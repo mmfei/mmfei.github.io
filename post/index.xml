@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>木木飞</title>
-    <link>https://www.mmfei.com/</link>
-    <description>Recent content on 木木飞</description>
+    <title>Posts on 木木飞</title>
+    <link>https://www.mmfei.com/post/</link>
+    <description>Recent content in Posts on 木木飞</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 23 May 2021 16:35:40 +0800</lastBuildDate>
     
-	<atom:link href="https://www.mmfei.com/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.mmfei.com/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,15 +18,6 @@
       
       <guid>https://www.mmfei.com/post/create_github_page_with_hugo/</guid>
       <description>如何使用hugo快速创建一个github page 创建github项目(私有项目 + 公开项目)  github.com/mmfei/mmfei.github.io.source; # 源项目 主要是用来生成网站项目 , 私有 github.com/mmfei/mmfei.github.io; # 网站项目 用来做 github page 的网站目录  # 安装hugo (mac环境下的安装方式 , 其他环境请看 gohugo.io) brew install hugo; # clone 私有项目 git clone github.com/mmfei/mmfei.github.io.source; cd mmfei.github.io.source; hugo new site .; hugo new post/first.md; # 往里面填充点内容 # 修改文件 config.tom cat config.tom &amp;lt;&amp;lt;EOT theme = &amp;#34;beautifulhugo&amp;#34; EOT # 修改文件 config.toml cat config.toml &amp;lt;&amp;lt;EOT baseURL = &amp;#34;https://mmfei.github.io/&amp;#34; languageCode = &amp;#34;en-us&amp;#34; title = &amp;#34;木木飞&amp;#34; theme = &amp;#34;beautifulhugo&amp;#34; EOT git add *; git commit -m &amp;#34;commit_message&amp;#34;; git push origin master; 创建本人在github的token(作为 GH_TOKEN 的值) https://github.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>https://www.mmfei.com/about/</link>
-      <pubDate>Sat, 22 May 2021 16:38:56 +0800</pubDate>
-      
-      <guid>https://www.mmfei.com/about/</guid>
-      <description>一直在广州的互联网老兵</description>
     </item>
     
   </channel>

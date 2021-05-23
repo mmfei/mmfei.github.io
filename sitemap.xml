@@ -3,12 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://www.mmfei.com/about/</loc>
-    <lastmod>2021-05-22T16:38:56+08:00</lastmod>
+    <loc>https://www.mmfei.com/post/create_github_page_with_hugo/</loc>
+    <lastmod>2021-05-23T16:35:40+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.mmfei.com/post/</loc>
+    <lastmod>2021-05-23T16:35:40+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://www.mmfei.com/</loc>
+    <lastmod>2021-05-23T16:35:40+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.mmfei.com/about/</loc>
     <lastmod>2021-05-22T16:38:56+08:00</lastmod>
   </url>
   
