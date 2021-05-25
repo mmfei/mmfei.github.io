@@ -80,8 +80,8 @@ if (!doNotTrack) {
   "keywords": [
     "hugo", "theme", "mermaid"
   ],
-  "articleBody": "hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.\n把它引入到hugo模板 , 写技术方案特别方便.\n步骤  修改模板 head.html (底部追加内容)   {{ if .Params.mermaid }} script src=\"https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js\" integrity=\"sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"script script // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(\"language-mermaid\")).forEach( (el) = { el.parentElement.outerHTML = `${el.innerText}`; } ); script style /* Set svg to center */ .mermaid svg { display: block; margin: auto; } style {{ end }}  config.yml 文件增加配置  # file config.yml params: mermaid: true ",
-  "wordCount" : "77",
+  "articleBody": "hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.\n把它引入到hugo模板 , 写技术方案特别方便.\n步骤  修改模板 head.html (底部追加内容)   {{ if .Params.mermaid }} script src=\"https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js\" integrity=\"sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"script script // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(\"language-mermaid\")).forEach( (el) = { el.parentElement.outerHTML = `${el.innerText}`; } ); script style /* Set svg to center */ .mermaid svg { display: block; margin: auto; } style {{ end }}  config.yml 文件增加配置  # file config.yml params: mermaid: true test sequenceDiagram participant Alice participant Bob Alice-John: Hello John, how are you? loop Healthcheck John-John: Fight against hypochondria end Note right of John: Rational thoughts prevail! John--Alice: Great! John-Bob: How about you? Bob--John: Jolly good! graph TD; A--B; A--C; B--D; C--D; sequenceDiagram 产品-+后端: 接需求 后端-+前端: 提交联调(本地自测完毕) [develop-feature) 前端---后端: 完成对接(在测试环境) [feature-test] 后端---测试: 提测(在测试环境) [feature-test] 测试--+产品: 验收 (在预发布环境) [feature-develop-master] 产品-+上线: 上线(本地自测完毕) [master] classDiagram Animal ",
+  "wordCount" : "178",
   "inLanguage": "en",
   "datePublished": "2021-05-26T00:26:15+08:00",
   "dateModified": "2021-05-26T00:26:15+08:00",
@@ -244,7 +244,54 @@ if (!doNotTrack) {
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#75715e"># file config.yml</span>
 <span style="color:#f92672">params</span>:
   <span style="color:#f92672">mermaid</span>: <span style="color:#66d9ef">true</span>
-</code></pre></div>
+</code></pre></div><h3 id="test">test<a hidden class="anchor" aria-hidden="true" href="#test">#</a></h3>
+<pre><code class="language-mermaid" data-lang="mermaid">sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice-&gt;&gt;John: Hello John, how are you?
+    loop Healthcheck
+        John-&gt;&gt;John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts &lt;br/&gt;prevail!
+    John--&gt;&gt;Alice: Great!
+    John-&gt;&gt;Bob: How about you?
+    Bob--&gt;&gt;John: Jolly good!
+</code></pre><pre><code class="language-mermaid" data-lang="mermaid">graph TD;
+    A--&gt;B;
+    A--&gt;C;
+    B--&gt;D;
+    C--&gt;D;
+</code></pre><pre><code class="language-mermaid" data-lang="mermaid">sequenceDiagram
+    产品-&gt;&gt;+后端: 接需求  
+    后端-&gt;&gt;+前端: 提交联调(本地自测完毕) [develop-&gt;feature)
+    前端--&gt;&gt;-后端: 完成对接(在测试环境) [feature-&gt;test]
+    后端--&gt;&gt;-测试: 提测(在测试环境) [feature-&gt;test]
+    测试--&gt;&gt;+产品: 验收 (在预发布环境) [feature-&gt;develop-&gt;master]
+    产品-&gt;&gt;+上线: 上线(本地自测完毕) [master]
+  
+</code></pre><pre><code class="language-mermaid" data-lang="mermaid">classDiagram
+    Animal &lt;|-- Duck
+    Animal &lt;|-- Fish
+    Animal &lt;|-- Zebra
+    Animal : +int age
+    Animal : +String gender
+    Animal: +isMammal()
+    Animal: +mate()
+    class Duck{
+      +String beakColor
+      +swim()
+      +quack()
+    }
+    class Fish{
+      -int sizeInFeet
+      -canEat()
+    }
+    class Zebra{
+      +bool is_wild
+      +run()
+    }
+            
+</code></pre>
 </div>
   <footer class="post-footer">
     <ul class="post-tags">
