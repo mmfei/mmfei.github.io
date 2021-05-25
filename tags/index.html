@@ -10,7 +10,7 @@
 <meta name="description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod">
 <meta name="author" content="大飞">
 <link rel="canonical" href="https://www.mmfei.com/tags/" />
-<link crossorigin="anonymous" href="/assets/css/stylesheet.min.2d6dbfc6e0f8a1db1c9d082a76dc11d094328cf63f247bbc2421dfaa7f2bb170.css" integrity="sha256-LW2/xuD4odscnQgqdtwR0JQyjPY/JHu8JCHfqn8rsXA=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.9e204a7d9213d9f18e2ac6652433ff1706262e7fad8be6a0fd906d922fff6340.css" integrity="sha256-niBKfZIT2fGOKsZlJDP/FwYmLn&#43;ti&#43;ag/ZBtki//Y0A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://www.mmfei.com/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://www.mmfei.com/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://www.mmfei.com/favicon-32x32.png">
@@ -223,7 +223,25 @@ if (!doNotTrack) {
 
 </script>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js" integrity="sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    mermaid.initialize({
+        theme: 'neutral'
+    });
+    
+    Array.from(document.getElementsByClassName("language-mermaid")).forEach(
+        (el) => {
+            el.parentElement.outerHTML = `<div class="mermaid">${el.innerText}</div>`;
+        }
+    );
+</script>
+<style>
+     
+    .mermaid svg {
+        display: block;
+        margin: auto;
+    }
+</style>
 </body>
 
 </html>
