@@ -149,6 +149,7 @@ if (!doNotTrack) {
   <section class="entry-content">
     <p>hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.
 把它引入到hugo模板 , 写技术方案特别方便.
+它的在线编辑器 https://mermaid-js.github.io/mermaid-live-editor/
 步骤  修改模板 head.html (底部追加内容)  &lt;!-- file layouts/partials/head.html --&gt; {{ if .Params.mermaid }} &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js&#34; integrity=&#34;sha512-kxc8&#43;BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==&#34; crossorigin=&#34;anonymous&#34; referrerpolicy=&#34;no-referrer&#34;&gt;&lt;/script&gt; &lt;script&gt; // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(&#34;language-mermaid&#34;)).forEach( (el) =&gt; { el.parentElement.outerHTML = `&lt;div class=&#34;mermaid&#34;&gt;${el.innerText}&lt;/div&gt;`; } ); &lt;/script&gt; &lt;style&gt; /* Set svg to center */ .mermaid svg { display: block; margin: auto; } &lt;/style&gt; {{ end }}  config....</p>
   </section>
   <footer class="entry-footer">May 26, 2021&nbsp;·&nbsp;1 min&nbsp;·&nbsp;大飞</footer>

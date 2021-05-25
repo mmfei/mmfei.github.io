@@ -9,6 +9,7 @@
 <meta name="keywords" content="hugo, theme, mermaid" />
 <meta name="description" content="hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.
 把它引入到hugo模板 , 写技术方案特别方便.
+它的在线编辑器 https://mermaid-js.github.io/mermaid-live-editor/
 步骤  修改模板 head.html (底部追加内容)  &lt;!-- file layouts/partials/head.html --&gt; {{ if .Params.mermaid }} &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js&#34; integrity=&#34;sha512-kxc8&#43;BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==&#34; crossorigin=&#34;anonymous&#34; referrerpolicy=&#34;no-referrer&#34;&gt;&lt;/script&gt; &lt;script&gt; // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(&#34;language-mermaid&#34;)).forEach( (el) =&gt; { el.parentElement.outerHTML = `&lt;div class=&#34;mermaid&#34;&gt;${el.innerText}&lt;/div&gt;`; } ); &lt;/script&gt; &lt;style&gt; /* Set svg to center */ .mermaid svg { display: block; margin: auto; } &lt;/style&gt; {{ end }}  config.">
 <meta name="author" content="大飞">
 <link rel="canonical" href="https://www.mmfei.com/post/hugo_support_mermaidjs/" />
@@ -37,6 +38,7 @@ if (!doNotTrack) {
 <meta property="og:title" content="Hugo_support_mermaidjs" />
 <meta property="og:description" content="hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.
 把它引入到hugo模板 , 写技术方案特别方便.
+它的在线编辑器 https://mermaid-js.github.io/mermaid-live-editor/
 步骤  修改模板 head.html (底部追加内容)  &lt;!-- file layouts/partials/head.html --&gt; {{ if .Params.mermaid }} &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js&#34; integrity=&#34;sha512-kxc8&#43;BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==&#34; crossorigin=&#34;anonymous&#34; referrerpolicy=&#34;no-referrer&#34;&gt;&lt;/script&gt; &lt;script&gt; // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(&#34;language-mermaid&#34;)).forEach( (el) =&gt; { el.parentElement.outerHTML = `&lt;div class=&#34;mermaid&#34;&gt;${el.innerText}&lt;/div&gt;`; } ); &lt;/script&gt; &lt;style&gt; /* Set svg to center */ .mermaid svg { display: block; margin: auto; } &lt;/style&gt; {{ end }}  config." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.mmfei.com/post/hugo_support_mermaidjs/" /><meta property="article:section" content="post" />
@@ -47,6 +49,7 @@ if (!doNotTrack) {
 <meta name="twitter:title" content="Hugo_support_mermaidjs"/>
 <meta name="twitter:description" content="hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.
 把它引入到hugo模板 , 写技术方案特别方便.
+它的在线编辑器 https://mermaid-js.github.io/mermaid-live-editor/
 步骤  修改模板 head.html (底部追加内容)  &lt;!-- file layouts/partials/head.html --&gt; {{ if .Params.mermaid }} &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js&#34; integrity=&#34;sha512-kxc8&#43;BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==&#34; crossorigin=&#34;anonymous&#34; referrerpolicy=&#34;no-referrer&#34;&gt;&lt;/script&gt; &lt;script&gt; // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(&#34;language-mermaid&#34;)).forEach( (el) =&gt; { el.parentElement.outerHTML = `&lt;div class=&#34;mermaid&#34;&gt;${el.innerText}&lt;/div&gt;`; } ); &lt;/script&gt; &lt;style&gt; /* Set svg to center */ .mermaid svg { display: block; margin: auto; } &lt;/style&gt; {{ end }}  config."/>
 
 
@@ -76,12 +79,12 @@ if (!doNotTrack) {
   "@type": "BlogPosting",
   "headline": "Hugo_support_mermaidjs",
   "name": "Hugo_support_mermaidjs",
-  "description": "hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.\n把它引入到hugo模板 , 写技术方案特别方便.\n步骤  修改模板 head.html (底部追加内容)  \u0026lt;!-- file layouts/partials/head.html --\u0026gt; {{ if .Params.mermaid }} \u0026lt;script src=\u0026#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js\u0026#34; integrity=\u0026#34;sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==\u0026#34; crossorigin=\u0026#34;anonymous\u0026#34; referrerpolicy=\u0026#34;no-referrer\u0026#34;\u0026gt;\u0026lt;/script\u0026gt; \u0026lt;script\u0026gt; // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(\u0026#34;language-mermaid\u0026#34;)).forEach( (el) =\u0026gt; { el.parentElement.outerHTML = `\u0026lt;div class=\u0026#34;mermaid\u0026#34;\u0026gt;${el.innerText}\u0026lt;/div\u0026gt;`; } ); \u0026lt;/script\u0026gt; \u0026lt;style\u0026gt; /* Set svg to center */ .mermaid svg { display: block; margin: auto; } \u0026lt;/style\u0026gt; {{ end }}  config.",
+  "description": "hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.\n把它引入到hugo模板 , 写技术方案特别方便.\n它的在线编辑器 https://mermaid-js.github.io/mermaid-live-editor/\n步骤  修改模板 head.html (底部追加内容)  \u0026lt;!-- file layouts/partials/head.html --\u0026gt; {{ if .Params.mermaid }} \u0026lt;script src=\u0026#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js\u0026#34; integrity=\u0026#34;sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==\u0026#34; crossorigin=\u0026#34;anonymous\u0026#34; referrerpolicy=\u0026#34;no-referrer\u0026#34;\u0026gt;\u0026lt;/script\u0026gt; \u0026lt;script\u0026gt; // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(\u0026#34;language-mermaid\u0026#34;)).forEach( (el) =\u0026gt; { el.parentElement.outerHTML = `\u0026lt;div class=\u0026#34;mermaid\u0026#34;\u0026gt;${el.innerText}\u0026lt;/div\u0026gt;`; } ); \u0026lt;/script\u0026gt; \u0026lt;style\u0026gt; /* Set svg to center */ .mermaid svg { display: block; margin: auto; } \u0026lt;/style\u0026gt; {{ end }}  config.",
   "keywords": [
     "hugo", "theme", "mermaid"
   ],
-  "articleBody": "hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.\n把它引入到hugo模板 , 写技术方案特别方便.\n步骤  修改模板 head.html (底部追加内容)   {{ if .Params.mermaid }} script src=\"https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js\" integrity=\"sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"script script // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(\"language-mermaid\")).forEach( (el) = { el.parentElement.outerHTML = `${el.innerText}`; } ); script style /* Set svg to center */ .mermaid svg { display: block; margin: auto; } style {{ end }}  config.yml 文件增加配置  # file config.yml params: mermaid: true test sequenceDiagram participant Alice participant Bob Alice-John: Hello John, how are you? loop Healthcheck John-John: Fight against hypochondria end Note right of John: Rational thoughts prevail! John--Alice: Great! John-Bob: How about you? Bob--John: Jolly good! graph TD; A--B; A--C; B--D; C--D; sequenceDiagram 产品-+后端: 接需求 后端-+前端: 提交联调(本地自测完毕) [develop-feature) 前端---后端: 完成对接(在测试环境) [feature-test] 后端---测试: 提测(在测试环境) [feature-test] 测试--+产品: 验收 (在预发布环境) [feature-develop-master] 产品-+上线: 上线(本地自测完毕) [master] classDiagram Animal ",
-  "wordCount" : "178",
+  "articleBody": "hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.\n把它引入到hugo模板 , 写技术方案特别方便.\n它的在线编辑器 https://mermaid-js.github.io/mermaid-live-editor/\n步骤  修改模板 head.html (底部追加内容)   {{ if .Params.mermaid }} script src=\"https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js\" integrity=\"sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"script script // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(\"language-mermaid\")).forEach( (el) = { el.parentElement.outerHTML = `${el.innerText}`; } ); script style /* Set svg to center */ .mermaid svg { display: block; margin: auto; } style {{ end }}  config.yml 文件增加配置  # file config.yml params: mermaid: true test sequenceDiagram participant Alice participant Bob Alice-John: Hello John, how are you? loop Healthcheck John-John: Fight against hypochondria end Note right of John: Rational thoughts prevail! John--Alice: Great! John-Bob: How about you? Bob--John: Jolly good! graph TD; A--B; A--C; B--D; C--D; sequenceDiagram 产品-+后端: 接需求 后端-+前端: 提交联调(本地自测完毕) [develop-feature) 前端---后端: 完成对接(在测试环境) [feature-test] 后端---测试: 提测(在测试环境) [feature-test] 测试--+产品: 验收 (在预发布环境) [feature-develop-master] 产品-+上线: 上线(本地自测完毕) [master] classDiagram Animal ",
+  "wordCount" : "180",
   "inLanguage": "en",
   "datePublished": "2021-05-26T00:26:15+08:00",
   "dateModified": "2021-05-26T00:26:15+08:00",
@@ -214,6 +217,8 @@ if (!doNotTrack) {
   <div class="post-content"><h2 id="hugo-增加mermaid-js的支持">hugo 增加mermaid js的支持<a hidden class="anchor" aria-hidden="true" href="#hugo-增加mermaid-js的支持">#</a></h2>
 <p>mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.</p>
 <p>把它引入到hugo模板 , 写技术方案特别方便.</p>
+<h2 id="它的在线编辑器">它的在线编辑器<a hidden class="anchor" aria-hidden="true" href="#它的在线编辑器">#</a></h2>
+<p><a href="https://mermaid-js.github.io/mermaid-live-editor/">https://mermaid-js.github.io/mermaid-live-editor/</a></p>
 <h2 id="步骤">步骤<a hidden class="anchor" aria-hidden="true" href="#步骤">#</a></h2>
 <ul>
 <li>修改模板 head.html (底部追加内容)</li>
