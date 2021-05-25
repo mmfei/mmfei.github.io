@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Posts on 木木飞</title>
-    <link>https://www.mmfei.com/post/</link>
-    <description>Recent content in Posts on 木木飞</description>
+    <title>theme on 木木飞</title>
+    <link>https://www.mmfei.com/tags/theme/</link>
+    <description>Recent content in theme on 木木飞</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 26 May 2021 00:26:15 +0800</lastBuildDate><atom:link href="https://www.mmfei.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 26 May 2021 00:26:15 +0800</lastBuildDate><atom:link href="https://www.mmfei.com/tags/theme/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hugo_support_mermaidjs</title>
       <link>https://www.mmfei.com/post/hugo_support_mermaidjs/</link>
@@ -15,15 +15,6 @@
       <description>hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.
 把它引入到hugo模板 , 写技术方案特别方便.
 步骤  修改模板 head.html (底部追加内容)  &amp;lt;!-- file layouts/partials/head.html --&amp;gt; {{ if .Params.mermaid }} &amp;lt;script src=&amp;#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js&amp;#34; integrity=&amp;#34;sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==&amp;#34; crossorigin=&amp;#34;anonymous&amp;#34; referrerpolicy=&amp;#34;no-referrer&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script&amp;gt; // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(&amp;#34;language-mermaid&amp;#34;)).forEach( (el) =&amp;gt; { el.parentElement.outerHTML = `&amp;lt;div class=&amp;#34;mermaid&amp;#34;&amp;gt;${el.innerText}&amp;lt;/div&amp;gt;`; } ); &amp;lt;/script&amp;gt; &amp;lt;style&amp;gt; /* Set svg to center */ .mermaid svg { display: block; margin: auto; } &amp;lt;/style&amp;gt; {{ end }}  config.</description>
-    </item>
-    
-    <item>
-      <title>Create_github_page_with_hugo</title>
-      <link>https://www.mmfei.com/post/create_github_page_with_hugo/</link>
-      <pubDate>Sun, 23 May 2021 16:35:40 +0800</pubDate>
-      
-      <guid>https://www.mmfei.com/post/create_github_page_with_hugo/</guid>
-      <description>如何使用hugo快速创建一个github page 创建github项目(私有项目 + 公开项目)  github.com/mmfei/mmfei.github.io.source; # 源项目 主要是用来生成网站项目 , 私有 github.com/mmfei/mmfei.github.io; # 网站项目 用来做 github page 的网站目录  # 安装hugo (mac环境下的安装方式 , 其他环境请看 gohugo.io) brew install hugo; # clone 私有项目 git clone github.com/mmfei/mmfei.github.io.source; cd mmfei.github.io.source; hugo new site .; hugo new post/first.md; # 往里面填充点内容 # 修改文件 config.tom cat config.tom &amp;lt;&amp;lt;EOT theme = &amp;#34;beautifulhugo&amp;#34; EOT # 修改文件 config.toml cat config.toml &amp;lt;&amp;lt;EOT baseURL = &amp;#34;https://mmfei.github.io/&amp;#34; languageCode = &amp;#34;en-us&amp;#34; title = &amp;#34;木木飞&amp;#34; theme = &amp;#34;beautifulhugo&amp;#34; EOT git add *; git commit -m &amp;#34;commit_message&amp;#34;; git push origin master; 创建本人在github的token(作为 GH_TOKEN 的值) https://github.</description>
     </item>
     
   </channel>
