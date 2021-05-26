@@ -176,13 +176,24 @@ if (!doNotTrack) {
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Centos_install_bat_a_better_cat</h2>
+  </header>
+  <section class="entry-content">
+    <p>install in centos #!/bin/sh URL=https://github.com/sharkdp/bat/releases/download/v0.18.1/bat-v0.18.1-x86_64-unknown-linux-musl.tar.gz wget -c -O bat.tar.gz $URL; tar -xvzf bat.tar.gz -C /usr/local; ln -s /usr/local/bat-v0.18.1-x86_64-unknown-linux-musl/bat /usr/local/bin/bat </p>
+  </section>
+  <footer class="entry-footer">May 26, 2021&nbsp;·&nbsp;1 min&nbsp;·&nbsp;大飞</footer>
+  <a class="entry-link" aria-label="post link to Centos_install_bat_a_better_cat" href="https://www.mmfei.com/post/centos_install_bat_a_better_cat/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Hugo_support_mermaidjs</h2>
   </header>
   <section class="entry-content">
     <p>hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.
 把它引入到hugo模板 , 写技术方案特别方便.
 它的在线编辑器 https://mermaid-js.github.io/mermaid-live-editor/
-步骤  修改模板 head.html (底部追加内容)  &lt;!-- file layouts/partials/head.html --&gt; {{ if .Params.mermaid }} &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js&#34; integrity=&#34;sha512-kxc8&#43;BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==&#34; crossorigin=&#34;anonymous&#34; referrerpolicy=&#34;no-referrer&#34;&gt;&lt;/script&gt; &lt;script&gt; // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(&#34;language-mermaid&#34;)).forEach( (el) =&gt; { el.parentElement.outerHTML = `&lt;div class=&#34;mermaid&#34;&gt;${el.innerText}&lt;/div&gt;`; } ); &lt;/script&gt; &lt;style&gt; /* Set svg to center */ .mermaid svg { display: block; margin: auto; } &lt;/style&gt; {{ end }}  文章增加配置  --- mermaid: true --- test %%{init: {&#39;theme&#39;: &#39;forest&#39;, &#39;fill&#39;: &#39;white&#39; } }%% sequenceDiagram participant Alice participant Bob Alice-&gt;&gt;John: Hello John, how are you?...</p>
+步骤  修改模板 head.html (底部追加内容)  &lt;!-- file layouts/partials/head.html --&gt; {{ if .Params.mermaid }} &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js&#34; integrity=&#34;sha512-kxc8&#43;BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==&#34; crossorigin=&#34;anonymous&#34; referrerpolicy=&#34;no-referrer&#34;&gt;&lt;/script&gt; &lt;script&gt; // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(&#34;language-mermaid&#34;)).forEach( (el) =&gt; { el.parentElement.outerHTML = `&lt;div class=&#34;mermaid&#34;&gt;${el.innerText}&lt;/div&gt;`; } ); &lt;/script&gt; &lt;style&gt; /* Set svg to center */ .mermaid svg { display: block; margin: auto; } &lt;/style&gt; {{ end }}  文章增加配置  --- mermaid: true --- test %%{init: {&#39;theme&#39;: &#39;forest&#39;, &#39;fill&#39;: &#39;white&#39;, &#39;securitylevel&#39;: &#39;loose&#39; } }%% sequenceDiagram participant Alice participant Bob Alice-&gt;&gt;John: Hello John, how are you?...</p>
   </section>
   <footer class="entry-footer">May 26, 2021&nbsp;·&nbsp;2 min&nbsp;·&nbsp;大飞</footer>
   <a class="entry-link" aria-label="post link to Hugo_support_mermaidjs" href="https://www.mmfei.com/post/hugo_support_mermaidjs/"></a>
