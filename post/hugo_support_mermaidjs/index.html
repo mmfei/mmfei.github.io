@@ -1,254 +1,336 @@
 <!DOCTYPE html>
-<html lang="en" dir="auto">
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+    <meta charset="UTF-8" />
 
-<head><meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
-<title>Hugo_support_mermaidjs | 木木飞</title>
-<meta name="keywords" content="hugo, theme, mermaid" />
-<meta name="description" content="hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.
-把它引入到hugo模板 , 写技术方案特别方便.
-它的在线编辑器 https://mermaid-js.github.io/mermaid-live-editor/
-步骤  修改模板 head.html (底部追加内容)  &lt;!-- file layouts/partials/head.html --&gt; {{ if .Params.mermaid }} &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js&#34; integrity=&#34;sha512-kxc8&#43;BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==&#34; crossorigin=&#34;anonymous&#34; referrerpolicy=&#34;no-referrer&#34;&gt;&lt;/script&gt; &lt;script&gt; // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(&#34;language-mermaid&#34;)).forEach( (el) =&gt; { el.parentElement.outerHTML = `&lt;div class=&#34;mermaid&#34;&gt;${el.innerText}&lt;/div&gt;`; } ); &lt;/script&gt; &lt;style&gt; /* Set svg to center */ .mermaid svg { display: block; margin: auto; } &lt;/style&gt; {{ end }}  文章增加配置  --- mermaid: true --- test %%{init: {&#39;theme&#39;: &#39;forest&#39;, &#39;fill&#39;: &#39;white&#39;, &#39;securitylevel&#39;: &#39;loose&#39; } }%% sequenceDiagram participant Alice participant Bob Alice-&gt;&gt;John: Hello John, how are you?">
-<meta name="author" content="大飞">
-<link rel="canonical" href="https://www.mmfei.com/post/hugo_support_mermaidjs/" />
-<link crossorigin="anonymous" href="/assets/css/stylesheet.min.9e204a7d9213d9f18e2ac6652433ff1706262e7fad8be6a0fd906d922fff6340.css" integrity="sha256-niBKfZIT2fGOKsZlJDP/FwYmLn&#43;ti&#43;ag/ZBtki//Y0A=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
-    onload="hljs.initHighlightingOnLoad();"></script>
-<link rel="icon" href="https://www.mmfei.com/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://www.mmfei.com/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://www.mmfei.com/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://www.mmfei.com/apple-touch-icon.png">
-<link rel="mask-icon" href="https://www.mmfei.com/safari-pinned-tab.svg">
-<meta name="theme-color" content="#2e2e33">
-<meta name="msapplication-TileColor" content="#2e2e33">
-<meta name="generator" content="Hugo 0.83.1" />
+    <meta name="generator" content="Hugo 0.83.1" /><meta name="theme-color" content="#16171d" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': false });
-}
+    <title>Hugo_support_mermaidjs | 木木飞</title>
+
+    <link rel="stylesheet" href="/css/meme.min.2f7689762e97218fc22352b8945588c5d7191e44bd7c9224f393f674ad3dec46.css"/>
+
+    
+    
+        <script src="/js/meme.min.8cbe976441b5181abfd3093c9beee209b19cdbb1fa77c48d225a83ba81fa3fb1.js"></script>
+
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB&#43;Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB&#43;Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="mmfei" /><meta name="description" content="hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="木木飞" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="木木飞" />
+    <meta name="msapplication-starturl" content="../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="https://mmfei.com/post/hugo_support_mermaidjs/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2021-05-26T00:26:15+08:00",
+        "dateModified": "2021-05-26T02:25:58+00:00",
+        "url": "https://mmfei.com/post/hugo_support_mermaidjs/",
+        "headline": "Hugo_support_mermaidjs",
+        "description": "hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "post",
+        "wordCount":  668 ,
+        "image": "https://mmfei.com/icons/apple-touch-icon.png",
+        "author": {
+            "@type": "Person",
+            "email": "wlfkongl@163.com",
+            "image": "https://mmfei.com/icons/apple-touch-icon.png",
+            "url": "https://mmfei.com/",
+            "name": "mmfei"
+        },
+        "license": "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)",
+        "publisher": {
+            "@type": "Organization",
+            "name": "木木飞",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://mmfei.com/icons/apple-touch-icon.png"
+            },
+            "url": "https://mmfei.com/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "https://mmfei.com/"
+        }
+    }
 </script>
+
+    
+
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@mmfei" />
+<meta name="twitter:creator" content="@mmfei" />
+
+    
+
+
+
 <meta property="og:title" content="Hugo_support_mermaidjs" />
-<meta property="og:description" content="hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.
-把它引入到hugo模板 , 写技术方案特别方便.
-它的在线编辑器 https://mermaid-js.github.io/mermaid-live-editor/
-步骤  修改模板 head.html (底部追加内容)  &lt;!-- file layouts/partials/head.html --&gt; {{ if .Params.mermaid }} &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js&#34; integrity=&#34;sha512-kxc8&#43;BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==&#34; crossorigin=&#34;anonymous&#34; referrerpolicy=&#34;no-referrer&#34;&gt;&lt;/script&gt; &lt;script&gt; // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(&#34;language-mermaid&#34;)).forEach( (el) =&gt; { el.parentElement.outerHTML = `&lt;div class=&#34;mermaid&#34;&gt;${el.innerText}&lt;/div&gt;`; } ); &lt;/script&gt; &lt;style&gt; /* Set svg to center */ .mermaid svg { display: block; margin: auto; } &lt;/style&gt; {{ end }}  文章增加配置  --- mermaid: true --- test %%{init: {&#39;theme&#39;: &#39;forest&#39;, &#39;fill&#39;: &#39;white&#39;, &#39;securitylevel&#39;: &#39;loose&#39; } }%% sequenceDiagram participant Alice participant Bob Alice-&gt;&gt;John: Hello John, how are you?" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.mmfei.com/post/hugo_support_mermaidjs/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-05-26T00:26:15&#43;08:00" />
-<meta property="article:modified_time" content="2021-05-26T00:26:15&#43;08:00" />
-
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Hugo_support_mermaidjs"/>
-<meta name="twitter:description" content="hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.
-把它引入到hugo模板 , 写技术方案特别方便.
-它的在线编辑器 https://mermaid-js.github.io/mermaid-live-editor/
-步骤  修改模板 head.html (底部追加内容)  &lt;!-- file layouts/partials/head.html --&gt; {{ if .Params.mermaid }} &lt;script src=&#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js&#34; integrity=&#34;sha512-kxc8&#43;BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==&#34; crossorigin=&#34;anonymous&#34; referrerpolicy=&#34;no-referrer&#34;&gt;&lt;/script&gt; &lt;script&gt; // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(&#34;language-mermaid&#34;)).forEach( (el) =&gt; { el.parentElement.outerHTML = `&lt;div class=&#34;mermaid&#34;&gt;${el.innerText}&lt;/div&gt;`; } ); &lt;/script&gt; &lt;style&gt; /* Set svg to center */ .mermaid svg { display: block; margin: auto; } &lt;/style&gt; {{ end }}  文章增加配置  --- mermaid: true --- test %%{init: {&#39;theme&#39;: &#39;forest&#39;, &#39;fill&#39;: &#39;white&#39;, &#39;securitylevel&#39;: &#39;loose&#39; } }%% sequenceDiagram participant Alice participant Bob Alice-&gt;&gt;John: Hello John, how are you?"/>
+<meta property="og:description" content="hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图……" />
+<meta property="og:url" content="https://mmfei.com/post/hugo_support_mermaidjs/" />
+<meta property="og:site_name" content="木木飞" />
+<meta property="og:locale" content="zh" /><meta property="og:image" content="https://mmfei.com/icons/apple-touch-icon.png" />
+    <meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2021-05-26T00:26:15&#43;08:00" />
+    <meta property="article:modified_time" content="2021-05-26T02:25:58&#43;00:00" />
+    
+    <meta property="article:section" content="post" />
 
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://www.mmfei.com/post/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "Hugo_support_mermaidjs",
-      "item": "https://www.mmfei.com/post/hugo_support_mermaidjs/"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Hugo_support_mermaidjs",
-  "name": "Hugo_support_mermaidjs",
-  "description": "hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.\n把它引入到hugo模板 , 写技术方案特别方便.\n它的在线编辑器 https://mermaid-js.github.io/mermaid-live-editor/\n步骤  修改模板 head.html (底部追加内容)  \u0026lt;!-- file layouts/partials/head.html --\u0026gt; {{ if .Params.mermaid }} \u0026lt;script src=\u0026#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js\u0026#34; integrity=\u0026#34;sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==\u0026#34; crossorigin=\u0026#34;anonymous\u0026#34; referrerpolicy=\u0026#34;no-referrer\u0026#34;\u0026gt;\u0026lt;/script\u0026gt; \u0026lt;script\u0026gt; // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(\u0026#34;language-mermaid\u0026#34;)).forEach( (el) =\u0026gt; { el.parentElement.outerHTML = `\u0026lt;div class=\u0026#34;mermaid\u0026#34;\u0026gt;${el.innerText}\u0026lt;/div\u0026gt;`; } ); \u0026lt;/script\u0026gt; \u0026lt;style\u0026gt; /* Set svg to center */ .mermaid svg { display: block; margin: auto; } \u0026lt;/style\u0026gt; {{ end }}  文章增加配置  --- mermaid: true --- test %%{init: {'theme': 'forest', 'fill': 'white', 'securitylevel': 'loose' } }%% sequenceDiagram participant Alice participant Bob Alice-\u0026gt;\u0026gt;John: Hello John, how are you?",
-  "keywords": [
-    "hugo", "theme", "mermaid"
-  ],
-  "articleBody": "hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.\n把它引入到hugo模板 , 写技术方案特别方便.\n它的在线编辑器 https://mermaid-js.github.io/mermaid-live-editor/\n步骤  修改模板 head.html (底部追加内容)   {{ if .Params.mermaid }} script src=\"https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js\" integrity=\"sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"script script // Replace mermaid pre.code to div  Array.from(document.getElementsByClassName(\"language-mermaid\")).forEach( (el) = { el.parentElement.outerHTML = `${el.innerText}`; } ); script style /* Set svg to center */ .mermaid svg { display: block; margin: auto; } style {{ end }}  文章增加配置  --- mermaid: true --- test %%{init: {'theme': 'forest', 'fill': 'white', 'securitylevel': 'loose' } }%% sequenceDiagram participant Alice participant Bob Alice-John: Hello John, how are you? loop Healthcheck John-John: Fight against hypochondria end Note right of John: Rational thoughts prevail! John--Alice: Great! John-Bob: How about you? Bob--John: Jolly good! %%{init: {'theme': 'forest', 'fill': 'white' } }%% sequenceDiagram participant Alice participant Bob Alice-John: Hello John, how are you? loop Healthcheck John-John: Fight against hypochondria end Note right of John: Rational thoughts prevail! John--Alice: Great! John-Bob: How about you? Bob--John: Jolly good! graph TD; A--B; A--C; B--D; C--D; graph TD; A--B; A--C; B--D; C--D; sequenceDiagram 产品-+后端: 接需求 后端-+前端: 提交联调(本地自测完毕) [develop-feature) 前端---后端: 完成对接(在测试环境) [feature-test] 后端---测试: 提测(在测试环境) [feature-test] 测试--+产品: 验收 (在预发布环境) [feature-develop-master] 产品-+上线: 上线(本地自测完毕) [master] sequenceDiagram 产品-+后端: 接需求 后端-+前端: 提交联调(本地自测完毕) [develop-feature) 前端---后端: 完成对接(在测试环境) [feature-test] 后端---测试: 提测(在测试环境) [feature-test] 测试--+产品: 验收 (在预发布环境) [feature-develop-master] 产品-+上线: 上线(本地自测完毕) [master] classDiagram Animal classDiagram Animal ",
-  "wordCount" : "293",
-  "inLanguage": "en",
-  "datePublished": "2021-05-26T00:26:15+08:00",
-  "dateModified": "2021-05-26T00:26:15+08:00",
-  "author":{
-    "@type": "Person",
-    "name": "大飞"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://www.mmfei.com/post/hugo_support_mermaidjs/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "木木飞",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://www.mmfei.com/favicon.ico"
-    }
-  }
-}
-</script>
+        <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
+
+        
+
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-JC9GDLXKD6');
+    </script>
+
+
+
+
+    
+    
+
+    
 </head>
 
-<body class="" id="top">
-<script>
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark');
-    }
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">木木飞</a>
+        
+    </div>
 
-</script>
-<noscript>
-    <style type="text/css">
-        #theme-toggle,
-        .top-link {
-            display: none;
-        }
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/posts/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon archive"><path d="M32 448c0 17.7 14.3 32 32 32h384c17.7 0 32-14.3 32-32V160H32v288zm160-212c0-6.6 5.4-12 12-12h104c6.6 0 12 5.4 12 12v8c0 6.6-5.4 12-12 12H204c-6.6 0-12-5.4-12-12v-8zM480 32H32C14.3 32 0 46.3 0 64v48c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16V64c0-17.7-14.3-32-32-32z"/></svg><span class="menu-item-name">文章</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/categories/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon th"><path d="M149.333 56v80c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V56c0-13.255 10.745-24 24-24h101.333c13.255 0 24 10.745 24 24zm181.334 240v-80c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.256 0 24.001-10.745 24.001-24zm32-240v80c0 13.255 10.745 24 24 24H488c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24H386.667c-13.255 0-24 10.745-24 24zm-32 80V56c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.256 0 24.001-10.745 24.001-24zm-205.334 56H24c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24zM0 376v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H24c-13.255 0-24 10.745-24 24zm386.667-56H488c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H386.667c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24zm0 160H488c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H386.667c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24zM181.333 376v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24z"/></svg><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="icon tags"><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="icon user-circle"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"/></svg><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-light"><path d="M193.2 104.5l48.8-97.5a18 18 0 0128 0l48.8 97.5 103.4 -34.5a18 18 0 0119.8 19.8l-34.5 103.4l97.5 48.8a18 18 0 010 28l-97.5 48.8 34.5 103.4a18 18 0 01-19.8 19.8l-103.4-34.5-48.8 97.5a18 18 0 01-28 0l-48.8-97.5l-103.4 34.5a18 18 0 01-19.8-19.8l34.5-103.4-97.5-48.8a18 18 0 010-28l97.5-48.8-34.5-103.4a18 18 0 0119.8-19.8zM256 128a128 128 0 10.01 0M256 160a96 96 0 10.01 0"/></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-dark"><path d="M27 412a256 256 0 10154-407a11.5 11.5 0 00-5 20a201.5 201.5 0 01-134 374a11.5 11.5 0 00-15 13"/></svg></a>
+                        </li>
+                    
+                
+            
+        
+            
+                
+            
+        
+    </ul>
+</nav>
 
-    </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: #1d1e20;
-                --entry: #2e2e33;
-                --primary: rgba(255, 255, 255, 0.84);
-                --secondary: rgba(255, 255, 255, 0.56);
-                --tertiary: rgba(255, 255, 255, 0.16);
-                --content: rgba(255, 255, 255, 0.74);
-                --hljs-bg: #2e2e33;
-                --code-bg: #37383e;
-                --border: #333;
-            }
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
 
-            .list {
-                background: var(--theme);
-            }
 
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
+        
+    </header>
 
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
 
-    </style>
-</noscript>
 
-<header class="header">
-    <nav class="nav">
-        <div class="logo">
-            <a href="https://www.mmfei.com/" accesskey="h" title="木木飞 (Alt + H)">木木飞</a>
-            <span class="logo-switches">
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button>
-            </span>
-        </div>
-        <ul id="menu">
-            <li>
-                <a href="https://www.mmfei.com/archives" title="Archive">
-                    <span>Archive</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.mmfei.com/search/" title="Search">
-                    <span>Search</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.mmfei.com/tags/" title="Tags">
-                    <span>Tags</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
-<main class="main">
 
-<article class="post-single">
-  <header class="post-header">
+            
+            
+    <main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="post" data-toc-num="true">
+
+            <h1 class="post-title p-name">Hugo_support_mermaidjs</h1>
+
+            
+
+            
+                
+            
+
+            
+                
+
+<div class="post-meta">
     
-    <h1 class="post-title">
-      Hugo_support_mermaidjs
-    </h1>
-    <div class="post-meta">May 26, 2021&nbsp;·&nbsp;2 min&nbsp;·&nbsp;大飞
+        
+        <time datetime="2021-05-26T00:26:15&#43;08:00" class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;2021.5.26</time>
+    
+    
+        
+        <time datetime="2021-05-26T02:25:58&#43;00:00" class="post-meta-item modified dt-updated"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M400 64h-48V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H160V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 400H54a6 6 0 0 1-6-6V160h352v298a6 6 0 0 1-6 6zm-52.849-200.65L198.842 404.519c-4.705 4.667-12.303 4.637-16.971-.068l-75.091-75.699c-4.667-4.705-4.637-12.303.068-16.971l22.719-22.536c4.705-4.667 12.303-4.637 16.97.069l44.104 44.461 111.072-110.181c4.705-4.667 12.303-4.637 16.971.068l22.536 22.718c4.667 4.705 4.636 12.303-.069 16.97z"/></svg>&nbsp;2021.5.26</time>
+    
+    
+    
+        
+        
+        
+            
+                <span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href="/categories/hugo/" class="category-link p-category">hugo</a></span>
+            
+        
+    
+    
+        
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;668</span>
+    
+    
+        
+        <span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;2&nbsp;分钟</span>
+    
+    
+    
 </div>
-  </header> 
-  <div class="post-content"><h2 id="hugo-增加mermaid-js的支持">hugo 增加mermaid js的支持<a hidden class="anchor" aria-hidden="true" href="#hugo-增加mermaid-js的支持">#</a></h2>
+
+            
+
+            <div class="post-body e-content">
+                <h2 id="hugo-增加mermaid-js的支持"><a href="#hugo-增加mermaid-js的支持" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>hugo 增加mermaid js的支持</h2>
 <p>mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.</p>
 <p>把它引入到hugo模板 , 写技术方案特别方便.</p>
-<h2 id="它的在线编辑器">它的在线编辑器<a hidden class="anchor" aria-hidden="true" href="#它的在线编辑器">#</a></h2>
-<p><a href="https://mermaid-js.github.io/mermaid-live-editor/">https://mermaid-js.github.io/mermaid-live-editor/</a></p>
-<h2 id="步骤">步骤<a hidden class="anchor" aria-hidden="true" href="#步骤">#</a></h2>
+<h2 id="它的在线编辑器"><a href="#它的在线编辑器" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>它的在线编辑器</h2>
+<p><a href="https://mermaid-js.github.io/mermaid-live-editor/" target="_blank" rel="noopener">https://mermaid-js.github.io/mermaid-live-editor/</a></p>
+<h2 id="步骤"><a href="#步骤" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>步骤</h2>
 <ul>
 <li>修改模板 head.html (底部追加内容)</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- file layouts/partials/head.html --&gt;</span>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="c">&lt;!-- file layouts/partials/head.html --&gt;</span>
 {{ if .Params.mermaid }}
-&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js&#34;</span> <span style="color:#a6e22e">integrity</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==&#34;</span> <span style="color:#a6e22e">crossorigin</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;anonymous&#34;</span> <span style="color:#a6e22e">referrerpolicy</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;no-referrer&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
-&lt;<span style="color:#f92672">script</span>&gt;
-    <span style="color:#75715e">// Replace mermaid pre.code to div
-</span><span style="color:#75715e"></span>    Array.<span style="color:#a6e22e">from</span>(document.<span style="color:#a6e22e">getElementsByClassName</span>(<span style="color:#e6db74">&#34;language-mermaid&#34;</span>)).<span style="color:#a6e22e">forEach</span>(
-        (<span style="color:#a6e22e">el</span>) =&gt; {
-            <span style="color:#a6e22e">el</span>.<span style="color:#a6e22e">parentElement</span>.<span style="color:#a6e22e">outerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`&lt;div class=&#34;mermaid&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">el</span>.<span style="color:#a6e22e">innerText</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/div&gt;`</span>;
-        }
-    );
-&lt;/<span style="color:#f92672">script</span>&gt;
-&lt;<span style="color:#f92672">style</span>&gt;
-    <span style="color:#75715e">/* Set svg to center */</span>
-    .<span style="color:#a6e22e">mermaid</span> <span style="color:#f92672">svg</span> {
-        <span style="color:#66d9ef">display</span>: <span style="color:#66d9ef">block</span>;
-        <span style="color:#66d9ef">margin</span>: <span style="color:#66d9ef">auto</span>;
-    }
-&lt;/<span style="color:#f92672">style</span>&gt;
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js&#34;</span> <span class="na">integrity</span><span class="o">=</span><span class="s">&#34;sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==&#34;</span> <span class="na">crossorigin</span><span class="o">=</span><span class="s">&#34;anonymous&#34;</span> <span class="na">referrerpolicy</span><span class="o">=</span><span class="s">&#34;no-referrer&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="c1">// Replace mermaid pre.code to div
+</span><span class="c1"></span>    <span class="nb">Array</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s2">&#34;language-mermaid&#34;</span><span class="p">)).</span><span class="nx">forEach</span><span class="p">(</span>
+        <span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="nx">el</span><span class="p">.</span><span class="nx">parentElement</span><span class="p">.</span><span class="nx">outerHTML</span> <span class="o">=</span> <span class="sb">`&lt;div class=&#34;mermaid&#34;&gt;</span><span class="si">${</span><span class="nx">el</span><span class="p">.</span><span class="nx">innerText</span><span class="si">}</span><span class="sb">&lt;/div&gt;`</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">);</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+    <span class="c">/* Set svg to center */</span>
+    <span class="p">.</span><span class="nc">mermaid</span> <span class="nt">svg</span> <span class="p">{</span>
+        <span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
+        <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 {{ end }}
-</code></pre></div><ul>
+</code></pre></td></tr></table></div>
+</div>
+</div><ul>
 <li>文章增加配置</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml">---
-<span style="color:#f92672">mermaid</span>: <span style="color:#66d9ef">true</span>
----
-</code></pre></div><h3 id="test">test<a hidden class="anchor" aria-hidden="true" href="#test">#</a></h3>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nn">---</span><span class="w">
+</span><span class="w"></span><span class="nt">mermaid</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w"></span><span class="nn">---</span><span class="w">
+</span></code></pre></td></tr></table></div>
+</div>
+</div><h3 id="test"><a href="#test" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>test</h3>
 <pre><code>%%{init: {'theme': 'forest', 'fill': 'white', 'securitylevel': 'loose' } }%%
 sequenceDiagram
     participant Alice
@@ -344,173 +426,282 @@ sequenceDiagram
     }
             
 </code></pre>
-</div>
-  <footer class="post-footer">
-    <ul class="post-tags">
-      <li><a href="https://www.mmfei.com/tags/hugo/">hugo</a></li>
-      <li><a href="https://www.mmfei.com/tags/theme/">theme</a></li>
-      <li><a href="https://www.mmfei.com/tags/mermaid/">mermaid</a></li>
-    </ul>
-<div class="share-buttons">
-    <a target="_blank" rel="noopener noreferrer" aria-label="share Hugo_support_mermaidjs on twitter"
-        href="https://twitter.com/intent/tweet/?text=Hugo_support_mermaidjs&amp;url=https%3a%2f%2fwww.mmfei.com%2fpost%2fhugo_support_mermaidjs%2f&amp;hashtags=hugo%2ctheme%2cmermaid">
-        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
-            <path
-                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-253.927,424.544c135.939,0 210.268,-112.643 210.268,-210.268c0,-3.218 0,-6.437 -0.153,-9.502c14.406,-10.421 26.973,-23.448 36.935,-38.314c-13.18,5.824 -27.433,9.809 -42.452,11.648c15.326,-9.196 26.973,-23.602 32.49,-40.92c-14.252,8.429 -30.038,14.56 -46.896,17.931c-13.487,-14.406 -32.644,-23.295 -53.946,-23.295c-40.767,0 -73.87,33.104 -73.87,73.87c0,5.824 0.613,11.494 1.992,16.858c-61.456,-3.065 -115.862,-32.49 -152.337,-77.241c-6.284,10.881 -9.962,23.601 -9.962,37.088c0,25.594 13.027,48.276 32.95,61.456c-12.107,-0.307 -23.448,-3.678 -33.41,-9.196l0,0.92c0,35.862 25.441,65.594 59.311,72.49c-6.13,1.686 -12.72,2.606 -19.464,2.606c-4.751,0 -9.348,-0.46 -13.946,-1.38c9.349,29.426 36.628,50.728 68.965,51.341c-25.287,19.771 -57.164,31.571 -91.8,31.571c-5.977,0 -11.801,-0.306 -17.625,-1.073c32.337,21.15 71.264,33.41 112.95,33.41Z" />
-        </svg>
-    </a>
-    <a target="_blank" rel="noopener noreferrer" aria-label="share Hugo_support_mermaidjs on linkedin"
-        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fwww.mmfei.com%2fpost%2fhugo_support_mermaidjs%2f&amp;title=Hugo_support_mermaidjs&amp;summary=Hugo_support_mermaidjs&amp;source=https%3a%2f%2fwww.mmfei.com%2fpost%2fhugo_support_mermaidjs%2f">
-        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
-            <path
-                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
-        </svg>
-    </a>
-    <a target="_blank" rel="noopener noreferrer" aria-label="share Hugo_support_mermaidjs on reddit"
-        href="https://reddit.com/submit?url=https%3a%2f%2fwww.mmfei.com%2fpost%2fhugo_support_mermaidjs%2f&title=Hugo_support_mermaidjs">
-        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
-            <path
-                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
-        </svg>
-    </a>
-    <a target="_blank" rel="noopener noreferrer" aria-label="share Hugo_support_mermaidjs on facebook"
-        href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.mmfei.com%2fpost%2fhugo_support_mermaidjs%2f">
-        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
-            <path
-                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
-        </svg>
-    </a>
-    <a target="_blank" rel="noopener noreferrer" aria-label="share Hugo_support_mermaidjs on whatsapp"
-        href="https://api.whatsapp.com/send?text=Hugo_support_mermaidjs%20-%20https%3a%2f%2fwww.mmfei.com%2fpost%2fhugo_support_mermaidjs%2f">
-        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
-            <path
-                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
-        </svg>
-    </a>
-    <a target="_blank" rel="noopener noreferrer" aria-label="share Hugo_support_mermaidjs on telegram"
-        href="https://telegram.me/share/url?text=Hugo_support_mermaidjs&amp;url=https%3a%2f%2fwww.mmfei.com%2fpost%2fhugo_support_mermaidjs%2f">
-        <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28">
-            <path
-                d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
-        </svg>
-    </a>
-</div>
+            </div>
 
-  </footer>
-  
-<div id="gitalk-container"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-<script>
-    const gitalk = new Gitalk({
-        clientID: '18b19d5b5907429c70ef',
-        clientSecret: '444861d0580bb2a49d81e6e18a2c7bd302668974',
-        repo: 'mmfei.github.io',
-        owner: 'mmfei',
-        admin: ['mmfei'],
-        id: location.pathname, 
-        distractionFreeMode: false 
-    });
-    (function () {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
-            return;
-        }
-        gitalk.render('gitalk-container');
-    })();
-</script>
-
-
-</article>
-    </main>
-    <footer class="footer">
-    <span>&copy; 2021 <a href="https://www.mmfei.com/">木木飞</a></span>
-    <span>
-        Powered by
-        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
-        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
-    </span>
-</footer>
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
-    <button class="top-link" id="top-link" type="button" accesskey="g">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-            <path d="M12 6H0l6-6z" />
-        </svg>
-    </button>
-</a>
-
-<script>
-    let menu = document.getElementById('menu')
-    menu.scrollLeft = localStorage.getItem("menu-scroll-position");
-    menu.onscroll = function () {
-        localStorage.setItem("menu-scroll-position", menu.scrollLeft);
-    }
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            var id = this.getAttribute("href").substr(1);
-            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
-                    behavior: "smooth"
-                });
-            } else {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
-            }
-            if (id === "top") {
-                history.replaceState(null, null, " ");
-            } else {
-                history.pushState(null, null, `#${id}`);
-            }
-        });
-    });
-
-</script>
-<script>
-    var mybutton = document.getElementById("top-link");
-    window.onscroll = function () {
-        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
-            mybutton.style.visibility = "visible";
-            mybutton.style.opacity = "1";
-        } else {
-            mybutton.style.visibility = "hidden";
-            mybutton.style.opacity = "0";
-        }
-    };
-
-</script>
-<script>
-    document.getElementById("theme-toggle").addEventListener("click", () => {
-        if (document.body.className.includes("dark")) {
-            document.body.classList.remove('dark');
-            localStorage.setItem("pref-theme", 'light');
-        } else {
-            document.body.classList.add('dark');
-            localStorage.setItem("pref-theme", 'dark');
-        }
-    })
-
-</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js" integrity="sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-    mermaid.initialize({
-        theme: 'neutral'
-    });
+            
     
-    Array.from(document.getElementsByClassName("language-mermaid")).forEach(
-        (el) => {
-            el.parentElement.outerHTML = `<div class="mermaid">${el.innerText}</div>`;
-        }
-    );
-</script>
-<style>
-     
-    .mermaid svg {
-        display: block;
-        margin: auto;
-    }
-</style>
-</body>
+    
+        <ul class="post-copyright">
+            <li class="copyright-item author"><span class="copyright-item-text">作者</span>：<a href="https://mmfei.com/" class="p-author h-card" target="_blank" rel="noopener">mmfei</a></li>
+            
+                
+                
+                
+                
+                <li class="copyright-item link"><span class="copyright-item-text">链接</span>：<a href="/post/hugo_support_mermaidjs/" target="_blank" rel="noopener">https://mmfei.com/post/hugo_support_mermaidjs/</a></li>
+            
+            <li class="copyright-item license"><span class="copyright-item-text">许可</span>：<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a></li>
+            
+        </ul>
+    
 
+
+
+        </article>
+
+        
+
+        
+    <div class="updated-badge-container">
+        <span title="Updated @ 2021-05-26 02:25:58 UTC" style="cursor:help">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2021-05-26</text><text x="915" y="140" textLength="650" transform="scale(.1)">2021-05-26</text></g></svg>
+        </span></div>
+
+
+
+        
+
+
+        <div class="post-share">
+
+        
+
+        <div class="share-items">
+
+            
+                <div class="share-item twitter">
+                    
+                    <a href="https://twitter.com/share?url=https://mmfei.com/post/hugo_support_mermaidjs/&amp;text=Hugo_support_mermaidjs&amp;hashtags=hugo,theme,mermaid,&amp;via=mmfei" title="分享到「Twitter」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon twitter-icon"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></a>
+                </div>
+            
+
+            
+                <div class="share-item facebook">
+                    
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://mmfei.com/post/hugo_support_mermaidjs/&amp;hashtag=%23hugo" title="分享到「Facebook」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon facebook-icon"><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></a>
+                </div>
+            
+
+            
+                <div class="share-item linkedin">
+                    
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://mmfei.com/post/hugo_support_mermaidjs/&amp;title=Hugo_support_mermaidjs&amp;summary=hugo%20%e5%a2%9e%e5%8a%a0mermaid%20js%e7%9a%84%e6%94%af%e6%8c%81%20mermaidjs%e6%98%af%e4%b8%80%e4%b8%aa%e4%bc%98%e7%a7%80%e7%9a%84%e7%bb%98%e5%9b%be%e7%9a%84js%e5%ba%93%20,%20%e6%94%af%e6%8c%81%e6%b5%81%e7%a8%8b%e5%9b%be%e2%80%a6%e2%80%a6&amp;source=%e6%9c%a8%e6%9c%a8%e9%a3%9e" title="分享到「LinkedIn」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon linkedin-icon"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a>
+                </div>
+            
+
+            
+                <div class="share-item telegram">
+                    
+                    <a href="https://t.me/share/url?url=https://mmfei.com/post/hugo_support_mermaidjs/&amp;text=Hugo_support_mermaidjs" title="分享到「Telegram」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="icon telegram-icon"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/></svg></a>
+                </div>
+            
+
+            
+                <div class="share-item weibo">
+                    
+                    <a href="https://service.weibo.com/share/share.php?&amp;url=https://mmfei.com/post/hugo_support_mermaidjs/&amp;title=Hugo_support_mermaidjs&amp;pic=https://mmfei.com/icons/apple-touch-icon.png&amp;searchPic=false" title="分享到「新浪微博」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon weibo-icon"><path d="M407 177.6c7.6-24-13.4-46.8-37.4-41.7-22 4.8-28.8-28.1-7.1-32.8 50.1-10.9 92.3 37.1 76.5 84.8-6.8 21.2-38.8 10.8-32-10.3zM214.8 446.7C108.5 446.7 0 395.3 0 310.4c0-44.3 28-95.4 76.3-143.7C176 67 279.5 65.8 249.9 161c-4 13.1 12.3 5.7 12.3 6 79.5-33.6 140.5-16.8 114 51.4-3.7 9.4 1.1 10.9 8.3 13.1 135.7 42.3 34.8 215.2-169.7 215.2zm143.7-146.3c-5.4-55.7-78.5-94-163.4-85.7-84.8 8.6-148.8 60.3-143.4 116s78.5 94 163.4 85.7c84.8-8.6 148.8-60.3 143.4-116zM347.9 35.1c-25.9 5.6-16.8 43.7 8.3 38.3 72.3-15.2 134.8 52.8 111.7 124-7.4 24.2 29.1 37 37.4 12 31.9-99.8-55.1-195.9-157.4-174.3zm-78.5 311c-17.1 38.8-66.8 60-109.1 46.3-40.8-13.1-58-53.4-40.3-89.7 17.7-35.4 63.1-55.4 103.4-45.1 42 10.8 63.1 50.2 46 88.5zm-86.3-30c-12.9-5.4-30 .3-38 12.9-8.3 12.9-4.3 28 8.6 34 13.1 6 30.8.3 39.1-12.9 8-13.1 3.7-28.3-9.7-34zm32.6-13.4c-5.1-1.7-11.4.6-14.3 5.4-2.9 5.1-1.4 10.6 3.7 12.9 5.1 2 11.7-.3 14.6-5.4 2.8-5.2 1.1-10.9-4-12.9z"/></svg></a>
+                </div>
+            
+
+            
+                <div class="share-item douban">
+                    
+                    <a href="https://www.douban.com/share/service?href=https://mmfei.com/post/hugo_support_mermaidjs/&amp;name=Hugo_support_mermaidjs&amp;text=hugo%20%e5%a2%9e%e5%8a%a0mermaid%20js%e7%9a%84%e6%94%af%e6%8c%81%20mermaidjs%e6%98%af%e4%b8%80%e4%b8%aa%e4%bc%98%e7%a7%80%e7%9a%84%e7%bb%98%e5%9b%be%e7%9a%84js%e5%ba%93%20,%20%e6%94%af%e6%8c%81%e6%b5%81%e7%a8%8b%e5%9b%be%e2%80%a6%e2%80%a6" title="分享到「豆瓣」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon douban-icon"><path d="M.643.92v2.412h22.714V.92H.643zm1.974 4.926v9.42h18.764v-9.42H2.617zm2.72 2.408H18.69v4.605H5.338V8.254zm1.657 7.412l-2.512.938c1.037 1.461 1.87 2.825 2.512 4.091H0v2.385h24v-2.385h-6.678c.818-1.176 1.589-2.543 2.303-4.091l-2.73-.938a29.952 29.952 0 01-2.479 5.03h-4.75c-.786-1.962-1.677-3.641-2.672-5.03Z"/></svg></a>
+                </div>
+            
+
+            
+                <div class="share-item qq">
+                    
+                    <a href="https://connect.qq.com/widget/shareqq/index.html?url=https://mmfei.com/post/hugo_support_mermaidjs/&amp;title=Hugo_support_mermaidjs&amp;summary=hugo%20%e5%a2%9e%e5%8a%a0mermaid%20js%e7%9a%84%e6%94%af%e6%8c%81%20mermaidjs%e6%98%af%e4%b8%80%e4%b8%aa%e4%bc%98%e7%a7%80%e7%9a%84%e7%bb%98%e5%9b%be%e7%9a%84js%e5%ba%93%20,%20%e6%94%af%e6%8c%81%e6%b5%81%e7%a8%8b%e5%9b%be%e2%80%a6%e2%80%a6&amp;pics=https://mmfei.com/icons/apple-touch-icon.png&amp;site=%e6%9c%a8%e6%9c%a8%e9%a3%9e" title="分享到「QQ」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon qq-icon"><path d="M433.754 420.445c-11.526 1.393-44.86-52.741-44.86-52.741 0 31.345-16.136 72.247-51.051 101.786 16.842 5.192 54.843 19.167 45.803 34.421-7.316 12.343-125.51 7.881-159.632 4.037-34.122 3.844-152.316 8.306-159.632-4.037-9.045-15.25 28.918-29.214 45.783-34.415-34.92-29.539-51.059-70.445-51.059-101.792 0 0-33.334 54.134-44.859 52.741-5.37-.65-12.424-29.644 9.347-99.704 10.261-33.024 21.995-60.478 40.144-105.779C60.683 98.063 108.982.006 224 0c113.737.006 163.156 96.133 160.264 214.963 18.118 45.223 29.912 72.85 40.144 105.778 21.768 70.06 14.716 99.053 9.346 99.704z"/></svg></a>
+                </div>
+            
+
+            
+                <div class="share-item qzone">
+                    
+                    <a href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://mmfei.com/post/hugo_support_mermaidjs/&amp;title=Hugo_support_mermaidjs&amp;summary=hugo%20%e5%a2%9e%e5%8a%a0mermaid%20js%e7%9a%84%e6%94%af%e6%8c%81%20mermaidjs%e6%98%af%e4%b8%80%e4%b8%aa%e4%bc%98%e7%a7%80%e7%9a%84%e7%bb%98%e5%9b%be%e7%9a%84js%e5%ba%93%20,%20%e6%94%af%e6%8c%81%e6%b5%81%e7%a8%8b%e5%9b%be%e2%80%a6%e2%80%a6&amp;pics=https://mmfei.com/icons/apple-touch-icon.png&amp;site=%e6%9c%a8%e6%9c%a8%e9%a3%9e" title="分享到「QQ 空间」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon qzone-icon"><path d="M23.985 9.202c-.032-.099-.127-.223-.334-.258-.207-.036-7.351-1.406-7.351-1.406s-.105-.022-.198-.07c-.092-.047-.127-.167-.127-.167S12.447.956 12.349.77C12.25.583 12.104.532 12 .532c-.104 0-.251.051-.349.238-.098.186-3.626 6.531-3.626 6.531s-.035.12-.128.167c-.092.047-.197.07-.197.07S.556 8.908.348 8.943c-.208.036-.302.16-.333.258a.477.477 0 0 0 .125.449l5.362 5.49s.072.08.119.172c.016.104.005.21.005.21s-1.189 7.242-1.22 7.45.075.369.159.43c.083.062.233.106.421.013.189-.093 6.812-3.261 6.812-3.261s.098-.044.201-.061c.103-.017.201.061.201.061s6.623 3.168 6.812 3.261c.188.094.338.049.421-.013a.463.463 0 0 0 .159-.43c-.021-.14-.93-5.677-.93-5.677.876-.54 1.425-1.039 1.849-1.747-2.594.969-6.006 1.717-9.415 1.866-.915.041-2.41.097-3.473-.015-.678-.071-1.17-.144-1.243-.438-.053-.215.054-.46.545-.831a2640.5 2640.5 0 0 1 2.861-2.155c1.285-.968 3.559-2.47 3.559-2.731 0-.285-2.144-.781-4.037-.781-1.945 0-2.275.132-2.811.168-.488.034-.769.005-.804-.138-.06-.248.183-.389.588-.568.709-.314 1.86-.594 1.984-.626.194-.052 3.082-.805 5.618-.535 1.318.14 3.244.668 3.244 1.276 0 .342-1.721 1.494-3.225 2.597-1.149.843-2.217 1.561-2.217 1.688 0 .342 3.533 1.241 6.689 1.01l.003-.022c.048-.092.119-.172.119-.172l5.362-5.49a.477.477 0 0 0 .127-.449z"/></svg></a>
+                </div>
+            
+
+            
+                <div class="share-item qrcode">
+                    <div class="qrcode-container" title="通过「二维码」"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon qrcode-icon"><path d="M0 224h192V32H0v192zM64 96h64v64H64V96zm192-64v192h192V32H256zm128 128h-64V96h64v64zM0 480h192V288H0v192zm64-128h64v64H64v-64zm352-64h32v128h-96v-32h-32v96h-64V288h96v32h64v-32zm0 160h32v32h-32v-32zm-64 0h32v32h-32v-32z"/></svg><div id="qrcode-img"></div>
+                    </div>
+                    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+
+<script>
+    var typeNumber = 0;
+    var errorCorrectionLevel = 'L';
+    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    qr.addData('https:\/\/mmfei.com\/post\/hugo_support_mermaidjs\/');
+    qr.make();
+    document.getElementById('qrcode-img').innerHTML = qr.createImgTag();
+</script>
+
+                </div>
+            
+
+        </div>
+
+    </div>
+
+
+
+
+        
+    
+    
+
+
+
+        
+    
+        <div class="post-tags">
+            
+                
+                
+                
+                
+                    
+                    <a href="/tags/hugo/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>hugo</a>
+                
+            
+                
+                
+                
+                
+                    
+                    <a href="/tags/theme/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>theme</a>
+                
+            
+                
+                
+                
+                
+                    
+                    <a href="/tags/mermaid/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>mermaid</a>
+                
+            
+        </div>
+    
+
+
+
+        
+
+
+        
+
+
+        
+    
+        
+        
+    
+    
+    
+    
+        <ul class="post-nav">
+            
+                <li class="post-nav-prev">
+                    <a href="/post/centos_install_bat_a_better_cat/" rel="prev">&lt; Centos_install_bat_a_better_cat</a>
+                </li>
+            
+            
+                <li class="post-nav-next">
+                    <a href="/post/create_github_page_with_hugo/" rel="next">Create_github_page_with_hugo &gt;</a>
+                </li>
+            
+        </ul>
+    
+
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="site-info">©&nbsp;1969–2021&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;mmfei</div><div class="powered-by">Powered by <a href="https://github.com/gohugoio/hugo" target="_blank" rel="noopener">Hugo</a> | Theme is <a href="https://github.com/reuixiy/hugo-theme-meme" target="_blank" rel="noopener">MemE</a></div><div class="site-copyright"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a></div>
+
+            
+    
+        <ul class="socials"><li class="socials-item">
+                    <a href="/rss.xml" target="_blank" rel="external noopener" title="RSS"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon social-icon"><path d="M19.199 24C19.199 13.467 10.533 4.8 0 4.8V0c13.165 0 24 10.835 24 24h-4.801zM3.291 17.415c1.814 0 3.293 1.479 3.293 3.295 0 1.813-1.485 3.29-3.301 3.29C1.47 24 0 22.526 0 20.71s1.475-3.294 3.291-3.295zM15.909 24h-4.665c0-6.169-5.075-11.245-11.244-11.245V8.09c8.727 0 15.909 7.184 15.909 15.91z"/></svg></a>
+                </li><li class="socials-item">
+                    <a href="mailto:reuixiy@gmail.com" target="_blank" rel="external noopener" title="Email"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon social-icon"><path d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"/></svg></a>
+                </li><li class="socials-item">
+                    <a href="https://github.com/reuixiy" target="_blank" rel="external noopener" title="GitHub"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon social-icon"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                </li><li class="socials-item">
+                    <a href="https://twitter.com/reuixiy" target="_blank" rel="external noopener" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon social-icon"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></a>
+                </li><li class="socials-item">
+                    <a href="https://t.me/yixiuer" target="_blank" rel="external noopener" title="Telegram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="icon social-icon"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/></svg></a>
+                </li></ul>
+    
+
+
+
+            
+        </div>
+    </footer>
+
+
+        </div>
+        
+
+        
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.8.3/dist/mermaid.min.js"></script>
+<script>
+    let mermaidConfig = {
+        startOnLoad: true,
+        flowchart: {
+            useMaxWidth: false,
+            htmlLabels: true
+        },
+        theme: 'dark'
+    };
+    mermaid.initialize(mermaidConfig);
+</script>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    mediumZoom(document.querySelectorAll('div.post-body img'), {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
+
+
+
+
+
+
+
+    </body>
 </html>

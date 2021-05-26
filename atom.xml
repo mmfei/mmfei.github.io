@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
+    <title type="text">木木飞</title>
+    <subtitle type="html">木木飞</subtitle>
+    <updated>2021-05-26T02:26:02&#43;00:00</updated>
+    <id>https://mmfei.com/</id>
+    <link rel="alternate" type="text/html" href="https://mmfei.com/" />
+    <link rel="self" type="application/atom&#43;xml" href="https://mmfei.com/atom.xml" />
+    <author>
+            <name>mmfei</name>
+            <uri>https://mmfei.com/</uri>
+            
+                <email>wlfkongl@163.com</email>
+            </author>
+    <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights>
+    <generator uri="https://gohugo.io/" version="0.83.1">Hugo</generator>
+        <entry>
+            <title type="text">Centos_kernal_update</title>
+            <link rel="alternate" type="text/html" href="https://mmfei.com/post/centos_kernel_update/" />
+            <id>https://mmfei.com/post/centos_kernel_update/</id>
+            <updated>2021-05-26T02:25:58&#43;00:00</updated>
+            <published>2021-05-26T09:13:20&#43;08:00</published>
+            <author>
+                    <name>mmfei</name>
+                    <uri>https://mmfei.com/</uri>
+                    <email>wlfkongl@163.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">如何升级centos的内核版本 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27……</summary>
+            
+                <content type="html">&lt;h2 id=&#34;如何升级centos的内核版本&#34;&gt;如何升级centos的内核版本&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;rpm -import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
+
+
+&lt;span class=&#34;c1&#34;&gt;# list all kernel&lt;/span&gt;
+yum --disablerepo&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt; --enablerepo&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;elrepo-kernel&amp;#34;&lt;/span&gt; list
+
+
+&lt;span class=&#34;c1&#34;&gt;# use newest kernel&lt;/span&gt;
+ yum --enablerepo&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;elrepo-kernel -y install kernel-ml kernel-ml-devel
+&lt;span class=&#34;c1&#34;&gt;# or use a normal kernel&lt;/span&gt;
+ yum --enablerepo&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;elrepo-kernel -y install kernel-lt kernel-lt-devel
+
+
+
+&lt;span class=&#34;c1&#34;&gt;# list all kernel can use&lt;/span&gt;
+awk -F&lt;span class=&#34;se&#34;&gt;\&amp;#39;&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;$1==&amp;#34;menuentry &amp;#34; {print i++ &amp;#34; : &amp;#34; $2}&amp;#39;&lt;/span&gt; /etc/grub2.cfg
+
+&lt;span class=&#34;c1&#34;&gt;# set boot kernel&lt;/span&gt;
+grub2-set-default &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# let grub run&lt;/span&gt;
+grub2-mkconfig -o /boot/grub2/grub.cfg
+&lt;span class=&#34;c1&#34;&gt;# reboot&lt;/span&gt;
+reboot&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+
+&lt;span class=&#34;c1&#34;&gt;# clean older kernel&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# list&lt;/span&gt;
+rpm -qa &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep kernel
+
+&lt;span class=&#34;c1&#34;&gt;# remove older kernal rmp&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# yum remove kernel-tools-3.10.0-957.el7.x86_64 kernel-headers-3.10.0-1062.12.1.el7.x86_64 kernel-3.10.0-957.el7.x86_64 kernel-debug-devel-3.10.0-1062.12.1.el7.x86_64 kernel-tools-libs-3.10.0-957.el7.x86_64&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://mmfei.com/categories/linux/" term="linux" label="linux" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://mmfei.com/tags/linux/" term="linux" label="linux" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://mmfei.com/tags/kernel/" term="kernel" label="kernel" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://mmfei.com/tags/centos/" term="centos" label="centos" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
+            <title type="text">Centos_install_bat_a_better_cat</title>
+            <link rel="alternate" type="text/html" href="https://mmfei.com/post/centos_install_bat_a_better_cat/" />
+            <id>https://mmfei.com/post/centos_install_bat_a_better_cat/</id>
+            <updated>2021-05-26T02:25:58&#43;00:00</updated>
+            <published>2021-05-26T09:07:14&#43;08:00</published>
+            <author>
+                    <name>mmfei</name>
+                    <uri>https://mmfei.com/</uri>
+                    <email>wlfkongl@163.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">install in centos 1 2 3 4 5  #!/bin/sh URL=https://github.com/sharkdp/bat/releases/download/v0.18.1/bat-v0.18.1-x86_64-unknown-linux-musl.tar.gz wget -c -O bat.tar.gz $URL; tar -xvzf bat.tar.gz -C /usr/local; ln -s /usr/local/bat-v0.18.1-x86_64-unknown-linux-musl/bat /usr/local/bin/bat   </summary>
+            
+                <content type="html">&lt;h2 id=&#34;install-in-centos&#34;&gt;install in centos&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/sh
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;URL&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;https://github.com/sharkdp/bat/releases/download/v0.18.1/bat-v0.18.1-x86_64-unknown-linux-musl.tar.gz
+wget -c -O bat.tar.gz &lt;span class=&#34;nv&#34;&gt;$URL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+tar -xvzf bat.tar.gz -C /usr/local&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+ln -s /usr/local/bat-v0.18.1-x86_64-unknown-linux-musl/bat /usr/local/bin/bat
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://mmfei.com/categories/install/" term="install" label="install" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://mmfei.com/tags/centos/" term="centos" label="centos" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://mmfei.com/tags/bat/" term="bat" label="bat" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
+            <title type="text">Hugo_support_mermaidjs</title>
+            <link rel="alternate" type="text/html" href="https://mmfei.com/post/hugo_support_mermaidjs/" />
+            <id>https://mmfei.com/post/hugo_support_mermaidjs/</id>
+            <updated>2021-05-26T02:25:58&#43;00:00</updated>
+            <published>2021-05-26T00:26:15&#43;08:00</published>
+            <author>
+                    <name>mmfei</name>
+                    <uri>https://mmfei.com/</uri>
+                    <email>wlfkongl@163.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图……</summary>
+            
+                <content type="html">&lt;h2 id=&#34;hugo-增加mermaid-js的支持&#34;&gt;hugo 增加mermaid js的支持&lt;/h2&gt;
+&lt;p&gt;mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.&lt;/p&gt;
+&lt;p&gt;把它引入到hugo模板 , 写技术方案特别方便.&lt;/p&gt;
+&lt;h2 id=&#34;它的在线编辑器&#34;&gt;它的在线编辑器&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://mermaid-js.github.io/mermaid-live-editor/&#34;&gt;https://mermaid-js.github.io/mermaid-live-editor/&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;步骤&#34;&gt;步骤&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;修改模板 head.html (底部追加内容)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;c&#34;&gt;&amp;lt;!-- file layouts/partials/head.html --&amp;gt;&lt;/span&gt;
+{{ if .Params.mermaid }}
+&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;script&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;src&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js&amp;#34;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;integrity&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==&amp;#34;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;crossorigin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;anonymous&amp;#34;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;referrerpolicy&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;no-referrer&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;script&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;script&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;// Replace mermaid pre.code to div
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;nb&#34;&gt;Array&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;document&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;getElementsByClassName&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;language-mermaid&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)).&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;forEach&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;parentElement&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;outerHTML&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;sb&#34;&gt;`&amp;lt;div class=&amp;#34;mermaid&amp;#34;&amp;gt;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;el&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;innerText&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;sb&#34;&gt;&amp;lt;/div&amp;gt;`&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;script&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;style&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&#34;c&#34;&gt;/* Set svg to center */&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;mermaid&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;svg&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;display&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;block&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;margin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;auto&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;style&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
+{{ end }}
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;文章增加配置&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yml&#34; data-lang=&#34;yml&#34;&gt;&lt;span class=&#34;nn&#34;&gt;---&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;mermaid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nn&#34;&gt;---&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;test&#34;&gt;test&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;%%{init: {&#39;theme&#39;: &#39;forest&#39;, &#39;fill&#39;: &#39;white&#39;, &#39;securitylevel&#39;: &#39;loose&#39; } }%%
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice-&amp;gt;&amp;gt;John: Hello John, how are you?
+    loop Healthcheck
+        John-&amp;gt;&amp;gt;John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts &amp;lt;br/&amp;gt;prevail!
+    John--&amp;gt;&amp;gt;Alice: Great!
+    John-&amp;gt;&amp;gt;Bob: How about you?
+    Bob--&amp;gt;&amp;gt;John: Jolly good!
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code class=&#34;language-mermaid&#34; data-lang=&#34;mermaid&#34;&gt;%%{init: {&#39;theme&#39;: &#39;forest&#39;, &#39;fill&#39;: &#39;white&#39; } }%%
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice-&amp;gt;&amp;gt;John: Hello John, how are you?
+    loop Healthcheck
+        John-&amp;gt;&amp;gt;John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts &amp;lt;br/&amp;gt;prevail!
+    John--&amp;gt;&amp;gt;Alice: Great!
+    John-&amp;gt;&amp;gt;Bob: How about you?
+    Bob--&amp;gt;&amp;gt;John: Jolly good!
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;graph TD;
+    A--&amp;gt;B;
+    A--&amp;gt;C;
+    B--&amp;gt;D;
+    C--&amp;gt;D;
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code class=&#34;language-mermaid&#34; data-lang=&#34;mermaid&#34;&gt;graph TD;
+    A--&amp;gt;B;
+    A--&amp;gt;C;
+    B--&amp;gt;D;
+    C--&amp;gt;D;
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;sequenceDiagram
+    产品-&amp;gt;&amp;gt;+后端: 接需求  
+    后端-&amp;gt;&amp;gt;+前端: 提交联调(本地自测完毕) [develop-&amp;gt;feature)
+    前端--&amp;gt;&amp;gt;-后端: 完成对接(在测试环境) [feature-&amp;gt;test]
+    后端--&amp;gt;&amp;gt;-测试: 提测(在测试环境) [feature-&amp;gt;test]
+    测试--&amp;gt;&amp;gt;+产品: 验收 (在预发布环境) [feature-&amp;gt;develop-&amp;gt;master]
+    产品-&amp;gt;&amp;gt;+上线: 上线(本地自测完毕) [master]
+  
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code class=&#34;language-mermaid&#34; data-lang=&#34;mermaid&#34;&gt;sequenceDiagram
+    产品-&amp;gt;&amp;gt;+后端: 接需求  
+    后端-&amp;gt;&amp;gt;+前端: 提交联调(本地自测完毕) [develop-&amp;gt;feature)
+    前端--&amp;gt;&amp;gt;-后端: 完成对接(在测试环境) [feature-&amp;gt;test]
+    后端--&amp;gt;&amp;gt;-测试: 提测(在测试环境) [feature-&amp;gt;test]
+    测试--&amp;gt;&amp;gt;+产品: 验收 (在预发布环境) [feature-&amp;gt;develop-&amp;gt;master]
+    产品-&amp;gt;&amp;gt;+上线: 上线(本地自测完毕) [master]
+  
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;classDiagram
+    Animal &amp;lt;|-- Duck
+    Animal &amp;lt;|-- Fish
+    Animal &amp;lt;|-- Zebra
+    Animal : +int age
+    Animal : +String gender
+    Animal: +isMammal()
+    Animal: +mate()
+    class Duck{
+      +String beakColor
+      +swim()
+      +quack()
+    }
+    class Fish{
+      -int sizeInFeet
+      -canEat()
+    }
+    class Zebra{
+      +bool is_wild
+      +run()
+    }
+            
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code class=&#34;language-mermaid&#34; data-lang=&#34;mermaid&#34;&gt;classDiagram
+    Animal &amp;lt;|-- Duck
+    Animal &amp;lt;|-- Fish
+    Animal &amp;lt;|-- Zebra
+    Animal : +int age
+    Animal : +String gender
+    Animal: +isMammal()
+    Animal: +mate()
+    class Duck{
+      +String beakColor
+      +swim()
+      +quack()
+    }
+    class Fish{
+      -int sizeInFeet
+      -canEat()
+    }
+    class Zebra{
+      +bool is_wild
+      +run()
+    }
+            
+&lt;/code&gt;&lt;/pre&gt;</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://mmfei.com/categories/hugo/" term="hugo" label="hugo" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://mmfei.com/tags/hugo/" term="hugo" label="hugo" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://mmfei.com/tags/theme/" term="theme" label="theme" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://mmfei.com/tags/mermaid/" term="mermaid" label="mermaid" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
+            <title type="text">Create_github_page_with_hugo</title>
+            <link rel="alternate" type="text/html" href="https://mmfei.com/post/create_github_page_with_hugo/" />
+            <id>https://mmfei.com/post/create_github_page_with_hugo/</id>
+            <updated>2021-05-26T02:25:58&#43;00:00</updated>
+            <published>2021-05-23T16:35:40&#43;08:00</published>
+            <author>
+                    <name>mmfei</name>
+                    <uri>https://mmfei.com/</uri>
+                    <email>wlfkongl@163.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">如何使用hugo快速创建一个github page 创建github项目(私有项目 + 公开项目)……</summary>
+            
+                <content type="html">&lt;h2 id=&#34;如何使用hugo快速创建一个github-page&#34;&gt;如何使用hugo快速创建一个github page&lt;/h2&gt;
+&lt;h3 id=&#34;创建github项目私有项目--公开项目&#34;&gt;创建github项目(私有项目 + 公开项目)&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;github.com/mmfei/mmfei.github.io.source; # &lt;code&gt;源项目&lt;/code&gt;  主要是用来生成网站项目 , 私有&lt;/li&gt;
+&lt;li&gt;github.com/mmfei/mmfei.github.io; # &lt;code&gt;网站项目&lt;/code&gt; 用来做 github page 的网站目录&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 安装hugo (mac环境下的安装方式 , 其他环境请看 gohugo.io)&lt;/span&gt;
+brew install hugo&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# clone 私有项目&lt;/span&gt;
+git clone github.com/mmfei/mmfei.github.io.source&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; mmfei.github.io.source&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+hugo new site .&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+hugo new post/first.md&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# 往里面填充点内容&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# 修改文件 config.tom&lt;/span&gt;
+cat config.tom &lt;span class=&#34;s&#34;&gt;&amp;lt;&amp;lt;EOT
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;theme = &amp;#34;beautifulhugo&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;EOT&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# 修改文件 config.toml&lt;/span&gt;
+cat config.toml &lt;span class=&#34;s&#34;&gt;&amp;lt;&amp;lt;EOT
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;baseURL = &amp;#34;https://mmfei.github.io/&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;languageCode = &amp;#34;en-us&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;title = &amp;#34;木木飞&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;theme = &amp;#34;beautifulhugo&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;EOT&lt;/span&gt;
+
+git add *&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+git commit -m &lt;span class=&#34;s2&#34;&gt;&amp;#34;commit_message&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+git push origin master&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;创建本人在github的token作为-gh_token-的值&#34;&gt;创建本人在github的token(作为 GH_TOKEN 的值)&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/settings/tokens&#34;&gt;https://github.com/settings/tokens&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;创建token-my_gh_token--需要赋予写仓库的权限这个token是要给mmfeigithubiosource项目生成mmfeigithubio文件用的&#34;&gt;创建TOKEN (MY_GH_TOKEN)  (需要赋予写仓库的权限,这个token是要给mmfei.github.io.source项目生成mmfei.github.io文件用的)&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/mmfei/mmfei.github.io/settings/secrets/actions&#34;&gt;https://github.com/mmfei/mmfei.github.io/settings/secrets/actions&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;设置page&#34;&gt;设置page&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/mmfei/mmfei.github.io/settings/pages&#34;&gt;https://github.com/mmfei/mmfei.github.io/settings/pages&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;生成部署相关的公私钥--用来从-mmfeigithubiosource-发布-内容到-mmfeigithubio&#34;&gt;生成部署相关的公私钥 , 用来从 mmfei.github.io.source 发布 内容到 mmfei.github.io&lt;/h1&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;ssh-keygen -t rsa -b &lt;span class=&#34;m&#34;&gt;4069&lt;/span&gt; -C &lt;span class=&#34;s2&#34;&gt;&amp;#34;abc@abc.com&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# 这里要替换成为你的邮箱地址 , 假设指定生成的文件为 ~/.ssh/id_rs_hugo_deploy.pub , ~/.ssh/id_rs_hugo_deploy&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;## 下面的 ACTIONS_DEPLOY_KEY 的值&lt;/span&gt;
+/bin/cat ~/.ssh/id_rs_hugo_deploy.pub&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;## 下面的 deploy key 的数值&lt;/span&gt;
+/bin/cat ~/.ssh/id_rs_hugo_deploy&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;设置-mmfeigithubio-项目&#34;&gt;设置 mmfei.github.io 项目&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/mmfei/mmfei.github.io/settings/keys&#34;&gt;https://github.com/mmfei/mmfei.github.io/settings/keys&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;创建一个deploy key (值是上面的 ~/.ssh/id_rs_hugo_deploy 的内容), 需要写入权限 , 目的是给source项目推内容上来用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;打开源目录的url设置&#34;&gt;打开源目录的url,设置&lt;/h2&gt;
+&lt;h3 id=&#34;设置-mmfeigithubiosource&#34;&gt;设置 mmfei.github.io.source&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/mmfei/mmfei.github.io.source/settings/secrets/actions&#34;&gt;https://github.com/mmfei/mmfei.github.io.source/settings/secrets/actions&lt;/a&gt;
+创建两个secret
+&lt;code&gt;ACTIONS_DEPLOY_KEY&lt;/code&gt; 的值为上面生成的pub
+&lt;code&gt;GH_TOKEN&lt;/code&gt; 的值为上面的MY_GH_TOKEN的值&lt;/p&gt;
+&lt;h2 id=&#34;设置构建脚本&#34;&gt;设置构建脚本&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;cat &amp;gt;&amp;gt; ./.github/workflows/main.yml &lt;span class=&#34;s&#34;&gt;&amp;lt;&amp;lt;EOT
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;name: Deploy Hugo Site to Github Pages on Master Branch
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;on:
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;  push:
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;    branches:
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;      - master
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;jobs:
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;  build-deploy:
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;    runs-on: ubuntu-18.04
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;    steps:
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;      - uses: actions/checkout@v1 # v2 does not have submodules option now
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;      # with:
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;      #   submodules: true
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;      - name: Setup Hugo
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;        uses: peaceiris/actions-hugo@v2
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;        with:
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;          hugo-version: &amp;#34;0.62.2&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;          # extended: true
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;      - name: Build
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;        run: |
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;          git submodule add https://github.com/halogenica/beautifulhugo.git themes/beautifulhugo 
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;          hugo --theme=beautifulhugo
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;          ls public
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;      - name: Deploy
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;        uses: peaceiris/actions-gh-pages@v3
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;        with:
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }} # 这里的 ACTIONS_DEPLOY_KEY 则是上面设置 Private Key的变量名
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;          github_token: ${{ secrets.GH_TOKEN }}
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;          external_repository: mmfei/mmfei.github.io
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;          publish_dir: &amp;#34;./public&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;          keep_files: false # remove existing files
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;          publish_branch: master # deploying branch
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;          commit_message: ${{ github.event.head_commit.message }}
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;          user_name: &amp;#34;mmfei&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;          user_email: &amp;#34;abc@abc.com&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;EOT&lt;/span&gt;
+
+git add ./.github/workflows/main.yml&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+git commit -m &lt;span class=&#34;s1&#34;&gt;&amp;#39;add deploy file&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+git push origin master&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</content>
+            
+            
+            
+            
+            
+                
+                    
+                
+                    
+                
+            
+        </entry>
+    
+</feed>
