@@ -21,7 +21,7 @@
             <webMaster>wlfkongl@163.com (mmfei)</webMaster>
         
         
-        <lastBuildDate>Wed, 26 May 2021 17:03:59 &#43;0000</lastBuildDate>
+        <lastBuildDate>Wed, 26 May 2021 17:06:25 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://mmfei.com/rss.xml" />
         
@@ -694,8 +694,8 @@ sequenceDiagram
                 
                 
                 
-                    <description>&lt;h2 id=&#34;如何使用hugo快速创建一个github-page&#34;&gt;如何使用hugo快速创建一个github page&lt;/h2&gt;
-&lt;h3 id=&#34;创建github项目私有项目--公开项目&#34;&gt;创建github项目(私有项目 + 公开项目)&lt;/h3&gt;
+                    <description>&lt;h4 id=&#34;如何使用hugo快速创建一个github-page&#34;&gt;如何使用hugo快速创建一个github page&lt;/h4&gt;
+&lt;h5 id=&#34;创建github项目私有项目--公开项目&#34;&gt;创建github项目(私有项目 + 公开项目)&lt;/h5&gt;
 &lt;ol&gt;
 &lt;li&gt;github.com/mmfei/mmfei.github.io.source; # &lt;code&gt;源项目&lt;/code&gt;  主要是用来生成网站项目 , 私有&lt;/li&gt;
 &lt;li&gt;github.com/mmfei/mmfei.github.io; # &lt;code&gt;网站项目&lt;/code&gt; 用来做 github page 的网站目录&lt;/li&gt;
@@ -754,13 +754,13 @@ git commit -m &lt;span class=&#34;s2&#34;&gt;&amp;#34;commit_message&amp;#34;&lt
 git push origin master&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;创建本人在github的token作为-gh_token-的值&#34;&gt;创建本人在github的token(作为 GH_TOKEN 的值)&lt;/h2&gt;
+&lt;/div&gt;&lt;h4 id=&#34;创建本人在github的token作为-gh_token-的值&#34;&gt;创建本人在github的token(作为 GH_TOKEN 的值)&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/settings/tokens&#34;&gt;https://github.com/settings/tokens&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;创建token-my_gh_token--需要赋予写仓库的权限这个token是要给mmfeigithubiosource项目生成mmfeigithubio文件用的&#34;&gt;创建TOKEN (MY_GH_TOKEN)  (需要赋予写仓库的权限,这个token是要给mmfei.github.io.source项目生成mmfei.github.io文件用的)&lt;/h2&gt;
+&lt;h4 id=&#34;创建token-my_gh_token--需要赋予写仓库的权限这个token是要给mmfeigithubiosource项目生成mmfeigithubio文件用的&#34;&gt;创建TOKEN (MY_GH_TOKEN)  (需要赋予写仓库的权限,这个token是要给mmfei.github.io.source项目生成mmfei.github.io文件用的)&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/mmfei/mmfei.github.io/settings/secrets/actions&#34;&gt;https://github.com/mmfei/mmfei.github.io/settings/secrets/actions&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;设置page&#34;&gt;设置page&lt;/h2&gt;
+&lt;h4 id=&#34;设置page&#34;&gt;设置page&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/mmfei/mmfei.github.io/settings/pages&#34;&gt;https://github.com/mmfei/mmfei.github.io/settings/pages&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&#34;生成部署相关的公私钥--用来从-mmfeigithubiosource-发布-内容到-mmfeigithubio&#34;&gt;生成部署相关的公私钥 , 用来从 mmfei.github.io.source 发布 内容到 mmfei.github.io&lt;/h1&gt;
+&lt;h4 id=&#34;生成部署相关的公私钥--用来从-mmfeigithubiosource-发布-内容到-mmfeigithubio&#34;&gt;生成部署相关的公私钥 , 用来从 mmfei.github.io.source 发布 内容到 mmfei.github.io&lt;/h4&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -777,18 +777,18 @@ git push origin master&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 /bin/cat ~/.ssh/id_rs_hugo_deploy&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;设置-mmfeigithubio-项目&#34;&gt;设置 mmfei.github.io 项目&lt;/h3&gt;
+&lt;/div&gt;&lt;h4 id=&#34;设置-mmfeigithubio-项目&#34;&gt;设置 mmfei.github.io 项目&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/mmfei/mmfei.github.io/settings/keys&#34;&gt;https://github.com/mmfei/mmfei.github.io/settings/keys&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;创建一个deploy key (值是上面的 ~/.ssh/id_rs_hugo_deploy 的内容), 需要写入权限 , 目的是给source项目推内容上来用&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;打开源目录的url设置&#34;&gt;打开源目录的url,设置&lt;/h2&gt;
+&lt;h3 id=&#34;打开源目录的url设置&#34;&gt;打开源目录的url,设置&lt;/h3&gt;
 &lt;h3 id=&#34;设置-mmfeigithubiosource&#34;&gt;设置 mmfei.github.io.source&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/mmfei/mmfei.github.io.source/settings/secrets/actions&#34;&gt;https://github.com/mmfei/mmfei.github.io.source/settings/secrets/actions&lt;/a&gt;
 创建两个secret
 &lt;code&gt;ACTIONS_DEPLOY_KEY&lt;/code&gt; 的值为上面生成的pub
 &lt;code&gt;GH_TOKEN&lt;/code&gt; 的值为上面的MY_GH_TOKEN的值&lt;/p&gt;
-&lt;h2 id=&#34;设置构建脚本&#34;&gt;设置构建脚本&lt;/h2&gt;
+&lt;h3 id=&#34;设置构建脚本&#34;&gt;设置构建脚本&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
