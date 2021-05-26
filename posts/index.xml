@@ -1,11 +1,9 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>木木飞</title>
-        <link>https://mmfei.com/</link>
-        <description>木木飞</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 May 2021 00:26:32 &#43;0800</lastBuildDate>
-            <atom:link href="https://mmfei.com/index.xml" rel="self" type="application/rss+xml" />
-        <item>
+        <title>所有文章 - 木木飞</title>
+        <link>https://mmfei.com/posts/</link>
+        <description>所有文章 | 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 May 2021 00:26:32 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
     <title>Gitlab_ci_npm_deploy_for_aliyun_oss</title>
     <link>https://mmfei.com/gitlab_ci_npm_deploy_for_aliyun_oss/</link>
     <pubDate>Thu, 27 May 2021 00:26:32 &#43;0800</pubDate>
