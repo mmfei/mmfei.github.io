@@ -21,7 +21,7 @@
             <webMaster>wlfkongl@163.com (mmfei)</webMaster>
         
         
-        <lastBuildDate>Wed, 26 May 2021 16:56:56 &#43;0000</lastBuildDate>
+        <lastBuildDate>Wed, 26 May 2021 16:59:18 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://mmfei.com/rss.xml" />
         
@@ -152,6 +152,15 @@
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker run -d --name gitlab-share-runner --restart always -v /data/gitlab-runner/config:/etc/gitlab-runner -v /var/run/docker.sock:/var/run/docker.sock gitlab/gitlab-runner:latest //启动一个容器
 docker &lt;span class=&#34;nb&#34;&gt;exec&lt;/span&gt; -it gitlab-share-runner gitlab-runner register //注册到Gtilab
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;安装runner的第二种方式centos直接安装--我选用这种&#34;&gt;安装runner的第二种方式(centos直接安装 , 我选用这种)&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;yum install gitlab-runner
 &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h3 id=&#34;安装阿里云的oss命令行工具&#34;&gt;安装阿里云的oss命令行工具&lt;/h3&gt;

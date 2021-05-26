@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">木木飞</title>
     <subtitle type="html">木木飞</subtitle>
-    <updated>2021-05-26T16:56:56&#43;00:00</updated>
+    <updated>2021-05-26T16:59:18&#43;00:00</updated>
     <id>https://mmfei.com/</id>
     <link rel="alternate" type="text/html" href="https://mmfei.com/" />
     <link rel="self" type="application/atom&#43;xml" href="https://mmfei.com/atom.xml" />
@@ -20,7 +20,7 @@
             <title type="text">Gitlab_ci_npm_deploy_for_aliyun_oss</title>
             <link rel="alternate" type="text/html" href="https://mmfei.com/post/gitlab_ci_npm_deploy_for_aliyun_oss/" />
             <id>https://mmfei.com/post/gitlab_ci_npm_deploy_for_aliyun_oss/</id>
-            <updated>2021-05-26T16:56:53&#43;00:00</updated>
+            <updated>2021-05-26T16:59:15&#43;00:00</updated>
             <published>2021-05-27T00:26:32&#43;08:00</published>
             <author>
                     <name>mmfei</name>
@@ -147,6 +147,15 @@
 docker &lt;span class=&#34;nb&#34;&gt;exec&lt;/span&gt; -it gitlab-share-runner gitlab-runner register //注册到Gtilab
 &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;安装runner的第二种方式centos直接安装--我选用这种&#34;&gt;安装runner的第二种方式(centos直接安装 , 我选用这种)&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;yum install gitlab-runner
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
 &lt;/div&gt;&lt;h3 id=&#34;安装阿里云的oss命令行工具&#34;&gt;安装阿里云的oss命令行工具&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -269,7 +278,7 @@ ossutils config &lt;span class=&#34;c1&#34;&gt;#配置阿里云的oss配置 ,会
             <title type="text">Centos_kernal_update</title>
             <link rel="alternate" type="text/html" href="https://mmfei.com/post/centos_kernel_update/" />
             <id>https://mmfei.com/post/centos_kernel_update/</id>
-            <updated>2021-05-26T16:56:53&#43;00:00</updated>
+            <updated>2021-05-26T16:59:15&#43;00:00</updated>
             <published>2021-05-26T09:13:20&#43;08:00</published>
             <author>
                     <name>mmfei</name>
@@ -397,7 +406,7 @@ rpm -qa &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep kernel
             <title type="text">Centos_install_bat_a_better_cat</title>
             <link rel="alternate" type="text/html" href="https://mmfei.com/post/centos_install_bat_a_better_cat/" />
             <id>https://mmfei.com/post/centos_install_bat_a_better_cat/</id>
-            <updated>2021-05-26T16:56:53&#43;00:00</updated>
+            <updated>2021-05-26T16:59:15&#43;00:00</updated>
             <published>2021-05-26T09:07:14&#43;08:00</published>
             <author>
                     <name>mmfei</name>
@@ -463,7 +472,7 @@ ln -s /usr/local/bat-v0.18.1-x86_64-unknown-linux-musl/bat /usr/local/bin/bat
             <title type="text">Hugo_support_mermaidjs</title>
             <link rel="alternate" type="text/html" href="https://mmfei.com/post/hugo_support_mermaidjs/" />
             <id>https://mmfei.com/post/hugo_support_mermaidjs/</id>
-            <updated>2021-05-26T16:56:53&#43;00:00</updated>
+            <updated>2021-05-26T16:59:15&#43;00:00</updated>
             <published>2021-05-26T00:26:15&#43;08:00</published>
             <author>
                     <name>mmfei</name>
@@ -681,7 +690,7 @@ sequenceDiagram
             <title type="text">Create_github_page_with_hugo</title>
             <link rel="alternate" type="text/html" href="https://mmfei.com/post/create_github_page_with_hugo/" />
             <id>https://mmfei.com/post/create_github_page_with_hugo/</id>
-            <updated>2021-05-26T16:56:53&#43;00:00</updated>
+            <updated>2021-05-26T16:59:15&#43;00:00</updated>
             <published>2021-05-23T16:35:40&#43;08:00</published>
             <author>
                     <name>mmfei</name>
