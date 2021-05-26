@@ -3,7 +3,8 @@
         <title>木木飞</title>
         <link>https://mmfei.com/en/</link>
         <description>About me</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster>
             <atom:link href="https://mmfei.com/en/index.xml" rel="self" type="application/rss+xml" />
         </channel>
 </rss>

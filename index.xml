@@ -3,7 +3,8 @@
         <title>木木飞</title>
         <link>https://mmfei.com/</link>
         <description>木木飞</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 May 2021 00:26:32 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 27 May 2021 00:26:32 &#43;0800</lastBuildDate>
             <atom:link href="https://mmfei.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>Gitlab_ci_npm_deploy_for_aliyun_oss</title>
