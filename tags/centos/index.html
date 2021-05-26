@@ -144,6 +144,17 @@ if (!doNotTrack) {
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2>Centos_kernal_update</h2>
+  </header>
+  <section class="entry-content">
+    <p>如何升级centos的内核版本 rpm -import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm # list all kernel yum --disablerepo=&#34;*&#34; --enablerepo=&#34;elrepo-kernel&#34; list # use newest kernel yum --enablerepo=elrepo-kernel -y install kernel-ml kernel-ml-devel # or use a normal kernel yum --enablerepo=elrepo-kernel -y install kernel-lt kernel-lt-devel # list all kernel can use awk -F\&#39; &#39;$1==&#34;menuentry &#34; {print i&#43;&#43; &#34; : &#34; $2}&#39; /etc/grub2.cfg # set boot kernel grub2-set-default 0 # let grub run grub2-mkconfig -o /boot/grub2/grub.cfg # reboot reboot; # clean older kernel # list rpm -qa | grep kernel # remove older kernal rmp # yum remove kernel-tools-3....</p>
+  </section>
+  <footer class="entry-footer">May 26, 2021&nbsp;·&nbsp;1 min&nbsp;·&nbsp;大飞</footer>
+  <a class="entry-link" aria-label="post link to Centos_kernal_update" href="https://www.mmfei.com/post/centos_kernel_update/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2>Centos_install_bat_a_better_cat</h2>
   </header>
   <section class="entry-content">

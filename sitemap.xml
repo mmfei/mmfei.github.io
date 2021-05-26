@@ -2,28 +2,40 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://www.mmfei.com/tags/bat/</loc>
-    <lastmod>2021-05-26T09:07:14+08:00</lastmod>
-  </url><url>
     <loc>https://www.mmfei.com/categories/</loc>
-    <lastmod>2021-05-26T09:07:14+08:00</lastmod>
+    <lastmod>2021-05-26T09:13:20+08:00</lastmod>
   </url><url>
     <loc>https://www.mmfei.com/tags/centos/</loc>
+    <lastmod>2021-05-26T09:13:20+08:00</lastmod>
+  </url><url>
+    <loc>https://www.mmfei.com/post/centos_kernel_update/</loc>
+    <lastmod>2021-05-26T09:13:20+08:00</lastmod>
+  </url><url>
+    <loc>https://www.mmfei.com/tags/kernel/</loc>
+    <lastmod>2021-05-26T09:13:20+08:00</lastmod>
+  </url><url>
+    <loc>https://www.mmfei.com/tags/linux/</loc>
+    <lastmod>2021-05-26T09:13:20+08:00</lastmod>
+  </url><url>
+    <loc>https://www.mmfei.com/categories/linux/</loc>
+    <lastmod>2021-05-26T09:13:20+08:00</lastmod>
+  </url><url>
+    <loc>https://www.mmfei.com/post/</loc>
+    <lastmod>2021-05-26T09:13:20+08:00</lastmod>
+  </url><url>
+    <loc>https://www.mmfei.com/tags/</loc>
+    <lastmod>2021-05-26T09:13:20+08:00</lastmod>
+  </url><url>
+    <loc>https://www.mmfei.com/</loc>
+    <lastmod>2021-05-26T09:13:20+08:00</lastmod>
+  </url><url>
+    <loc>https://www.mmfei.com/tags/bat/</loc>
     <lastmod>2021-05-26T09:07:14+08:00</lastmod>
   </url><url>
     <loc>https://www.mmfei.com/post/centos_install_bat_a_better_cat/</loc>
     <lastmod>2021-05-26T09:07:14+08:00</lastmod>
   </url><url>
     <loc>https://www.mmfei.com/categories/install/</loc>
-    <lastmod>2021-05-26T09:07:14+08:00</lastmod>
-  </url><url>
-    <loc>https://www.mmfei.com/post/</loc>
-    <lastmod>2021-05-26T09:07:14+08:00</lastmod>
-  </url><url>
-    <loc>https://www.mmfei.com/tags/</loc>
-    <lastmod>2021-05-26T09:07:14+08:00</lastmod>
-  </url><url>
-    <loc>https://www.mmfei.com/</loc>
     <lastmod>2021-05-26T09:07:14+08:00</lastmod>
   </url><url>
     <loc>https://www.mmfei.com/tags/hugo/</loc>

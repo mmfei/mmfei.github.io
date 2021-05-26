@@ -5,7 +5,16 @@
     <link>https://www.mmfei.com/</link>
     <description>Recent content on 木木飞</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 26 May 2021 09:07:14 +0800</lastBuildDate><atom:link href="https://www.mmfei.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 26 May 2021 09:13:20 +0800</lastBuildDate><atom:link href="https://www.mmfei.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Centos_kernal_update</title>
+      <link>https://www.mmfei.com/post/centos_kernel_update/</link>
+      <pubDate>Wed, 26 May 2021 09:13:20 +0800</pubDate>
+      
+      <guid>https://www.mmfei.com/post/centos_kernel_update/</guid>
+      <description>如何升级centos的内核版本 rpm -import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm # list all kernel yum --disablerepo=&amp;#34;*&amp;#34; --enablerepo=&amp;#34;elrepo-kernel&amp;#34; list # use newest kernel yum --enablerepo=elrepo-kernel -y install kernel-ml kernel-ml-devel # or use a normal kernel yum --enablerepo=elrepo-kernel -y install kernel-lt kernel-lt-devel # list all kernel can use awk -F\&amp;#39; &amp;#39;$1==&amp;#34;menuentry &amp;#34; {print i++ &amp;#34; : &amp;#34; $2}&amp;#39; /etc/grub2.cfg # set boot kernel grub2-set-default 0 # let grub run grub2-mkconfig -o /boot/grub2/grub.cfg # reboot reboot; # clean older kernel # list rpm -qa | grep kernel # remove older kernal rmp # yum remove kernel-tools-3.</description>
+    </item>
+    
     <item>
       <title>Centos_install_bat_a_better_cat</title>
       <link>https://www.mmfei.com/post/centos_install_bat_a_better_cat/</link>
