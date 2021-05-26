@@ -21,9 +21,7 @@
             <webMaster>wlfkongl@163.com (mmfei)</webMaster>
         
         
-            <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
-        
-        <lastBuildDate>Wed, 26 May 2021 03:16:33 &#43;0000</lastBuildDate>
+        <lastBuildDate>Wed, 26 May 2021 03:24:59 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://mmfei.com/rss.xml" />
         
@@ -36,7 +34,7 @@
                 
                     <author>wlfkongl@163.com (mmfei)</author>
                 
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
+                
                 
                     <description>&lt;h2 id=&#34;如何升级centos的内核版本&#34;&gt;如何升级centos的内核版本&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -161,7 +159,7 @@ rpm -qa &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep kernel
                 
                     <author>wlfkongl@163.com (mmfei)</author>
                 
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
+                
                 
                     <description>&lt;h2 id=&#34;install-in-centos&#34;&gt;install in centos&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -224,7 +222,7 @@ ln -s /usr/local/bat-v0.18.1-x86_64-unknown-linux-musl/bat /usr/local/bin/bat
                 
                     <author>wlfkongl@163.com (mmfei)</author>
                 
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
+                
                 
                     <description>&lt;h2 id=&#34;hugo-增加mermaid-js的支持&#34;&gt;hugo 增加mermaid js的支持&lt;/h2&gt;
 &lt;p&gt;mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.&lt;/p&gt;
@@ -439,7 +437,7 @@ sequenceDiagram
                 
                     <author>wlfkongl@163.com (mmfei)</author>
                 
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
+                
                 
                     <description>&lt;h2 id=&#34;如何使用hugo快速创建一个github-page&#34;&gt;如何使用hugo快速创建一个github page&lt;/h2&gt;
 &lt;h3 id=&#34;创建github项目私有项目--公开项目&#34;&gt;创建github项目(私有项目 + 公开项目)&lt;/h3&gt;
