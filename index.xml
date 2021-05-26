@@ -2,8 +2,9 @@
     <channel>
         <title>木木飞</title>
         <link>https://mmfei.com/</link>
-        <description>木木飞</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 May 2021 01:29:52 &#43;0800</lastBuildDate>
+        <description>Coder</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 27 May 2021 01:29:52 &#43;0800</lastBuildDate>
             <atom:link href="https://mmfei.com/index.xml" rel="self" type="application/rss+xml" />
         </channel>
 </rss>

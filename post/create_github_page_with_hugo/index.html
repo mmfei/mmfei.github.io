@@ -5,20 +5,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>Create_github_page_with_hugo - 木木飞</title><meta name="Description" content=""><meta property="og:title" content="Create_github_page_with_hugo" />
+        <title>Create_github_page_with_hugo - 木木飞</title><meta name="Description" content="Coder"><meta property="og:title" content="Create_github_page_with_hugo" />
 <meta property="og:description" content="如何使用hugo快速创建一个github page 创建github项目(私有项目 &#43; 公开项目) github.com/mmfei/mmfei.github.io.source; # 源项目 主要是用来生成网站项目 , 私有 github.com/mmfei/mmfei.github.io; # 网站项目 用来做" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://mmfei.com/post/create_github_page_with_hugo/" /><meta property="article:section" content="post" />
+<meta property="og:url" content="https://mmfei.com/post/create_github_page_with_hugo/" /><meta property="og:image" content="https://mmfei.com/images/avatar.jpg"/><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2021-05-23T16:35:40&#43;08:00" />
 <meta property="article:modified_time" content="2021-05-23T16:35:40&#43;08:00" />
 
-<meta name="twitter:card" content="summary"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://mmfei.com/images/avatar.jpg"/>
+
 <meta name="twitter:title" content="Create_github_page_with_hugo"/>
 <meta name="twitter:description" content="如何使用hugo快速创建一个github page 创建github项目(私有项目 &#43; 公开项目) github.com/mmfei/mmfei.github.io.source; # 源项目 主要是用来生成网站项目 , 私有 github.com/mmfei/mmfei.github.io; # 网站项目 用来做"/>
 <meta name="application-name" content="木木飞">
-<meta name="apple-mobile-web-app-title" content="木木飞"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://mmfei.com/post/create_github_page_with_hugo/" /><link rel="next" href="https://mmfei.com/post/hugo_support_mermaidjs/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://mmfei.com/post/create_github_page_with_hugo/" /><link rel="next" href="https://mmfei.com/post/hugo_support_mermaidjs/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,24 +29,42 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/mmfei.com\/post\/create_github_page_with_hugo\/"
-        },"genre": "post","keywords": "hugo, github","wordcount":  631 ,
+        },"genre": "post","keywords": "hugo, github","wordcount":  704 ,
         "url": "https:\/\/mmfei.com\/post\/create_github_page_with_hugo\/","datePublished": "2021-05-23T16:35:40+08:00","dateModified": "2021-05-23T16:35:40+08:00","publisher": {
             "@type": "Organization",
-            "name": "Author"},"author": {
+            "name": ""},"author": {
                 "@type": "Person",
-                "name": "Author"
+                "name": "mmfei"
             },"description": ""
     }
     </script></head>
-    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/" title="木木飞">木木飞</a>
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" />木木飞</a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                     <i class="fas fa-adjust fa-fw"></i>
                 </a>
             </div>
@@ -54,13 +74,36 @@
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/" title="木木飞">木木飞</a>
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" />木木飞</a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw"></i>
             </a></div>
     </div>
@@ -78,7 +121,35 @@
 <li>github.com/mmfei/mmfei.github.io.source; # <code>源项目</code>  主要是用来生成网站项目 , 私有</li>
 <li>github.com/mmfei/mmfei.github.io; # <code>网站项目</code> 用来做 github page 的网站目录</li>
 </ol>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 安装hugo (mac环境下的安装方式 , 其他环境请看 gohugo.io)</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 安装hugo (mac环境下的安装方式 , 其他环境请看 gohugo.io)</span>
 brew install hugo<span class="p">;</span>
 
 <span class="c1"># clone 私有项目</span>
@@ -102,19 +173,32 @@ cat config.toml <span class="s">&lt;&lt;EOT
 git add *<span class="p">;</span>
 git commit -m <span class="s2">&#34;commit_message&#34;</span><span class="p">;</span>
 git push origin master<span class="p">;</span>
-</code></pre></div><h4 id="创建本人在github的token作为-gh_token-的值">创建本人在github的token(作为 GH_TOKEN 的值)</h4>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="创建本人在github的token作为-gh_token-的值">创建本人在github的token(作为 GH_TOKEN 的值)</h4>
 <p><a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreffer">https://github.com/settings/tokens</a></p>
 <h4 id="创建token-my_gh_token--需要赋予写仓库的权限这个token是要给mmfeigithubiosource项目生成mmfeigithubio文件用的">创建TOKEN (MY_GH_TOKEN)  (需要赋予写仓库的权限,这个token是要给mmfei.github.io.source项目生成mmfei.github.io文件用的)</h4>
 <p><a href="https://github.com/mmfei/mmfei.github.io/settings/secrets/actions" target="_blank" rel="noopener noreffer">https://github.com/mmfei/mmfei.github.io/settings/secrets/actions</a></p>
 <h4 id="设置page">设置page</h4>
 <p><a href="https://github.com/mmfei/mmfei.github.io/settings/pages" target="_blank" rel="noopener noreffer">https://github.com/mmfei/mmfei.github.io/settings/pages</a></p>
 <h4 id="生成部署相关的公私钥--用来从-mmfeigithubiosource-发布-内容到-mmfeigithubio">生成部署相关的公私钥 , 用来从 mmfei.github.io.source 发布 内容到 mmfei.github.io</h4>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">ssh-keygen -t rsa -b <span class="m">4069</span> -C <span class="s2">&#34;abc@abc.com&#34;</span><span class="p">;</span>  <span class="c1"># 这里要替换成为你的邮箱地址 , 假设指定生成的文件为 ~/.ssh/id_rs_hugo_deploy.pub , ~/.ssh/id_rs_hugo_deploy</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh-keygen -t rsa -b <span class="m">4069</span> -C <span class="s2">&#34;abc@abc.com&#34;</span><span class="p">;</span>  <span class="c1"># 这里要替换成为你的邮箱地址 , 假设指定生成的文件为 ~/.ssh/id_rs_hugo_deploy.pub , ~/.ssh/id_rs_hugo_deploy</span>
 <span class="c1">## 下面的 ACTIONS_DEPLOY_KEY 的值</span>
 /bin/cat ~/.ssh/id_rs_hugo_deploy.pub<span class="p">;</span>
 <span class="c1">## 下面的 deploy key 的数值</span>
 /bin/cat ~/.ssh/id_rs_hugo_deploy<span class="p">;</span>
-</code></pre></div><h4 id="设置-mmfeigithubio-项目">设置 mmfei.github.io 项目</h4>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="设置-mmfeigithubio-项目">设置 mmfei.github.io 项目</h4>
 <p><a href="https://github.com/mmfei/mmfei.github.io/settings/keys" target="_blank" rel="noopener noreffer">https://github.com/mmfei/mmfei.github.io/settings/keys</a></p>
 <ul>
 <li>创建一个deploy key (值是上面的 ~/.ssh/id_rs_hugo_deploy 的内容), 需要写入权限 , 目的是给source项目推内容上来用</li>
@@ -126,7 +210,55 @@ git push origin master<span class="p">;</span>
 <code>ACTIONS_DEPLOY_KEY</code> 的值为上面生成的pub
 <code>GH_TOKEN</code> 的值为上面的MY_GH_TOKEN的值</p>
 <h3 id="设置构建脚本">设置构建脚本</h3>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">cat &gt;&gt; ./.github/workflows/main.yml <span class="s">&lt;&lt;EOT
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">cat &gt;&gt; ./.github/workflows/main.yml <span class="s">&lt;&lt;EOT
 </span><span class="s">name: Deploy Hugo Site to Github Pages on Master Branch
 </span><span class="s">
 </span><span class="s">on:
@@ -170,10 +302,14 @@ git push origin master<span class="p">;</span>
 git add ./.github/workflows/main.yml<span class="p">;</span>
 git commit -m <span class="s1">&#39;add deploy file&#39;</span><span class="p">;</span>
 git push origin master<span class="p">;</span>
-</code></pre></div></div></div></div>
+</code></pre></td></tr></table>
+</div>
+</div></div><div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></div></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank"></a></span></div>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://mmfei.com" target="_blank">mmfei</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 
@@ -182,5 +318,8 @@ git push origin master<span class="p">;</span>
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw"></i>
             </a>
-        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="/lib/gitalk/gitalk.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script type="text/javascript" src="/lib/gitalk/gitalk.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript" src="/lib/cookieconsent/cookieconsent.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{"gitalk":{"admin":["mmfei"],"clientID":"18b19d5b5907429c70ef","clientSecret":"444861d0580bb2a49d81e6e18a2c7bd302668974","id":"2021-05-23T16:35:40+08:00","owner":"mmfei","repo":"mmfei.github.io","title":"Create_github_page_with_hugo"}},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6" async></script></body>
 </html>

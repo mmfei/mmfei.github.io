@@ -3,12 +3,13 @@
         <title>bat - Tag - 木木飞</title>
         <link>https://mmfei.com/tags/bat/</link>
         <description>bat - Tag - 木木飞</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 26 May 2021 09:07:14 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/tags/bat/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 26 May 2021 09:07:14 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/tags/bat/" rel="self" type="application/rss+xml" /><item>
     <title>Centos_install_bat_a_better_cat</title>
     <link>https://mmfei.com/post/centos_install_bat_a_better_cat/</link>
     <pubDate>Wed, 26 May 2021 09:07:14 &#43;0800</pubDate>
     <author>Author</author>
     <guid>https://mmfei.com/post/centos_install_bat_a_better_cat/</guid>
-    <description><![CDATA[install in centos #!/bin/sh URL=https://github.com/sharkdp/bat/releases/download/v0.18.1/bat-v0.18.1-x86_64-unknown-linux-musl.tar.gz wget -c -O bat.tar.gz $URL; tar -xvzf bat.tar.gz -C /usr/local; ln -s /usr/local/bat-v0.18.1-x86_64-unknown-linux-musl/bat /usr/local/bin/bat ]]></description>
+    <description><![CDATA[install in centos 1 2 3 4 5  #!/bin/sh URL=https://github.com/sharkdp/bat/releases/download/v0.18.1/bat-v0.18.1-x86_64-unknown-linux-musl.tar.gz wget -c -O bat.tar.gz $URL; tar -xvzf bat.tar.gz -C /usr/local; ln -s /usr/local/bat-v0.18.1-x86_64-unknown-linux-musl/bat /usr/local/bin/bat   ]]></description>
 </item></channel>
 </rss>
