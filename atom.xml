@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">木木飞</title>
     <subtitle type="html">木木飞</subtitle>
-    <updated>2021-05-26T17:06:25&#43;00:00</updated>
+    <updated>2021-05-26T17:07:00&#43;00:00</updated>
     <id>https://mmfei.com/</id>
     <link rel="alternate" type="text/html" href="https://mmfei.com/" />
     <link rel="self" type="application/atom&#43;xml" href="https://mmfei.com/atom.xml" />
@@ -20,7 +20,7 @@
             <title type="text">Gitlab_ci_npm_deploy_for_aliyun_oss</title>
             <link rel="alternate" type="text/html" href="https://mmfei.com/post/gitlab_ci_npm_deploy_for_aliyun_oss/" />
             <id>https://mmfei.com/post/gitlab_ci_npm_deploy_for_aliyun_oss/</id>
-            <updated>2021-05-26T17:06:22&#43;00:00</updated>
+            <updated>2021-05-26T17:06:58&#43;00:00</updated>
             <published>2021-05-27T00:26:32&#43;08:00</published>
             <author>
                     <name>mmfei</name>
@@ -278,7 +278,7 @@ ossutils config &lt;span class=&#34;c1&#34;&gt;#配置阿里云的oss配置 ,会
             <title type="text">Centos_kernal_update</title>
             <link rel="alternate" type="text/html" href="https://mmfei.com/post/centos_kernel_update/" />
             <id>https://mmfei.com/post/centos_kernel_update/</id>
-            <updated>2021-05-26T17:06:22&#43;00:00</updated>
+            <updated>2021-05-26T17:06:58&#43;00:00</updated>
             <published>2021-05-26T09:13:20&#43;08:00</published>
             <author>
                     <name>mmfei</name>
@@ -406,7 +406,7 @@ rpm -qa &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; grep kernel
             <title type="text">Centos_install_bat_a_better_cat</title>
             <link rel="alternate" type="text/html" href="https://mmfei.com/post/centos_install_bat_a_better_cat/" />
             <id>https://mmfei.com/post/centos_install_bat_a_better_cat/</id>
-            <updated>2021-05-26T17:06:22&#43;00:00</updated>
+            <updated>2021-05-26T17:06:58&#43;00:00</updated>
             <published>2021-05-26T09:07:14&#43;08:00</published>
             <author>
                     <name>mmfei</name>
@@ -472,7 +472,7 @@ ln -s /usr/local/bat-v0.18.1-x86_64-unknown-linux-musl/bat /usr/local/bin/bat
             <title type="text">Hugo_support_mermaidjs</title>
             <link rel="alternate" type="text/html" href="https://mmfei.com/post/hugo_support_mermaidjs/" />
             <id>https://mmfei.com/post/hugo_support_mermaidjs/</id>
-            <updated>2021-05-26T17:06:22&#43;00:00</updated>
+            <updated>2021-05-26T17:06:58&#43;00:00</updated>
             <published>2021-05-26T00:26:15&#43;08:00</published>
             <author>
                     <name>mmfei</name>
@@ -690,7 +690,7 @@ sequenceDiagram
             <title type="text">Create_github_page_with_hugo</title>
             <link rel="alternate" type="text/html" href="https://mmfei.com/post/create_github_page_with_hugo/" />
             <id>https://mmfei.com/post/create_github_page_with_hugo/</id>
-            <updated>2021-05-26T17:06:22&#43;00:00</updated>
+            <updated>2021-05-26T17:06:58&#43;00:00</updated>
             <published>2021-05-23T16:35:40&#43;08:00</published>
             <author>
                     <name>mmfei</name>
@@ -699,7 +699,7 @@ sequenceDiagram
                     </author>
             <summary type="html">如何使用hugo快速创建一个github page 创建github项目(私有项目 + 公开项目)……</summary>
             
-                <content type="html">&lt;h4 id=&#34;如何使用hugo快速创建一个github-page&#34;&gt;如何使用hugo快速创建一个github page&lt;/h4&gt;
+                <content type="html">&lt;h3 id=&#34;如何使用hugo快速创建一个github-page&#34;&gt;如何使用hugo快速创建一个github page&lt;/h3&gt;
 &lt;h5 id=&#34;创建github项目私有项目--公开项目&#34;&gt;创建github项目(私有项目 + 公开项目)&lt;/h5&gt;
 &lt;ol&gt;
 &lt;li&gt;github.com/mmfei/mmfei.github.io.source; # &lt;code&gt;源项目&lt;/code&gt;  主要是用来生成网站项目 , 私有&lt;/li&gt;
