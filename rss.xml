@@ -21,7 +21,7 @@
             <webMaster>wlfkongl@163.com (mmfei)</webMaster>
         
         
-        <lastBuildDate>Wed, 26 May 2021 16:59:18 &#43;0000</lastBuildDate>
+        <lastBuildDate>Wed, 26 May 2021 17:03:59 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://mmfei.com/rss.xml" />
         
@@ -891,7 +891,41 @@ git push origin master&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
                 
                     
                         
+                            
+                                
+                                
+                                
+                                    <category domain="https://mmfei.com/categories/hugo/">hugo</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://mmfei.com/categories/github/">github</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://mmfei.com/categories/github-action/">github action</category>
+                                
+                            
+                        
                     
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://mmfei.com/tags/hugo/">hugo</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://mmfei.com/tags/github/">github</category>
+                                
+                            
                         
                     
                 
