@@ -1,0 +1,77 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Tags - Tag - 木木飞</title>
+        <link>https://mmfei.com/tags/</link>
+        <description>Tags - Tag - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 May 2021 01:29:52 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>config</title>
+    <link>https://mmfei.com/tags/config/</link>
+    <pubDate>Thu, 27 May 2021 01:29:52 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mmfei.com/tags/config/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>hugo</title>
+    <link>https://mmfei.com/tags/hugo/</link>
+    <pubDate>Thu, 27 May 2021 01:29:52 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mmfei.com/tags/hugo/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>theme</title>
+    <link>https://mmfei.com/tags/theme/</link>
+    <pubDate>Thu, 27 May 2021 01:29:52 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mmfei.com/tags/theme/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>aliyun</title>
+    <link>https://mmfei.com/tags/aliyun/</link>
+    <pubDate>Thu, 27 May 2021 00:26:32 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mmfei.com/tags/aliyun/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>ci</title>
+    <link>https://mmfei.com/tags/ci/</link>
+    <pubDate>Thu, 27 May 2021 00:26:32 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mmfei.com/tags/ci/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>deploy</title>
+    <link>https://mmfei.com/tags/deploy/</link>
+    <pubDate>Thu, 27 May 2021 00:26:32 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mmfei.com/tags/deploy/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>gitlab</title>
+    <link>https://mmfei.com/tags/gitlab/</link>
+    <pubDate>Thu, 27 May 2021 00:26:32 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mmfei.com/tags/gitlab/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>npm</title>
+    <link>https://mmfei.com/tags/npm/</link>
+    <pubDate>Thu, 27 May 2021 00:26:32 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mmfei.com/tags/npm/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>oss</title>
+    <link>https://mmfei.com/tags/oss/</link>
+    <pubDate>Thu, 27 May 2021 00:26:32 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mmfei.com/tags/oss/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>centos</title>
+    <link>https://mmfei.com/tags/centos/</link>
+    <pubDate>Wed, 26 May 2021 09:13:20 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mmfei.com/tags/centos/</guid>
+    <description><![CDATA[]]></description>
+</item></channel>
+</rss>

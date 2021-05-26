@@ -1,0 +1,9 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>木木飞</title>
+        <link>https://mmfei.com/</link>
+        <description>木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 May 2021 01:29:52 &#43;0800</lastBuildDate>
+            <atom:link href="https://mmfei.com/index.xml" rel="self" type="application/rss+xml" />
+        </channel>
+</rss>

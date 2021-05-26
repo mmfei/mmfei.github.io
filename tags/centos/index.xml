@@ -1,0 +1,21 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>centos - Tag - 木木飞</title>
+        <link>https://mmfei.com/tags/centos/</link>
+        <description>centos - Tag - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 26 May 2021 09:13:20 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/tags/centos/" rel="self" type="application/rss+xml" /><item>
+    <title>Centos_kernal_update</title>
+    <link>https://mmfei.com/post/centos_kernel_update/</link>
+    <pubDate>Wed, 26 May 2021 09:13:20 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mmfei.com/post/centos_kernel_update/</guid>
+    <description><![CDATA[如何升级centos的内核版本 rpm -import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm # list all kernel yum --disablerepo=&#34;*&#34; --enablerepo=&#34;elrepo-kernel&#34; list # use newest kernel yum --enablerepo=elrepo-kernel -y install kernel-ml kernel-ml-devel # or use a normal kernel yum --enablerepo=elrepo-kernel -y install kernel-lt kernel-lt-devel # list all kernel can use awk -F\&#39; &#39;$1==&#34;menuentry &#34; {print i++ &#34; : &#34; $2}&#39; /etc/grub2.cfg # set]]></description>
+</item><item>
+    <title>Centos_install_bat_a_better_cat</title>
+    <link>https://mmfei.com/post/centos_install_bat_a_better_cat/</link>
+    <pubDate>Wed, 26 May 2021 09:07:14 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mmfei.com/post/centos_install_bat_a_better_cat/</guid>
+    <description><![CDATA[install in centos #!/bin/sh URL=https://github.com/sharkdp/bat/releases/download/v0.18.1/bat-v0.18.1-x86_64-unknown-linux-musl.tar.gz wget -c -O bat.tar.gz $URL; tar -xvzf bat.tar.gz -C /usr/local; ln -s /usr/local/bat-v0.18.1-x86_64-unknown-linux-musl/bat /usr/local/bin/bat ]]></description>
+</item></channel>
+</rss>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on 木木飞</title>
+    <link>https://mmfei.com/post/</link>
+    <description>Recent content in Posts on 木木飞</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 27 May 2021 01:29:52 +0800</lastBuildDate><atom:link href="https://mmfei.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo_themes_config</title>
+      <link>https://mmfei.com/post/hugo_themes_config/</link>
+      <pubDate>Thu, 27 May 2021 01:29:52 +0800</pubDate>
+      
+      <guid>https://mmfei.com/post/hugo_themes_config/</guid>
+      <description>&lt;h3 id=&#34;hugo-themes-config&#34;&gt;hugo theme&amp;rsquo;s config&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;</description>
+    </item>
+    
+    <item>
+      <title>Gitlab_ci_npm_deploy_for_aliyun_oss</title>
+      <link>https://mmfei.com/post/gitlab_ci_npm_deploy_for_aliyun_oss/</link>
+      <pubDate>Thu, 27 May 2021 00:26:32 +0800</pubDate>
+      
+      <guid>https://mmfei.com/post/gitlab_ci_npm_deploy_for_aliyun_oss/</guid>
+      <description>通过gitlab的ci自动部署前端项目到阿里云的oss gitlab-ci.yml # 指定使用的镜像image:node:latest# 执行步骤，依次执行stages:</description>
+    </item>
+    
+    <item>
+      <title>Centos_kernal_update</title>
+      <link>https://mmfei.com/post/centos_kernel_update/</link>
+      <pubDate>Wed, 26 May 2021 09:13:20 +0800</pubDate>
+      
+      <guid>https://mmfei.com/post/centos_kernel_update/</guid>
+      <description>如何升级centos的内核版本 rpm -import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm # list all kernel yum --disablerepo=&amp;#34;*&amp;#34; --enablerepo=&amp;#34;elrepo-kernel&amp;#34; list # use newest kernel yum --enablerepo=elrepo-kernel -y install kernel-ml kernel-ml-devel # or use a normal kernel yum --enablerepo=elrepo-kernel -y install kernel-lt kernel-lt-devel # list all kernel can use awk -F\&amp;#39; &amp;#39;$1==&amp;#34;menuentry &amp;#34; {print i++ &amp;#34; : &amp;#34; $2}&amp;#39; /etc/grub2.cfg # set</description>
+    </item>
+    
+    <item>
+      <title>Centos_install_bat_a_better_cat</title>
+      <link>https://mmfei.com/post/centos_install_bat_a_better_cat/</link>
+      <pubDate>Wed, 26 May 2021 09:07:14 +0800</pubDate>
+      
+      <guid>https://mmfei.com/post/centos_install_bat_a_better_cat/</guid>
+      <description>install in centos #!/bin/sh URL=https://github.com/sharkdp/bat/releases/download/v0.18.1/bat-v0.18.1-x86_64-unknown-linux-musl.tar.gz wget -c -O bat.tar.gz $URL; tar -xvzf bat.tar.gz -C /usr/local; ln -s /usr/local/bat-v0.18.1-x86_64-unknown-linux-musl/bat /usr/local/bin/bat </description>
+    </item>
+    
+    <item>
+      <title>Hugo_support_mermaidjs</title>
+      <link>https://mmfei.com/post/hugo_support_mermaidjs/</link>
+      <pubDate>Wed, 26 May 2021 00:26:15 +0800</pubDate>
+      
+      <guid>https://mmfei.com/post/hugo_support_mermaidjs/</guid>
+      <description>hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能. 把它引入到hugo模板 , 写</description>
+    </item>
+    
+    <item>
+      <title>Create_github_page_with_hugo</title>
+      <link>https://mmfei.com/post/create_github_page_with_hugo/</link>
+      <pubDate>Sun, 23 May 2021 16:35:40 +0800</pubDate>
+      
+      <guid>https://mmfei.com/post/create_github_page_with_hugo/</guid>
+      <description>如何使用hugo快速创建一个github page 创建github项目(私有项目 + 公开项目) github.com/mmfei/mmfei.github.io.source; # 源项目 主要是用来生成网站项目 , 私有 github.com/mmfei/mmfei.github.io; # 网站项目 用来做</description>
+    </item>
+    
+  </channel>
+</rss>

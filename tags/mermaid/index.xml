@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>mermaid - Tag - 木木飞</title>
+        <link>https://mmfei.com/tags/mermaid/</link>
+        <description>mermaid - Tag - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 26 May 2021 00:26:15 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/tags/mermaid/" rel="self" type="application/rss+xml" /><item>
+    <title>Hugo_support_mermaidjs</title>
+    <link>https://mmfei.com/post/hugo_support_mermaidjs/</link>
+    <pubDate>Wed, 26 May 2021 00:26:15 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mmfei.com/post/hugo_support_mermaidjs/</guid>
+    <description><![CDATA[hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能. 把它引入到hugo模板 , 写]]></description>
+</item></channel>
+</rss>

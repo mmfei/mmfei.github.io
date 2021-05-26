@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>aliyun - Tag - 木木飞</title>
+        <link>https://mmfei.com/tags/aliyun/</link>
+        <description>aliyun - Tag - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 May 2021 00:26:32 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/tags/aliyun/" rel="self" type="application/rss+xml" /><item>
+    <title>Gitlab_ci_npm_deploy_for_aliyun_oss</title>
+    <link>https://mmfei.com/post/gitlab_ci_npm_deploy_for_aliyun_oss/</link>
+    <pubDate>Thu, 27 May 2021 00:26:32 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mmfei.com/post/gitlab_ci_npm_deploy_for_aliyun_oss/</guid>
+    <description><![CDATA[通过gitlab的ci自动部署前端项目到阿里云的oss gitlab-ci.yml # 指定使用的镜像image:node:latest# 执行步骤，依次执行stages:]]></description>
+</item></channel>
+</rss>
