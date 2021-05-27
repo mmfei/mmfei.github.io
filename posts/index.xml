@@ -4,7 +4,14 @@
         <link>https://mmfei.com/posts/</link>
         <description>所有文章 | 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 27 May 2021 00:26:32 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 27 May 2021 10:41:19 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Favicon_generator</title>
+    <link>https://mmfei.com/favicon_generator/</link>
+    <pubDate>Thu, 27 May 2021 10:41:19 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/favicon_generator/</guid>
+    <description><![CDATA[一个非常好的favicon在线解决工具 https://realfavicongenerator.net/]]></description>
+</item><item>
     <title>Gitlab_ci_npm_deploy_for_aliyun_oss</title>
     <link>https://mmfei.com/gitlab_ci_npm_deploy_for_aliyun_oss/</link>
     <pubDate>Thu, 27 May 2021 00:26:32 &#43;0800</pubDate>
