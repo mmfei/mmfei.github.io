@@ -1,4 +1,4 @@
-# 如何使用hugo快速创建一个github page
+# 如何使用hugo快速创建一个github的page
 
 
 
