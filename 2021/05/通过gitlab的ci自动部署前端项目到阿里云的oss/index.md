@@ -1,4 +1,4 @@
-# Gitlab_ci_npm_deploy_for_aliyun_oss
+# 通过gitlab的ci自动部署前端项目到阿里云的oss
 
 
 ## 通过gitlab的ci自动部署前端项目到阿里云的oss

@@ -4,49 +4,56 @@
         <link>https://mmfei.com/</link>
         <description>木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 27 May 2021 10:41:19 &#43;0800</lastBuildDate>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 27 May 2021 18:49:50 &#43;0800</lastBuildDate>
             <atom:link href="https://mmfei.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>Favicon_generator</title>
-    <link>https://mmfei.com/favicon_generator/</link>
+    <title>非常方便的在线配图工具placeimg</title>
+    <link>https://mmfei.com/2021/05/%E9%9D%9E%E5%B8%B8%E6%96%B9%E4%BE%BF%E7%9A%84%E5%9C%A8%E7%BA%BF%E9%85%8D%E5%9B%BE%E5%B7%A5%E5%85%B7placeimg/</link>
+    <pubDate>Thu, 27 May 2021 18:49:50 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/05/%E9%9D%9E%E5%B8%B8%E6%96%B9%E4%BE%BF%E7%9A%84%E5%9C%A8%E7%BA%BF%E9%85%8D%E5%9B%BE%E5%B7%A5%E5%85%B7placeimg/</guid>
+    <description><![CDATA[这是一个很方便的在线配图工具,点赞啊 http://placeimg.com/]]></description>
+</item><item>
+    <title>一个非常好的favicon在线解决工具</title>
+    <link>https://mmfei.com/2021/05/%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E5%A5%BD%E7%9A%84favicon%E5%9C%A8%E7%BA%BF%E8%A7%A3%E5%86%B3%E5%B7%A5%E5%85%B7/</link>
     <pubDate>Thu, 27 May 2021 10:41:19 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/favicon_generator/</guid>
+    <guid>https://mmfei.com/2021/05/%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E5%A5%BD%E7%9A%84favicon%E5%9C%A8%E7%BA%BF%E8%A7%A3%E5%86%B3%E5%B7%A5%E5%85%B7/</guid>
     <description><![CDATA[一个非常好的favicon在线解决工具 https://realfavicongenerator.net/]]></description>
 </item><item>
-    <title>Gitlab_ci_npm_deploy_for_aliyun_oss</title>
-    <link>https://mmfei.com/gitlab_ci_npm_deploy_for_aliyun_oss/</link>
+    <title>通过gitlab的ci自动部署前端项目到阿里云的oss</title>
+    <link>https://mmfei.com/2021/05/%E9%80%9A%E8%BF%87gitlab%E7%9A%84ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E5%88%B0%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84oss/</link>
     <pubDate>Thu, 27 May 2021 00:26:32 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/gitlab_ci_npm_deploy_for_aliyun_oss/</guid>
+    <guid>https://mmfei.com/2021/05/%E9%80%9A%E8%BF%87gitlab%E7%9A%84ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E5%88%B0%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84oss/</guid>
     <description><![CDATA[通过gitlab的ci自动部署前端项目到阿里云的oss gitlab-ci.yml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42]]></description>
 </item><item>
-    <title>Centos_kernal_update</title>
-    <link>https://mmfei.com/centos_kernel_update/</link>
+    <title>如何升级centos的内核版本</title>
+    <link>https://mmfei.com/2021/05/%E5%A6%82%E4%BD%95%E5%8D%87%E7%BA%A7centos%E7%9A%84%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC/</link>
     <pubDate>Wed, 26 May 2021 09:13:20 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/centos_kernel_update/</guid>
+    <guid>https://mmfei.com/2021/05/%E5%A6%82%E4%BD%95%E5%8D%87%E7%BA%A7centos%E7%9A%84%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC/</guid>
     <description><![CDATA[如何升级centos的内核版本 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 rpm -import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm # list all kernel yum --disablerepo=&#34;*&#34; --enablerepo=&#34;elrepo-kernel&#34; list # use newest kernel yum --enablerepo=elrepo-kernel -y install]]></description>
 </item><item>
     <title>Centos_install_bat_a_better_cat</title>
-    <link>https://mmfei.com/centos_install_bat_a_better_cat/</link>
+    <link>https://mmfei.com/2021/05/centos_install_bat_a_better_cat/</link>
     <pubDate>Wed, 26 May 2021 09:07:14 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/centos_install_bat_a_better_cat/</guid>
+    <guid>https://mmfei.com/2021/05/centos_install_bat_a_better_cat/</guid>
     <description><![CDATA[install in centos 1 2 3 4 5  #!/bin/sh URL=https://github.com/sharkdp/bat/releases/download/v0.18.1/bat-v0.18.1-x86_64-unknown-linux-musl.tar.gz wget -c -O bat.tar.gz $URL; tar -xvzf bat.tar.gz -C /usr/local; ln -s /usr/local/bat-v0.18.1-x86_64-unknown-linux-musl/bat /usr/local/bin/bat   ]]></description>
 </item><item>
-    <title>Hugo_support_mermaidjs</title>
-    <link>https://mmfei.com/hugo_support_mermaidjs/</link>
+    <title>hugo 增加mermaid js的支持</title>
+    <link>https://mmfei.com/2021/05/hugo%E5%A2%9E%E5%8A%A0mermaidjs%E7%9A%84%E6%94%AF%E6%8C%81/</link>
     <pubDate>Wed, 26 May 2021 00:26:15 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/hugo_support_mermaidjs/</guid>
-    <description><![CDATA[hugo 增加mermaid js的支持 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能. 把它引入到hugo模板 , 写]]></description>
+    <guid>https://mmfei.com/2021/05/hugo%E5%A2%9E%E5%8A%A0mermaidjs%E7%9A%84%E6%94%AF%E6%8C%81/</guid>
+    <description><![CDATA[mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能. 把它引入到hugo模板 , 写技术方案特别方便. 它的在线编辑]]></description>
 </item><item>
-    <title>Create_github_page_with_hugo</title>
-    <link>https://mmfei.com/create_github_page_with_hugo/</link>
+    <title>如何使用hugo快速创建一个github page</title>
+    <link>https://mmfei.com/2021/05/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8hugo%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAgithub-page/</link>
     <pubDate>Sun, 23 May 2021 16:35:40 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/create_github_page_with_hugo/</guid>
+    <guid>https://mmfei.com/2021/05/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8hugo%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAgithub-page/</guid>
     <description><![CDATA[如何使用hugo快速创建一个github page 创建github项目(私有项目 + 公开项目) github.com/mmfei/mmfei.github.io.source; # 源项目 主要是用来生成网站项目 , 私有 github.com/mmfei/mmfei.github.io; # 网站项目 用来做]]></description>
 </item></channel>
 </rss>

@@ -1,7 +1,5 @@
-# Hugo_support_mermaidjs
+# hugo 增加mermaid js的支持
 
-
-## hugo 增加mermaid js的支持
 
 mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能.
 

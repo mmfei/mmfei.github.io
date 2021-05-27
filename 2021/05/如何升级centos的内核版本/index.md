@@ -1,4 +1,4 @@
-# Centos_kernal_update
+# 如何升级centos的内核版本
 
 
 ## 如何升级centos的内核版本
