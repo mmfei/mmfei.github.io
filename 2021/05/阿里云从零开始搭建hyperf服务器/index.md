@@ -65,9 +65,24 @@ cp /usr/local/php-$PHP_VERSION/etc/php-fpm.conf.default /usr/local/php-$PHP_VERS
 ln -s /usr/local/php-$PHP_VERSION /usr/local/php
 /usr/local/php/bin/php -v
 /usr/local/php-$PHP_VERSION/bin/php -v
+echo 'pathmunge /usr/local/php/bin' >> /etc/profile.d/php.sh
 ```
 
 #### swoole
+```shell
+yum install -y glibc-headers gcc-c++
+export SWOOLE_VERSION=4.6.7
+mkdir -p /data/src/install/swoole-$SWOOLE_VERSION
+cd /data/src/install/swoole-$SWOOLE_VERSION
+wget -c https://pecl.php.net/get/swoole-$SWOOLE_VERSION.tgz -O /data/src/install/swoole-$SWOOLE_VERSION/swoole-$SWOOLE_VERSION.tgz --no-check-certificate
+tar -zvxf swoole-$SWOOLE_VERSION.tgz
+cd swoole-$SWOOLE_VERSION
+/usr/local/php/bin/phpize
+./configure --with-php-config=/usr/local/php/bin/php-config
+make && make install
+echo 'extension="swoole.so"' >> /usr/local/php/etc/php.ini
+php -m | grep swoole
+```
 
 #### nginx config
 
