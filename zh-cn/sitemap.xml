@@ -2,18 +2,8 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://mmfei.com/posts/</loc><lastmod>2021-05-27T18:49:50&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/</loc><lastmod>2021-05-27T18:49:50&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
-                        rel="alternate"
-                        hreflang="en"
-                        href="https://mmfei.com/en/"
-                        /><xhtml:link
-                    rel="alternate"
-                    hreflang="zh-cn"
-                    href="https://mmfei.com/"
-                    /></url><url>
-            <loc>https://mmfei.com/2021/05/%E9%9D%9E%E5%B8%B8%E6%96%B9%E4%BE%BF%E7%9A%84%E5%9C%A8%E7%BA%BF%E9%85%8D%E5%9B%BE%E5%B7%A5%E5%85%B7placeimg/</loc><lastmod>2021-05-27T18:49:50&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/categories/</loc><lastmod>2021-05-27T10:41:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://mmfei.com/categories/blog/</loc><lastmod>2021-05-28T10:23:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/categories/</loc><lastmod>2021-05-28T10:23:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://mmfei.com/en/categories/"
@@ -22,8 +12,8 @@
                     hreflang="zh-cn"
                     href="https://mmfei.com/categories/"
                     /></url><url>
-            <loc>https://mmfei.com/tags/favicon/</loc><lastmod>2021-05-27T10:41:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/</loc><lastmod>2021-05-27T10:41:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://mmfei.com/posts/</loc><lastmod>2021-05-28T10:23:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/</loc><lastmod>2021-05-28T10:23:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://mmfei.com/en/tags/"
@@ -32,9 +22,18 @@
                     hreflang="zh-cn"
                     href="https://mmfei.com/tags/"
                     /></url><url>
-            <loc>https://mmfei.com/categories/tool/</loc><lastmod>2021-05-27T10:41:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/tools/</loc><lastmod>2021-05-27T10:41:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/2021/05/%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E5%A5%BD%E7%9A%84favicon%E5%9C%A8%E7%BA%BF%E8%A7%A3%E5%86%B3%E5%B7%A5%E5%85%B7/</loc><lastmod>2021-05-27T10:41:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/%E5%8D%9A%E5%AE%A2/</loc><lastmod>2021-05-28T10:23:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/%E5%B7%A5%E5%85%B7/</loc><lastmod>2021-05-28T10:23:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/2021/05/%E6%8E%A8%E8%8D%90%E5%86%99%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7/</loc><lastmod>2021-05-28T10:23:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/</loc><lastmod>2021-05-28T10:23:17&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="en"
+                        href="https://mmfei.com/en/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="zh-cn"
+                    href="https://mmfei.com/"
+                    /></url><url>
             <loc>https://mmfei.com/tags/aliyun/</loc><lastmod>2021-05-27T00:26:32&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://mmfei.com/tags/ci/</loc><lastmod>2021-05-27T00:26:32&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://mmfei.com/tags/deploy/</loc><lastmod>2021-05-27T00:26:32&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
