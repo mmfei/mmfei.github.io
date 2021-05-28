@@ -8,8 +8,8 @@
 [http://placeimg.com/](http://placeimg.com/)
 
 #### 这里使用的图片链接
-![http://placeimg.com/790/220/any](http://placeimg.com/790/220/any)
-* http://placeimg.com/790/220/any
+![http://placeimg.com/800/250/any](http://placeimg.com/800/250/any)
+* http://placeimg.com/800/250/any
 
 ## 颜色选择器
 #### 你是不是在苦恼配色? 用这个试试 , 有类似色给你选
