@@ -35,6 +35,7 @@ echo 'yasd.remote_port='.$DEBUG_PORT >> $PHP_INI
 
 ## phpstorm配置
 对应端口改```9001```
+
 ![/images/posts/MacbookMAMP套件安装yasd扩展调试swoole和hyperf代码/phpstorm_debug_port_setting.png](/images/posts/MacbookMAMP套件安装yasd扩展调试swoole和hyperf代码/phpstorm_debug_port_setting.png)
 
 
