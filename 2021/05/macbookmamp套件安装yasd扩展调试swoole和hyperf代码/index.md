@@ -11,6 +11,10 @@
 ## 安装yasd扩展
 * debug是在本机debug , 端口是9001
 ```shell
+# 这是debug的端口,换端口可以改这个9001
+export DEBUG_PORT=9001
+# 这是debug的host,127.0.0.1表示php所在的机器在debug , 一般来说开发都是在本地调试的,用127.0.0.1就好
+export DEBUG_IP=127.0.0.1
 brew install boost
 
 git clone https://github.com/swoole/yasd.git;
@@ -22,12 +26,13 @@ make clean && \
 make && \
 make install
 
+
 export PHP_INI=`php -i | grep "conf/php.ini" | awk '{print $5}'`;
 echo '[xdebug]' >> $PHP_INI
 echo 'zend_extension=yasd' >> $PHP_INI
 echo 'yasd.debug_mode=remote' >> $PHP_INI
-echo 'yasd.remote_host=127.0.0.1' >> $PHP_INI
-echo 'yasd.remote_port=9001' >> $PHP_INI
+echo 'yasd.remote_host='.$DEBUG_IP >> $PHP_INI
+echo 'yasd.remote_port='.$DEBUG_PORT >> $PHP_INI
 ```
 
 
