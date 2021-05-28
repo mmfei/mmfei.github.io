@@ -1,7 +1,7 @@
 # MacbookMAMP套件安装yasd扩展调试swoole和hyperf代码
 
 
-这是一个在macbook环境下 , 用MAMP套件的小伙伴 , 如果安装一个yasd扩展进行调试
+这是一个在macbook环境下 , 用MAMP套件的小伙伴 , 如何安装一个yasd扩展进行调试
 
 ## 步骤
 * 下载yasd
