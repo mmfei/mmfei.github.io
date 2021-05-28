@@ -21,7 +21,7 @@
     <guid>https://mmfei.com/2021/05/%E9%98%BF%E9%87%8C%E4%BA%91%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAhyperf%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e9%98%bf%e9%87%8c%e4%ba%91%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e6%90%ad%e5%bb%bahyperf%e6%9c%8d%e5%8a%a1%e5%99%a8/featuredImage.png" referrerpolicy="no-referrer">
-            </div>服务需要用到 免密登录配置 openresty php7 swoole nginx config gitlab runner gitlab ci 一些约定 编译的源码目录 /data/src/install/{包名}/{src/,*.tag.gz}]]></description>
+            </div>服务需要用到 免密登录配置 openresty php7 swoole nginx config gitlab runner gitlab ci php-redis扩展 一些约定 编译的源码目录 /data/src/install/{包名}/{src]]></description>
 </item><item>
     <title>推荐写博客的在线工具</title>
     <link>https://mmfei.com/2021/05/%E6%8E%A8%E8%8D%90%E5%86%99%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7/</link>

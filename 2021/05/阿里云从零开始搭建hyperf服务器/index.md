@@ -9,6 +9,7 @@
 * nginx config
 * gitlab runner
 * gitlab ci
+* php-redis扩展
 
 ### 一些约定
 * 编译的源码目录 /data/src/install/{包名}/{src/,*.tag.gz}
@@ -35,6 +36,7 @@ wget https://openresty.org/package/centos/openresty.repo -O /etc/yum.repos.d/ope
 yum check-update
 yum install -y openresty
 systemctl start openresty
+systemctl enable openresty
 ls -al /usr/local/openresty/
 ls -al /usr/local/openresty/nginx/sbin
 ```
@@ -66,6 +68,20 @@ ln -s /usr/local/php-$PHP_VERSION /usr/local/php
 /usr/local/php/bin/php -v
 /usr/local/php-$PHP_VERSION/bin/php -v
 echo 'pathmunge /usr/local/php/bin' >> /etc/profile.d/php.sh
+
+
+# install php-redis
+export PHPREDIS_VERSION=5.3.4
+mkdir -p /data/src/install/phpredis-$PHPREDIS_VERSION
+cd /data/src/install/phpredis-$PHPREDIS_VERSION
+wget https://github.com/phpredis/phpredis/archive/refs/tags/$PHPREDIS_VERSION.tar.gz --no-check-certificate -O phpredis-$PHPREDIS_VERSION.tar.gz;
+tar xvzf phpredis-$PHPREDIS_VERSION.tar.gz
+cd phpredis-$PHPREDIS_VERSION
+/usr/local/php/bin/phpize
+./configure --with-php-config=/usr/local/php/bin/php-config
+make && make install
+echo 'extension="redis.so"' >> /usr/local/php/etc/php.ini
+php -m | grep redis
 ```
 
 #### swoole
