@@ -22,12 +22,12 @@ make clean && \
 make && \
 make install
 
-
-echo '[xdebug]' >> /Applications/MAMP/bin/php/php7.4.2/conf/php.ini
-echo 'zend_extension=yasd' >> /Applications/MAMP/bin/php/php7.4.2/conf/php.ini
-echo 'yasd.debug_mode=remote' >> /Applications/MAMP/bin/php/php7.4.2/conf/php.ini
-echo 'yasd.remote_host=127.0.0.1' >> /Applications/MAMP/bin/php/php7.4.2/conf/php.ini
-echo 'yasd.remote_port=9001' >> /Applications/MAMP/bin/php/php7.4.2/conf/php.ini
+export PHP_INI=`php -i | grep "conf/php.ini" | awk '{print $5}'`;
+echo '[xdebug]' >> $PHP_INI
+echo 'zend_extension=yasd' >> $PHP_INI
+echo 'yasd.debug_mode=remote' >> $PHP_INI
+echo 'yasd.remote_host=127.0.0.1' >> $PHP_INI
+echo 'yasd.remote_port=9001' >> $PHP_INI
 ```
 
 
