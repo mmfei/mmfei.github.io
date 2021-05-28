@@ -19,12 +19,9 @@ brew install boost
 
 git clone https://github.com/swoole/yasd.git;
 cd yasd;
-phpize --clean && \
-phpize && \
-./configure && \
-make clean && \
-make && \
-make install
+phpize --clean && phpize 
+./configure 
+make clean && make && make install
 
 
 export PHP_INI=`php -i | grep "conf/php.ini" | awk '{print $5}'`;
