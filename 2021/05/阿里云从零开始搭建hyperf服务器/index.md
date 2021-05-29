@@ -97,7 +97,7 @@ wget -c https://pecl.php.net/get/swoole-$SWOOLE_VERSION.tgz -O /data/src/install
 tar -zvxf swoole-$SWOOLE_VERSION.tgz
 cd swoole-$SWOOLE_VERSION
 /usr/local/php/bin/phpize
-./configure --with-php-config=/usr/local/php/bin/php-config
+./configure --with-php-config=/usr/local/php/bin/php-config --enable-openssl --enable-http2 --enable-swoole-json --enable-swoole-curl
 make && make install
 echo 'extension="swoole.so"' >> /usr/local/php/etc/php.ini
 echo 'swoole.use_shortname = off' >> /usr/local/php/etc/php.ini

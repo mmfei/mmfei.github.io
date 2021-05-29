@@ -1,4 +1,4 @@
-# Centos8搭建gitlab和gitlab Runner
+# Centos8搭建gitlab和gitlab-Runner
 
 
 ## docker-compose.yml
@@ -44,14 +44,19 @@ services:
 ```shell
 yum install -y yum-utils
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotat docker-engine
-yum install docker-ce docker-ce-cli containerd.io
+yum -y remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotat docker-engine
+yum -y install docker-ce docker-ce-cli containerd.io
 systemctl start docker
 curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-`uname -s`-`uname -m` -o /usr/bin/docker-compose
 chmod +x /usr/bin/docker-compose
 mkdir -p /data/gitlab.abc.com/{logs,config,data,backups}
 mkdir -p ./ssl
+
+curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-ci-multi-runner/script.rpm.sh | sudo bash
+yum install gitlab-runner
+gitlab-runner register
 ```
+
 
 ## 配置本地的nginx服务器
 ```editorconfig
