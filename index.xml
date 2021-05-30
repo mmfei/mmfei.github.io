@@ -14,7 +14,7 @@
     <guid>https://mmfei.com/2021/05/bash%E5%91%BD%E4%BB%A4%E5%A2%9E%E5%8A%A0%E6%8F%90%E7%A4%BAautocomplete/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/bash%e5%91%bd%e4%bb%a4%e5%a2%9e%e5%8a%a0%e6%8f%90%e7%a4%baautocomplete/featuredImage.png" referrerpolicy="no-referrer">
-            </div>执行以下命令 , 会让命令行更加好用个, 会根据历史记录补齐和提醒 1 2 3 4 cat &gt;&gt; ~/.inputrc &lt;&lt;&#39;EOF&#39; &#34;\e[A&#34;: history-search-backward &#34;\e[B&#34;: history-search-forward EOF]]></description>
+            </div>执行以下命令 , 会让命令行更加好用, 会根据历史记录补齐和提醒 1 2 3 4 cat &gt;&gt; ~/.inputrc &lt;&lt;&#39;EOF&#39; &#34;\e[A&#34;: history-search-backward &#34;\e[B&#34;: history-search-forward EOF]]></description>
 </item><item>
     <title>Centos8搭建gitlab和gitlab-Runner</title>
     <link>https://mmfei.com/2021/05/centos8%E6%90%AD%E5%BB%BAgitlab%E5%92%8Cgitlab-runner/</link>
