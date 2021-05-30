@@ -14,48 +14,41 @@ stages:
   - build
   - deploy
 
-# 安装依赖 job 下面的 stage 字段和 stages 下面的步骤一一对应
-install-job:dep:
-  stage: install
-  cache:
-    paths:
-      - node_modules/
-  only: # 限定执行脚本的条件，only 支持 branch、tag、change、正则
-    - master
-    - develop
-    - master
-  script: # 此 stage 要执行的脚本
-    -  npm i
-  artifacts:  # 将这个job生成的依赖传递给下一个job。需要设置dependencies
-    expire_in: 60 mins   # artifacets 的过期时间，因为这些数据都是直接保存在 Gitlab 机器上的，过于久远的资源就可以删除掉了
-    paths:  # 需要被传递给下一个job的目录。
-      - node_modules/
-# 打包
-build-job:dep:
-  stage: build
-  only:
-    - master
-    - develop
-    - master
-  script:
-    -  npm run build
-  artifacts:  # 将这个job生成的依赖传递给下一个job。需要设置dependencies
-    expire_in: 60 mins   # artifacets 的过期时间，因为这些数据都是直接保存在 Gitlab 机器上的，过于久远的资源就可以删除掉了
-    paths:  # 需要被传递给下一个job的目录。
-      - node_modules/
-
 # 上传到服务器
 deploy-job:dep:
   stage: deploy
+  cache:
+    paths:
+      - node_modules/
   only:
-    - master
-    - develop
-    - master
+    - alpha
   script:
-    -  |
-    npm run deploy
+    - |
+        echo "git checkout ${CI_COMMIT_REF_NAME} --";
+        git checkout ${CI_COMMIT_REF_NAME} --
+        npm i
+        npm run build # 这里需要自己看一下script的build的内容
+        ossutil64 config -e $OSS_END_POINT -i $OSS_ACCESS_KEY_ID -k $OSS_ACCESS_KEY_SECRET
+        ossutil64 cp -r -f dist/ oss://$OSS_BUCKET_NAME
+  tags:
+    - deploy
 ```
 
+### 在gitlab对应项目中增加变量(gitlab-ci会用到)
+```
+OSS_END_POINT   oss的endpoint
+OSS_ACCESS_KEY_ID  oss的accessKeyId
+OSS_ACCESS_KEY_SECRET oss的AccessKeySecret
+OSS_BUCKET_NAME  oss的bucketName
+```
+
+### oss的bucket需要设置
+> 对象存储 > bucket name > 权限管理 
+* Bucket ACL -> 公开读
+* Bucket 授权策略 , 给你的账号读写授权 (账号跟这两个变量关联的 OSS_ACCESS_KEY_ID , OSS_ACCESS_KEY_SECRET)
+* 跨域设置(加上自己的访问域)
+> 对象存储 > bucket name > 权限管理
+* 绑定域名 , 可以设置https证书 , 需要对域名做cname绑定
 
 ## 在gitlab-runner机器
 ### 安装runner(docker的方式)
@@ -82,26 +75,8 @@ chmod 755 /usr/bin/ossutil64
 su gitlab-runner
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 nvm install node
-
-
-
 ```
 
-### 安装阿里云的oss命令行工具
-```shell
-cd /your_workspace/
-npm install aliyunoss-cli --save-dev
-ossutils config #配置阿里云的oss配置 ,会生成.ossconfig在工程目录下 , 需要阿里云的AccessKey
-```
-### .ossconfig
-```json
-{
-  "region": "-",
-  "accessKeyId": "-",
-  "accessKeySecret": "-",
-  "bucket": "-"
-}
-```
 
 ## 配置script,配合gitlab-ci执行打包上传命令
 ### package.json
@@ -109,7 +84,8 @@ ossutils config #配置阿里云的oss配置 ,会生成.ossconfig在工程目录
 {
   "scripts": {
     "deploy": "npx aliyunoss-cli --releaseEnv dev",
-    "publish": "npm i && npm run build && npm run deploy"
+    "publish": "npm i && npm run build && npm run deploy",
+    "build": "vue-cli-service build --mode production"
   }
 }
 ```
