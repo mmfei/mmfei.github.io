@@ -2,6 +2,17 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>https://mmfei.com/2021/05/bash%E5%91%BD%E4%BB%A4%E5%A2%9E%E5%8A%A0%E6%8F%90%E7%A4%BAautocomplete/</loc><lastmod>2021-05-31T01:30:09&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/posts/</loc><lastmod>2021-05-31T01:30:09&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/</loc><lastmod>2021-05-31T01:30:09&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="en"
+                        href="https://mmfei.com/en/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="zh-cn"
+                    href="https://mmfei.com/"
+                    /></url><url>
             <loc>https://mmfei.com/categories/</loc><lastmod>2021-05-29T16:21:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
@@ -21,7 +32,6 @@
             <loc>https://mmfei.com/tags/gitlab/</loc><lastmod>2021-05-29T16:21:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://mmfei.com/categories/gitlab/</loc><lastmod>2021-05-29T16:21:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://mmfei.com/tags/gitlab-runner/</loc><lastmod>2021-05-29T16:21:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/posts/</loc><lastmod>2021-05-29T16:21:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://mmfei.com/tags/</loc><lastmod>2021-05-29T16:21:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
@@ -30,15 +40,6 @@
                     rel="alternate"
                     hreflang="zh-cn"
                     href="https://mmfei.com/tags/"
-                    /></url><url>
-            <loc>https://mmfei.com/</loc><lastmod>2021-05-29T16:21:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
-                        rel="alternate"
-                        hreflang="en"
-                        href="https://mmfei.com/en/"
-                        /><xhtml:link
-                    rel="alternate"
-                    hreflang="zh-cn"
-                    href="https://mmfei.com/"
                     /></url><url>
             <loc>https://mmfei.com/tags/hyperf/</loc><lastmod>2021-05-28T15:16:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://mmfei.com/categories/hyperf/</loc><lastmod>2021-05-28T15:16:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>

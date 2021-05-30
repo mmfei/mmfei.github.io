@@ -65,7 +65,26 @@ docker exec -it gitlab-share-runner gitlab-runner register //注册到Gtilab
 ```
 ### 安装runner的第二种方式(centos直接安装 , 我选用这种)
 ```shell
-yum install gitlab-runner
+yum install -y gitlab-runner
+
+### 安装nodejs (用mvn管理 , 如果需要其他版本的nvm , 可以 nvm install 14.17.0; nvm alias default v14.17.0)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+echo 'export NVM_DIR="$HOME/.nvm"' > /etc/profile.d/nvm.sh
+echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' >> /etc/profile.d/nvm.sh
+echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' >> /etc/profile.d/nvm.sh
+source /etc/profile
+nvm install node
+
+wget http://gosspublic.alicdn.com/ossutil/1.7.3/ossutil64 -O /usr/bin/ossutil64
+chmod 755 /usr/bin/ossutil64
+
+### gitlab-runner 也需要安装node , 否则gitlab-ci执行会找到npm
+su gitlab-runner
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+nvm install node
+
+
+
 ```
 
 ### 安装阿里云的oss命令行工具
