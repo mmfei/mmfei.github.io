@@ -52,11 +52,35 @@ chmod +x /usr/bin/docker-compose
 mkdir -p /data/gitlab.abc.com/{logs,config,data,backups}
 mkdir -p ./ssl
 
-curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-ci-multi-runner/script.rpm.sh | sudo bash
-yum install gitlab-runner
+curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh | sudo bash
+yum -y install gitlab-runner
 gitlab-runner register
+# 查看: https://your.gitlab.url/admin/runners
 ```
 
+### gitlab-runner register
+#### 从gitlab获得注册所需要的信息
+![/images/posts/centos8搭建gitlab的gitlab-runner/featuredImage.png](/images/posts/centos8搭建gitlab的gitlab-runner/featuredImage.png)
+
+#### 注册需要输入的内容
+```shell
+gitlab-runner register
+Runtime platform                                    arch=amd64 os=linux pid=291523 revision=7a6612da version=13.12.0
+Running in system-mode.
+
+Enter the GitLab instance URL (for example, https://gitlab.com/):
+https://gitlab.abc.com/    # 这里填入上图 标注的 1 的url
+Enter the registration token:
+{{ token }}  # 这里填入上图标注 2 的 token 字符串
+Enter a description for the runner:
+[adasdf]: sg-aliyun-test    # 给你的runner起个名字
+Enter tags for the runner (comma-separated):
+test,deploy,build,gitlab-ci   # 起个标签 , 跟.gitlab-ci.yaml 的tags一致 , 它表示可以执行跟ci指定tags同名的tags的任务
+Registering runner... succeeded                     runner=adfasdfasdf
+Enter an executor: parallels, ssh, virtualbox, custom, docker, docker-ssh, kubernetes, shell, docker+machine, docker-ssh+machine:
+shell   # 这里选shell即可
+Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded!
+```
 
 ## 配置本地的nginx服务器
 ```editorconfig
