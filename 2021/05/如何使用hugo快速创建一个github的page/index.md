@@ -88,26 +88,44 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: "0.62.2"
-          # extended: true
+          hugo-version: "0.83.1"
+          extended: true
 
       - name: Build
         run: |
-          git submodule add https://github.com/halogenica/beautifulhugo.git themes/beautifulhugo 
-          hugo --theme=beautifulhugo
-          ls public
+          git clone https://github.com/mmfei/LoveIt themes/LoveIt
+          echo 'gen';
+          hugo --theme=LoveIt;
+          echo 'build done';
+          echo 'www.mmfei.com' > public/CNAME
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }} # 这里的 ACTIONS_DEPLOY_KEY 则是上面设置 Private Key的变量名
-          github_token: ${{ secrets.GH_TOKEN }}
+          github_token: ${{ secrets.MMFEI_GH_TOKEN }}
           external_repository: mmfei/mmfei.github.io
           publish_dir: "./public"
           keep_files: false # remove existing files
           publish_branch: master # deploying branch
           commit_message: ${{ github.event.head_commit.message }}
           user_name: "mmfei"
-          user_email: "abc@abc.com"
+          user_email: "wlfkongl@163.com"
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Install automic-algolia
+        run: |
+          npm install -g atomic-algolia
+          atomic-algolia
+        env:
+          ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+          ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+          ALGOLIA_INDEX_NAME: ${{ secrets.ALGOLIA_INDEX_NAME }}
+          ALGOLIA_INDEX_FILE: "./public/index.json"
+
 EOT
 
 git add ./.github/workflows/main.yml;

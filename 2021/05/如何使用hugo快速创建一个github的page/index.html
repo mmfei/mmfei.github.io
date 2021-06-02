@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/mmfei.com\/2021\/05\/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8hugo%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAgithub%E7%9A%84page\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "hugo, github","wordcount":  704 ,
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "hugo, github","wordcount":  762 ,
         "url": "https:\/\/mmfei.com\/2021\/05\/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8hugo%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAgithub%E7%9A%84page\/","datePublished": "2021-05-23T16:35:40+08:00","dateModified": "2021-05-23T16:35:40+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
@@ -124,7 +124,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">如何使用hugo快速创建一个github的page</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/hugo/"><i class="far fa-folder fa-fw"></i>hugo</a>&nbsp;<a href="/categories/github/"><i class="far fa-folder fa-fw"></i>github</a>&nbsp;<a href="/categories/github-action/"><i class="far fa-folder fa-fw"></i>github action</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-23">2021-05-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 704 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-23">2021-05-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 762 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -304,6 +304,24 @@ git push origin master<span class="p">;</span>
 </span><span class="lnt">42
 </span><span class="lnt">43
 </span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-bash" data-lang="bash">cat &gt;&gt; ./.github/workflows/main.yml <span class="s">&lt;&lt;EOT
@@ -325,26 +343,44 @@ git push origin master<span class="p">;</span>
 </span><span class="s">      - name: Setup Hugo
 </span><span class="s">        uses: peaceiris/actions-hugo@v2
 </span><span class="s">        with:
-</span><span class="s">          hugo-version: &#34;0.62.2&#34;
-</span><span class="s">          # extended: true
+</span><span class="s">          hugo-version: &#34;0.83.1&#34;
+</span><span class="s">          extended: true
 </span><span class="s">
 </span><span class="s">      - name: Build
 </span><span class="s">        run: |
-</span><span class="s">          git submodule add https://github.com/halogenica/beautifulhugo.git themes/beautifulhugo 
-</span><span class="s">          hugo --theme=beautifulhugo
-</span><span class="s">          ls public
+</span><span class="s">          git clone https://github.com/mmfei/LoveIt themes/LoveIt
+</span><span class="s">          echo &#39;gen&#39;;
+</span><span class="s">          hugo --theme=LoveIt;
+</span><span class="s">          echo &#39;build done&#39;;
+</span><span class="s">          echo &#39;www.mmfei.com&#39; &gt; public/CNAME
+</span><span class="s">
 </span><span class="s">      - name: Deploy
 </span><span class="s">        uses: peaceiris/actions-gh-pages@v3
 </span><span class="s">        with:
 </span><span class="s">          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }} # 这里的 ACTIONS_DEPLOY_KEY 则是上面设置 Private Key的变量名
-</span><span class="s">          github_token: ${{ secrets.GH_TOKEN }}
+</span><span class="s">          github_token: ${{ secrets.MMFEI_GH_TOKEN }}
 </span><span class="s">          external_repository: mmfei/mmfei.github.io
 </span><span class="s">          publish_dir: &#34;./public&#34;
 </span><span class="s">          keep_files: false # remove existing files
 </span><span class="s">          publish_branch: master # deploying branch
 </span><span class="s">          commit_message: ${{ github.event.head_commit.message }}
 </span><span class="s">          user_name: &#34;mmfei&#34;
-</span><span class="s">          user_email: &#34;abc@abc.com&#34;
+</span><span class="s">          user_email: &#34;wlfkongl@163.com&#34;
+</span><span class="s">
+</span><span class="s">      - name: Use Node.js
+</span><span class="s">        uses: actions/setup-node@v1
+</span><span class="s">        with:
+</span><span class="s">          node-version: &#39;12.x&#39;
+</span><span class="s">      - name: Install automic-algolia
+</span><span class="s">        run: |
+</span><span class="s">          npm install -g atomic-algolia
+</span><span class="s">          atomic-algolia
+</span><span class="s">        env:
+</span><span class="s">          ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+</span><span class="s">          ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+</span><span class="s">          ALGOLIA_INDEX_NAME: ${{ secrets.ALGOLIA_INDEX_NAME }}
+</span><span class="s">          ALGOLIA_INDEX_FILE: &#34;./public/index.json&#34;
+</span><span class="s">
 </span><span class="s">EOT</span>
 
 git add ./.github/workflows/main.yml<span class="p">;</span>
