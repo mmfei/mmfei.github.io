@@ -67,6 +67,48 @@ ssh-keygen -t rsa -b 4069 -C "abc@abc.com";  # 这里要替换成为你的邮箱
 `ACTIONS_DEPLOY_KEY` 的值为上面生成的pub
 `GH_TOKEN` 的值为上面的MY_GH_TOKEN的值
 
+
+### 新增algolia搜索功能
+
+
+> 在algolia创建了index后 , 在API Keys获取上面三个值
+[https://www.algolia.com/](https://www.algolia.com/)
+![/images/posts/如何使用hugo快速创建一个github的page/algolia.png](/images/posts/如何使用hugo快速创建一个github的page/algolia.png)
+
+> 在github注册actions的变量
+```
+ALGOLIA_APP_ID=你的Application ID
+ALGOLIA_INDEX_NAME=你的索引名字
+ALGOLIA_INDEX_FILE=public/algolia.json
+ALGOLIA_ADMIN_KEY=你的Admin API Key
+```
+
+> 配置hugo的config.toml
+```toml
+      # 搜索配置
+      [languages.zh-cn.params.search]
+        enable = true
+        # 搜索引擎的类型 ("lunr", "algolia")
+        type = "algolia"
+        # 文章内容最长索引长度
+        contentLength = 4000
+        # 搜索框的占位提示语
+        placeholder = "搜索"
+        # 最大结果数目
+        maxResultLength = 10
+        # 结果内容片段长度
+        snippetLength = 50
+        # 搜索结果中高亮部分的 HTML 标签
+        highlightTag = "em"
+        # 是否在搜索索引中使用基于 baseURL 的绝对路径
+        absoluteURL = true
+        [languages.zh-cn.params.search.algolia]
+          index = "index.zh-cn" #algolia 里面的 index 名称相对应，如果你有多语言版本，那么就需要创建多个语言的 index，我这里仅举例中文的版本
+          appID = ""
+          searchKey = ""
+```
+
+
 ### 设置构建脚本
 ```bash
 cat >> ./.github/workflows/main.yml <<EOT
