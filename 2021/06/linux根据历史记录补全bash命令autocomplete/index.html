@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Linux根据历史记录补全bash命令autocomplete - 木木飞</title><meta name="Description" content="木木飞"><meta property="og:title" content="Linux根据历史记录补全bash命令autocomplete" />
+<meta property="og:description" content="在shell输入一个命令后 , 可以通过上下方向箭头翻出最近的历史记录. 这么好用的功能,为啥不内置呢0.0&hellip;. 1 2 3 4 cat &gt;&gt; ~/.inputrc &lt;&lt;&#39;EOF&#39; &#34;\e[A&#34;: history-search-backward" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mmfei.com/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/" /><meta property="og:image" content="https://mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-06-08T11:47:50&#43;08:00" />
+<meta property="article:modified_time" content="2021-06-08T11:47:50&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://mmfei.com/images/avatar.jpg"/>
+
+<meta name="twitter:title" content="Linux根据历史记录补全bash命令autocomplete"/>
+<meta name="twitter:description" content="在shell输入一个命令后 , 可以通过上下方向箭头翻出最近的历史记录. 这么好用的功能,为啥不内置呢0.0&hellip;. 1 2 3 4 cat &gt;&gt; ~/.inputrc &lt;&lt;&#39;EOF&#39; &#34;\e[A&#34;: history-search-backward"/>
+<meta name="application-name" content="木木飞">
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://mmfei.com/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/" /><link rel="prev" href="https://mmfei.com/2021/05/%E6%9C%80%E5%BF%AB%E6%90%AD%E5%BB%BA%E7%A6%85%E9%81%93%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%96%B9%E6%A1%88/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Linux根据历史记录补全bash命令autocomplete",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/mmfei.com\/2021\/06\/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete\/"
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "linux, bash, autocomplete, history, shell","wordcount":  73 ,
+        "url": "https:\/\/mmfei.com\/2021\/06\/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete\/","datePublished": "2021-06-08T11:47:50+08:00","dateModified": "2021-06-08T11:47:50+08:00","publisher": {
+            "@type": "Organization",
+            "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "mmfei"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Linux根据历史记录补全bash命令autocomplete</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>linux</a>&nbsp;<a href="/categories/bash/"><i class="far fa-folder fa-fw"></i>bash</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-08">2021-06-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 73 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/Linux%e6%a0%b9%e6%8d%ae%e5%8e%86%e5%8f%b2%e8%ae%b0%e5%bd%95%e8%a1%a5%e5%85%a8bash%e5%91%bd%e4%bb%a4autocomplete/featuredImage.png"
+        data-srcset="/images/posts/Linux%e6%a0%b9%e6%8d%ae%e5%8e%86%e5%8f%b2%e8%ae%b0%e5%bd%95%e8%a1%a5%e5%85%a8bash%e5%91%bd%e4%bb%a4autocomplete/featuredImage.png, /images/posts/Linux%e6%a0%b9%e6%8d%ae%e5%8e%86%e5%8f%b2%e8%ae%b0%e5%bd%95%e8%a1%a5%e5%85%a8bash%e5%91%bd%e4%bb%a4autocomplete/featuredImage.png 1.5x, /images/posts/Linux%e6%a0%b9%e6%8d%ae%e5%8e%86%e5%8f%b2%e8%ae%b0%e5%bd%95%e8%a1%a5%e5%85%a8bash%e5%91%bd%e4%bb%a4autocomplete/featuredImage.png 2x"
+        data-sizes="auto"
+        alt="/images/posts/Linux根据历史记录补全bash命令autocomplete/featuredImage.png"
+        title="/images/posts/Linux根据历史记录补全bash命令autocomplete/featuredImage.png" /></div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p>在shell输入一个命令后 , 可以通过上下方向箭头翻出最近的历史记录.
+这么好用的功能,为啥不内置呢0.0&hellip;.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">cat &gt;&gt; ~/.inputrc <span class="s">&lt;&lt;&#39;EOF&#39;
+</span><span class="s">&#34;\e[A&#34;: history-search-backward
+</span><span class="s">&#34;\e[B&#34;: history-search-forward
+</span><span class="s">EOF</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-06-08</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://mmfei.com/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/" data-title="Linux根据历史记录补全bash命令autocomplete" data-via="mmfei" data-hashtags="linux,bash,autocomplete,history,shell"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://mmfei.com/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/" data-hashtag="linux"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://mmfei.com/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/" data-title="Linux根据历史记录补全bash命令autocomplete"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://mmfei.com/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/" data-title="Linux根据历史记录补全bash命令autocomplete"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://mmfei.com/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/" data-title="Linux根据历史记录补全bash命令autocomplete" data-image="/images/posts/Linux根据历史记录补全bash命令autocomplete/featuredImage.png"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/linux/">linux</a>,&nbsp;<a href="/tags/bash/">bash</a>,&nbsp;<a href="/tags/autocomplete/">autocomplete</a>,&nbsp;<a href="/tags/history/">history</a>,&nbsp;<a href="/tags/shell/">shell</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2021/05/%E6%9C%80%E5%BF%AB%E6%90%AD%E5%BB%BA%E7%A6%85%E9%81%93%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%96%B9%E6%A1%88/" class="prev" rel="prev" title="最快搭建禅道项目管理系统的方案"><i class="fas fa-angle-left fa-fw"></i>最快搭建禅道项目管理系统的方案</a></div>
+</div>
+
+<div id="comments"><div id="gitalk" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://mmfei.com" target="_blank">mmfei</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"gitalk":{"admin":["mmfei"],"clientID":"18b19d5b5907429c70ef","clientSecret":"444861d0580bb2a49d81e6e18a2c7bd302668974","id":"2021-06-08T11:47:50+08:00","owner":"mmfei","repo":"mmfei.github.io","title":"Linux根据历史记录补全bash命令autocomplete"}},"search":{"algoliaAppID":"ZD40NBNJFZ","algoliaIndex":"mmfei.github.io","algoliaSearchKey":"3cbdd6ad4a933a1506a89507e381ec1f","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
