@@ -11,7 +11,7 @@
     <author>作者</author>
     <guid>https://mmfei.com/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/Linux%e6%a0%b9%e6%8d%ae%e5%8e%86%e5%8f%b2%e8%ae%b0%e5%bd%95%e8%a1%a5%e5%85%a8bash%e5%91%bd%e4%bb%a4autocomplete/featuredImage.png" referrerpolicy="no-referrer">
+                <img src="/images/posts/linux%e6%a0%b9%e6%8d%ae%e5%8e%86%e5%8f%b2%e8%ae%b0%e5%bd%95%e8%a1%a5%e5%85%a8bash%e5%91%bd%e4%bb%a4autocomplete/featuredImage.png" referrerpolicy="no-referrer">
             </div>在shell输入一个命令后 , 可以通过上下方向箭头翻出最近的历史记录. 这么好用的功能,为啥不内置呢0.0&hellip;. 1 2 3 4 cat &gt;&gt; ~/.inputrc &lt;&lt;&#39;EOF&#39; &#34;\e[A&#34;: history-search-backward]]></description>
 </item><item>
     <title>最快搭建禅道项目管理系统的方案</title>
