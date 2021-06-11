@@ -7,7 +7,7 @@
 composer create-project hyperf/hyperf-skeleton  # 主项目 , 它会使用下面那个自建的组件
 composer create-project hyperf/component-creater your_component dev-master # 自建的组件项目
 cd hyperf-skeleton
-composer config repositories '[{"name": "your_component/your_component","type": "path","url": "../your_component/src/*"}]' # 设置主项目依赖的自建组件为本地目录 , hyperf 官方教程旧了,新的composer要用这个结构
+composer config repositories '[{"name": "your_component/your_component", "type": "path", "url": "../your_component/src/*"}]' # 设置主项目依赖的自建组件为本地目录 , hyperf 官方教程旧了,新的composer要用这个结构
 composer config require."your_component/your_component" dev-master # 指定项目依赖包 your_component.your_component , 等同于 composer require your_component.your_component 只是还没发布,所以手动编辑
 cd hyperf-skeleton;rm -rf composer.lock && rm -rf vendor && composer update # 初始化主项目 , 把依赖都装上
 ls -al vendor/your_component # 此时看到的应该是软连接
