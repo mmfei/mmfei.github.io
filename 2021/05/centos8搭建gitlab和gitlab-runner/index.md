@@ -16,6 +16,7 @@ services:
         external_url 'https://gitlab.abc.com'
         gitlab_rails['time_zone'] = 'Asia/Shanghai'
         nginx['enable'] = false
+        prometheus_monitoring['enable'] = false
         gitlab_workhorse['listen_network'] = "tcp"
         gitlab_workhorse['listen_addr'] = ":19900"
         gitlab_rails['gitlab_shell_ssh_port'] = 19901
