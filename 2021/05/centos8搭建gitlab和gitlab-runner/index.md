@@ -61,7 +61,7 @@ gitlab-runner register
 
 ### gitlab-runner register
 #### 从gitlab获得注册所需要的信息
-![/images/posts/centos8搭建gitlab的gitlab-runner/featuredImage.png](/images/posts/centos8搭建gitlab的gitlab-runner/featuredImage.png)
+![https://www.mmfei.com/images/posts/centos8搭建gitlab的gitlab-runner/gitlab_admin_panel.png](https://www.mmfei.com/images/posts/centos8搭建gitlab的gitlab-runner/gitlab_admin_panel.png)
 
 #### 注册需要输入的内容
 ```shell
@@ -132,5 +132,29 @@ server {
     }
 }
 
+```
+
+> 卸载 gitlab-runner
+```shell
+!/bin/bash
+# 卸载gitlab-runner
+
+# 停止服务
+gitlab-runner stop
+
+# 取消随机启动
+chkconfig gitlab-runner off
+
+# 卸载服务
+gitlab-runner uninstall
+
+# 清理文件
+rm -rf /etc/gitlab-runner
+rm -rf /usr/local/bin/gitlab-runner
+rm -rf /usr/bin/gitlab-runner
+rm -rf /etc/sudoers.d/gitlab-runner
+
+# 删除用户
+userdel -r gitlab-runner
 ```
 
