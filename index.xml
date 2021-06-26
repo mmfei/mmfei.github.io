@@ -4,9 +4,18 @@
         <link>https://mmfei.com/</link>
         <description>木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 22 Jun 2021 18:58:51 &#43;0800</lastBuildDate>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sat, 26 Jun 2021 23:32:08 &#43;0800</lastBuildDate>
             <atom:link href="https://mmfei.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>程序员如何不经意的表达自己编程水平</title>
+    <link>https://mmfei.com/2021/06/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%A6%82%E4%BD%95%E4%B8%8D%E7%BB%8F%E6%84%8F%E7%9A%84%E8%A1%A8%E8%BE%BE%E8%87%AA%E5%B7%B1%E7%BC%96%E7%A8%8B%E6%B0%B4%E5%B9%B3/</link>
+    <pubDate>Sat, 26 Jun 2021 23:32:08 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/06/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%A6%82%E4%BD%95%E4%B8%8D%E7%BB%8F%E6%84%8F%E7%9A%84%E8%A1%A8%E8%BE%BE%E8%87%AA%E5%B7%B1%E7%BC%96%E7%A8%8B%E6%B0%B4%E5%B9%B3/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e7%a8%8b%e5%ba%8f%e5%91%98%e5%a6%82%e4%bd%95%e4%b8%8d%e7%bb%8f%e6%84%8f%e7%9a%84%e8%a1%a8%e8%be%be%e8%87%aa%e5%b7%b1%e7%bc%96%e7%a8%8b%e6%b0%b4%e5%b9%b3/featuredImage.png" referrerpolicy="no-referrer">
+            </div>如何不经意地表达自己编程水平 凡尔赛级别 图解 作为行外人 , 如何快速识别码农的水平 , 简单明了 , 只需在人群中看了你一眼]]></description>
+</item><item>
     <title>如何在vscode编辑器中通过xdebug调试在docker的运行的服务</title>
     <link>https://mmfei.com/2021/06/%E5%A6%82%E4%BD%95%E5%9C%A8vscode%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%AD%E9%80%9A%E8%BF%87xdebug%E8%B0%83%E8%AF%95%E5%9C%A8docker%E7%9A%84%E8%BF%90%E8%A1%8C%E7%9A%84%E6%9C%8D%E5%8A%A1/</link>
     <pubDate>Tue, 22 Jun 2021 18:58:51 &#43;0800</pubDate>
@@ -87,14 +96,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e9%98%bf%e9%87%8c%e4%ba%91%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e6%90%ad%e5%bb%bahyperf%e6%9c%8d%e5%8a%a1%e5%99%a8/featuredImage.png" referrerpolicy="no-referrer">
             </div>服务需要用到 免密登录配置 openresty php7 swoole nginx config gitlab runner gitlab ci php-redis扩展 一些约定 编译的源码目录 /data/src/install/{包名}/{src]]></description>
-</item><item>
-    <title>推荐写博客的在线工具</title>
-    <link>https://mmfei.com/2021/05/%E6%8E%A8%E8%8D%90%E5%86%99%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7/</link>
-    <pubDate>Fri, 28 May 2021 10:23:17 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2021/05/%E6%8E%A8%E8%8D%90%E5%86%99%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/%e9%9d%9e%e5%b8%b8%e6%96%b9%e4%be%bf%e7%9a%84%e5%9c%a8%e7%ba%bf%e9%85%8d%e5%9b%be%e5%b7%a5%e5%85%b7placeimg/featuredImage.png" referrerpolicy="no-referrer">
-            </div>配图工具 一篇文章如果是存文字 , 感官会差很多 . 有个高质量的图片会让枯燥的博文增色不少. 这是一个很方便的在线配图工具,点赞啊 http://placeimg.com/ 这里使用的图片链接]]></description>
 </item></channel>
 </rss>
