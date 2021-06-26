@@ -1,4 +1,4 @@
-# 拥抱openapi把postman的接口导入到swagger
+# 搭建php服务的openapi接口文档通过gitlab自动部署系统
 
 ### 前端后端交互流程
 ![images/img_3.png](images/img_3.png)
