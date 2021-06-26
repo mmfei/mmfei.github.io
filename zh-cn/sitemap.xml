@@ -11,28 +11,6 @@
                     hreflang="zh-cn"
                     href="https://mmfei.com/categories/"
                     /></url><url>
-            <loc>https://mmfei.com/posts/</loc><lastmod>2021-06-27T01:10:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/</loc><lastmod>2021-06-27T01:10:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
-                        rel="alternate"
-                        hreflang="en"
-                        href="https://mmfei.com/en/tags/"
-                        /><xhtml:link
-                    rel="alternate"
-                    hreflang="zh-cn"
-                    href="https://mmfei.com/tags/"
-                    /></url><url>
-            <loc>https://mmfei.com/</loc><lastmod>2021-06-27T01:10:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
-                        rel="alternate"
-                        hreflang="en"
-                        href="https://mmfei.com/en/"
-                        /><xhtml:link
-                    rel="alternate"
-                    hreflang="zh-cn"
-                    href="https://mmfei.com/"
-                    /></url><url>
-            <loc>https://mmfei.com/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/</loc><lastmod>2021-06-26T23:32:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/</loc><lastmod>2021-06-26T23:32:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/2021/06/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%A6%82%E4%BD%95%E4%B8%8D%E7%BB%8F%E6%84%8F%E7%9A%84%E8%A1%A8%E8%BE%BE%E8%87%AA%E5%B7%B1%E7%BC%96%E7%A8%8B%E6%B0%B4%E5%B9%B3/</loc><lastmod>2021-06-26T23:32:08&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://mmfei.com/categories/gitlab/</loc><lastmod>2021-06-22T18:59:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://mmfei.com/tags/gitlab-ci/</loc><lastmod>2021-06-22T18:59:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://mmfei.com/categories/gitlab-ci/</loc><lastmod>2021-06-22T18:59:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -42,9 +20,28 @@
             <loc>https://mmfei.com/categories/openapi/</loc><lastmod>2021-06-22T18:59:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://mmfei.com/tags/postman/</loc><lastmod>2021-06-22T18:59:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://mmfei.com/categories/postman/</loc><lastmod>2021-06-22T18:59:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/posts/</loc><lastmod>2021-06-27T01:10:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://mmfei.com/tags/swagger/</loc><lastmod>2021-06-22T18:59:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://mmfei.com/categories/swagger/</loc><lastmod>2021-06-22T18:59:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/</loc><lastmod>2021-06-27T01:10:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="en"
+                        href="https://mmfei.com/en/tags/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="zh-cn"
+                    href="https://mmfei.com/tags/"
+                    /></url><url>
             <loc>https://mmfei.com/2021/06/%E4%BD%BF%E7%94%A8gitlab-ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2php%E6%9C%8D%E5%8A%A1%E7%9A%84openapi%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/</loc><lastmod>2021-06-22T18:59:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/</loc><lastmod>2021-06-27T01:10:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+                        rel="alternate"
+                        hreflang="en"
+                        href="https://mmfei.com/en/"
+                        /><xhtml:link
+                    rel="alternate"
+                    hreflang="zh-cn"
+                    href="https://mmfei.com/"
+                    /></url><url>
             <loc>https://mmfei.com/tags/debug/</loc><lastmod>2021-06-22T18:58:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://mmfei.com/categories/debug/</loc><lastmod>2021-06-22T18:58:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://mmfei.com/tags/docker/</loc><lastmod>2021-06-22T18:58:51&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
