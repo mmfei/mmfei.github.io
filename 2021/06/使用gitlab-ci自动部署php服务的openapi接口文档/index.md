@@ -1,4 +1,4 @@
-# 搭建php服务的openapi接口文档通过gitlab自动部署系统
+# 使用gitlab-ci自动部署php服务的openapi接口文档
 
 ### 前端后端交互流程
 ![images/img_3.png](images/img_3.png)
