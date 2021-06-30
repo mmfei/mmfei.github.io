@@ -10,6 +10,7 @@
 
 ## gitlab的服务器
     在gitlab服务器上存放一个文件 `/data/src/script/backup_gitlab.sh`
+    chmod +x /data/src/script/backup_gitlab.sh; # 需要给一个执行权限
     
 ### /data/src/script/backup_gitlab.sh
 ```bash
