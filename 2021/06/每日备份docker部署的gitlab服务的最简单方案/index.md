@@ -22,7 +22,7 @@
 dir="/data/backups" # gitlab备份所在的目录 , 需要docker -v /data/backups:/var/opt/gitlab/backups:rw 挂载好
 save_number="5" # 备份只留最新5份
 keyword="backup" # 过滤关键字,防止目录有混淆其他文件删错了
-docker exec -t gitlab gitlab-rake gitlab:backup:create
+docker exec -t gitlab gitlab-rake gitlab:backup:create   # 这里要注意去掉-i,否则备份不成功
 cd $dir
 save_file=`ls -lrt | grep "$keyword" | tail -$save_number | awk '{print $NF}'`
 ls | grep "$keyword" | grep -v "$save_file" | xargs rm -rf
