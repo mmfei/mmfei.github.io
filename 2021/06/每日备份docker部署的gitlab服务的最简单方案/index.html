@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/mmfei.com\/2021\/06\/%E6%AF%8F%E6%97%A5%E5%A4%87%E4%BB%BDdocker%E9%83%A8%E7%BD%B2%E7%9A%84gitlab%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%9C%80%E7%AE%80%E5%8D%95%E6%96%B9%E6%A1%88\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "docker, gitlab, backup, 备份, rsync","wordcount":  764 ,
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "docker, gitlab, backup, 备份, rsync","wordcount":  969 ,
         "url": "https:\/\/mmfei.com\/2021\/06\/%E6%AF%8F%E6%97%A5%E5%A4%87%E4%BB%BDdocker%E9%83%A8%E7%BD%B2%E7%9A%84gitlab%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%9C%80%E7%AE%80%E5%8D%95%E6%96%B9%E6%A1%88\/","datePublished": "2021-06-29T21:09:34+08:00","dateModified": "2021-06-29T21:09:34+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
@@ -124,7 +124,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">每日备份docker部署的gitlab服务的最简单方案</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/docker/"><i class="far fa-folder fa-fw"></i>docker</a>&nbsp;<a href="/categories/gitlab/"><i class="far fa-folder fa-fw"></i>gitlab</a>&nbsp;<a href="/categories/backup/"><i class="far fa-folder fa-fw"></i>backup</a>&nbsp;<a href="/categories/%E5%A4%87%E4%BB%BD/"><i class="far fa-folder fa-fw"></i>备份</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-29">2021-06-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 764 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-29">2021-06-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 969 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id="/2021/06/%E6%AF%8F%E6%97%A5%E5%A4%87%E4%BB%BDdocker%E9%83%A8%E7%BD%B2%E7%9A%84gitlab%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%9C%80%E7%AE%80%E5%8D%95%E6%96%B9%E6%A1%88/" class="leancloud_visitors" data-flag-title="每日备份docker部署的gitlab服务的最简单方案">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -153,6 +153,7 @@
       <ul>
         <li><a href="#datasrcscriptpull_gitlab_backupsh">/data/src/script/pull_gitlab_backup.sh</a></li>
         <li><a href="#在备份机配好定时器">在备份机配好定时器</a></li>
+        <li><a href="#可以给备份数据的机器-设置免密登录">可以给备份数据的机器 设置免密登录</a></li>
       </ul>
     </li>
   </ul>
@@ -196,7 +197,7 @@ chmod +x /data/src/script/backup_gitlab.sh; # 需要给一个执行权限
 <span class="nv">dir</span><span class="o">=</span><span class="s2">&#34;/data/backups&#34;</span> <span class="c1"># gitlab备份所在的目录 , 需要docker -v /data/backups:/var/opt/gitlab/backups:rw 挂载好</span>
 <span class="nv">save_number</span><span class="o">=</span><span class="s2">&#34;5&#34;</span> <span class="c1"># 备份只留最新5份</span>
 <span class="nv">keyword</span><span class="o">=</span><span class="s2">&#34;backup&#34;</span> <span class="c1"># 过滤关键字,防止目录有混淆其他文件删错了</span>
-docker <span class="nb">exec</span> -ti gitlab gitlab-rake gitlab:backup:create
+docker <span class="nb">exec</span> -t gitlab gitlab-rake gitlab:backup:create
 <span class="nb">cd</span> <span class="nv">$dir</span>
 <span class="nv">save_file</span><span class="o">=</span><span class="sb">`</span>ls -lrt <span class="p">|</span> grep <span class="s2">&#34;</span><span class="nv">$keyword</span><span class="s2">&#34;</span> <span class="p">|</span> tail -<span class="nv">$save_number</span> <span class="p">|</span> awk <span class="s1">&#39;{print $NF}&#39;</span><span class="sb">`</span>
 ls <span class="p">|</span> grep <span class="s2">&#34;</span><span class="nv">$keyword</span><span class="s2">&#34;</span> <span class="p">|</span> grep -v <span class="s2">&#34;</span><span class="nv">$save_file</span><span class="s2">&#34;</span> <span class="p">|</span> xargs rm -rf
@@ -207,7 +208,7 @@ ls <span class="p">|</span> grep <span class="s2">&#34;</span><span class="nv">$
 </code></pre>
 <h3 id="crontab">crontab</h3>
 <pre><code class="language-crontab" data-lang="crontab"># 每日三点零1分开始备份
-1 3 * * * /data/src/script/backup_gitlab.sh
+1 3 * * * /data/src/script/backup_gitlab.sh &gt; &quot;/data/logs/gitlab_backups/gitlab.backup.$(date +&quot;\%Y-\%m-\%d+\%T&quot;).log&quot; 2&gt;&amp;1
 </code></pre><h2 id="备份数据的机器">备份数据的机器</h2>
 <pre><code>在备份机存放以下脚本 /data/src/script/pull_gitlab_backup.sh
 </code></pre>
@@ -260,8 +261,45 @@ ls <span class="p">|</span> grep <span class="s2">&#34;</span><span class="nv">$
 <pre><code>在备份数据的机器配好定时器crontab (命令: crontab -e 能直接编辑)
 </code></pre>
 <pre><code class="language-crontab" data-lang="crontab"># 每日五点零1分开始备份 (预计2小时内服务器已经完成备份)
-1 5 * * * /data/src/script/pull_gitlab_backup.sh
-</code></pre></div><div class="post-footer" id="post-footer">
+1 3 * * * /data/src/script/pull_gitlab_backup.sh &gt; &quot;/data/logs/gitlab_backups/gitlab.backup.$(date +&quot;\%Y-\%m-\%d+\%T&quot;).log&quot; 2&gt;&amp;1
+</code></pre><h3 id="可以给备份数据的机器-设置免密登录">可以给备份数据的机器 设置免密登录</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># file ~/.ssh/config</span>
+<span class="c1">#Host gitlab_server_demo</span>
+<span class="c1">#    HostName gitlab服务器的公网ip</span>
+<span class="c1">#    Port gitlab服务器的ssh的端口,一般是22</span>
+<span class="c1">#    User gitlab服务器ssh登录账号,一般是root(更建议是低权的账号)</span>
+<span class="c1">#    IdentityFile 私钥文件(一般是:~/.ssh/id_rsa)</span>
+
+
+<span class="c1"># 以下配置需要把 `cat ~/.ssh/id_rsa.pub` 的内容追加到 gitlab服务器的 ~/.ssh/authorized_keys</span>
+<span class="c1"># 在备份服务执行 ssh gitlab_server 如果正常是可以免密登录了</span>
+Host gitlab_server
+    HostName 8.8.8.8
+    Port <span class="m">8888</span>
+    User root
+    IdentityFile ~/.ssh/id_rsa
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

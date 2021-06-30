@@ -22,7 +22,7 @@
 dir="/data/backups" # gitlab备份所在的目录 , 需要docker -v /data/backups:/var/opt/gitlab/backups:rw 挂载好
 save_number="5" # 备份只留最新5份
 keyword="backup" # 过滤关键字,防止目录有混淆其他文件删错了
-docker exec -ti gitlab gitlab-rake gitlab:backup:create
+docker exec -t gitlab gitlab-rake gitlab:backup:create
 cd $dir
 save_file=`ls -lrt | grep "$keyword" | tail -$save_number | awk '{print $NF}'`
 ls | grep "$keyword" | grep -v "$save_file" | xargs rm -rf
@@ -34,7 +34,7 @@ echo "finish!"
 ### crontab
 ```crontab
 # 每日三点零1分开始备份
-1 3 * * * /data/src/script/backup_gitlab.sh
+1 3 * * * /data/src/script/backup_gitlab.sh > "/data/logs/gitlab_backups/gitlab.backup.$(date +"\%Y-\%m-\%d+\%T").log" 2>&1
 ```
 
 
@@ -67,7 +67,28 @@ echo 'finished';
     在备份数据的机器配好定时器crontab (命令: crontab -e 能直接编辑)
 ```crontab
 # 每日五点零1分开始备份 (预计2小时内服务器已经完成备份)
-1 5 * * * /data/src/script/pull_gitlab_backup.sh
+1 3 * * * /data/src/script/pull_gitlab_backup.sh > "/data/logs/gitlab_backups/gitlab.backup.$(date +"\%Y-\%m-\%d+\%T").log" 2>&1
+```
+
+
+### 可以给备份数据的机器 设置免密登录
+
+```shell
+# file ~/.ssh/config
+#Host gitlab_server_demo
+#    HostName gitlab服务器的公网ip
+#    Port gitlab服务器的ssh的端口,一般是22
+#    User gitlab服务器ssh登录账号,一般是root(更建议是低权的账号)
+#    IdentityFile 私钥文件(一般是:~/.ssh/id_rsa)
+
+
+# 以下配置需要把 `cat ~/.ssh/id_rsa.pub` 的内容追加到 gitlab服务器的 ~/.ssh/authorized_keys
+# 在备份服务执行 ssh gitlab_server 如果正常是可以免密登录了
+Host gitlab_server
+    HostName 8.8.8.8
+    Port 8888
+    User root
+    IdentityFile ~/.ssh/id_rsa
 ```
 
 
