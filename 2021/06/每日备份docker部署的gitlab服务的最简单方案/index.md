@@ -15,7 +15,9 @@
 6. 了解shell或者bash
 
 ## 最终实现每日定期备份gitlab源码所有数据
-> 每日3点1分 , gitlab服务器自动备份; 每日5点1分 , 备份机器自动去gitlab服务器同步备份文件
+> 每日3点1分 , gitlab服务器自动备份; 
+> 
+> 每日5点1分 , 备份机器自动去gitlab服务器同步备份文件
 
 ## gitlab的服务器
     在gitlab服务器上存放一个文件 `/data/src/script/backup_gitlab.sh`
