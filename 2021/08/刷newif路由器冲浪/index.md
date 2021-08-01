@@ -14,12 +14,10 @@
 
 [upload/breed-mt7621-newifi-d2.bin](upload/breed-mt7621-newifi-d2.bin)
 
-![](images/img_3.png)
 
 ### 官方固件的内核版本太低了 , 用网友制作的升级包在管理后台升级下
 [upload/openwrt-ramips-mt7621-d-team_newifi-d2-squashfs-sysupgrade.bin](upload/openwrt-ramips-mt7621-d-team_newifi-d2-squashfs-sysupgrade.bin)
 
-![](images/img_4.png)
 
 
 ## 刷breed
@@ -36,14 +34,16 @@ insmod /tmp/breed-mt7621-newifi-d2.bin ; #ssh 之後應該會no response，這�
 
 # 等路由器重启后 , 把路由器断电, 然后按住reset键 通电 , 成功的话会看到所有的led灯快闪4下. 然后连上路由器打开 http://192.168.1.1 进入 Breed Web Interface
 ```
+![](images/img_3.png)
 
 ## 刷openwrt
 > 在breed后台 , 选 固件更新  , 使用 upload/openwrt-ramips-mt7621-d-team_newifi-d2-squashfs-sysupgrade.bin
 
 
-## 冲浪
 upload/openwrt-ramips-mt7621-d-team_newifi-d2-squashfs-sysupgrade.bin 这个固件里面已经有ssplus了 , 直接配置就好了.
+![](images/img_4.png)
 
+## 冲浪
 ## 自己搭建一个v2ray
 ```shell
 # 找个新加坡的机器 进入ssh, centos系统为例

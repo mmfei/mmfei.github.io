@@ -170,24 +170,8 @@
 <p>为了后面方便使用 , 我直接保存一份我用的文件 (我用的是自定义固件,不是上面那个官方固件,管)</p>
 <h3 id="不死breed固件">不死breed固件</h3>
 <p><a href="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/upload/breed-mt7621-newifi-d2.bin" rel="">upload/breed-mt7621-newifi-d2.bin</a></p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="images/img_3.png"
-        data-srcset="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_3.png, images/img_3.png 1.5x, /2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_3.png 2x"
-        data-sizes="auto"
-        alt="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_3.png"
-        title="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_3.png" /></p>
 <h3 id="官方固件的内核版本太低了--用网友制作的升级包在管理后台升级下">官方固件的内核版本太低了 , 用网友制作的升级包在管理后台升级下</h3>
 <p><a href="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/upload/openwrt-ramips-mt7621-d-team_newifi-d2-squashfs-sysupgrade.bin" rel="">upload/openwrt-ramips-mt7621-d-team_newifi-d2-squashfs-sysupgrade.bin</a></p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="images/img_4.png"
-        data-srcset="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_4.png, images/img_4.png 1.5x, /2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_4.png 2x"
-        data-sizes="auto"
-        alt="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_4.png"
-        title="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_4.png" /></p>
 <h2 id="刷breed">刷breed</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -217,12 +201,28 @@ insmod /tmp/breed-mt7621-newifi-d2.bin <span class="p">;</span> <span class="c1"
 <span class="c1"># 等路由器重启后 , 把路由器断电, 然后按住reset键 通电 , 成功的话会看到所有的led灯快闪4下. 然后连上路由器打开 http://192.168.1.1 进入 Breed Web Interface</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="刷openwrt">刷openwrt</h2>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="images/img_3.png"
+        data-srcset="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_3.png, images/img_3.png 1.5x, /2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_3.png 2x"
+        data-sizes="auto"
+        alt="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_3.png"
+        title="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_3.png" /></p>
+<h2 id="刷openwrt">刷openwrt</h2>
 <blockquote>
 <p>在breed后台 , 选 固件更新  , 使用 upload/openwrt-ramips-mt7621-d-team_newifi-d2-squashfs-sysupgrade.bin</p>
 </blockquote>
+<p>upload/openwrt-ramips-mt7621-d-team_newifi-d2-squashfs-sysupgrade.bin 这个固件里面已经有ssplus了 , 直接配置就好了.
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="images/img_4.png"
+        data-srcset="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_4.png, images/img_4.png 1.5x, /2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_4.png 2x"
+        data-sizes="auto"
+        alt="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_4.png"
+        title="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_4.png" /></p>
 <h2 id="冲浪">冲浪</h2>
-<p>upload/openwrt-ramips-mt7621-d-team_newifi-d2-squashfs-sysupgrade.bin 这个固件里面已经有ssplus了 , 直接配置就好了.</p>
 <h2 id="自己搭建一个v2ray">自己搭建一个v2ray</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
