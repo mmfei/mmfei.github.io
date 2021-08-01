@@ -211,7 +211,7 @@
 <span class="c1"># 上传breed固件到路由器的tmp目录</span>
 scp upload/breed-mt7621-newifi-d2.bin root@192.168.1.1:/tmp/
 ssh root@192.168.1.1
-insmod /tmp/breed-mt7621-newifi-d2.bin <span class="p">;</span> <span class="c1">#ssh 之後應該會no response，這是正常的，因為newifi-d2-jail-break.ko會停止其它系統功能強制寫入Breed bootloader到Flash，完成寫入後Router會自動重啟，所以等一下就好：D</span>
+insmod /tmp/breed-mt7621-newifi-d2.bin <span class="p">;</span> <span class="c1">#ssh 之後應該會no response，這是正常的，因為newifi-d2-jail-breek.ko會停止其它系統功能強制寫入Breed bootloader到Flash，完成寫入後Router會自動重啟，所以等一下就好：D</span>
 
 
 <span class="c1"># 等路由器重启后 , 把路由器断电, 然后按住reset键 通电 , 成功的话会看到所有的led灯快闪4下. 然后连上路由器打开 http://192.168.1.1 进入 Breed Web Interface</span>
