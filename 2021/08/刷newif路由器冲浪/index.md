@@ -11,11 +11,14 @@
 为了后面方便使用 , 我直接保存一份我用的文件 (我用的是自定义固件,不是上面那个官方固件,管)
 
 ### 不死breed固件
+
 [upload/breed-mt7621-newifi-d2.bin](upload/breed-mt7621-newifi-d2.bin)
+
 ![](images/img_3.png)
 
 ### 官方固件的内核版本太低了 , 用网友制作的升级包在管理后台升级下
 [upload/openwrt-ramips-mt7621-d-team_newifi-d2-squashfs-sysupgrade.bin](upload/openwrt-ramips-mt7621-d-team_newifi-d2-squashfs-sysupgrade.bin)
+
 ![](images/img_4.png)
 
 
