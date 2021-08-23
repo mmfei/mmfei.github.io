@@ -4,7 +4,16 @@
         <link>https://mmfei.com/posts/</link>
         <description>所有文章 | 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 11 Aug 2021 20:43:39 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Mon, 23 Aug 2021 20:05:44 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>在centos8系统安装ffmpeg</title>
+    <link>https://mmfei.com/2021/08/%E5%9C%A8centos8%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85ffmpeg/</link>
+    <pubDate>Mon, 23 Aug 2021 20:05:44 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/08/%E5%9C%A8centos8%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85ffmpeg/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e5%9c%a8centos8%e7%b3%bb%e7%bb%9f%e5%ae%89%e8%a3%85ffmpeg/img.png" referrerpolicy="no-referrer">
+            </div>1 2 3 4 5 yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm yum install https://download1.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm yum install http://mirror.centos.org/centos/8/PowerTools/x86_64/os/Packages/SDL2-2.0.10-2.el8.x86_64.rpm yum install ffmpeg ffmpeg-devel ffmpeg -version 修正依赖的SDL的版本(SDL2-2.0.8-7.el8.x86_64.rpm =&gt; SDL2-2.0.]]></description>
+</item><item>
     <title>自定义macbook的右键菜单在Finder增加右键用vscode打开功能</title>
     <link>https://mmfei.com/2021/08/%E8%87%AA%E5%AE%9A%E4%B9%89macbook%E7%9A%84%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%E5%9C%A8finder%E5%A2%9E%E5%8A%A0%E5%8F%B3%E9%94%AE%E7%94%A8vscode%E6%89%93%E5%BC%80%E5%8A%9F%E8%83%BD/</link>
     <pubDate>Wed, 11 Aug 2021 20:43:39 &#43;0800</pubDate>
@@ -85,14 +94,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e6%80%8e%e6%a0%b7%e8%ae%a9nginx%e7%9a%84%e9%85%8d%e7%bd%ae%e6%94%af%e6%8c%81https/featuredImage.png" referrerpolicy="no-referrer">
             </div>server { listen 80; server_name api.dev.com; error_page 500 502 503 504 /50x.html; error_log /data/nginx/api.dev.com/error.log; access_log /data/nginx/api.dev.com/access_$logdate.log; #root /mnt/d/wsl/www/playsmart/; index index.html index.htm index.php; location = / { proxy_set_header X-Real-IP $remote_addr; proxy_set_header Host $http_host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_http_version 1.1; proxy_set_header Connection keep-alive; proxy_cookie_path / &quot;/; secure; HttpOnly; SameSite=strict&quot;; proxy_pass http://127.0.0.1:8080; } location / { proxy_set_header X-Real-IP $remote_addr; proxy_set_header Host $http_host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_http_version 1.1; proxy_set_header Connection keep-alive; proxy_cookie_path / &quot;/; secure;]]></description>
-</item><item>
-    <title>基于github开发一个php的适用于hyperf的composer包</title>
-    <link>https://mmfei.com/2021/06/%E5%9F%BA%E4%BA%8Egithub%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAphp%E7%9A%84%E9%80%82%E7%94%A8%E4%BA%8Ehyperf%E7%9A%84composer%E5%8C%85/</link>
-    <pubDate>Sat, 05 Jun 2021 19:06:57 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2021/06/%E5%9F%BA%E4%BA%8Egithub%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAphp%E7%9A%84%E9%80%82%E7%94%A8%E4%BA%8Ehyperf%E7%9A%84composer%E5%8C%85/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/%e5%9f%ba%e4%ba%8egithub%e5%bc%80%e5%8f%91%e4%b8%80%e4%b8%aaphp%e7%9a%84%e9%80%82%e7%94%a8%e4%ba%8ehyperf%e7%9a%84composer%e5%8c%85/featuredImage.png" referrerpolicy="no-referrer">
-            </div>准备下环境 1 2 3 4 5 6 7 8 9 # 在github创建一个仓库 , 并clone到本地 # 计划 在 your_component 文件夹开发 your_component/your_component 包 composer create-project hyperf/hyperf-skeleton # 主项目 , 它会使用下面那个自建的组]]></description>
 </item></channel>
 </rss>
