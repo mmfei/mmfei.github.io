@@ -38,7 +38,7 @@
     <author>作者</author>
     <guid>https://mmfei.com/2021/07/%E6%90%AD%E5%BB%BArobot-framework-ride%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/%e6%90%ad%e5%bb%barobot-Framework-Ride%e6%b5%8b%e8%af%95%e6%a1%86%e6%9e%b6/featuredImage.png" referrerpolicy="no-referrer">
+                <img src="/images/posts/%e6%90%ad%e5%bb%barobot-framework-ride%e6%b5%8b%e8%af%95%e6%a1%86%e6%9e%b6/featuredImage.png" referrerpolicy="no-referrer">
             </div>方案1 (直接本地安装) 1 2 3 4 5 6 7 8 9 10 # pip install -U robotframework pip install -U -r https://raw.githubusercontent.com/robotframework/RIDE/master/requirements.txt pip install -U robotframework-ride mkdir project; cd project; pipenv --three pipenv install robotframework-ride robotframework-ride 方案2 (docker方案 , 容器运行ride.py +]]></description>
 </item><item>
     <title>每日备份docker部署的gitlab服务的最简单方案</title>

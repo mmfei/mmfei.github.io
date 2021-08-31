@@ -1,6 +1,6 @@
 # 搭建robot Framework Ride测试框架
 
-![/images/posts/搭建robot-Framework-Ride测试框架/img.png](/images/posts/搭建robot-Framework-Ride测试框架/img.png)
+![/images/posts/搭建robot-framework-ride测试框架/img.png](/images/posts/搭建robot-framework-ride测试框架/img.png)
 > 方案1 (直接本地安装)
 ```shell
 # 
