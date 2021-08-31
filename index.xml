@@ -34,6 +34,15 @@
                 <img src="/images/posts/%e5%88%b7newifi%e8%b7%af%e7%94%b1%e5%99%a8%e5%86%b2%e6%b5%aa/img.png" referrerpolicy="no-referrer">
             </div>找路由器型号的固件 (newifi d2: MediaTek MT7621AT) 刷breed (https://breed.hackpascal.net/) 刷官方openwrt (https://openwrt.org/toh/hwdata/d-team/d-team_newifi_d2) 为了后面方便使用 , 我直接保存一份我用的文件 (我用的是自定义固件,不是上面那个官]]></description>
 </item><item>
+    <title>搭建robot Framework Ride测试框架</title>
+    <link>https://mmfei.com/2021/07/%E6%90%AD%E5%BB%BArobot-framework-ride%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/</link>
+    <pubDate>Wed, 14 Jul 2021 11:25:41 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/07/%E6%90%AD%E5%BB%BArobot-framework-ride%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e6%90%ad%e5%bb%barobot-Framework-Ride%e6%b5%8b%e8%af%95%e6%a1%86%e6%9e%b6/featuredImage.png" referrerpolicy="no-referrer">
+            </div>方案1 (直接本地安装) 1 2 3 4 5 6 7 8 9 10 # pip install -U robotframework pip install -U -r https://raw.githubusercontent.com/robotframework/RIDE/master/requirements.txt pip install -U robotframework-ride mkdir project; cd project; pipenv --three pipenv install robotframework-ride robotframework-ride 方案2 (docker方案 , 容器运行ride.py +]]></description>
+</item><item>
     <title>每日备份docker部署的gitlab服务的最简单方案</title>
     <link>https://mmfei.com/2021/06/%E6%AF%8F%E6%97%A5%E5%A4%87%E4%BB%BDdocker%E9%83%A8%E7%BD%B2%E7%9A%84gitlab%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%9C%80%E7%AE%80%E5%8D%95%E6%96%B9%E6%A1%88/</link>
     <pubDate>Tue, 29 Jun 2021 21:09:34 &#43;0800</pubDate>
@@ -87,14 +96,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/linux%e6%a0%b9%e6%8d%ae%e5%8e%86%e5%8f%b2%e8%ae%b0%e5%bd%95%e8%a1%a5%e5%85%a8bash%e5%91%bd%e4%bb%a4autocomplete/img.png" referrerpolicy="no-referrer">
             </div>在shell输入一个命令后 , 可以通过上下方向箭头翻出最近的历史记录. 这么好用的功能,为啥不内置呢0.0&hellip;. 1 2 3 4 cat &gt;&gt; ~/.inputrc &lt;&lt;&#39;EOF&#39; &#34;\e[A&#34;: history-search-backward]]></description>
-</item><item>
-    <title>怎样让nginx的配置支持https</title>
-    <link>https://mmfei.com/2021/06/%E6%80%8E%E6%A0%B7%E8%AE%A9nginx%E7%9A%84%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81https/</link>
-    <pubDate>Sat, 05 Jun 2021 23:47:17 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2021/06/%E6%80%8E%E6%A0%B7%E8%AE%A9nginx%E7%9A%84%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81https/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/%e6%80%8e%e6%a0%b7%e8%ae%a9nginx%e7%9a%84%e9%85%8d%e7%bd%ae%e6%94%af%e6%8c%81https/featuredImage.png" referrerpolicy="no-referrer">
-            </div>server { listen 80; server_name api.dev.com; error_page 500 502 503 504 /50x.html; error_log /data/nginx/api.dev.com/error.log; access_log /data/nginx/api.dev.com/access_$logdate.log; #root /mnt/d/wsl/www/playsmart/; index index.html index.htm index.php; location = / { proxy_set_header X-Real-IP $remote_addr; proxy_set_header Host $http_host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_http_version 1.1; proxy_set_header Connection keep-alive; proxy_cookie_path / &quot;/; secure; HttpOnly; SameSite=strict&quot;; proxy_pass http://127.0.0.1:8080; } location / { proxy_set_header X-Real-IP $remote_addr; proxy_set_header Host $http_host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_http_version 1.1; proxy_set_header Connection keep-alive; proxy_cookie_path / &quot;/; secure;]]></description>
 </item></channel>
 </rss>
