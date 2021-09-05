@@ -4,7 +4,16 @@
         <link>https://mmfei.com/posts/</link>
         <description>所有文章 | 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Mon, 23 Aug 2021 20:05:44 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sun, 05 Sep 2021 18:38:39 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>在hyperf框架的2.2版本的单元测试开启db的事务</title>
+    <link>https://mmfei.com/2021/09/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1/</link>
+    <pubDate>Sun, 05 Sep 2021 18:38:39 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/09/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e5%9c%a8hyperf%e6%a1%86%e6%9e%b6%e7%9a%842.2%e7%89%88%e6%9c%ac%e7%9a%84%e5%8d%95%e5%85%83%e6%b5%8b%e8%af%95%e5%bc%80%e5%90%afdb%e7%9a%84%e4%ba%8b%e5%8a%a1/img.png" referrerpolicy="no-referrer">
+            </div>背景 : 我们团队一直在使用优秀的hyperf框架 , 并在内部推行了单元测试 , 一直使用db的事务回滚的方式在测试环境跑得很顺畅 , 这样不会有脏数据.]]></description>
+</item><item>
     <title>在centos8系统安装ffmpeg</title>
     <link>https://mmfei.com/2021/08/%E5%9C%A8centos8%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85ffmpeg/</link>
     <pubDate>Mon, 23 Aug 2021 20:05:44 &#43;0800</pubDate>
@@ -85,14 +94,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/mac%e7%8e%af%e5%a2%83%e5%ae%89%e8%a3%85grpc%e7%9a%84php%e5%ae%a2%e6%88%b7%e7%ab%af/featuredImage.png" referrerpolicy="no-referrer">
             </div>1 2 3 4 pecl install grpc pecl install protobuf php -m | grep grpc php -m | grep protobuf 安装超好用的grpc客户端EVANS https://github.com/ktr0731/evans 安装 1 2 brew tap ktr0731/evans brew install evans]]></description>
-</item><item>
-    <title>Linux根据历史记录补全bash命令autocomplete</title>
-    <link>https://mmfei.com/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/</link>
-    <pubDate>Tue, 08 Jun 2021 11:47:50 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/linux%e6%a0%b9%e6%8d%ae%e5%8e%86%e5%8f%b2%e8%ae%b0%e5%bd%95%e8%a1%a5%e5%85%a8bash%e5%91%bd%e4%bb%a4autocomplete/img.png" referrerpolicy="no-referrer">
-            </div>在shell输入一个命令后 , 可以通过上下方向箭头翻出最近的历史记录. 这么好用的功能,为啥不内置呢0.0&hellip;. 1 2 3 4 cat &gt;&gt; ~/.inputrc &lt;&lt;&#39;EOF&#39; &#34;\e[A&#34;: history-search-backward]]></description>
 </item></channel>
 </rss>
