@@ -14,7 +14,7 @@
     <guid>https://mmfei.com/2021/09/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e5%9c%a8hyperf%e6%a1%86%e6%9e%b6%e7%9a%842.2%e7%89%88%e6%9c%ac%e7%9a%84%e5%8d%95%e5%85%83%e6%b5%8b%e8%af%95%e5%bc%80%e5%90%afdb%e7%9a%84%e4%ba%8b%e5%8a%a1/img_1.png" referrerpolicy="no-referrer">
-            </div>背景 : 我们团队一直在使用优秀的hyperf框架 , 并在内部推行了单元测试 , 一直使用db的事务回滚的方式在测试环境跑得很顺畅 , 这样不会有脏数据.]]></description>
+            </div>背景 : 我们团队一直在使用优秀的hyperf框架 , 并在内部推行了单元测试 . 一直使用db的事务回滚的方式在测试环境跑得很顺畅 , 这样不会有脏数据.]]></description>
 </item><item>
     <title>在centos8系统安装ffmpeg</title>
     <link>https://mmfei.com/2021/08/%E5%9C%A8centos8%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85ffmpeg/</link>

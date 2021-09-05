@@ -6,7 +6,7 @@
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>在hyperf框架的2.2版本的单元测试开启db的事务 - 木木飞</title><meta name="Description" content="木木飞"><meta property="og:title" content="在hyperf框架的2.2版本的单元测试开启db的事务" />
-<meta property="og:description" content="背景 : 我们团队一直在使用优秀的hyperf框架 , 并在内部推行了单元测试 , 一直使用db的事务回滚的方式在测试环境跑得很顺畅 , 这样不会有脏数据." />
+<meta property="og:description" content="背景 : 我们团队一直在使用优秀的hyperf框架 , 并在内部推行了单元测试 . 一直使用db的事务回滚的方式在测试环境跑得很顺畅 , 这样不会有脏数据." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mmfei.com/2021/09/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1/" /><meta property="og:image" content="https://mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-09-05T18:38:39&#43;08:00" />
@@ -16,7 +16,7 @@
 <meta name="twitter:image" content="https://mmfei.com/images/avatar.jpg"/>
 
 <meta name="twitter:title" content="在hyperf框架的2.2版本的单元测试开启db的事务"/>
-<meta name="twitter:description" content="背景 : 我们团队一直在使用优秀的hyperf框架 , 并在内部推行了单元测试 , 一直使用db的事务回滚的方式在测试环境跑得很顺畅 , 这样不会有脏数据."/>
+<meta name="twitter:description" content="背景 : 我们团队一直在使用优秀的hyperf框架 , 并在内部推行了单元测试 . 一直使用db的事务回滚的方式在测试环境跑得很顺畅 , 这样不会有脏数据."/>
 <meta name="application-name" content="木木飞">
 <meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/mmfei.com\/2021\/09\/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "hyperf, testing, unittest, phpuint, 事务, 协程","wordcount":  836 ,
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "hyperf, testing, unittest, phpuint, 事务, 协程","wordcount":  840 ,
         "url": "https:\/\/mmfei.com\/2021\/09\/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1\/","datePublished": "2021-09-05T18:38:39+08:00","dateModified": "2021-09-05T18:38:39+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
@@ -124,7 +124,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">在hyperf框架的2.2版本的单元测试开启db的事务</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/hyperf/"><i class="far fa-folder fa-fw"></i>hyperf</a>&nbsp;<a href="/categories/testing/"><i class="far fa-folder fa-fw"></i>testing</a>&nbsp;<a href="/categories/unittest/"><i class="far fa-folder fa-fw"></i>unittest</a>&nbsp;<a href="/categories/phpuint/"><i class="far fa-folder fa-fw"></i>phpuint</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-05">2021-09-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 836 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-05">2021-09-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 840 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id="/2021/09/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1/" class="leancloud_visitors" data-flag-title="在hyperf框架的2.2版本的单元测试开启db的事务">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -142,7 +142,13 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#如何在hyperf的testcase中开启mysql的事务处理">如何在hyperf的testcase中开启mysql的事务处理</a></li>
+    <li><a href="#背景-">背景 :</a></li>
+    <li><a href="#如何在hyperf的testcase中开启mysql的事务处理">如何在hyperf的testcase中开启mysql的事务处理</a>
+      <ul>
+        <li><a href="#file-testhttptestcasephp">file test/HttpTestCase.php</a></li>
+      </ul>
+    </li>
+    <li><a href="#file-testtestclientphp">file test/TestClient.php</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><img
@@ -153,10 +159,13 @@
         data-sizes="auto"
         alt="/images/posts/在hyperf框架的2.2版本的单元测试开启db的事务/img.png"
         title="/images/posts/在hyperf框架的2.2版本的单元测试开启db的事务/img.png" /></p>
-<p>背景 :
-我们团队一直在使用优秀的hyperf框架 , 并在内部推行了单元测试 , 一直使用db的事务回滚的方式在测试环境跑得很顺畅 , 这样不会有脏数据.
+<h2 id="背景-">背景 :</h2>
+<blockquote>
+<p>我们团队一直在使用优秀的hyperf框架 , 并在内部推行了单元测试 .
+一直使用db的事务回滚的方式在测试环境跑得很顺畅 , 这样不会有脏数据.
 最近它更新了2.2版本. 上周升级了下 , 发现hyperf/testing在新版2.2版本下,正常的测试用例跑不下去了 ,
 定位了一个下午发现问题所在 , 是由于没复用第一次首次初始化的db连接导致的, 考虑到项目比较急 , 没把握一时半会处理完,就先退回2.1版本去了.2版本</p>
+</blockquote>
 <p>今天下午抽了个空把问题修完 , 记录下.</p>
 <h2 id="如何在hyperf的testcase中开启mysql的事务处理">如何在hyperf的testcase中开启mysql的事务处理</h2>
 <p>最终处理方式</p>
@@ -166,6 +175,7 @@
 <li>在testClient的协程上下文切换的时候 , 塞入已经开启好事务的db连接到到容器中</li>
 </ol>
 </blockquote>
+<h3 id="file-testhttptestcasephp">file test/HttpTestCase.php</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -294,7 +304,8 @@
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div><h2 id="file-testtestclientphp">file test/TestClient.php</h2>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
