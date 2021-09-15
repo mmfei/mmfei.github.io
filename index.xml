@@ -4,9 +4,18 @@
         <link>https://mmfei.com/</link>
         <description>木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sun, 05 Sep 2021 18:38:39 &#43;0800</lastBuildDate>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 15 Sep 2021 22:30:19 &#43;0800</lastBuildDate>
             <atom:link href="https://mmfei.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>用mediainfo代替ffmpeg读取视频文件的毫秒级的时长</title>
+    <link>https://mmfei.com/2021/09/%E7%94%A8mediainfo%E4%BB%A3%E6%9B%BFffmpeg%E8%AF%BB%E5%8F%96%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%AB%E7%A7%92%E7%BA%A7%E7%9A%84%E6%97%B6%E9%95%BF/</link>
+    <pubDate>Wed, 15 Sep 2021 22:30:19 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/09/%E7%94%A8mediainfo%E4%BB%A3%E6%9B%BFffmpeg%E8%AF%BB%E5%8F%96%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%AB%E7%A7%92%E7%BA%A7%E7%9A%84%E6%97%B6%E9%95%BF/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e7%94%a8mediainfo%e4%bb%a3%e6%9b%bfffmpeg%e8%af%bb%e5%8f%96%e8%a7%86%e9%a2%91%e6%96%87%e4%bb%b6%e7%9a%84%e6%af%ab%e7%a7%92%e7%ba%a7%e7%9a%84%e6%97%b6%e9%95%bf/featuredImage.png" referrerpolicy="no-referrer">
+            </div>背景: 由于我们有个功能需要把用户库中的视频文件播放时长的毫秒数读取出来并入库. 经过调研以及对大名鼎鼎的ffmpeg的信仰 , 果断选了ffmpe]]></description>
+</item><item>
     <title>在hyperf框架的2.2版本的单元测试开启db的事务</title>
     <link>https://mmfei.com/2021/09/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1/</link>
     <pubDate>Sun, 05 Sep 2021 18:38:39 &#43;0800</pubDate>
@@ -87,14 +96,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e5%a6%82%e4%bd%95%e5%9c%a8vscode%e7%bc%96%e8%be%91%e5%99%a8%e4%b8%ad%e9%80%9a%e8%bf%87xdebug%e8%b0%83%e8%af%95%e5%9c%a8docker%e7%9a%84%e8%bf%90%e8%a1%8c%e7%9a%84%e6%9c%8d%e5%8a%a1/img.png" referrerpolicy="no-referrer">
             </div>https://github.com/oh-my-docker-hub/oh-my-docker/blob/master/build/php7/README.php7.md docker hub : omydockerhub/php7 如何Debug容器里面运行的php服务 配置好xdebug 1 2 3 4 5 6 7 8 9 10 11 12 ; conf/conf.d/docker-php-ext-xdebug.ini ; 此文件映射到 /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini [XDebug] xdebug.default_enable=1 xdebug.remote_enable=1 xdebug.remot]]></description>
-</item><item>
-    <title>Mac环境安装grpc的php客户端</title>
-    <link>https://mmfei.com/2021/06/mac%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85grpc%E7%9A%84php%E5%AE%A2%E6%88%B7%E7%AB%AF/</link>
-    <pubDate>Tue, 22 Jun 2021 11:28:31 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2021/06/mac%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85grpc%E7%9A%84php%E5%AE%A2%E6%88%B7%E7%AB%AF/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/mac%e7%8e%af%e5%a2%83%e5%ae%89%e8%a3%85grpc%e7%9a%84php%e5%ae%a2%e6%88%b7%e7%ab%af/featuredImage.png" referrerpolicy="no-referrer">
-            </div>1 2 3 4 pecl install grpc pecl install protobuf php -m | grep grpc php -m | grep protobuf 安装超好用的grpc客户端EVANS https://github.com/ktr0731/evans 安装 1 2 brew tap ktr0731/evans brew install evans]]></description>
 </item></channel>
 </rss>
