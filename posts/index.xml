@@ -4,7 +4,16 @@
         <link>https://mmfei.com/posts/</link>
         <description>所有文章 | 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 15 Sep 2021 22:30:19 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 06 Oct 2021 23:00:38 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Mac通过brew安装php7.4&#43;swoole</title>
+    <link>https://mmfei.com/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/</link>
+    <pubDate>Wed, 06 Oct 2021 23:00:38 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/mac%e9%80%9a%e8%bf%87brew%e5%ae%89%e8%a3%85php7.4&#43;swoole/featuredImage.png" referrerpolicy="no-referrer">
+            </div>1 2 3 4 5 brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole 这里会有三四个询问确认的 , 需要注意的是 ssl那个选项 , 要选择 yes --with-openssl-dir=/usr/local/opt/openssl@1.1 启动php服务进行调试(要带-e参数]]></description>
+</item><item>
     <title>用mediainfo代替ffmpeg读取视频文件的毫秒级的时长</title>
     <link>https://mmfei.com/2021/09/%E7%94%A8mediainfo%E4%BB%A3%E6%9B%BFffmpeg%E8%AF%BB%E5%8F%96%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%AB%E7%A7%92%E7%BA%A7%E7%9A%84%E6%97%B6%E9%95%BF/</link>
     <pubDate>Wed, 15 Sep 2021 22:30:19 &#43;0800</pubDate>
@@ -85,14 +94,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e4%bd%bf%e7%94%a8gitlab-ci%e8%87%aa%e5%8a%a8%e9%83%a8%e7%bd%b2php%e6%9c%8d%e5%8a%a1%e7%9a%84openapi%e6%8e%a5%e5%8f%a3%e6%96%87%e6%a1%a3/img.png" referrerpolicy="no-referrer">
             </div>前端后端交互流程 前后端频繁通过接口对接 , 维护一个真实的api文档是非常有必要的, 但是这也是一个繁重的工作. 如果你是使用 php(hyperf) + gitlab(托管]]></description>
-</item><item>
-    <title>如何在vscode编辑器中通过xdebug调试在docker的运行的服务</title>
-    <link>https://mmfei.com/2021/06/%E5%A6%82%E4%BD%95%E5%9C%A8vscode%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%AD%E9%80%9A%E8%BF%87xdebug%E8%B0%83%E8%AF%95%E5%9C%A8docker%E7%9A%84%E8%BF%90%E8%A1%8C%E7%9A%84%E6%9C%8D%E5%8A%A1/</link>
-    <pubDate>Tue, 22 Jun 2021 18:58:51 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2021/06/%E5%A6%82%E4%BD%95%E5%9C%A8vscode%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%AD%E9%80%9A%E8%BF%87xdebug%E8%B0%83%E8%AF%95%E5%9C%A8docker%E7%9A%84%E8%BF%90%E8%A1%8C%E7%9A%84%E6%9C%8D%E5%8A%A1/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/%e5%a6%82%e4%bd%95%e5%9c%a8vscode%e7%bc%96%e8%be%91%e5%99%a8%e4%b8%ad%e9%80%9a%e8%bf%87xdebug%e8%b0%83%e8%af%95%e5%9c%a8docker%e7%9a%84%e8%bf%90%e8%a1%8c%e7%9a%84%e6%9c%8d%e5%8a%a1/img.png" referrerpolicy="no-referrer">
-            </div>https://github.com/oh-my-docker-hub/oh-my-docker/blob/master/build/php7/README.php7.md docker hub : omydockerhub/php7 如何Debug容器里面运行的php服务 配置好xdebug 1 2 3 4 5 6 7 8 9 10 11 12 ; conf/conf.d/docker-php-ext-xdebug.ini ; 此文件映射到 /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini [XDebug] xdebug.default_enable=1 xdebug.remote_enable=1 xdebug.remot]]></description>
 </item></channel>
 </rss>
