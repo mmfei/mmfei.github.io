@@ -2,7 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://mmfei.com/categories/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://mmfei.com/categories/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://mmfei.com/en/categories/"
@@ -11,17 +11,17 @@
                     hreflang="zh-cn"
                     href="https://mmfei.com/categories/"
                     /></url><url>
-            <loc>https://mmfei.com/tags/debug/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/categories/debug/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/mac/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/categories/mac/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/php/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/categories/php/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/posts/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/swoole/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/categories/swoole/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://mmfei.com/tags/debug/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/debug/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/mac/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/mac/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/php/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/php/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/posts/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/swoole/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/swoole/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://mmfei.com/en/tags/"
@@ -30,8 +30,8 @@
                     hreflang="zh-cn"
                     href="https://mmfei.com/tags/"
                     /></url><url>
-            <loc>https://mmfei.com/tags/yasd/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://mmfei.com/tags/yasd/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://mmfei.com/en/"
@@ -40,24 +40,24 @@
                     hreflang="zh-cn"
                     href="https://mmfei.com/"
                     /></url><url>
-            <loc>https://mmfei.com/tags/centos/</loc><lastmod>2021-09-15T22:30:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://mmfei.com/categories/centos/</loc><lastmod>2021-09-15T22:30:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://mmfei.com/tags/ffmpeg/</loc><lastmod>2021-09-15T22:30:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://mmfei.com/categories/ffmpeg/</loc><lastmod>2021-09-15T22:30:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://mmfei.com/tags/mediainfo/</loc><lastmod>2021-09-15T22:30:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://mmfei.com/categories/mediainfo/</loc><lastmod>2021-09-15T22:30:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://mmfei.com/2021/09/%E7%94%A8mediainfo%E4%BB%A3%E6%9B%BFffmpeg%E8%AF%BB%E5%8F%96%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%AB%E7%A7%92%E7%BA%A7%E7%9A%84%E6%97%B6%E9%95%BF/</loc><lastmod>2021-09-15T22:30:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://mmfei.com/tags/hyperf/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://mmfei.com/categories/hyperf/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://mmfei.com/tags/phpuint/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://mmfei.com/categories/phpuint/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://mmfei.com/tags/testing/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://mmfei.com/categories/testing/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://mmfei.com/tags/unittest/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://mmfei.com/categories/unittest/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://mmfei.com/tags/%E4%BA%8B%E5%8A%A1/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://mmfei.com/tags/%E5%8D%8F%E7%A8%8B/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://mmfei.com/2021/09/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
+            <loc>https://mmfei.com/tags/centos/</loc><lastmod>2021-09-15T22:30:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/centos/</loc><lastmod>2021-09-15T22:30:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/ffmpeg/</loc><lastmod>2021-09-15T22:30:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/ffmpeg/</loc><lastmod>2021-09-15T22:30:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/mediainfo/</loc><lastmod>2021-09-15T22:30:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/mediainfo/</loc><lastmod>2021-09-15T22:30:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/2021/09/%E7%94%A8mediainfo%E4%BB%A3%E6%9B%BFffmpeg%E8%AF%BB%E5%8F%96%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%AB%E7%A7%92%E7%BA%A7%E7%9A%84%E6%97%B6%E9%95%BF/</loc><lastmod>2021-09-15T22:30:19&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/hyperf/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/hyperf/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/phpuint/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/phpuint/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/testing/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/testing/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/unittest/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/unittest/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/%E4%BA%8B%E5%8A%A1/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/%E5%8D%8F%E7%A8%8B/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/2021/09/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1/</loc><lastmod>2021-09-05T18:38:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/2021/08/%E5%9C%A8centos8%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85ffmpeg/</loc><lastmod>2021-08-23T20:05:44&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/tags/macbook/</loc><lastmod>2021-08-11T20:43:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/categories/macbook/</loc><lastmod>2021-08-11T20:43:39&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
