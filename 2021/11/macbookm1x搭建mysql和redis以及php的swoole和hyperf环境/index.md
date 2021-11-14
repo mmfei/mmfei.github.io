@@ -28,4 +28,8 @@ make install;
 brew install iTerm2
 brew install hugo;
 brew install bat;
+
+# 软件
+# phpstorm , vscode , wechat , qq, surge , wps , android studio , chrome , docker, sequal ace,redis-pro
 ```
+
