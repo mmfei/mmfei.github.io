@@ -4,7 +4,16 @@
         <link>https://mmfei.com/posts/</link>
         <description>所有文章 | 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 06 Oct 2021 23:00:38 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sun, 14 Nov 2021 01:59:47 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>MacBookM1X搭建mysql和redis以及php的swoole和hyperf环境</title>
+    <link>https://mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/</link>
+    <pubDate>Sun, 14 Nov 2021 01:59:47 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/MacBookM1X%e6%90%ad%e5%bb%bamysql%e5%92%8credis%e4%bb%a5%e5%8f%8aphp%e7%9a%84swoole%e5%92%8chyperf%e7%8e%af%e5%a2%83/featuredImage.png" referrerpolicy="no-referrer">
+            </div>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole brew install boost; # 在m1x环境 , yasd在编译的时候会找不到这个boost依赖 , 解]]></description>
+</item><item>
     <title>Mac通过brew安装php7.4&#43;swoole</title>
     <link>https://mmfei.com/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/</link>
     <pubDate>Wed, 06 Oct 2021 23:00:38 &#43;0800</pubDate>
@@ -85,14 +94,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e4%bf%9d%e7%95%99%e6%9c%80%e6%96%b0n%e4%b8%aa%e6%96%87%e4%bb%b6%e7%9a%84bash%e8%84%9a%e6%9c%ac/img.png" referrerpolicy="no-referrer">
             </div>保留最新n个文件的bash脚本 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 #!/bin/sh usage() { echo &#34;Usage: $0dir&#34; echo &#34;Usage: $0dir save_number&#34; echo &#34;Usage: $0dir save_number keyword&#34; exit 1 } if [ $# -lt 1]]></description>
-</item><item>
-    <title>使用gitlab-ci自动部署php服务的openapi接口文档</title>
-    <link>https://mmfei.com/2021/06/%E4%BD%BF%E7%94%A8gitlab-ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2php%E6%9C%8D%E5%8A%A1%E7%9A%84openapi%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/</link>
-    <pubDate>Tue, 22 Jun 2021 18:59:34 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2021/06/%E4%BD%BF%E7%94%A8gitlab-ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2php%E6%9C%8D%E5%8A%A1%E7%9A%84openapi%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/%e4%bd%bf%e7%94%a8gitlab-ci%e8%87%aa%e5%8a%a8%e9%83%a8%e7%bd%b2php%e6%9c%8d%e5%8a%a1%e7%9a%84openapi%e6%8e%a5%e5%8f%a3%e6%96%87%e6%a1%a3/img.png" referrerpolicy="no-referrer">
-            </div>前端后端交互流程 前后端频繁通过接口对接 , 维护一个真实的api文档是非常有必要的, 但是这也是一个繁重的工作. 如果你是使用 php(hyperf) + gitlab(托管]]></description>
 </item></channel>
 </rss>
