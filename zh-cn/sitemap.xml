@@ -2,7 +2,12 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://mmfei.com/categories/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://mmfei.com/tags/avi/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/base64/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/bash/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/categories/bash/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/bmp/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/categories/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://mmfei.com/en/categories/"
@@ -11,20 +16,19 @@
                     hreflang="zh-cn"
                     href="https://mmfei.com/categories/"
                     /></url><url>
-            <loc>https://mmfei.com/categories/deploy/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/hyperf/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/m1x/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/categories/mac/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/macbook/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/mysql/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/categories/mysql/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/php/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/categories/php/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/posts/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/redis/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/swoole/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://mmfei.com/tags/ico/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/image/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/jpeg/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/jpg/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/json/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/categories/json/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/mp3/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/mp4/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/png/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/posts/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/shell/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/categories/shell/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://mmfei.com/en/tags/"
@@ -33,7 +37,9 @@
                     hreflang="zh-cn"
                     href="https://mmfei.com/tags/"
                     /></url><url>
-            <loc>https://mmfei.com/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://mmfei.com/categories/tools/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/video/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://mmfei.com/en/"
@@ -42,6 +48,19 @@
                     hreflang="zh-cn"
                     href="https://mmfei.com/"
                     /></url><url>
+            <loc>https://mmfei.com/2022/01/%E8%BD%AC%E6%8D%A2%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E8%A7%86%E9%A2%91%E4%B8%BAbase64%E7%9A%84json/</loc><lastmod>2022-01-03T17:27:31&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/categories/deploy/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/hyperf/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/m1x/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/mac/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/macbook/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/mysql/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/mysql/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/php/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/php/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/redis/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/swoole/</loc><lastmod>2021-11-14T01:59:47&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/tags/debug/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/categories/debug/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/tags/mac/</loc><lastmod>2021-10-06T23:00:38&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
@@ -96,12 +115,8 @@
             <loc>https://mmfei.com/tags/%E5%A4%87%E4%BB%BD/</loc><lastmod>2021-06-29T21:09:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/categories/%E5%A4%87%E4%BB%BD/</loc><lastmod>2021-06-29T21:09:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/2021/06/%E6%AF%8F%E6%97%A5%E5%A4%87%E4%BB%BDdocker%E9%83%A8%E7%BD%B2%E7%9A%84gitlab%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%9C%80%E7%AE%80%E5%8D%95%E6%96%B9%E6%A1%88/</loc><lastmod>2021-06-29T21:09:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://mmfei.com/tags/bash/</loc><lastmod>2021-06-29T20:12:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://mmfei.com/categories/bash/</loc><lastmod>2021-06-29T20:12:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/tags/script/</loc><lastmod>2021-06-29T20:12:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/categories/script/</loc><lastmod>2021-06-29T20:12:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://mmfei.com/tags/shell/</loc><lastmod>2021-06-29T20:12:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://mmfei.com/categories/shell/</loc><lastmod>2021-06-29T20:12:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/2021/06/%E4%BF%9D%E7%95%99%E6%9C%80%E6%96%B0n%E4%B8%AA%E6%96%87%E4%BB%B6%E7%9A%84bash%E8%84%9A%E6%9C%AC/</loc><lastmod>2021-06-29T20:12:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/tags/%E8%84%9A%E6%9C%AC/</loc><lastmod>2021-06-29T20:12:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/categories/%E8%84%9A%E6%9C%AC/</loc><lastmod>2021-06-29T20:12:27&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>

@@ -33,3 +33,12 @@ brew install bat;
 # phpstorm , vscode , wechat , qq, surge , wps , android studio , chrome , docker, sequal ace,redis-pro
 ```
 
+# swoole
+```shell
+wget https://github.com/swoole/swoole-src/archive/refs/tags/v4.5.11.tar.gz -O swoole.v4.5.11.tar.gz
+tar xvzf swoole.v4.5.11.tar.gz;
+cd swoole-src-4.5.11;
+./configure
+make && make install;
+```
+

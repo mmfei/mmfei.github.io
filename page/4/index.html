@@ -120,6 +120,20 @@
         alt="/images/avatar.jpg"
         title="/images/avatar.jpg" /></a></div><h1 class="home-title">木木飞</h1><div class="links"><a href="https://github.com/mmfei" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href="https://twitter.com/mmfei" title="Twitter" target="_blank" rel="noopener noreffer me"><i class="fab fa-twitter fa-fw"></i></a><a href="https://www.instagram.com/daffy_weng" title="Instagram" target="_blank" rel="noopener noreffer me"><i class="fab fa-instagram fa-fw"></i></a><a href="https://facebook.com/mmfei" title="facebook" target="_blank" rel="noopener noreffer me"><i class="fab fa-facebook fa-fw"></i></a><a href="https://t.me/mmfei" title="Telegram" target="_blank" rel="noopener noreffer me"><i class="fab fa-telegram-plane fa-fw"></i></a><a href="mailto:wlfkongl@gmail.com" title="Email" rel=" me"><i class="far fa-envelope fa-fw"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
+            <a href="/2021/05/centos8%E6%90%AD%E5%BB%BAgitlab%E5%92%8Cgitlab-runner/"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/centos8%e6%90%ad%e5%bb%bagitlab%e7%9a%84gitlab-runner/featuredImage.png"
+        data-srcset="/images/posts/centos8%e6%90%ad%e5%bb%bagitlab%e7%9a%84gitlab-runner/featuredImage.png, /images/posts/centos8%e6%90%ad%e5%bb%bagitlab%e7%9a%84gitlab-runner/featuredImage.png 1.5x, /images/posts/centos8%e6%90%ad%e5%bb%bagitlab%e7%9a%84gitlab-runner/featuredImage.png 2x"
+        data-sizes="auto"
+        alt="/images/posts/centos8搭建gitlab的gitlab-runner/featuredImage.png"
+        title="/images/posts/centos8搭建gitlab的gitlab-runner/featuredImage.png" /></a>
+        </div><h1 class="single-title" itemprop="name headline">
+        <a href="/2021/05/centos8%E6%90%AD%E5%BB%BAgitlab%E5%92%8Cgitlab-runner/">Centos8搭建gitlab和gitlab-Runner</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-05-29">2021-05-29</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/centos/"><i class="far fa-folder fa-fw"></i>centos</a>&nbsp;<a href="/categories/deploy/"><i class="far fa-folder fa-fw"></i>deploy</a>&nbsp;<a href="/categories/gitlab/"><i class="far fa-folder fa-fw"></i>gitlab</a>&nbsp;<a href="/categories/docker/"><i class="far fa-folder fa-fw"></i>docker</a></span></div><div class="content">docker-compose.yml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 version:&#39;3&#39;services:gitlab.abc.com:container_name:gitlab.abc.comimage:gitlab/gitlab-ce:latest# image: gitlab/gitlab-ce:11.0.1-ce.0restart:alwaysprivileged:trueenvironment:GITLAB_OMNIBUS_CONFIG:|external_url &#39;https://gitlab.abc.com&#39; gitlab_rails[&#39;time_zone&#39;] = &#39;Asia/Shanghai&#39; nginx[&#39;enable&#39;] = false prometheus_monitoring[&#39;enable&#39;] = false gitlab_workhorse[&#39;listen_network&#39;] = &#34;tcp&#34; gitlab_workhorse[&#39;listen_addr&#39;] = &#34;:19900&#34; gitlab_rails[&#39;gitlab_shell_ssh_port&#39;] = 19901ports:- &#34;19900:19900&#34;- &#34;19901:22&#34;- &#34;19091:9090&#34;volumes:- &#34;./ssl:/etc/gitlab/ssl&#34;- &#34;/data/gitlab.abc.com/config:/etc/gitlab:rw&#34;- &#34;/data/gitlab.abc.com/logs:/var/log/gitlab:rw&#34;- &#34;/data/gitlab.abc.com/data:/var/opt/gitlab:rw&#34;- &#34;/data/gitlab.abc.com/backups:/var/opt/gitlab/backups:rw&#34;gitlab-runner:restart:alwaysimage:gitlab/gitlab-runnerdepends_on:- gitlab.abc.comvolumes:- /data/gitlab/gitlab-runner/config:/etc/gitlab-runner:Z-</div><div class="post-footer">
+        <a href="/2021/05/centos8%E6%90%AD%E5%BB%BAgitlab%E5%92%8Cgitlab-runner/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/centos/">centos</a>,&nbsp;<a href="/tags/docker/">docker</a>,&nbsp;<a href="/tags/gitlab/">gitlab</a>,&nbsp;<a href="/tags/docker-compose/">docker-compose</a>,&nbsp;<a href="/tags/gitlab-runner/">gitlab-runner</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
             <a href="/2021/05/macbookmamp%E5%A5%97%E4%BB%B6%E5%AE%89%E8%A3%85yasd%E6%89%A9%E5%B1%95%E8%B0%83%E8%AF%95swoole%E5%92%8Chyperf%E4%BB%A3%E7%A0%81/"><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -189,20 +203,6 @@
     </h1><div class="post-meta"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-05-26">2021-05-26</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>Linux</a></span></div><div class="content">如何升级centos的内核版本 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 rpm -import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm # list all kernel yum --disablerepo=&#34;*&#34; --enablerepo=&#34;elrepo-kernel&#34; list # use newest kernel yum --enablerepo=elrepo-kernel -y install</div><div class="post-footer">
         <a href="/2021/05/%E5%A6%82%E4%BD%95%E5%8D%87%E7%BA%A7centos%E7%9A%84%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/linux/">linux</a>,&nbsp;<a href="/tags/kernel/">kernel</a>,&nbsp;<a href="/tags/centos/">centos</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
-            <a href="/2021/05/centos_install_bat_a_better_cat/"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/images/posts/centos_install_bat_a_better_cat/img.png"
-        data-srcset="/images/posts/centos_install_bat_a_better_cat/img.png, /images/posts/centos_install_bat_a_better_cat/img.png 1.5x, /images/posts/centos_install_bat_a_better_cat/img.png 2x"
-        data-sizes="auto"
-        alt="/images/posts/centos_install_bat_a_better_cat/img.png"
-        title="/images/posts/centos_install_bat_a_better_cat/img.png" /></a>
-        </div><h1 class="single-title" itemprop="name headline">
-        <a href="/2021/05/centos_install_bat_a_better_cat/">Centos_install_bat_a_better_cat</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-05-26">2021-05-26</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/install/"><i class="far fa-folder fa-fw"></i>install</a></span></div><div class="content">install in centos 1 2 3 4 5  #!/bin/sh URL=https://github.com/sharkdp/bat/releases/download/v0.18.1/bat-v0.18.1-x86_64-unknown-linux-musl.tar.gz wget -c -O bat.tar.gz $URL; tar -xvzf bat.tar.gz -C /usr/local; ln -s /usr/local/bat-v0.18.1-x86_64-unknown-linux-musl/bat /usr/local/bin/bat   </div><div class="post-footer">
-        <a href="/2021/05/centos_install_bat_a_better_cat/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/centos/">centos</a>,&nbsp;<a href="/tags/bat/">bat</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -226,7 +226,7 @@
                 </li></ul></div></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://mmfei.com" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://mmfei.com" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
         </div>
     </footer></div>
