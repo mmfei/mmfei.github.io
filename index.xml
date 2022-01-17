@@ -13,7 +13,7 @@
     <author>作者</author>
     <guid>https://mmfei.com/2022/01/%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84centos%E5%AE%89%E8%A3%85docker-compose/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/%e9%98%bf%e9%87%8c%e4%ba%91%e7%9a%84centos%e5%ae%89%e8%a3%85docker-Compose/christopher-gower.jpg" referrerpolicy="no-referrer">
+                <img src="/images/posts/%e9%98%bf%e9%87%8c%e4%ba%91%e7%9a%84centos%e5%ae%89%e8%a3%85dockerCompose/christophergower.jpg" referrerpolicy="no-referrer">
             </div>1 2 3 yum install docker curl -L &#34;https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)&#34; -o /usr/local/bin/docker-compose chmod +x /usr/local/bin/docker-compose]]></description>
 </item><item>
     <title>转换本地图片视频为base64的json</title>
