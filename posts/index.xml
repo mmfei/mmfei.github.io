@@ -4,7 +4,16 @@
         <link>https://mmfei.com/posts/</link>
         <description>所有文章 | 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Mon, 03 Jan 2022 17:27:31 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Mon, 17 Jan 2022 20:01:47 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>阿里云的centos安装docker Compose</title>
+    <link>https://mmfei.com/2022/01/%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84centos%E5%AE%89%E8%A3%85docker-compose/</link>
+    <pubDate>Mon, 17 Jan 2022 20:01:47 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2022/01/%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84centos%E5%AE%89%E8%A3%85docker-compose/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e9%98%bf%e9%87%8c%e4%ba%91%e7%9a%84centos%e5%ae%89%e8%a3%85docker%20Compose/christopher-gower.jpg" referrerpolicy="no-referrer">
+            </div>1 2 3 yum install docker curl -L &#34;https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)&#34; -o /usr/local/bin/docker-compose chmod +x /usr/local/bin/docker-compose]]></description>
+</item><item>
     <title>转换本地图片视频为base64的json</title>
     <link>https://mmfei.com/2022/01/%E8%BD%AC%E6%8D%A2%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E8%A7%86%E9%A2%91%E4%B8%BAbase64%E7%9A%84json/</link>
     <pubDate>Mon, 03 Jan 2022 17:27:31 &#43;0800</pubDate>
@@ -85,14 +94,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e6%90%ad%e5%bb%barobot-framework-ride%e6%b5%8b%e8%af%95%e6%a1%86%e6%9e%b6/featuredImage.png" referrerpolicy="no-referrer">
             </div>方案1 (直接本地安装) 1 2 3 4 5 6 7 8 9 10 # pip install -U robotframework pip install -U -r https://raw.githubusercontent.com/robotframework/RIDE/master/requirements.txt pip install -U robotframework-ride mkdir project; cd project; pipenv --three pipenv install robotframework-ride robotframework-ride 方案2 (docker方案 , 容器运行ride.py +]]></description>
-</item><item>
-    <title>每日备份docker部署的gitlab服务的最简单方案</title>
-    <link>https://mmfei.com/2021/06/%E6%AF%8F%E6%97%A5%E5%A4%87%E4%BB%BDdocker%E9%83%A8%E7%BD%B2%E7%9A%84gitlab%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%9C%80%E7%AE%80%E5%8D%95%E6%96%B9%E6%A1%88/</link>
-    <pubDate>Tue, 29 Jun 2021 21:09:34 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2021/06/%E6%AF%8F%E6%97%A5%E5%A4%87%E4%BB%BDdocker%E9%83%A8%E7%BD%B2%E7%9A%84gitlab%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%9C%80%E7%AE%80%E5%8D%95%E6%96%B9%E6%A1%88/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/%e6%af%8f%e6%97%a5%e5%a4%87%e4%bb%bddocker%e9%83%a8%e7%bd%b2%e7%9a%84gitlab%e6%9c%8d%e5%8a%a1%e7%9a%84%e6%9c%80%e7%ae%80%e5%8d%95%e6%96%b9%e6%a1%88/img.png" referrerpolicy="no-referrer">
-            </div>每日备份docker部署的gitlab服务的最简单的方案 , 简单直接 gitlab的服务器每日执行下备份 另一台服务器每日从gitlab服务器rs]]></description>
 </item></channel>
 </rss>
