@@ -2,15 +2,25 @@
 
 ## 方法一: 源码安装
 ```shell
-FFMPEG_VERSION="5.0";
-YASM_VERSION='1.3.0';
+YASM_VERSION=1.3.0;
 
 pwd=`pwd`;
+
+cd $pwd;
+git clone https://code.videolan.org/videolan/x264.git;
+cd x264;
+./configure --enable-shared --enable-static --disable-asm && make && make install;
+echo '/usr/local/lib' >> /etc/ld.so.conf;
+ldconfig;
+
+
 cd $pwd;
 wget http://www.tortall.net/projects/yasm/releases/yasm-$YASM_VERSION.tar.gz;
 tar -xvf yasm-$YASM_VERSION.tar.gz;
 cd yasm-$YASM_VERSION;
 ./configure && make -j 4 && sudo make install
+
+FFMPEG_VERSION="5.0";
 
 cd $pwd;
 
@@ -19,9 +29,12 @@ wget http://www.ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.gz
 tar -xvf ffmpeg-$FFMPEG_VERSION.tar.gz
 
 cd ffmpeg-$FFMPEG_VERSION/
-./configure && make && make install
+./configure --prefix=/usr/local/ffmpeg --enable-gpl --enable-libx264 && make && make install
 
-ffmpeg -version
+/usr/local/ffmpeg/bin/ffmpeg -version
+/usr/local/ffmpeg/bin/ffprobe -version
+
+
 
 
 ```
