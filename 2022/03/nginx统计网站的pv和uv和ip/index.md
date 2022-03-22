@@ -3,8 +3,7 @@
 
 ```nginx
 # nginx 配置
-log_format tongji '$remote_addr - [$time_iso8601]  "$request" '
-                        ' - $status "User_Cookie:$guid" ';
+log_format tongji '$remote_addr - [$time_iso8601]  "$request" '' - $status "User_Cookie:$guid" ';
                         
  server {
     listen      80;
