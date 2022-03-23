@@ -11,7 +11,7 @@
     <author>作者</author>
     <guid>https://mmfei.com/2022/03/centos8%E5%AE%89%E8%A3%85chromedriver/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/Centos8%e5%ae%89%e8%a3%85chromedriver/featuredImage.png" referrerpolicy="no-referrer">
+                <img src="/images/posts/centos8%e5%ae%89%e8%a3%85chromedriver/featuredImage.png" referrerpolicy="no-referrer">
             </div>1 2 3 4 5 6 7 yum install google-chrome-stable pip install selenium yum install chromedriver.x86_64 # 如果版本不一致 , 则找到对应的版本 wget http://chromedriver.storage.googleapis.com/99.0.4844.51/chromedriver_linux64.zip; unzip chromedriver.zip]]></description>
 </item><item>
     <title>Nginx统计网站的pv和uv和ip</title>
