@@ -6,7 +6,7 @@
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>Mac通过brew安装php7.4&#43;swoole - 木木飞</title><meta name="Description" content="木木飞"><meta property="og:title" content="Mac通过brew安装php7.4&#43;swoole" />
-<meta property="og:description" content="brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole 这里会有三四个询问确认的 , 需要注意的是 ssl那个选项 , 要选择 yes --with-openssl-dir=/usr/local/opt/openssl@1.1 启动php服务进行调试(要带-e参数) &gt; php -e test.php" />
+<meta property="og:description" content="1 2 3 4 5 brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole 这里会有三四个询问确认的 , 需要注意的是 ssl那个选项 , 要选择 yes --with-openssl-dir=/usr/local/opt/openssl@1.1 启动php服务进行调试(要带-e参数" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mmfei.com/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/" /><meta property="og:image" content="https://mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-10-06T23:00:38&#43;08:00" />
@@ -16,7 +16,7 @@
 <meta name="twitter:image" content="https://mmfei.com/images/avatar.jpg"/>
 
 <meta name="twitter:title" content="Mac通过brew安装php7.4&#43;swoole"/>
-<meta name="twitter:description" content="brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole 这里会有三四个询问确认的 , 需要注意的是 ssl那个选项 , 要选择 yes --with-openssl-dir=/usr/local/opt/openssl@1.1 启动php服务进行调试(要带-e参数) &gt; php -e test.php"/>
+<meta name="twitter:description" content="1 2 3 4 5 brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole 这里会有三四个询问确认的 , 需要注意的是 ssl那个选项 , 要选择 yes --with-openssl-dir=/usr/local/opt/openssl@1.1 启动php服务进行调试(要带-e参数"/>
 <meta name="application-name" content="木木飞">
 <meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/mmfei.com\/2021\/10\/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "debug, yasd, swoole, php, mac","wordcount":  359 ,
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "debug, yasd, swoole, php, mac","wordcount":  374 ,
         "url": "https:\/\/mmfei.com\/2021\/10\/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole\/","datePublished": "2021-10-06T23:00:38+08:00","dateModified": "2021-10-06T23:00:38+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
@@ -124,7 +124,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Mac通过brew安装php7.4&#43;swoole</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mac/"><i class="far fa-folder fa-fw"></i>mac</a>&nbsp;<a href="/categories/php/"><i class="far fa-folder fa-fw"></i>php</a>&nbsp;<a href="/categories/swoole/"><i class="far fa-folder fa-fw"></i>swoole</a>&nbsp;<a href="/categories/debug/"><i class="far fa-folder fa-fw"></i>debug</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-06">2021-10-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 359 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-06">2021-10-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 374 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/" class="leancloud_visitors" data-flag-title="Mac通过brew安装php7.4&#43;swoole">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -147,39 +147,73 @@
     <li><a href="#补一个hyperf22swoole-46-组合的bug">补一个hyperf2.2+swoole 4.6 组合的bug</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><pre><code class="language-bash">brew install php@7.4
+            </div><div class="content" id="content"><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">brew install php@7.4
 brew install openssl
 pecl install igbinary
 brew install redis
 pecl install swoole
-</code></pre>
-<h2 id="这里会有三四个询问确认的--需要注意的是-ssl那个选项--要选择-yes---with-openssl-dirusrlocaloptopenssl11">这里会有三四个询问确认的 , 需要注意的是 ssl那个选项 , 要选择 <code>yes --with-openssl-dir=/usr/local/opt/openssl@1.1</code></h2>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="这里会有三四个询问确认的--需要注意的是-ssl那个选项--要选择-yes---with-openssl-dirusrlocaloptopenssl11">这里会有三四个询问确认的 , 需要注意的是 ssl那个选项 , 要选择 <code>yes --with-openssl-dir=/usr/local/opt/openssl@1.1</code></h2>
 <h2 id="启动php服务进行调试要带-e参数">启动php服务进行调试(要带<code>-e</code>参数)</h2>
-<pre><code class="language-shell">&gt; php -e test.php # 如果没在ide没监听debug信息 , 会出现这段文字 , 意思是没找到监听
-[yasd] Connect IDE failed (Connection refused), please check that the IDE is in a listening state
-</code></pre>
-<h2 id="补一个hyperf22swoole-46-组合的bug">补一个hyperf2.2+swoole 4.6 组合的bug</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">&gt; php -e test.php <span class="c1"># 如果没在ide没监听debug信息 , 会出现这段文字 , 意思是没找到监听</span>
+<span class="o">[</span>yasd<span class="o">]</span> Connect IDE failed <span class="o">(</span>Connection refused<span class="o">)</span>, please check that the IDE is in a listening state
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="补一个hyperf22swoole-46-组合的bug">补一个hyperf2.2+swoole 4.6 组合的bug</h2>
 <blockquote>
 <p>hyperf 2.2 框架用了pcntl_fork函数 , 但是这个函数在swoole 4.6.0 后被禁用了.这个问题据说在linux不会出现 , 比较神奇
 如果是hyperf2.2 搭配了 swoole4.6以上版本 , 会出现很魔幻的报错:</p>
 </blockquote>
-<pre><code class="language-shell">&gt; php ./bin/hyperf.php start
-Warning: pcntl_fork() has been disabled for security reasons
-</code></pre>
-<p>我查了这个问题很久 , 网上到处说的是php的 disable_function , 实际上是swoole在协程环境下,禁用了危险参数:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">&gt; php ./bin/hyperf.php start
+Warning: pcntl_fork<span class="o">()</span> has been disabled <span class="k">for</span> security reasons
+</code></pre></td></tr></table>
+</div>
+</div><p>我查了这个问题很久 , 网上到处说的是php的 disable_function , 实际上是swoole在协程环境下,禁用了危险参数:</p>
 <pre><code>使用协程时禁用不安全功能，包括 `pcntl_fork/pcntl_wait/pcntl_waitpid/pcntl_sigtimedwait`
-</code></pre>
-<blockquote>
+</code></pre><blockquote>
 <p>解决方案就是用swoole 4.5版本的</p>
 </blockquote>
-<pre><code class="language-shell">brew install php@7.4
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">brew install php@7.4
 brew install openssl
 pecl install igbinary
 brew install redis
 pecl install install https://pecl.php.net/get/swoole-4.5.2.tgz
-yes --with-openssl-dir=/usr/local/opt/openssl@1.1
-</code></pre>
-</div><div class="post-footer" id="post-footer">
+yes --with-openssl-dir<span class="o">=</span>/usr/local/opt/openssl@1.1
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

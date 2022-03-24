@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/mmfei.com\/2021\/06\/%E4%BD%BF%E7%94%A8gitlab-ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2php%E6%9C%8D%E5%8A%A1%E7%9A%84openapi%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "openapi, postman, swagger, gitlab-ci, hyperf","wordcount":  1560 ,
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "openapi, postman, swagger, gitlab-ci, hyperf","wordcount":  1764 ,
         "url": "https:\/\/mmfei.com\/2021\/06\/%E4%BD%BF%E7%94%A8gitlab-ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2php%E6%9C%8D%E5%8A%A1%E7%9A%84openapi%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3\/","datePublished": "2021-06-22T18:59:34+08:00","dateModified": "2021-06-22T18:59:34+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
@@ -124,7 +124,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">使用gitlab-ci自动部署php服务的openapi接口文档</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/openapi/"><i class="far fa-folder fa-fw"></i>openapi</a>&nbsp;<a href="/categories/postman/"><i class="far fa-folder fa-fw"></i>postman</a>&nbsp;<a href="/categories/swagger/"><i class="far fa-folder fa-fw"></i>swagger</a>&nbsp;<a href="/categories/gitlab/"><i class="far fa-folder fa-fw"></i>gitlab</a>&nbsp;<a href="/categories/gitlab-ci/"><i class="far fa-folder fa-fw"></i>gitlab-ci</a>&nbsp;<a href="/categories/hyperf/"><i class="far fa-folder fa-fw"></i>hyperf</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-22">2021-06-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1560 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-22">2021-06-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1764 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/2021/06/%E4%BD%BF%E7%94%A8gitlab-ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2php%E6%9C%8D%E5%8A%A1%E7%9A%84openapi%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/" class="leancloud_visitors" data-flag-title="使用gitlab-ci自动部署php服务的openapi接口文档">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -170,11 +170,19 @@
 这是打造一套自动化文档系统部署的方案 (swagger-ui + openapi + php[hyperf] + nginx + gitlab-ci)
 </code></pre>
 <h3 id="hyperf增加配置">hyperf增加配置</h3>
-<pre><code class="language-shell">composer require --dev hyperf/swagger
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">composer require --dev hyperf/swagger
 php ./bin/hyperf.php gen:command SwaggerCommand
 php ./bin/hyperf.php swagger:gen
-</code></pre>
-<h3 id="搭建swagger-editor--本地使用">搭建swagger-editor  (本地使用)</h3>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="搭建swagger-editor--本地使用">搭建swagger-editor  (本地使用)</h3>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -183,12 +191,21 @@ php ./bin/hyperf.php swagger:gen
         data-sizes="auto"
         alt="/2021/06/%E4%BD%BF%E7%94%A8gitlab-ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2php%E6%9C%8D%E5%8A%A1%E7%9A%84openapi%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/images/img.png"
         title="images/img.png" /></p>
-<pre><code class="language-shell">git clone https://github.com/swagger-api/swagger-editor;
-cd swagger-editor
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">git clone https://github.com/swagger-api/swagger-editor<span class="p">;</span>
+<span class="nb">cd</span> swagger-editor
 npm install
 npm start
-</code></pre>
-<h3 id="搭建swagger-ui--可以部署到内网环境--没做账号密码保护--属于公开的">搭建swagger-ui  (可以部署到内网环境 , 没做账号密码保护 , 属于公开的!)</h3>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="搭建swagger-ui--可以部署到内网环境--没做账号密码保护--属于公开的">搭建swagger-ui  (可以部署到内网环境 , 没做账号密码保护 , 属于公开的!)</h3>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -197,63 +214,124 @@ npm start
         data-sizes="auto"
         alt="/2021/06/%E4%BD%BF%E7%94%A8gitlab-ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2php%E6%9C%8D%E5%8A%A1%E7%9A%84openapi%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/images/img_1.png"
         title="images/img_1.png" /></p>
-<pre><code class="language-shell">cd /www
-git clone https://github.com/swagger-api/swagger-ui;
-# 修改dist的读取的json配置的文件
-sed -i 's#https://petstore.swagger.io/v2/swagger.json#openapi-doc.yaml#' dist/index.html
-</code></pre>
-<blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> /www
+git clone https://github.com/swagger-api/swagger-ui<span class="p">;</span>
+<span class="c1"># 修改dist的读取的json配置的文件</span>
+sed -i <span class="s1">&#39;s#https://petstore.swagger.io/v2/swagger.json#openapi-doc.yaml#&#39;</span> dist/index.html
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
 <p>nginx配置</p>
 </blockquote>
-<pre><code class="language-nginx"># 请替换对应的域名 swagger-ui.doc.com 和 路径 /www/swagger-ui
-server {
-    listen       80;
-    server_name  swagger-ui.doc.com;
-    error_page   500 502 503 504 /50x.html;
-    root         /www/swagger-ui/dist;
-    index        index.html index.htm;
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-nginx" data-lang="nginx"><span class="c1"># 请替换对应的域名 swagger-ui.doc.com 和 路径 /www/swagger-ui
+</span><span class="c1"></span><span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span>       <span class="mi">80</span><span class="p">;</span>
+    <span class="kn">server_name</span>  <span class="s">swagger-ui.doc.com</span><span class="p">;</span>
+    <span class="kn">error_page</span>   <span class="mi">500</span> <span class="mi">502</span> <span class="mi">503</span> <span class="mi">504</span> <span class="s">/50x.html</span><span class="p">;</span>
+    <span class="kn">root</span>         <span class="s">/www/swagger-ui/dist</span><span class="p">;</span>
+    <span class="kn">index</span>        <span class="s">index.html</span> <span class="s">index.htm</span><span class="p">;</span>
 
-    access_log   /data/nginx/swagger-ui/access_$logdate.log;
-    error_log    /data/nginx/swagger-ui/error.log;
+    <span class="kn">access_log</span>   <span class="s">/data/nginx/swagger-ui/access_</span><span class="nv">$logdate.log</span><span class="p">;</span>
+    <span class="kn">error_log</span>    <span class="s">/data/nginx/swagger-ui/error.log</span><span class="p">;</span>
 
-#    return 301 https://$server_name$request_uri;
+<span class="c1">#    return 301 https://$server_name$request_uri;
+</span><span class="c1"></span>
+    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+        <span class="kn">charset</span>  <span class="no">off</span><span class="p">;</span>
 
-    location / {
-        charset  off;
+        <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="nv">$uri/</span> <span class="s">/index.html</span><span class="p">;</span>
+    <span class="p">}</span>
 
-        try_files $uri $uri/ /index.html;
-    }
+<span class="p">}</span>
 
-}
+<span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span>       <span class="mi">443</span> <span class="s">ssl</span><span class="p">;</span>
+    <span class="kn">server_name</span>  <span class="s">swagger-ui</span><span class="p">;</span>
+    <span class="kn">error_page</span>   <span class="mi">500</span> <span class="mi">502</span> <span class="mi">503</span> <span class="mi">504</span> <span class="s">/50x.html</span><span class="p">;</span>
+    <span class="kn">root</span>         <span class="s">/www/swagger-ui/dist</span><span class="p">;</span>
+    <span class="kn">index</span>        <span class="s">index.html</span> <span class="s">index.htm</span><span class="p">;</span>
 
-server {
-    listen       443 ssl;
-    server_name  swagger-ui;
-    error_page   500 502 503 504 /50x.html;
-    root         /www/swagger-ui/dist;
-    index        index.html index.htm;
+    <span class="kn">access_log</span>   <span class="s">/data/nginx/swagger-ui/access_</span><span class="nv">$logdate.log</span><span class="p">;</span>
+    <span class="kn">error_log</span>    <span class="s">/data/nginx/swagger-ui/error.log</span><span class="p">;</span>
 
-    access_log   /data/nginx/swagger-ui/access_$logdate.log;
-    error_log    /data/nginx/swagger-ui/error.log;
+    <span class="kn">ssl_session_cache</span>    <span class="s">shared:SSL:1m</span><span class="p">;</span>
+    <span class="kn">ssl_certificate</span>     <span class="s">pem/abc.com/cert.pem</span><span class="p">;</span>  <span class="c1"># pem文件的路径
+</span><span class="c1"></span>    <span class="kn">ssl_certificate_key</span>  <span class="s">pem/abc.com/key.pem</span><span class="p">;</span> <span class="c1"># key文件的路径
+</span><span class="c1"></span>
+    <span class="kn">ssl_session_timeout</span>  <span class="mi">5m</span><span class="p">;</span>    <span class="c1">#缓存有效期
+</span><span class="c1"></span>    <span class="kn">ssl_ciphers</span> <span class="s">ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4</span><span class="p">;</span>    <span class="c1">#加密算法
+</span><span class="c1"></span>    <span class="kn">ssl_protocols</span> <span class="s">TLSv1</span> <span class="s">TLSv1.1</span> <span class="s">TLSv1.2</span><span class="p">;</span>    <span class="c1">#安全链接可选的加密协议
+</span><span class="c1"></span>    <span class="kn">ssl_prefer_server_ciphers</span> <span class="no">on</span><span class="p">;</span>   <span class="c1">#使用服务器端的首选算法
+</span><span class="c1"></span>
+    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+        <span class="kn">charset</span>  <span class="no">off</span><span class="p">;</span>
 
-    ssl_session_cache    shared:SSL:1m;
-    ssl_certificate     pem/abc.com/cert.pem;  # pem文件的路径
-    ssl_certificate_key  pem/abc.com/key.pem; # key文件的路径
+        <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="nv">$uri/</span> <span class="s">/index.html</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    ssl_session_timeout  5m;    #缓存有效期
-    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;    #加密算法
-    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;    #安全链接可选的加密协议
-    ssl_prefer_server_ciphers on;   #使用服务器端的首选算法
-
-    location / {
-        charset  off;
-
-        try_files $uri $uri/ /index.html;
-    }
-
-}
-</code></pre>
-<h3 id="配置gitlab自动打包文档到项目">配置gitlab自动打包文档到项目</h3>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="配置gitlab自动打包文档到项目">配置gitlab自动打包文档到项目</h3>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -265,200 +343,403 @@ server {
 <blockquote>
 <p>配置gitlab-ci.yml</p>
 </blockquote>
-<pre><code class="language-yaml"># 这个例子是当test分支有任何提交 , 会自动生成openapi-doc.yaml , 并复制到 /www/dist/openapi-doc.yaml
-# $SWAGGER_API_JSON_FILE_NAME 生成的api的文件名字 , 如: openapi-doc.yaml
-# $SWAGGER_ROOT_DIST_PATH swagger-ui的dist所在目录, 如: /www/dist/
-stages:
-  - buildApi
-build_test_api:
-  stage: buildApi
-  script:
-    - |
-      echo &quot;git checkout ${CI_COMMIT_REF_NAME} --&quot;;
-      git checkout ${CI_COMMIT_REF_NAME} --
-      git pull
-      if [[ &quot;$WEB_ROOT_PATH&quot; == &quot;&quot; ]]; then
-        echo &quot;EMPTY VAR WEB_ROOT_PATH&quot;;
-      else
-        composer install
-        php ./bin/hyperf.php swagger:gen
-        cp $SWAGGER_API_JSON_FILE_NAME $SWAGGER_ROOT_DIST_PATH
-      fi
-  only:
-    - test
-  tags:
-    - build
-</code></pre>
-<h3 id="如何在hyperf框架下配好一个swagger文档基本信息新增一个文件apputilsswaggerutilphp">如何在hyperf框架下配好一个swagger文档基本信息(新增一个文件app/Utils/SwaggerUtil.php)</h3>
-<pre><code class="language-php">&lt;?php
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># 这个例子是当test分支有任何提交 , 会自动生成openapi-doc.yaml , 并复制到 /www/dist/openapi-doc.yaml</span><span class="w">
+</span><span class="w"></span><span class="c"># $SWAGGER_API_JSON_FILE_NAME 生成的api的文件名字 , 如: openapi-doc.yaml</span><span class="w">
+</span><span class="w"></span><span class="c"># $SWAGGER_ROOT_DIST_PATH swagger-ui的dist所在目录, 如: /www/dist/</span><span class="w">
+</span><span class="w"></span><span class="nt">stages</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="l">buildApi</span><span class="w">
+</span><span class="w"></span><span class="nt">build_test_api</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l">buildApi</span><span class="w">
+</span><span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="p">|</span><span class="sd">
+</span><span class="sd">      echo &#34;git checkout ${CI_COMMIT_REF_NAME} --&#34;;
+</span><span class="sd">      git checkout ${CI_COMMIT_REF_NAME} --
+</span><span class="sd">      git pull
+</span><span class="sd">      if [[ &#34;$WEB_ROOT_PATH&#34; == &#34;&#34; ]]; then
+</span><span class="sd">        echo &#34;EMPTY VAR WEB_ROOT_PATH&#34;;
+</span><span class="sd">      else
+</span><span class="sd">        composer install
+</span><span class="sd">        php ./bin/hyperf.php swagger:gen
+</span><span class="sd">        cp $SWAGGER_API_JSON_FILE_NAME $SWAGGER_ROOT_DIST_PATH
+</span><span class="sd">      fi</span><span class="w">      
+</span><span class="w">  </span><span class="nt">only</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">test</span><span class="w">
+</span><span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">build</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="如何在hyperf框架下配好一个swagger文档基本信息新增一个文件apputilsswaggerutilphp">如何在hyperf框架下配好一个swagger文档基本信息(新增一个文件app/Utils/SwaggerUtil.php)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="o">&lt;?</span><span class="nx">php</span>
 
-declare(strict_types=1);
-/**
- * This file is part of mydomain.
- * 这个例子支持传递一个token=?的检验参数作为账号识别
- *
- * @link     https://mydomain.com
- * @document https://doc.mydomain.com
- * @contact  it@mydomain.com
- */
-namespace App\Utils;
+<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+<span class="sd">/**
+</span><span class="sd"> * This file is part of mydomain.
+</span><span class="sd"> * 这个例子支持传递一个token=?的检验参数作为账号识别
+</span><span class="sd"> *
+</span><span class="sd"> * @link     https://mydomain.com
+</span><span class="sd"> * @document https://doc.mydomain.com
+</span><span class="sd"> * @contact  it@mydomain.com
+</span><span class="sd"> */</span>
+<span class="k">namespace</span> <span class="nx">App\Utils</span><span class="p">;</span>
 
-use OpenApi\Annotations as OA;
+<span class="k">use</span> <span class="nx">OpenApi\Annotations</span> <span class="k">as</span> <span class="nx">OA</span><span class="p">;</span>
 
-/**
- * 文档生成器注解.
- *
- * @OA\Info(title=&quot;mydomain&quot;, version=&quot;0.1&quot;)
- * @OA\Server(url=&quot;https://api.mydomain.com&quot;, description=&quot;正式环境(慎用)[https]&quot;)
- * @OA\Server(url=&quot;http://127.0.0.1:9601&quot;, description=&quot;开发环境(本地)&quot;)
- * @OA\SecurityScheme(
- *     securityScheme=&quot;tpToken&quot;,
- *     type=&quot;apiKey&quot;,
- *     in=&quot;query&quot;,
- *     name=&quot;token&quot;
- * )
- * @OA\Schema(
- *     schema=&quot;ApiSuccessResponse&quot;,
- *     type=&quot;object&quot;,
- *     description=&quot;{&quot;&quot;code&quot;&quot;: 200,&quot;&quot;data&quot;&quot;: {},&quot;&quot;msg&quot;&quot;: &quot;&quot;&quot;&quot;,&quot;&quot;time&quot;&quot;: 1624432870}&quot;,
- *     properties={
- *         @OA\Property(
- *             type=&quot;integer&quot;,
- *             property=&quot;code&quot;,
- *             description=&quot;code&quot;,
- *             example=&quot;200&quot;
- *         ),
- *         @OA\Property(
- *             type=&quot;object&quot;,
- *             property=&quot;data&quot;,
- *             description=&quot;data&quot;,
- *             example=&quot;{}&quot;
- *         ),
- *         @OA\Property(
- *             type=&quot;string&quot;,
- *             property=&quot;msg&quot;,
- *             description=&quot;msg&quot;,
- *             example=&quot;&quot;
- *         ),
- *         @OA\Property(
- *             type=&quot;integer&quot;,
- *             property=&quot;time&quot;,
- *             description=&quot;current timestamp&quot;,
- *             example=&quot;1624500732&quot;
- *         )
- *     }
- * )
- * @OA\Schema(
- *     schema=&quot;ApiFaile500Response&quot;,
- *     type=&quot;object&quot;,
- *     description=&quot;{&quot;&quot;code&quot;&quot;: 0,&quot;&quot;data&quot;&quot;: {},&quot;&quot;msg&quot;&quot;: &quot;&quot;???&quot;&quot;,&quot;&quot;time&quot;&quot;: 1624432870}&quot;,
- *     properties={
- *         @OA\Property(
- *             type=&quot;integer&quot;,
- *             property=&quot;code&quot;,
- *             description=&quot;code&quot;,
- *             example=&quot;500&quot;
- *         ),
- *         @OA\Property(
- *             type=&quot;object&quot;,
- *             property=&quot;data&quot;,
- *             description=&quot;data&quot;,
- *             example=&quot;{}&quot;
- *         ),
- *         @OA\Property(
- *             type=&quot;string&quot;,
- *             property=&quot;msg&quot;,
- *             description=&quot;msg&quot;,
- *             example=&quot;Illegal string offset '?'&quot;
- *         ),
- *         @OA\Property(
- *             type=&quot;integer&quot;,
- *             property=&quot;time&quot;,
- *             description=&quot;current timestamp&quot;,
- *             example=&quot;1624500732&quot;
- *         )
- *     }
- * )
- */
-class SwaggerUtil
-{
-}
-</code></pre>
-<h3 id="如何写一个文档注释">如何写一个文档注释</h3>
-<pre><code class="language-php">/**
- * 
- * @OA\Get(
- *      path=&quot;/users&quot;,
- *      operationId=&quot;getListOfUsers&quot;,
- *      tags={&quot;Users&quot;},
- *      description=&quot;Get list of users&quot;,
- *      security={{&quot;Authorization-Bearer&quot;:{}}}, 
- *      @OA\Parameter(
- *         name=&quot;Authorization&quot;,
- *         in=&quot;header&quot;,
- *         required=true,
- *         description=&quot;Bearer {access-token}&quot;,
- *         @OA\Schema(
- *              type=&quot;bearerAuth&quot;
- *         ) 
- *      ), 
- *      @OA\Response(
- *          response=200,
- *          description=&quot;Get list of users.&quot;,
- *          @OA\JsonContent(type=&quot;object&quot;,
- *              @OA\Property(property=&quot;message&quot;, type=&quot;string&quot;),
- *              @OA\Property(property=&quot;data&quot;, type=&quot;array&quot;,
- *                  @OA\Items(type=&quot;object&quot;,
- *                      @OA\Property(property=&quot;id&quot;, type=&quot;integer&quot;),
- *                      @OA\Property(property=&quot;name&quot;, type=&quot;string&quot;),
- *                      @OA\Property(property=&quot;email&quot;, type=&quot;string&quot;),
- *                  ),
- *              ),
- *          ),
- *       ),
- *       @OA\Response(response=401, description=&quot;Unauthorized&quot;),
- *       @OA\Response(response=404, description=&quot;Not Found&quot;),
- * )
- * 
- *
- *
- * @OA\Post(
- *      path=&quot;/api/login&quot;,
- *      tags={&quot;手机验证码登录&quot;},
- *      summary=&quot;手机验证码登录&quot;,
- *      description=&quot;用户登录（手机号+验证码）&quot;,
- *
- *      @OA\Parameter(ref=&quot;#/components/parameters/authToken&quot;),//这里引入了authToken参数
- *      @OA\RequestBody( 
- *          @OA\MediaType(
- *              *mediaType=&quot;application/json&quot;,
- *              mediaType=&quot;application/x-www-form-urlencoded&quot;,
- *              @OA\Schema(ref=&quot;#/components/schemas/MobileLogin&quot;) //这里引入了手机验证码登录属性模板
- *          )
- *      ),
- *      @OA\Response(
- *          response=200,
- *          description=&quot;successful operation&quot;,
- *          @OA\JsonContent(
- *              ref=&quot;#/components/schemas/MsgExport&quot;,//这里引入了公共响应模板
- *              example={&quot;code&quot;:0,&quot;reason&quot;:&quot;接口响应消息&quot;,&quot;result&quot;:{&quot;status&quot;:1},&quot;params&quot;:{}},
- *          )
- *       ),
- *
- * )
- * 如果有多个参数的话且复用度较高，可以独立设置params，然后引用 
- * @OA\Parameter(
- *     in=&quot;header&quot;,
- *     name=&quot;authToken&quot;,
- *     description=&quot;测试HeaderToken&quot;,
- *     required=true,
- *     @OA\Schema(
- *          type=&quot;string&quot;
- *     )
- * ),
- */
-</code></pre>
-<blockquote>
+<span class="sd">/**
+</span><span class="sd"> * 文档生成器注解.
+</span><span class="sd"> *
+</span><span class="sd"> * @OA\Info(title=&#34;mydomain&#34;, version=&#34;0.1&#34;)
+</span><span class="sd"> * @OA\Server(url=&#34;https://api.mydomain.com&#34;, description=&#34;正式环境(慎用)[https]&#34;)
+</span><span class="sd"> * @OA\Server(url=&#34;http://127.0.0.1:9601&#34;, description=&#34;开发环境(本地)&#34;)
+</span><span class="sd"> * @OA\SecurityScheme(
+</span><span class="sd"> *     securityScheme=&#34;tpToken&#34;,
+</span><span class="sd"> *     type=&#34;apiKey&#34;,
+</span><span class="sd"> *     in=&#34;query&#34;,
+</span><span class="sd"> *     name=&#34;token&#34;
+</span><span class="sd"> * )
+</span><span class="sd"> * @OA\Schema(
+</span><span class="sd"> *     schema=&#34;ApiSuccessResponse&#34;,
+</span><span class="sd"> *     type=&#34;object&#34;,
+</span><span class="sd"> *     description=&#34;{&#34;&#34;code&#34;&#34;: 200,&#34;&#34;data&#34;&#34;: {},&#34;&#34;msg&#34;&#34;: &#34;&#34;&#34;&#34;,&#34;&#34;time&#34;&#34;: 1624432870}&#34;,
+</span><span class="sd"> *     properties={
+</span><span class="sd"> *         @OA\Property(
+</span><span class="sd"> *             type=&#34;integer&#34;,
+</span><span class="sd"> *             property=&#34;code&#34;,
+</span><span class="sd"> *             description=&#34;code&#34;,
+</span><span class="sd"> *             example=&#34;200&#34;
+</span><span class="sd"> *         ),
+</span><span class="sd"> *         @OA\Property(
+</span><span class="sd"> *             type=&#34;object&#34;,
+</span><span class="sd"> *             property=&#34;data&#34;,
+</span><span class="sd"> *             description=&#34;data&#34;,
+</span><span class="sd"> *             example=&#34;{}&#34;
+</span><span class="sd"> *         ),
+</span><span class="sd"> *         @OA\Property(
+</span><span class="sd"> *             type=&#34;string&#34;,
+</span><span class="sd"> *             property=&#34;msg&#34;,
+</span><span class="sd"> *             description=&#34;msg&#34;,
+</span><span class="sd"> *             example=&#34;&#34;
+</span><span class="sd"> *         ),
+</span><span class="sd"> *         @OA\Property(
+</span><span class="sd"> *             type=&#34;integer&#34;,
+</span><span class="sd"> *             property=&#34;time&#34;,
+</span><span class="sd"> *             description=&#34;current timestamp&#34;,
+</span><span class="sd"> *             example=&#34;1624500732&#34;
+</span><span class="sd"> *         )
+</span><span class="sd"> *     }
+</span><span class="sd"> * )
+</span><span class="sd"> * @OA\Schema(
+</span><span class="sd"> *     schema=&#34;ApiFaile500Response&#34;,
+</span><span class="sd"> *     type=&#34;object&#34;,
+</span><span class="sd"> *     description=&#34;{&#34;&#34;code&#34;&#34;: 0,&#34;&#34;data&#34;&#34;: {},&#34;&#34;msg&#34;&#34;: &#34;&#34;???&#34;&#34;,&#34;&#34;time&#34;&#34;: 1624432870}&#34;,
+</span><span class="sd"> *     properties={
+</span><span class="sd"> *         @OA\Property(
+</span><span class="sd"> *             type=&#34;integer&#34;,
+</span><span class="sd"> *             property=&#34;code&#34;,
+</span><span class="sd"> *             description=&#34;code&#34;,
+</span><span class="sd"> *             example=&#34;500&#34;
+</span><span class="sd"> *         ),
+</span><span class="sd"> *         @OA\Property(
+</span><span class="sd"> *             type=&#34;object&#34;,
+</span><span class="sd"> *             property=&#34;data&#34;,
+</span><span class="sd"> *             description=&#34;data&#34;,
+</span><span class="sd"> *             example=&#34;{}&#34;
+</span><span class="sd"> *         ),
+</span><span class="sd"> *         @OA\Property(
+</span><span class="sd"> *             type=&#34;string&#34;,
+</span><span class="sd"> *             property=&#34;msg&#34;,
+</span><span class="sd"> *             description=&#34;msg&#34;,
+</span><span class="sd"> *             example=&#34;Illegal string offset &#39;?&#39;&#34;
+</span><span class="sd"> *         ),
+</span><span class="sd"> *         @OA\Property(
+</span><span class="sd"> *             type=&#34;integer&#34;,
+</span><span class="sd"> *             property=&#34;time&#34;,
+</span><span class="sd"> *             description=&#34;current timestamp&#34;,
+</span><span class="sd"> *             example=&#34;1624500732&#34;
+</span><span class="sd"> *         )
+</span><span class="sd"> *     }
+</span><span class="sd"> * )
+</span><span class="sd"> */</span>
+<span class="k">class</span> <span class="nc">SwaggerUtil</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="如何写一个文档注释">如何写一个文档注释</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="sd">/**
+</span><span class="sd"> * 
+</span><span class="sd"> * @OA\Get(
+</span><span class="sd"> *      path=&#34;/users&#34;,
+</span><span class="sd"> *      operationId=&#34;getListOfUsers&#34;,
+</span><span class="sd"> *      tags={&#34;Users&#34;},
+</span><span class="sd"> *      description=&#34;Get list of users&#34;,
+</span><span class="sd"> *      security={{&#34;Authorization-Bearer&#34;:{}}}, 
+</span><span class="sd"> *      @OA\Parameter(
+</span><span class="sd"> *         name=&#34;Authorization&#34;,
+</span><span class="sd"> *         in=&#34;header&#34;,
+</span><span class="sd"> *         required=true,
+</span><span class="sd"> *         description=&#34;Bearer {access-token}&#34;,
+</span><span class="sd"> *         @OA\Schema(
+</span><span class="sd"> *              type=&#34;bearerAuth&#34;
+</span><span class="sd"> *         ) 
+</span><span class="sd"> *      ), 
+</span><span class="sd"> *      @OA\Response(
+</span><span class="sd"> *          response=200,
+</span><span class="sd"> *          description=&#34;Get list of users.&#34;,
+</span><span class="sd"> *          @OA\JsonContent(type=&#34;object&#34;,
+</span><span class="sd"> *              @OA\Property(property=&#34;message&#34;, type=&#34;string&#34;),
+</span><span class="sd"> *              @OA\Property(property=&#34;data&#34;, type=&#34;array&#34;,
+</span><span class="sd"> *                  @OA\Items(type=&#34;object&#34;,
+</span><span class="sd"> *                      @OA\Property(property=&#34;id&#34;, type=&#34;integer&#34;),
+</span><span class="sd"> *                      @OA\Property(property=&#34;name&#34;, type=&#34;string&#34;),
+</span><span class="sd"> *                      @OA\Property(property=&#34;email&#34;, type=&#34;string&#34;),
+</span><span class="sd"> *                  ),
+</span><span class="sd"> *              ),
+</span><span class="sd"> *          ),
+</span><span class="sd"> *       ),
+</span><span class="sd"> *       @OA\Response(response=401, description=&#34;Unauthorized&#34;),
+</span><span class="sd"> *       @OA\Response(response=404, description=&#34;Not Found&#34;),
+</span><span class="sd"> * )
+</span><span class="sd"> * 
+</span><span class="sd"> *
+</span><span class="sd"> *
+</span><span class="sd"> * @OA\Post(
+</span><span class="sd"> *      path=&#34;/api/login&#34;,
+</span><span class="sd"> *      tags={&#34;手机验证码登录&#34;},
+</span><span class="sd"> *      summary=&#34;手机验证码登录&#34;,
+</span><span class="sd"> *      description=&#34;用户登录（手机号+验证码）&#34;,
+</span><span class="sd"> *
+</span><span class="sd"> *      @OA\Parameter(ref=&#34;#/components/parameters/authToken&#34;),//这里引入了authToken参数
+</span><span class="sd"> *      @OA\RequestBody( 
+</span><span class="sd"> *          @OA\MediaType(
+</span><span class="sd"> *              *mediaType=&#34;application/json&#34;,
+</span><span class="sd"> *              mediaType=&#34;application/x-www-form-urlencoded&#34;,
+</span><span class="sd"> *              @OA\Schema(ref=&#34;#/components/schemas/MobileLogin&#34;) //这里引入了手机验证码登录属性模板
+</span><span class="sd"> *          )
+</span><span class="sd"> *      ),
+</span><span class="sd"> *      @OA\Response(
+</span><span class="sd"> *          response=200,
+</span><span class="sd"> *          description=&#34;successful operation&#34;,
+</span><span class="sd"> *          @OA\JsonContent(
+</span><span class="sd"> *              ref=&#34;#/components/schemas/MsgExport&#34;,//这里引入了公共响应模板
+</span><span class="sd"> *              example={&#34;code&#34;:0,&#34;reason&#34;:&#34;接口响应消息&#34;,&#34;result&#34;:{&#34;status&#34;:1},&#34;params&#34;:{}},
+</span><span class="sd"> *          )
+</span><span class="sd"> *       ),
+</span><span class="sd"> *
+</span><span class="sd"> * )
+</span><span class="sd"> * 如果有多个参数的话且复用度较高，可以独立设置params，然后引用 
+</span><span class="sd"> * @OA\Parameter(
+</span><span class="sd"> *     in=&#34;header&#34;,
+</span><span class="sd"> *     name=&#34;authToken&#34;,
+</span><span class="sd"> *     description=&#34;测试HeaderToken&#34;,
+</span><span class="sd"> *     required=true,
+</span><span class="sd"> *     @OA\Schema(
+</span><span class="sd"> *          type=&#34;string&#34;
+</span><span class="sd"> *     )
+</span><span class="sd"> * ),
+</span><span class="sd"> */</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
 <p>官方文档: <a href="https://swagger.io/specification/" target="_blank" rel="noopener noreffer">https://swagger.io/specification/</a></p>
 <p>中文文档: <a href="https://www.sdk.cn/details/9pPQD6wqK09L8ozvNy#title-5" target="_blank" rel="noopener noreffer">https://www.sdk.cn/details/9pPQD6wqK09L8ozvNy#title-5</a></p>
 </blockquote>

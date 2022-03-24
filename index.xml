@@ -14,7 +14,7 @@
     <guid>https://mmfei.com/2022/03/centos8%E5%AE%89%E8%A3%85chromedriver/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/centos8%e5%ae%89%e8%a3%85chromedriver/featuredImage.png" referrerpolicy="no-referrer">
-            </div>yum install google-chrome-stable pip install selenium yum install chromedriver.x86_64 # 如果版本不一致 , 则找到对应的版本 wget http://chromedriver.storage.googleapis.com/99.0.4844.51/chromedriver_linux64.zip; unzip chromedriver.zip]]></description>
+            </div>1 2 3 4 5 6 7 yum install google-chrome-stable pip install selenium yum install chromedriver.x86_64 # 如果版本不一致 , 则找到对应的版本 wget http://chromedriver.storage.googleapis.com/99.0.4844.51/chromedriver_linux64.zip; unzip chromedriver.zip]]></description>
 </item><item>
     <title>Nginx统计网站的pv和uv和ip</title>
     <link>https://mmfei.com/2022/03/nginx%E7%BB%9F%E8%AE%A1%E7%BD%91%E7%AB%99%E7%9A%84pv%E5%92%8Cuv%E5%92%8Cip/</link>
@@ -23,7 +23,7 @@
     <guid>https://mmfei.com/2022/03/nginx%E7%BB%9F%E8%AE%A1%E7%BD%91%E7%AB%99%E7%9A%84pv%E5%92%8Cuv%E5%92%8Cip/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/nginx%e7%bb%9f%e8%ae%a1%e7%bd%91%e7%ab%99%e7%9a%84pv%e5%92%8cuv%e5%92%8cip/featuredImage.png" referrerpolicy="no-referrer">
-            </div># nginx 配置 log_format tongji '$remote_addr - [$time_iso8601] &quot;$request&quot; '' - $status &quot;User_Cookie:$guid&quot; '; server { listen 80; server_name xxx.com; index index.html index.htm index.php; root /alidata/www/tongji; #将cookie中key为guid，value为字母、数字部分保存为guid if ( $http_cookie ~* &quot;guid=([a-zA-Z0-9]*)&quot;){]]></description>
+            </div>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 # nginx 配置 log_format tongji &#39;$remote_addr - [$time_iso8601] &#34;$request&#34; &#39;&#39; - $status &#34;User_Cookie:$guid&#34; &#39;; server { listen 80; server_name xxx.com; index index.html index.htm index.php; root /alidata/www/tongji; #将cookie中key为g]]></description>
 </item><item>
     <title>阿里云服务器yum报错Errors_during_downloading_metadata_for_repository_AppStream</title>
     <link>https://mmfei.com/2022/03/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8yum%E6%8A%A5%E9%94%99errors_during_downloading_metadata_for_repository_appstream/</link>
@@ -32,7 +32,7 @@
     <guid>https://mmfei.com/2022/03/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8yum%E6%8A%A5%E9%94%99errors_during_downloading_metadata_for_repository_appstream/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e9%98%bf%e9%87%8c%e4%ba%91%e6%9c%8d%e5%8a%a1%e5%99%a8yum%e6%8a%a5%e9%94%99Errors_during_downloading_metadata_for_repository_AppStream/featuredImage.png" referrerpolicy="no-referrer">
-            </div>[root@mmfei.com yum.repos.d]# yum makecache Repository epel is listed more than once in the configuration CentOS-8 - AppStream 3.2 kB/s | 2.5 kB 00:00 Errors during downloading metadata for repository 'AppStream': - Status code: 404 for http://mirrors.cloud.aliyuncs.com/centos/8/AppStream/x86_64/os/repodata/repomd.xml (IP: 100.100.2.148) Error: Failed to download metadata for repo 'AppStream': Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried [root@mmfei.com yum.repos.d]# 查了各种资料 , 实际上是 centos8]]></description>
+            </div>1 2 3 4 5 6 7 [root@mmfei.com yum.repos.d]# yum makecache Repository epel is listed more than once in the configuration CentOS-8 - AppStream 3.2 kB/s | 2.5 kB 00:00 Errors during downloading metadata for repository &#39;AppStream&#39;: - Status code: 404 for http://mirrors.cloud.aliyuncs.com/centos/8/AppStream/x86_64/os/repodata/repomd.xml (IP: 100.100.2.148) Error: Failed to download metadata for repo &#39;AppStream&#39;: Cannot download repomd.xml: Cannot download repodata/repomd.xml: All mirrors were tried [root@mmfei.com yum.repos.d]# 查了各种资]]></description>
 </item><item>
     <title>给openresty服务器的静态网站加上访问密码</title>
     <link>https://mmfei.com/2022/01/%E7%BB%99openresty%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99%E5%8A%A0%E4%B8%8A%E8%AE%BF%E9%97%AE%E5%AF%86%E7%A0%81/</link>
@@ -41,7 +41,7 @@
     <guid>https://mmfei.com/2022/01/%E7%BB%99openresty%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99%E5%8A%A0%E4%B8%8A%E8%AE%BF%E9%97%AE%E5%AF%86%E7%A0%81/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e7%bb%99openresty%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%9a%84%e9%9d%99%e6%80%81%e7%bd%91%e7%ab%99%e5%8a%a0%e4%b8%8a%e8%ae%bf%e9%97%ae%e5%af%86%e7%a0%81/featuredImage.png" referrerpolicy="no-referrer">
-            </div>背景 , 一个没权限保护的静态资源所有人可以访问 , 期望加一些密码 原来访问地址: static.mmfei.com 改正后的地址: static.mmfei.com/?doc_access_token=123456 没啥好说的 , 上配置 # 密码是: 123456 , 自己改 # 参数名:]]></description>
+            </div>背景 , 一个没权限保护的静态资源所有人可以访问 , 期望加一些密码 原来访问地址: static.mmfei.com 改正后的地址: static.mmfei.com/?doc_access_token=123456 没啥好说的 , 上配置 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]]></description>
 </item><item>
     <title>阿里云的centos安装docker Compose</title>
     <link>https://mmfei.com/2022/01/%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84centos%E5%AE%89%E8%A3%85docker-compose/</link>
@@ -50,7 +50,7 @@
     <guid>https://mmfei.com/2022/01/%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84centos%E5%AE%89%E8%A3%85docker-compose/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e9%98%bf%e9%87%8c%e4%ba%91%e7%9a%84centos%e5%ae%89%e8%a3%85dockercompose/christophergower.jpg" referrerpolicy="no-referrer">
-            </div>yum install docker curl -L &quot;https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose chmod +x /usr/local/bin/docker-compose]]></description>
+            </div>1 2 3 yum install docker curl -L &#34;https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -s)-$(uname -m)&#34; -o /usr/local/bin/docker-compose chmod +x /usr/local/bin/docker-compose]]></description>
 </item><item>
     <title>转换本地图片视频为base64的json</title>
     <link>https://mmfei.com/2022/01/%E8%BD%AC%E6%8D%A2%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E8%A7%86%E9%A2%91%E4%B8%BAbase64%E7%9A%84json/</link>
@@ -59,7 +59,7 @@
     <guid>https://mmfei.com/2022/01/%E8%BD%AC%E6%8D%A2%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E8%A7%86%E9%A2%91%E4%B8%BAbase64%E7%9A%84json/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e8%bd%ac%e6%8d%a2%e6%9c%ac%e5%9c%b0%e5%9b%be%e7%89%87%e8%a7%86%e9%a2%91%e4%b8%babase64%e7%9a%84json/featuredImage.png" referrerpolicy="no-referrer">
-            </div>最近 , 前端同事有个需求是把本地的图片视频转成base64的json文件. 由于量比较多 , 且繁琐. 我花了点时间写了个简单的工具 https://github.com/mmfei/bash_image_to_base64 使用方式 # print base64 code]]></description>
+            </div>最近 , 前端同事有个需求是把本地的图片视频转成base64的json文件. 由于量比较多 , 且繁琐. 我花了点时间写了个简单的工具 https://github.com/mmfei/bash_image_to_base64 使用方式 1 2 3 4]]></description>
 </item><item>
     <title>MacBookM1X搭建mysql和redis以及php的swoole和hyperf环境</title>
     <link>https://mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/</link>
@@ -68,7 +68,7 @@
     <guid>https://mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/MacBookM1X%e6%90%ad%e5%bb%bamysql%e5%92%8credis%e4%bb%a5%e5%8f%8aphp%e7%9a%84swoole%e5%92%8chyperf%e7%8e%af%e5%a2%83/featuredImage.png" referrerpolicy="no-referrer">
-            </div>brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole brew install boost; # 在m1x环境 , yasd在编译的时候会找不到这个boost依赖 , 解决方式如下 # 这里是解决yasd安装的时]]></description>
+            </div>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole brew install boost; # 在m1x环境 , yasd在编译的时候会找不到这个boost依赖 , 解]]></description>
 </item><item>
     <title>Mac通过brew安装php7.4&#43;swoole</title>
     <link>https://mmfei.com/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/</link>
@@ -77,7 +77,7 @@
     <guid>https://mmfei.com/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/mac%e9%80%9a%e8%bf%87brew%e5%ae%89%e8%a3%85php7.4&#43;swoole/featuredImage.png" referrerpolicy="no-referrer">
-            </div>brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole 这里会有三四个询问确认的 , 需要注意的是 ssl那个选项 , 要选择 yes --with-openssl-dir=/usr/local/opt/openssl@1.1 启动php服务进行调试(要带-e参数) &gt; php -e test.php]]></description>
+            </div>1 2 3 4 5 brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole 这里会有三四个询问确认的 , 需要注意的是 ssl那个选项 , 要选择 yes --with-openssl-dir=/usr/local/opt/openssl@1.1 启动php服务进行调试(要带-e参数]]></description>
 </item><item>
     <title>用mediainfo代替ffmpeg读取视频文件的毫秒级的时长</title>
     <link>https://mmfei.com/2021/09/%E7%94%A8mediainfo%E4%BB%A3%E6%9B%BFffmpeg%E8%AF%BB%E5%8F%96%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%AB%E7%A7%92%E7%BA%A7%E7%9A%84%E6%97%B6%E9%95%BF/</link>
