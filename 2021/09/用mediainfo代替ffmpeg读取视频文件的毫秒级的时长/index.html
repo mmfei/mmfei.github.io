@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/mmfei.com\/2021\/09\/%E7%94%A8mediainfo%E4%BB%A3%E6%9B%BFffmpeg%E8%AF%BB%E5%8F%96%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%AB%E7%A7%92%E7%BA%A7%E7%9A%84%E6%97%B6%E9%95%BF\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "mediainfo, ffmpeg, centos","wordcount":  510 ,
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "mediainfo, ffmpeg, centos","wordcount":  465 ,
         "url": "https:\/\/mmfei.com\/2021\/09\/%E7%94%A8mediainfo%E4%BB%A3%E6%9B%BFffmpeg%E8%AF%BB%E5%8F%96%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%AB%E7%A7%92%E7%BA%A7%E7%9A%84%E6%97%B6%E9%95%BF\/","datePublished": "2021-09-15T22:30:19+08:00","dateModified": "2021-09-15T22:30:19+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
@@ -124,8 +124,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">用mediainfo代替ffmpeg读取视频文件的毫秒级的时长</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mediainfo/"><i class="far fa-folder fa-fw"></i>mediainfo</a>&nbsp;<a href="/categories/ffmpeg/"><i class="far fa-folder fa-fw"></i>ffmpeg</a>&nbsp;<a href="/categories/centos/"><i class="far fa-folder fa-fw"></i>centos</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-15">2021-09-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 510 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id="/2021/09/%E7%94%A8mediainfo%E4%BB%A3%E6%9B%BFffmpeg%E8%AF%BB%E5%8F%96%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%AB%E7%A7%92%E7%BA%A7%E7%9A%84%E6%97%B6%E9%95%BF/" class="leancloud_visitors" data-flag-title="用mediainfo代替ffmpeg读取视频文件的毫秒级的时长">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-15">2021-09-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 465 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2021/09/%E7%94%A8mediainfo%E4%BB%A3%E6%9B%BFffmpeg%E8%AF%BB%E5%8F%96%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%AB%E7%A7%92%E7%BA%A7%E7%9A%84%E6%97%B6%E9%95%BF/" class="leancloud_visitors" data-flag-title="用mediainfo代替ffmpeg读取视频文件的毫秒级的时长">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="featured-image"><img
@@ -149,124 +149,65 @@
 由于我们有个功能需要把用户库中的视频文件播放时长的毫秒数读取出来并入库.
 经过调研以及对大名鼎鼎的ffmpeg的信仰 , 果断选了ffmpeg去完成这个重任.
 </code></pre>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">&gt; ffmpeg -i /250a40a2293b978736a43c715fcab538.mp4
+<pre><code class="language-shell">&gt; ffmpeg -i /250a40a2293b978736a43c715fcab538.mp4
 
-<span class="o">[</span>mov,mp4,m4a,3gp,3g2,mj2 @ 0x7f835800ac00<span class="o">]</span> stream 0, timescale not <span class="nb">set</span>
-Input <span class="c1">#0, mov,mp4,m4a,3gp,3g2,mj2, from &#39;/250a40a2293b978736a43c715fcab538.mp4&#39;:</span>
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x7f835800ac00] stream 0, timescale not set
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/250a40a2293b978736a43c715fcab538.mp4':
   Metadata:
     major_brand     : isom
-    minor_version   : <span class="m">512</span>
+    minor_version   : 512
     compatible_brands: isomiso2avc1mp41
     encoder         : Lavf58.29.100
-  Duration: 00:00:07.05, start: 0.000000, bitrate: <span class="m">1268</span> kb/s
-  Stream <span class="c1">#0:0(und): Video: h264 (Main) (avc1 / 0x31637661), yuv420p(tv), 640x360 [SAR 1144:1143 DAR 18304:10287], 740 kb/s, 25 fps, 25 tbr, 12800 tbn, 60 tbc (default)</span>
+  Duration: 00:00:07.05, start: 0.000000, bitrate: 1268 kb/s
+  Stream #0:0(und): Video: h264 (Main) (avc1 / 0x31637661), yuv420p(tv), 640x360 [SAR 1144:1143 DAR 18304:10287], 740 kb/s, 25 fps, 25 tbr, 12800 tbn, 60 tbc (default)
     Metadata:
       handler_name    : VideoHandler
-      vendor_id       : <span class="o">[</span>0<span class="o">][</span>0<span class="o">][</span>0<span class="o">][</span>0<span class="o">]</span>
-  Stream <span class="c1">#0:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 22050 Hz, mono, fltp, 24 kb/s (default)</span>
+      vendor_id       : [0][0][0][0]
+  Stream #0:1(und): Audio: aac (LC) (mp4a / 0x6134706D), 22050 Hz, mono, fltp, 24 kb/s (default)
     Metadata:
       handler_name    : SoundHandler
-      vendor_id       : <span class="o">[</span>0<span class="o">][</span>0<span class="o">][</span>0<span class="o">][</span>0<span class="o">]</span>
-  Stream <span class="c1">#0:2: Video: png, rgb24(pc), 640x360 [SAR 1144:1143 DAR 18304:10287], 90k tbr, 90k tbn, 90k tbc (attached pic)</span>
+      vendor_id       : [0][0][0][0]
+  Stream #0:2: Video: png, rgb24(pc), 640x360 [SAR 1144:1143 DAR 18304:10287], 90k tbr, 90k tbn, 90k tbc (attached pic)
 At least one output file must be specified
-</code></pre></td></tr></table>
-</div>
-</div><p>上面出来的有个关键的内容 Duration: <code>00:00:07.05</code>, start: 0.000000, bitrate: 1268 kb/s</p>
+</code></pre>
+<p>上面出来的有个关键的内容 Duration: <code>00:00:07.05</code>, start: 0.000000, bitrate: 1268 kb/s</p>
 <p>这就是 <code>00:00:07 秒 + 05 毫秒</code>&hellip;..
 然而我错了 , 这个 05 大有玄机&hellip;</p>
 <pre><code> .05  == 050 毫秒
  .78 == 78(0-9) 毫秒
-</code></pre><p>万万想不到啊&hellip;.兄弟&hellip;. 被坑了 , 果断换方案&hellip;</p>
+</code></pre>
+<p>万万想不到啊&hellip;.兄弟&hellip;. 被坑了 , 果断换方案&hellip;</p>
 <p>找到另外一个 <code>mediainfo</code>&hellip;..</p>
 <p>记录一下在centos安装 mediainfo 的过程 , 略坑</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">wget http://mirror.centos.org/centos/8/PowerTools/x86_64/os/Packages/tinyxml2-6.0.0-3.el8.x86_64.rpm
+<pre><code class="language-shell">wget http://mirror.centos.org/centos/8/PowerTools/x86_64/os/Packages/tinyxml2-6.0.0-3.el8.x86_64.rpm
 rpm -i tinyxml2-6.0.0-3.el8.x86_64.rpm
 dnf install mediainfo
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="使用mediainfo读取视频时长">使用mediainfo读取视频时长</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">&gt; mediainfo /250a40a2293b978736a43c715fcab538.mp4
+</code></pre>
+<h2 id="使用mediainfo读取视频时长">使用mediainfo读取视频时长</h2>
+<pre><code class="language-shell">&gt; mediainfo /250a40a2293b978736a43c715fcab538.mp4
 
 General
 Complete name                            : /250a40a2293b978736a43c715fcab538.mp4
 Format                                   : MPEG-4
 Format profile                           : Base Media
-Codec ID                                 : isom <span class="o">(</span>isom/iso2/avc1/mp41<span class="o">)</span>
+Codec ID                                 : isom (isom/iso2/avc1/mp41)
 File size                                : 1.07 MiB
-Duration                                 : <span class="m">7</span> s <span class="m">47</span> ms
-Overall bit rate                         : <span class="m">1</span> <span class="m">268</span> kb/s
+Duration                                 : 7 s 47 ms
+Overall bit rate                         : 1 268 kb/s
 Writing application                      : Lavf58.29.100
 Cover                                    : Yes
 
 Video
-ID                                       : <span class="m">1</span>
+ID                                       : 1
 Format                                   : AVC
 Format/Info                              : Advanced Video Codec
 Format profile                           : Main@L4.2
-Format settings                          : CABAC / <span class="m">1</span> Ref Frames
+Format settings                          : CABAC / 1 Ref Frames
 
-&gt; mediainfo --Output<span class="o">=</span><span class="s1">&#39;General;%Duration%&#39;</span> /250a40a2293b978736a43c715fcab538.mp4
-<span class="m">7047</span>
-</code></pre></td></tr></table>
-</div>
-</div><blockquote>
+&gt; mediainfo --Output='General;%Duration%' /250a40a2293b978736a43c715fcab538.mp4
+7047
+</code></pre>
+<blockquote>
 <p>第二个命令真香 , 直出毫秒数 , 完美啊&hellip;果断换方案了</p>
 </blockquote>
 </div><div class="post-footer" id="post-footer">

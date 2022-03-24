@@ -6,7 +6,7 @@
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>Mac环境安装grpc的php客户端 - 木木飞</title><meta name="Description" content="木木飞"><meta property="og:title" content="Mac环境安装grpc的php客户端" />
-<meta property="og:description" content="1 2 3 4 pecl install grpc pecl install protobuf php -m | grep grpc php -m | grep protobuf 安装超好用的grpc客户端EVANS https://github.com/ktr0731/evans 安装 1 2 brew tap ktr0731/evans brew install evans" />
+<meta property="og:description" content="pecl install grpc pecl install protobuf php -m | grep grpc php -m | grep protobuf 安装超好用的grpc客户端EVANS https://github.com/ktr0731/evans 安装 brew tap ktr0731/evans brew install evans" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mmfei.com/2021/06/mac%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85grpc%E7%9A%84php%E5%AE%A2%E6%88%B7%E7%AB%AF/" /><meta property="og:image" content="https://mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-06-22T11:28:31&#43;08:00" />
@@ -16,7 +16,7 @@
 <meta name="twitter:image" content="https://mmfei.com/images/avatar.jpg"/>
 
 <meta name="twitter:title" content="Mac环境安装grpc的php客户端"/>
-<meta name="twitter:description" content="1 2 3 4 pecl install grpc pecl install protobuf php -m | grep grpc php -m | grep protobuf 安装超好用的grpc客户端EVANS https://github.com/ktr0731/evans 安装 1 2 brew tap ktr0731/evans brew install evans"/>
+<meta name="twitter:description" content="pecl install grpc pecl install protobuf php -m | grep grpc php -m | grep protobuf 安装超好用的grpc客户端EVANS https://github.com/ktr0731/evans 安装 brew tap ktr0731/evans brew install evans"/>
 <meta name="application-name" content="木木飞">
 <meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/mmfei.com\/2021\/06\/mac%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85grpc%E7%9A%84php%E5%AE%A2%E6%88%B7%E7%AB%AF\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "mac, grpc, php","wordcount":  49 ,
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "mac, grpc, php","wordcount":  43 ,
         "url": "https:\/\/mmfei.com\/2021\/06\/mac%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85grpc%E7%9A%84php%E5%AE%A2%E6%88%B7%E7%AB%AF\/","datePublished": "2021-06-22T11:28:31+08:00","dateModified": "2021-06-22T11:28:31+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
@@ -124,7 +124,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Mac环境安装grpc的php客户端</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mac/"><i class="far fa-folder fa-fw"></i>mac</a>&nbsp;<a href="/categories/grpc/"><i class="far fa-folder fa-fw"></i>grpc</a>&nbsp;<a href="/categories/php/"><i class="far fa-folder fa-fw"></i>php</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-22">2021-06-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 49 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-22">2021-06-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 43 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2021/06/mac%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85grpc%E7%9A%84php%E5%AE%A2%E6%88%B7%E7%AB%AF/" class="leancloud_visitors" data-flag-title="Mac环境安装grpc的php客户端">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -149,21 +149,12 @@
     </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">pecl install grpc
+            </div><div class="content" id="content"><pre><code class="language-shell">pecl install grpc
 pecl install protobuf
-php -m <span class="p">|</span> grep grpc
-php -m <span class="p">|</span> grep protobuf
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="安装超好用的grpc客户端evans">安装超好用的grpc客户端EVANS</h2>
+php -m | grep grpc
+php -m | grep protobuf
+</code></pre>
+<h2 id="安装超好用的grpc客户端evans">安装超好用的grpc客户端EVANS</h2>
 <p><a href="https://github.com/ktr0731/evans" target="_blank" rel="noopener noreffer">https://github.com/ktr0731/evans</a></p>
 <p><img
         class="lazyload"
@@ -182,17 +173,10 @@ php -m <span class="p">|</span> grep protobuf
         alt="./images/evans1.gif"
         title="./images/evans1.gif" /></p>
 <h3 id="安装">安装</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">brew tap ktr0731/evans
+<pre><code class="language-shell">brew tap ktr0731/evans
 brew install evans
-</code></pre></td></tr></table>
-</div>
-</div></div><div class="post-footer" id="post-footer">
+</code></pre>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

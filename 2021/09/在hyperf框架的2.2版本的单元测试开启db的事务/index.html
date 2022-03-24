@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/mmfei.com\/2021\/09\/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "hyperf, testing, unittest, phpuint, 事务, 协程","wordcount":  840 ,
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "hyperf, testing, unittest, phpuint, 事务, 协程","wordcount":  740 ,
         "url": "https:\/\/mmfei.com\/2021\/09\/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1\/","datePublished": "2021-09-05T18:38:39+08:00","dateModified": "2021-09-05T18:38:39+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
@@ -124,7 +124,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">在hyperf框架的2.2版本的单元测试开启db的事务</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/hyperf/"><i class="far fa-folder fa-fw"></i>hyperf</a>&nbsp;<a href="/categories/testing/"><i class="far fa-folder fa-fw"></i>testing</a>&nbsp;<a href="/categories/unittest/"><i class="far fa-folder fa-fw"></i>unittest</a>&nbsp;<a href="/categories/phpuint/"><i class="far fa-folder fa-fw"></i>phpuint</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-05">2021-09-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 840 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-05">2021-09-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 740 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id="/2021/09/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1/" class="leancloud_visitors" data-flag-title="在hyperf框架的2.2版本的单元测试开启db的事务">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -176,228 +176,114 @@
 </ol>
 </blockquote>
 <h3 id="file-testhttptestcasephp">file test/HttpTestCase.php</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-php" data-lang="php"><span class="o">&lt;?</span><span class="nx">php</span>
-<span class="c1"># file test/HttpTestCase.php
-</span><span class="c1"></span><span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
-<span class="k">namespace</span> <span class="nx">HyperfTest</span><span class="p">;</span>
+<pre><code class="language-php">&lt;?php
+# file test/HttpTestCase.php
+declare(strict_types=1);
+namespace HyperfTest;
 
-<span class="k">use</span> <span class="nx">Hyperf\Contract\ConfigInterface</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Hyperf\DbConnection\Db</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Hyperf\Utils\ApplicationContext</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">PHPUnit\Framework\TestCase</span><span class="p">;</span>
+use Hyperf\Contract\ConfigInterface;
+use Hyperf\DbConnection\Db;
+use Hyperf\Utils\ApplicationContext;
+use PHPUnit\Framework\TestCase;
 
-<span class="sd">/**
-</span><span class="sd"> * Class HttpTestCase.
-</span><span class="sd"> * @method get($uri, $data = [], $headers = [])
-</span><span class="sd"> * @method post($uri, $data = [], $headers = [])
-</span><span class="sd"> * @method json($uri, $data = [], $headers = [])
-</span><span class="sd"> * @method file($uri, $data = [], $headers = [])
-</span><span class="sd"> * @method request($method, $path, $options = [])
-</span><span class="sd"> */</span>
-<span class="k">abstract</span> <span class="k">class</span> <span class="nc">HttpTestCase</span> <span class="k">extends</span> <span class="nx">TestCase</span>
-<span class="p">{</span>
-    <span class="sd">/**
-</span><span class="sd">     * @var TestClient
-</span><span class="sd">     */</span>
-    <span class="k">protected</span> <span class="nv">$client</span><span class="p">;</span>
+/**
+ * Class HttpTestCase.
+ * @method get($uri, $data = [], $headers = [])
+ * @method post($uri, $data = [], $headers = [])
+ * @method json($uri, $data = [], $headers = [])
+ * @method file($uri, $data = [], $headers = [])
+ * @method request($method, $path, $options = [])
+ */
+abstract class HttpTestCase extends TestCase
+{
+    /**
+     * @var TestClient
+     */
+    protected $client;
 
-    <span class="k">private</span> <span class="nv">$connections</span> <span class="o">=</span> <span class="p">[];</span>
+    private $connections = [];
 
-    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nv">$name</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$data</span> <span class="o">=</span> <span class="p">[],</span> <span class="nv">$dataName</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">parent</span><span class="o">::</span><span class="na">__construct</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$data</span><span class="p">,</span> <span class="nv">$dataName</span><span class="p">);</span>
-    <span class="p">}</span>
+    public function __construct($name = null, array $data = [], $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+    }
 
-    <span class="k">public</span> <span class="k">function</span> <span class="fm">__call</span><span class="p">(</span><span class="nv">$name</span><span class="p">,</span> <span class="nv">$arguments</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">client</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$name</span><span class="p">}(</span><span class="o">...</span><span class="nv">$arguments</span><span class="p">);</span>
-    <span class="p">}</span>
+    public function __call($name, $arguments)
+    {
+        return $this-&gt;client-&gt;{$name}(...$arguments);
+    }
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
-    <span class="p">{</span>
-        <span class="nv">$container</span>         <span class="o">=</span> <span class="nx">ApplicationContext</span><span class="o">::</span><span class="na">getContainer</span><span class="p">();</span>
-        <span class="nv">$config</span>            <span class="o">=</span> <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nx">ConfigInterface</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
-        <span class="nv">$databases_configs</span> <span class="o">=</span> <span class="nv">$config</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;databases&#39;</span><span class="p">);</span>
-        <span class="k">foreach</span> <span class="p">(</span><span class="nx">array_keys</span><span class="p">(</span><span class="nv">$databases_configs</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$pool_name</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nv">$connection</span> <span class="o">=</span> <span class="nx">Db</span><span class="o">::</span><span class="na">connection</span><span class="p">(</span><span class="nv">$pool_name</span><span class="p">);</span>
-            <span class="c1">// &#34;打开DB的事务[{$pool_name}]&#34;
-</span><span class="c1"></span>            <span class="nv">$connection</span><span class="o">-&gt;</span><span class="na">isTransaction</span><span class="p">()</span> <span class="o">||</span> <span class="nv">$connection</span><span class="o">-&gt;</span><span class="na">beginTransaction</span><span class="p">();</span>
-            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">connections</span><span class="p">[</span><span class="nv">$pool_name</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$connection</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">client</span>  <span class="o">=</span> <span class="nx">make</span><span class="p">(</span><span class="nx">TestClient</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">client</span><span class="o">-&gt;</span><span class="na">setDbConnection</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">connections</span><span class="p">);</span> <span class="c1">//给TestClient设置好所有的db
-</span><span class="c1"></span>    <span class="p">}</span>
+    public function setUp(): void
+    {
+        $container         = ApplicationContext::getContainer();
+        $config            = $container-&gt;get(ConfigInterface::class);
+        $databases_configs = $config-&gt;get('databases');
+        foreach (array_keys($databases_configs) as $pool_name) {
+            $connection = Db::connection($pool_name);
+            // &quot;打开DB的事务[{$pool_name}]&quot;
+            $connection-&gt;isTransaction() || $connection-&gt;beginTransaction();
+            $this-&gt;connections[$pool_name] = $connection;
+        }
+        $this-&gt;client  = make(TestClient::class);
+        $this-&gt;client-&gt;setDbConnection($this-&gt;connections); //给TestClient设置好所有的db
+    }
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">tearDown</span><span class="p">()</span><span class="o">:</span> <span class="nx">void</span>
-    <span class="p">{</span>
-        <span class="c1">//所有db事务rollback
-</span><span class="c1"></span>        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">connections</span> <span class="k">as</span> <span class="nv">$pool_name</span> <span class="o">=&gt;</span> <span class="nv">$connection</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// &#34;回滚DB的事务[{$pool_name}]&#34;;
-</span><span class="c1"></span>            <span class="nv">$connection</span><span class="o">-&gt;</span><span class="na">rollBack</span><span class="p">();</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="file-testtestclientphp">file test/TestClient.php</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-php" data-lang="php"><span class="o">&lt;?</span><span class="nx">php</span>
-<span class="c1"># file test/TestClient.php
-</span><span class="c1"></span><span class="k">namespace</span> <span class="nx">HyperfTest</span><span class="p">;</span>
+    public function tearDown(): void
+    {
+        //所有db事务rollback
+        foreach ($this-&gt;connections as $pool_name =&gt; $connection) {
+            // &quot;回滚DB的事务[{$pool_name}]&quot;;
+            $connection-&gt;rollBack();
+        }
+    }
+}
+</code></pre>
+<h2 id="file-testtestclientphp">file test/TestClient.php</h2>
+<pre><code class="language-php">&lt;?php
+# file test/TestClient.php
+namespace HyperfTest;
 
-<span class="k">use</span> <span class="nx">Hyperf\Contract\ConfigInterface</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Hyperf\Testing\Client</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Hyperf\Utils\ApplicationContext</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Hyperf\Utils\Context</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Psr\Http\Message\ResponseInterface</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Psr\Http\Message\ServerRequestInterface</span><span class="p">;</span>
+use Hyperf\Contract\ConfigInterface;
+use Hyperf\Testing\Client;
+use Hyperf\Utils\ApplicationContext;
+use Hyperf\Utils\Context;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
-<span class="k">class</span> <span class="nc">TestClient</span> <span class="k">extends</span> <span class="nx">Client</span>
-<span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$query</span> <span class="o">=</span> <span class="p">[];</span>
+class TestClient extends Client
+{
+    protected $query = [];
 
-    <span class="k">protected</span> <span class="nv">$headers</span> <span class="o">=</span> <span class="p">[];</span>
+    protected $headers = [];
 
-    <span class="k">protected</span> <span class="nv">$user</span><span class="p">;</span>
+    protected $user;
 
-    <span class="k">private</span> <span class="nv">$connections</span> <span class="o">=</span> <span class="p">[];</span>
+    private $connections = [];
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">setDbConnection</span><span class="p">(</span><span class="nv">$connections</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">connections</span> <span class="o">=</span> <span class="nv">$connections</span><span class="p">;</span>
-    <span class="p">}</span>
+    public function setDbConnection($connections) {
+        $this-&gt;connections = $connections;
+    }
 
-    <span class="k">protected</span> <span class="k">function</span> <span class="nf">persistToContext</span><span class="p">(</span><span class="nx">ServerRequestInterface</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">ResponseInterface</span> <span class="nv">$response</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="c1">// 初始化test client的时候, 会带入的上下文
-</span><span class="c1"></span>        <span class="k">parent</span><span class="o">::</span><span class="na">persistToContext</span><span class="p">(</span><span class="nv">$request</span><span class="p">,</span> <span class="nv">$response</span><span class="p">);</span>
-        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">connections</span> <span class="k">as</span> <span class="nv">$pool_name</span> <span class="o">=&gt;</span> <span class="nv">$connection</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nv">$id</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getContextKey</span><span class="p">(</span><span class="nv">$pool_name</span><span class="p">);</span>
-            <span class="nx">Context</span><span class="o">::</span><span class="na">set</span><span class="p">(</span><span class="nv">$id</span><span class="p">,</span> <span class="nv">$connection</span><span class="p">);</span> <span class="c1">// 把打开了事务的connection , 塞入到协程的上下文中
-</span><span class="c1"></span>        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="sd">/**
-</span><span class="sd">     * The key to identify the connection object in coroutine context.
-</span><span class="sd">     * @param mixed $name
-</span><span class="sd">     */</span>
-    <span class="k">private</span> <span class="k">function</span> <span class="nf">getContextKey</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span><span class="o">:</span> <span class="nx">string</span>
-    <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">sprintf</span><span class="p">(</span><span class="s1">&#39;database.connection.%s&#39;</span><span class="p">,</span> <span class="nv">$name</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
-</div>
-</div></div><div class="post-footer" id="post-footer">
+    protected function persistToContext(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        // 初始化test client的时候, 会带入的上下文
+        parent::persistToContext($request, $response);
+        foreach ($this-&gt;connections as $pool_name =&gt; $connection) {
+            $id = $this-&gt;getContextKey($pool_name);
+            Context::set($id, $connection); // 把打开了事务的connection , 塞入到协程的上下文中
+        }
+    }
+    /**
+     * The key to identify the connection object in coroutine context.
+     * @param mixed $name
+     */
+    private function getContextKey($name): string
+    {
+        return sprintf('database.connection.%s', $name);
+    }
+}
+</code></pre>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

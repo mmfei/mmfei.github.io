@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/mmfei.com\/2021\/08\/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "mt7621, openwrt, breed, newifi-d2, sysupgrade, v2ray","wordcount":  607 ,
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "mt7621, openwrt, breed, newifi-d2, sysupgrade, v2ray","wordcount":  588 ,
         "url": "https:\/\/mmfei.com\/2021\/08\/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA\/","datePublished": "2021-08-01T16:38:42+08:00","dateModified": "2021-08-01T16:38:42+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
@@ -124,7 +124,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">刷newifi路由器冲浪</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/openwrt/"><i class="far fa-folder fa-fw"></i>openwrt</a>&nbsp;<a href="/categories/routes/"><i class="far fa-folder fa-fw"></i>routes</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-01">2021-08-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 607 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-01">2021-08-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 588 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/" class="leancloud_visitors" data-flag-title="刷newifi路由器冲浪">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -173,35 +173,19 @@
 <h3 id="官方固件的内核版本太低了--用网友制作的升级包在管理后台升级下">官方固件的内核版本太低了 , 用网友制作的升级包在管理后台升级下</h3>
 <p><a href="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/upload/openwrt-ramips-mt7621-d-team_newifi-d2-squashfs-sysupgrade.bin" rel="">upload/openwrt-ramips-mt7621-d-team_newifi-d2-squashfs-sysupgrade.bin</a></p>
 <h2 id="刷breed">刷breed</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 路由器开启了ssh登录</span>
-<span class="c1"># breed 文件在 upload/breed-mt7621-newifi-d2.bin</span>
-<span class="c1"># 路由器ip假设为 192.168.1.1</span>
+<pre><code class="language-shell"># 路由器开启了ssh登录
+# breed 文件在 upload/breed-mt7621-newifi-d2.bin
+# 路由器ip假设为 192.168.1.1
 
-<span class="c1"># 上传breed固件到路由器的tmp目录</span>
+# 上传breed固件到路由器的tmp目录
 scp upload/breed-mt7621-newifi-d2.bin root@192.168.1.1:/tmp/
 ssh root@192.168.1.1
-insmod /tmp/breed-mt7621-newifi-d2.bin <span class="p">;</span> <span class="c1">#ssh 之後應該會no response，這是正常的，因為newifi-d2-jail-breek.ko會停止其它系統功能強制寫入Breed bootloader到Flash，完成寫入後Router會自動重啟，所以等一下就好：D</span>
+insmod /tmp/breed-mt7621-newifi-d2.bin ; #ssh 之後應該會no response，這是正常的，因為newifi-d2-jail-breek.ko會停止其它系統功能強制寫入Breed bootloader到Flash，完成寫入後Router會自動重啟，所以等一下就好：D
 
 
-<span class="c1"># 等路由器重启后 , 把路由器断电, 然后按住reset键 通电 , 成功的话会看到所有的led灯快闪4下. 然后连上路由器打开 http://192.168.1.1 进入 Breed Web Interface</span>
-</code></pre></td></tr></table>
-</div>
-</div><p><img
+# 等路由器重启后 , 把路由器断电, 然后按住reset键 通电 , 成功的话会看到所有的led灯快闪4下. 然后连上路由器打开 http://192.168.1.1 进入 Breed Web Interface
+</code></pre>
+<p><img
         class="lazyload"
         src="/svg/loading.min.svg"
         data-src="images/img_3.png"
@@ -224,29 +208,16 @@ insmod /tmp/breed-mt7621-newifi-d2.bin <span class="p">;</span> <span class="c1"
         title="/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/images/img_4.png" /></p>
 <h2 id="冲浪">冲浪</h2>
 <h2 id="自己搭建一个v2ray">自己搭建一个v2ray</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 找个新加坡的机器 进入ssh, centos系统为例</span>
-wget https://git.io/v2rayinstall.sh<span class="p">;</span>
-sh v2rayinstall.sh<span class="p">;</span>
-<span class="c1"># 选tcp模式</span>
-<span class="c1"># 端口输入自己看着顺眼的 , 例如 10086 , 提示:如果是云厂商的ecs,可能需要开启下安全组对应的端口,以及注意下防火墙设置</span>
-<span class="c1"># 不开启ss</span>
-<span class="c1"># 剩下就等它安装完毕</span>
-v2ray info <span class="p">;</span> <span class="c1"># 看服务器配置 , 然后在openwrt的路由器后台配置好对应的ssplus+的v2ray的配置,注意协议,端口,uuid哈</span>
-</code></pre></td></tr></table>
-</div>
-</div></div><div class="post-footer" id="post-footer">
+<pre><code class="language-shell"># 找个新加坡的机器 进入ssh, centos系统为例
+wget https://git.io/v2rayinstall.sh;
+sh v2rayinstall.sh;
+# 选tcp模式
+# 端口输入自己看着顺眼的 , 例如 10086 , 提示:如果是云厂商的ecs,可能需要开启下安全组对应的端口,以及注意下防火墙设置
+# 不开启ss
+# 剩下就等它安装完毕
+v2ray info ; # 看服务器配置 , 然后在openwrt的路由器后台配置好对应的ssplus+的v2ray的配置,注意协议,端口,uuid哈
+</code></pre>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

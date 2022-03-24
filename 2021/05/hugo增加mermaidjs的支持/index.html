@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/mmfei.com\/2021\/05\/hugo%E5%A2%9E%E5%8A%A0mermaidjs%E7%9A%84%E6%94%AF%E6%8C%81\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "hugo, theme, mermaid","wordcount":  653 ,
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "hugo, theme, mermaid","wordcount":  634 ,
         "url": "https:\/\/mmfei.com\/2021\/05\/hugo%E5%A2%9E%E5%8A%A0mermaidjs%E7%9A%84%E6%94%AF%E6%8C%81\/","datePublished": "2021-05-26T00:26:15+08:00","dateModified": "2021-05-26T00:26:15+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
@@ -124,7 +124,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">hugo增加mermaidjs的支持</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/hugo/"><i class="far fa-folder fa-fw"></i>hugo</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-26">2021-05-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 653 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-26">2021-05-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 634 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id="/2021/05/hugo%E5%A2%9E%E5%8A%A0mermaidjs%E7%9A%84%E6%94%AF%E6%8C%81/" class="leancloud_visitors" data-flag-title="hugo增加mermaidjs的支持">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -158,66 +158,34 @@
 <ul>
 <li>修改模板 head.html (底部追加内容)</li>
 </ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-html" data-lang="html"><span class="c">&lt;!-- file layouts/partials/head.html --&gt;</span>
+<pre><code class="language-html">&lt;!-- file layouts/partials/head.html --&gt;
 {{ if .Params.mermaid }}
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js&#34;</span> <span class="na">integrity</span><span class="o">=</span><span class="s">&#34;sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==&#34;</span> <span class="na">crossorigin</span><span class="o">=</span><span class="s">&#34;anonymous&#34;</span> <span class="na">referrerpolicy</span><span class="o">=</span><span class="s">&#34;no-referrer&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="c1">// Replace mermaid pre.code to div
-</span><span class="c1"></span>    <span class="nb">Array</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s2">&#34;language-mermaid&#34;</span><span class="p">)).</span><span class="nx">forEach</span><span class="p">(</span>
-        <span class="p">(</span><span class="nx">el</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-            <span class="nx">el</span><span class="p">.</span><span class="nx">parentElement</span><span class="p">.</span><span class="nx">outerHTML</span> <span class="o">=</span> <span class="sb">`&lt;div class=&#34;mermaid&#34;&gt;</span><span class="si">${</span><span class="nx">el</span><span class="p">.</span><span class="nx">innerText</span><span class="si">}</span><span class="sb">&lt;/div&gt;`</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">);</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-    <span class="c">/* Set svg to center */</span>
-    <span class="p">.</span><span class="nc">mermaid</span> <span class="nt">svg</span> <span class="p">{</span>
-        <span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
-        <span class="k">margin</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js&quot; integrity=&quot;sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==&quot; crossorigin=&quot;anonymous&quot; referrerpolicy=&quot;no-referrer&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    // Replace mermaid pre.code to div
+    Array.from(document.getElementsByClassName(&quot;language-mermaid&quot;)).forEach(
+        (el) =&gt; {
+            el.parentElement.outerHTML = `&lt;div class=&quot;mermaid&quot;&gt;${el.innerText}&lt;/div&gt;`;
+        }
+    );
+&lt;/script&gt;
+&lt;style&gt;
+    /* Set svg to center */
+    .mermaid svg {
+        display: block;
+        margin: auto;
+    }
+&lt;/style&gt;
 {{ end }}
-</code></pre></td></tr></table>
-</div>
-</div><ul>
+</code></pre>
+<ul>
 <li>文章增加配置</li>
 </ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-yml" data-lang="yml"><span class="nn">---</span><span class="w">
-</span><span class="w"></span><span class="nt">mermaid</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w"></span><span class="nn">---</span><span class="w">
-</span></code></pre></td></tr></table>
-</div>
-</div><h3 id="test">test</h3>
+<pre><code class="language-yml">---
+mermaid: true
+---
+</code></pre>
+<h3 id="test">test</h3>
 <pre><code>%%{init: {'theme': 'forest', 'fill': 'white', 'securitylevel': 'loose' } }%%
 sequenceDiagram
     participant Alice
@@ -230,7 +198,8 @@ sequenceDiagram
     John--&gt;&gt;Alice: Great!
     John-&gt;&gt;Bob: How about you?
     Bob--&gt;&gt;John: Jolly good!
-</code></pre><pre><code class="language-mermaid" data-lang="mermaid">%%{init: {'theme': 'forest', 'fill': 'white' } }%%
+</code></pre>
+<pre><code class="language-mermaid">%%{init: {'theme': 'forest', 'fill': 'white' } }%%
 sequenceDiagram
     participant Alice
     participant Bob
@@ -242,17 +211,20 @@ sequenceDiagram
     John--&gt;&gt;Alice: Great!
     John-&gt;&gt;Bob: How about you?
     Bob--&gt;&gt;John: Jolly good!
-</code></pre><pre><code>graph TD;
+</code></pre>
+<pre><code>graph TD;
     A--&gt;B;
     A--&gt;C;
     B--&gt;D;
     C--&gt;D;
-</code></pre><pre><code class="language-mermaid" data-lang="mermaid">graph TD;
+</code></pre>
+<pre><code class="language-mermaid">graph TD;
     A--&gt;B;
     A--&gt;C;
     B--&gt;D;
     C--&gt;D;
-</code></pre><pre><code>sequenceDiagram
+</code></pre>
+<pre><code>sequenceDiagram
     产品-&gt;&gt;+后端: 接需求  
     后端-&gt;&gt;+前端: 提交联调(本地自测完毕) [develop-&gt;feature)
     前端--&gt;&gt;-后端: 完成对接(在测试环境) [feature-&gt;test]
@@ -260,7 +232,8 @@ sequenceDiagram
     测试--&gt;&gt;+产品: 验收 (在预发布环境) [feature-&gt;develop-&gt;master]
     产品-&gt;&gt;+上线: 上线(本地自测完毕) [master]
   
-</code></pre><pre><code class="language-mermaid" data-lang="mermaid">sequenceDiagram
+</code></pre>
+<pre><code class="language-mermaid">sequenceDiagram
     产品-&gt;&gt;+后端: 接需求  
     后端-&gt;&gt;+前端: 提交联调(本地自测完毕) [develop-&gt;feature)
     前端--&gt;&gt;-后端: 完成对接(在测试环境) [feature-&gt;test]
@@ -268,7 +241,8 @@ sequenceDiagram
     测试--&gt;&gt;+产品: 验收 (在预发布环境) [feature-&gt;develop-&gt;master]
     产品-&gt;&gt;+上线: 上线(本地自测完毕) [master]
   
-</code></pre><pre><code>classDiagram
+</code></pre>
+<pre><code>classDiagram
     Animal &lt;|-- Duck
     Animal &lt;|-- Fish
     Animal &lt;|-- Zebra
@@ -290,7 +264,8 @@ sequenceDiagram
       +run()
     }
             
-</code></pre><pre><code class="language-mermaid" data-lang="mermaid">classDiagram
+</code></pre>
+<pre><code class="language-mermaid">classDiagram
     Animal &lt;|-- Duck
     Animal &lt;|-- Fish
     Animal &lt;|-- Zebra
@@ -312,7 +287,8 @@ sequenceDiagram
       +run()
     }
             
-</code></pre></div><div class="post-footer" id="post-footer">
+</code></pre>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">

@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/mmfei.com\/2021\/05\/%E9%98%BF%E9%87%8C%E4%BA%91%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAhyperf%E6%9C%8D%E5%8A%A1%E5%99%A8\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "aliyun, centos, oss, hyperf, deploy, phpredis","wordcount":  929 ,
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "aliyun, centos, oss, hyperf, deploy, phpredis","wordcount":  781 ,
         "url": "https:\/\/mmfei.com\/2021\/05\/%E9%98%BF%E9%87%8C%E4%BA%91%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAhyperf%E6%9C%8D%E5%8A%A1%E5%99%A8\/","datePublished": "2021-05-28T11:30:14+08:00","dateModified": "2021-05-28T11:30:14+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
@@ -124,7 +124,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">阿里云从零开始搭建hyperf服务器</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/deploy/"><i class="far fa-folder fa-fw"></i>deploy</a>&nbsp;<a href="/categories/aliyun/"><i class="far fa-folder fa-fw"></i>aliyun</a>&nbsp;<a href="/categories/hyperf/"><i class="far fa-folder fa-fw"></i>hyperf</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-28">2021-05-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 929 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-05-28">2021-05-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 781 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id="/2021/05/%E9%98%BF%E9%87%8C%E4%BA%91%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAhyperf%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="leancloud_visitors" data-flag-title="阿里云从零开始搭建hyperf服务器">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -209,341 +209,166 @@
 </tbody>
 </table>
 <h4 id="免密登录配置">免密登录配置</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">## 在服务器上执行, 下次就可以不输入密码登录</span>
-<span class="nb">echo</span> <span class="s2">&#34;你自己笔记本或者电脑的`cat ~/.ssh/id_rsa.pub`内容&#34;</span> &gt;&gt; ~/.ssh/authorized_keys<span class="p">;</span>
-</code></pre></td></tr></table>
-</div>
-</div><h4 id="openresty">openresty</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">wget https://openresty.org/package/centos/openresty.repo -O /etc/yum.repos.d/openresty.repo
+<pre><code class="language-shell">## 在服务器上执行, 下次就可以不输入密码登录
+echo &quot;你自己笔记本或者电脑的`cat ~/.ssh/id_rsa.pub`内容&quot; &gt;&gt; ~/.ssh/authorized_keys;
+</code></pre>
+<h4 id="openresty">openresty</h4>
+<pre><code class="language-shell">wget https://openresty.org/package/centos/openresty.repo -O /etc/yum.repos.d/openresty.repo
 yum check-update
 yum install -y openresty
 systemctl start openresty
-systemctl <span class="nb">enable</span> openresty
+systemctl enable openresty
 ls -al /usr/local/openresty/
 ls -al /usr/local/openresty/nginx/sbin
-</code></pre></td></tr></table>
-</div>
-</div><h4 id="php源码编译安装">PHP源码编译安装</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">yum install -y libxml2-devel krb5-devel openssl-devel sqlite-devel libcurl-devel libxslt-devel libjpeg-devel libzip-devel bzip2-devel libpng-devel freetype-devel autoconf automake libtool
-<span class="nb">export</span> <span class="nv">ONIGURUMA_VERSION</span><span class="o">=</span>6.9.4
-mkdir -p /data/src/install/oniguruma-<span class="nv">$ONIGURUMA_VERSION</span>
-<span class="nb">cd</span> /data/src/install/oniguruma-<span class="nv">$ONIGURUMA_VERSION</span>
-wget -c https://github.com/kkos/oniguruma/archive/v<span class="nv">$ONIGURUMA_VERSION</span>.tar.gz -O oniguruma-<span class="nv">$ONIGURUMA_VERSION</span>.tar.gz
-tar xvzf oniguruma-<span class="nv">$ONIGURUMA_VERSION</span>.tar.gz<span class="p">;</span>
-<span class="nb">cd</span> oniguruma-<span class="nv">$ONIGURUMA_VERSION</span><span class="p">;</span>
-./autogen.sh <span class="o">&amp;&amp;</span> ./configure --prefix<span class="o">=</span>/usr
-make <span class="o">&amp;&amp;</span> make install
+</code></pre>
+<h4 id="php源码编译安装">PHP源码编译安装</h4>
+<pre><code class="language-shell">yum install -y libxml2-devel krb5-devel openssl-devel sqlite-devel libcurl-devel libxslt-devel libjpeg-devel libzip-devel bzip2-devel libpng-devel freetype-devel autoconf automake libtool
+export ONIGURUMA_VERSION=6.9.4
+mkdir -p /data/src/install/oniguruma-$ONIGURUMA_VERSION
+cd /data/src/install/oniguruma-$ONIGURUMA_VERSION
+wget -c https://github.com/kkos/oniguruma/archive/v$ONIGURUMA_VERSION.tar.gz -O oniguruma-$ONIGURUMA_VERSION.tar.gz
+tar xvzf oniguruma-$ONIGURUMA_VERSION.tar.gz;
+cd oniguruma-$ONIGURUMA_VERSION;
+./autogen.sh &amp;&amp; ./configure --prefix=/usr
+make &amp;&amp; make install
 
 
-<span class="c1"># install php</span>
-<span class="nb">export</span> <span class="nv">PHP_VERSION</span><span class="o">=</span>7.4.19
-mkdir -p /data/src/install/php-<span class="nv">$PHP_VERSION</span>
-<span class="nb">cd</span> /data/src/install/php-<span class="nv">$PHP_VERSION</span>
-wget -c https://www.php.net/distributions/php-<span class="nv">$PHP_VERSION</span>.tar.gz --no-check-certificate<span class="p">;</span>
-tar xvzf php-<span class="nv">$PHP_VERSION</span>.tar.gz<span class="p">;</span>
-<span class="nb">cd</span> /data/src/install/php-<span class="nv">$PHP_VERSION</span>/php-<span class="nv">$PHP_VERSION</span><span class="p">;</span>
-./configure --prefix<span class="o">=</span>/usr/local/php-<span class="nv">$PHP_VERSION</span> --with-curl --with-freetype --enable-gd --with-jpeg --with-gettext --with-iconv-dir<span class="o">=</span>/usr/local --with-kerberos --with-libdir<span class="o">=</span>lib64 --with-libxml --with-mysqli --with-openssl --with-pdo-mysql --with-pdo-sqlite --with-pear --enable-sockets --with-mhash --with-ldap-sasl --with-xmlrpc --with-xsl --with-zlib --enable-fpm --enable-bcmath --enable-inline-optimization --enable-mbregex --enable-mbstring --enable-opcache --enable-pcntl --enable-shmop --enable-soap --enable-sockets --enable-sysvsem --enable-xml --with-zip --with-config-file-path<span class="o">=</span>/usr/local/php-<span class="nv">$PHP_VERSION</span>/etc -with-bz2 --enable-inline-optimization --enable-sysvsem
-make <span class="o">&amp;&amp;</span> make install
-cp php.ini-production /usr/local/php-<span class="nv">$PHP_VERSION</span>/etc/php.ini
-cp /usr/local/php-<span class="nv">$PHP_VERSION</span>/etc/php-fpm.conf.default /usr/local/php-<span class="nv">$PHP_VERSION</span>/etc/php-fpm.d/www.conf
-ln -s /usr/local/php-<span class="nv">$PHP_VERSION</span> /usr/local/php
+# install php
+export PHP_VERSION=7.4.19
+mkdir -p /data/src/install/php-$PHP_VERSION
+cd /data/src/install/php-$PHP_VERSION
+wget -c https://www.php.net/distributions/php-$PHP_VERSION.tar.gz --no-check-certificate;
+tar xvzf php-$PHP_VERSION.tar.gz;
+cd /data/src/install/php-$PHP_VERSION/php-$PHP_VERSION;
+./configure --prefix=/usr/local/php-$PHP_VERSION --with-curl --with-freetype --enable-gd --with-jpeg --with-gettext --with-iconv-dir=/usr/local --with-kerberos --with-libdir=lib64 --with-libxml --with-mysqli --with-openssl --with-pdo-mysql --with-pdo-sqlite --with-pear --enable-sockets --with-mhash --with-ldap-sasl --with-xmlrpc --with-xsl --with-zlib --enable-fpm --enable-bcmath --enable-inline-optimization --enable-mbregex --enable-mbstring --enable-opcache --enable-pcntl --enable-shmop --enable-soap --enable-sockets --enable-sysvsem --enable-xml --with-zip --with-config-file-path=/usr/local/php-$PHP_VERSION/etc -with-bz2 --enable-inline-optimization --enable-sysvsem
+make &amp;&amp; make install
+cp php.ini-production /usr/local/php-$PHP_VERSION/etc/php.ini
+cp /usr/local/php-$PHP_VERSION/etc/php-fpm.conf.default /usr/local/php-$PHP_VERSION/etc/php-fpm.d/www.conf
+ln -s /usr/local/php-$PHP_VERSION /usr/local/php
 /usr/local/php/bin/php -v
-/usr/local/php-<span class="nv">$PHP_VERSION</span>/bin/php -v
-<span class="nb">echo</span> <span class="s1">&#39;pathmunge /usr/local/php/bin&#39;</span> &gt;&gt; /etc/profile.d/php.sh
+/usr/local/php-$PHP_VERSION/bin/php -v
+echo 'pathmunge /usr/local/php/bin' &gt;&gt; /etc/profile.d/php.sh
 
 
-<span class="c1"># install php-redis</span>
-<span class="nb">export</span> <span class="nv">PHPREDIS_VERSION</span><span class="o">=</span>5.3.4
-mkdir -p /data/src/install/phpredis-<span class="nv">$PHPREDIS_VERSION</span>
-<span class="nb">cd</span> /data/src/install/phpredis-<span class="nv">$PHPREDIS_VERSION</span>
-wget https://github.com/phpredis/phpredis/archive/refs/tags/<span class="nv">$PHPREDIS_VERSION</span>.tar.gz --no-check-certificate -O phpredis-<span class="nv">$PHPREDIS_VERSION</span>.tar.gz<span class="p">;</span>
-tar xvzf phpredis-<span class="nv">$PHPREDIS_VERSION</span>.tar.gz
-<span class="nb">cd</span> phpredis-<span class="nv">$PHPREDIS_VERSION</span>
+# install php-redis
+export PHPREDIS_VERSION=5.3.4
+mkdir -p /data/src/install/phpredis-$PHPREDIS_VERSION
+cd /data/src/install/phpredis-$PHPREDIS_VERSION
+wget https://github.com/phpredis/phpredis/archive/refs/tags/$PHPREDIS_VERSION.tar.gz --no-check-certificate -O phpredis-$PHPREDIS_VERSION.tar.gz;
+tar xvzf phpredis-$PHPREDIS_VERSION.tar.gz
+cd phpredis-$PHPREDIS_VERSION
 /usr/local/php/bin/phpize
-./configure --with-php-config<span class="o">=</span>/usr/local/php/bin/php-config
-make <span class="o">&amp;&amp;</span> make install
-<span class="nb">echo</span> <span class="s1">&#39;extension=&#34;redis.so&#34;&#39;</span> &gt;&gt; /usr/local/php/etc/php.ini
-php -m <span class="p">|</span> grep redis
-</code></pre></td></tr></table>
-</div>
-</div><h4 id="swoole">swoole</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">yum install -y glibc-headers gcc-c++
-<span class="nb">export</span> <span class="nv">SWOOLE_VERSION</span><span class="o">=</span>4.6.7
-mkdir -p /data/src/install/swoole-<span class="nv">$SWOOLE_VERSION</span>
-<span class="nb">cd</span> /data/src/install/swoole-<span class="nv">$SWOOLE_VERSION</span>
-wget -c https://pecl.php.net/get/swoole-<span class="nv">$SWOOLE_VERSION</span>.tgz -O /data/src/install/swoole-<span class="nv">$SWOOLE_VERSION</span>/swoole-<span class="nv">$SWOOLE_VERSION</span>.tgz --no-check-certificate
-tar -zvxf swoole-<span class="nv">$SWOOLE_VERSION</span>.tgz
-<span class="nb">cd</span> swoole-<span class="nv">$SWOOLE_VERSION</span>
+./configure --with-php-config=/usr/local/php/bin/php-config
+make &amp;&amp; make install
+echo 'extension=&quot;redis.so&quot;' &gt;&gt; /usr/local/php/etc/php.ini
+php -m | grep redis
+</code></pre>
+<h4 id="swoole">swoole</h4>
+<pre><code class="language-shell">yum install -y glibc-headers gcc-c++
+export SWOOLE_VERSION=4.6.7
+mkdir -p /data/src/install/swoole-$SWOOLE_VERSION
+cd /data/src/install/swoole-$SWOOLE_VERSION
+wget -c https://pecl.php.net/get/swoole-$SWOOLE_VERSION.tgz -O /data/src/install/swoole-$SWOOLE_VERSION/swoole-$SWOOLE_VERSION.tgz --no-check-certificate
+tar -zvxf swoole-$SWOOLE_VERSION.tgz
+cd swoole-$SWOOLE_VERSION
 /usr/local/php/bin/phpize
-./configure --with-php-config<span class="o">=</span>/usr/local/php/bin/php-config --enable-openssl --enable-http2 --enable-swoole-json --enable-swoole-curl
-make <span class="o">&amp;&amp;</span> make install
-<span class="nb">echo</span> <span class="s1">&#39;extension=&#34;swoole.so&#34;&#39;</span> &gt;&gt; /usr/local/php/etc/php.ini
-<span class="nb">echo</span> <span class="s1">&#39;swoole.use_shortname = off&#39;</span> &gt;&gt; /usr/local/php/etc/php.ini
-php -m <span class="p">|</span> grep swoole
-</code></pre></td></tr></table>
-</div>
-</div><h4 id="nginx-config">nginx config</h4>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span><span class="lnt">63
-</span><span class="lnt">64
-</span><span class="lnt">65
-</span><span class="lnt">66
-</span><span class="lnt">67
-</span><span class="lnt">68
-</span><span class="lnt">69
-</span><span class="lnt">70
-</span><span class="lnt">71
-</span><span class="lnt">72
-</span><span class="lnt">73
-</span><span class="lnt">74
-</span><span class="lnt">75
-</span><span class="lnt">76
-</span><span class="lnt">77
-</span><span class="lnt">78
-</span><span class="lnt">79
-</span><span class="lnt">80
-</span><span class="lnt">81
-</span><span class="lnt">82
-</span><span class="lnt">83
-</span><span class="lnt">84
-</span><span class="lnt">85
-</span><span class="lnt">86
-</span><span class="lnt">87
-</span><span class="lnt">88
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-nginx" data-lang="nginx"><span class="k">server</span> <span class="p">{</span>
-    <span class="kn">listen</span>       <span class="mi">80</span><span class="p">;</span>
-    <span class="kn">server_name</span>  <span class="s">api.abc.com</span><span class="p">;</span>
-    <span class="kn">error_page</span>   <span class="mi">500</span> <span class="mi">502</span> <span class="mi">503</span> <span class="mi">504</span> <span class="s">/50x.html</span><span class="p">;</span>
-    <span class="kn">error_log</span>    <span class="s">/data/nginx/api.abc.com/error.log</span><span class="p">;</span>
-    <span class="kn">access_log</span>   <span class="s">/data/nginx/api.abc.com/access_</span><span class="nv">$logdate.log</span><span class="p">;</span>
-    <span class="c1">#root     /mnt/d/wsl/www/playsmart/;
-</span><span class="c1"></span>    <span class="kn">index</span>    <span class="s">index.html</span> <span class="s">index.htm</span> <span class="s">index.php</span><span class="p">;</span>
+./configure --with-php-config=/usr/local/php/bin/php-config --enable-openssl --enable-http2 --enable-swoole-json --enable-swoole-curl
+make &amp;&amp; make install
+echo 'extension=&quot;swoole.so&quot;' &gt;&gt; /usr/local/php/etc/php.ini
+echo 'swoole.use_shortname = off' &gt;&gt; /usr/local/php/etc/php.ini
+php -m | grep swoole
+</code></pre>
+<h4 id="nginx-config">nginx config</h4>
+<pre><code class="language-nginx">server {
+    listen       80;
+    server_name  api.abc.com;
+    error_page   500 502 503 504 /50x.html;
+    error_log    /data/nginx/api.abc.com/error.log;
+    access_log   /data/nginx/api.abc.com/access_$logdate.log;
+    #root     /mnt/d/wsl/www/playsmart/;
+    index    index.html index.htm index.php;
 
-    <span class="kn">location</span> <span class="p">=</span> <span class="s">/</span> <span class="p">{</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">Host</span> <span class="nv">$http_host</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
-	<span class="kn">proxy_set_header</span>    <span class="s">Access-Control-Expose-Headers</span> <span class="s">Content-Disposition</span><span class="p">;</span>
-        <span class="kn">proxy_http_version</span>  <span class="mi">1</span><span class="s">.1</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">Connection</span> <span class="s">keep-alive</span><span class="p">;</span>
-        <span class="kn">proxy_cookie_path</span>   <span class="s">/</span> <span class="s">&#34;/</span><span class="p">;</span> <span class="kn">secure</span><span class="p">;</span> <span class="kn">HttpOnly</span><span class="p">;</span> <span class="kn">SameSite=strict&#34;</span><span class="p">;</span>
+    location = / {
+        proxy_set_header    X-Real-IP $remote_addr;
+        proxy_set_header    Host $http_host;
+        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+	proxy_set_header    Access-Control-Expose-Headers Content-Disposition;
+        proxy_http_version  1.1;
+        proxy_set_header    Connection keep-alive;
+        proxy_cookie_path   / &quot;/; secure; HttpOnly; SameSite=strict&quot;;
 
-        <span class="kn">proxy_pass</span>  <span class="s">http://127.0.0.1:9701</span><span class="p">;</span>
-    <span class="p">}</span>
+        proxy_pass  http://127.0.0.1:9701;
+    }
 
-    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">Host</span> <span class="nv">$http_host</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
-	<span class="kn">proxy_set_header</span>    <span class="s">Access-Control-Expose-Headers</span> <span class="s">Content-Disposition</span><span class="p">;</span>
-        <span class="kn">proxy_http_version</span>  <span class="mi">1</span><span class="s">.1</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">Connection</span> <span class="s">keep-alive</span><span class="p">;</span>
-        <span class="kn">proxy_cookie_path</span>   <span class="s">/</span> <span class="s">&#34;/</span><span class="p">;</span> <span class="kn">secure</span><span class="p">;</span> <span class="kn">HttpOnly</span><span class="p">;</span> <span class="kn">SameSite=strict&#34;</span><span class="p">;</span>
+    location / {
+        proxy_set_header    X-Real-IP $remote_addr;
+        proxy_set_header    Host $http_host;
+        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+	proxy_set_header    Access-Control-Expose-Headers Content-Disposition;
+        proxy_http_version  1.1;
+        proxy_set_header    Connection keep-alive;
+        proxy_cookie_path   / &quot;/; secure; HttpOnly; SameSite=strict&quot;;
 
-        <span class="kn">if</span> <span class="s">(!-e</span> <span class="nv">$request_filename</span><span class="s">)</span> <span class="p">{</span>
-            <span class="kn">proxy_pass</span>  <span class="s">http://127.0.0.1:9701</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+        if (!-e $request_filename) {
+            proxy_pass  http://127.0.0.1:9701;
+        }
+    }
 
-    <span class="kn">location</span> <span class="p">=</span> <span class="s">/50x.html</span> <span class="p">{</span>
-        <span class="kn">root</span>  <span class="s">/usr/share/nginx/html</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-<span class="k">server</span> <span class="p">{</span>
-    <span class="kn">listen</span>       <span class="mi">443</span> <span class="s">ssl</span><span class="p">;</span>
-    <span class="kn">server_name</span>  <span class="s">api.abc.com</span><span class="p">;</span>
-    <span class="kn">error_page</span>   <span class="mi">500</span> <span class="mi">502</span> <span class="mi">503</span> <span class="mi">504</span> <span class="s">/50x.html</span><span class="p">;</span>
-    <span class="kn">index</span>        <span class="s">index.html</span> <span class="s">index.htm</span><span class="p">;</span>
+    location = /50x.html {
+        root  /usr/share/nginx/html;
+    }
+}
+server {
+    listen       443 ssl;
+    server_name  api.abc.com;
+    error_page   500 502 503 504 /50x.html;
+    index        index.html index.htm;
 
-    <span class="kn">access_log</span>   <span class="s">/data/nginx/api.abc.com/access_</span><span class="nv">$logdate.log</span><span class="p">;</span>
-    <span class="kn">error_log</span>    <span class="s">/data/nginx/api.abc.com/error.log</span><span class="p">;</span>
+    access_log   /data/nginx/api.abc.com/access_$logdate.log;
+    error_log    /data/nginx/api.abc.com/error.log;
 
-    <span class="kn">ssl_session_cache</span>    <span class="s">shared:SSL:1m</span><span class="p">;</span>
-    <span class="kn">ssl_certificate</span>     <span class="s">pem/api.abc.com/cert.pem</span><span class="p">;</span>  <span class="c1"># pem文件的路径
-</span><span class="c1"></span>    <span class="kn">ssl_certificate_key</span>  <span class="s">pem/api.abc.com/key.pem</span><span class="p">;</span> <span class="c1"># key文件的路径
-</span><span class="c1"></span>
-    <span class="kn">ssl_session_timeout</span>  <span class="mi">5m</span><span class="p">;</span>    <span class="c1">#缓存有效期
-</span><span class="c1"></span>    <span class="kn">ssl_ciphers</span> <span class="s">ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4</span><span class="p">;</span>    <span class="c1">#加密算法
-</span><span class="c1"></span>    <span class="kn">ssl_protocols</span> <span class="s">TLSv1</span> <span class="s">TLSv1.1</span> <span class="s">TLSv1.2</span><span class="p">;</span>    <span class="c1">#安全链接可选的加密协议
-</span><span class="c1"></span>    <span class="kn">ssl_prefer_server_ciphers</span> <span class="no">on</span><span class="p">;</span>   <span class="c1">#使用服务器端的首选算法
-</span><span class="c1"></span>
-    <span class="kn">location</span> <span class="p">=</span> <span class="s">/</span> <span class="p">{</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">Host</span> <span class="s">api.abc.com</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
-	<span class="kn">proxy_set_header</span>    <span class="s">Access-Control-Expose-Headers</span> <span class="s">Content-Disposition</span><span class="p">;</span>
-        <span class="kn">proxy_http_version</span>  <span class="mi">1</span><span class="s">.1</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">Connection</span> <span class="s">keep-alive</span><span class="p">;</span>
-        <span class="kn">proxy_cookie_path</span>   <span class="s">/</span> <span class="s">&#34;/</span><span class="p">;</span> <span class="kn">secure</span><span class="p">;</span> <span class="kn">HttpOnly</span><span class="p">;</span> <span class="kn">SameSite=strict&#34;</span><span class="p">;</span>
+    ssl_session_cache    shared:SSL:1m;
+    ssl_certificate     pem/api.abc.com/cert.pem;  # pem文件的路径
+    ssl_certificate_key  pem/api.abc.com/key.pem; # key文件的路径
 
-        <span class="kn">proxy_pass</span>  <span class="s">http://127.0.0.1:9701</span><span class="p">;</span>
-    <span class="p">}</span>
+    ssl_session_timeout  5m;    #缓存有效期
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;    #加密算法
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;    #安全链接可选的加密协议
+    ssl_prefer_server_ciphers on;   #使用服务器端的首选算法
 
-    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">Host</span> <span class="s">api.abc.com</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
-	<span class="kn">proxy_set_header</span>    <span class="s">Access-Control-Expose-Headers</span> <span class="s">Content-Disposition</span><span class="p">;</span>
-        <span class="kn">proxy_http_version</span>  <span class="mi">1</span><span class="s">.1</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span>    <span class="s">Connection</span> <span class="s">keep-alive</span><span class="p">;</span>
-        <span class="kn">proxy_cookie_path</span>   <span class="s">/</span> <span class="s">&#34;/</span><span class="p">;</span> <span class="kn">secure</span><span class="p">;</span> <span class="kn">HttpOnly</span><span class="p">;</span> <span class="kn">SameSite=strict&#34;</span><span class="p">;</span>
+    location = / {
+        proxy_set_header    X-Real-IP $remote_addr;
+        proxy_set_header    Host api.abc.com;
+        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+	proxy_set_header    Access-Control-Expose-Headers Content-Disposition;
+        proxy_http_version  1.1;
+        proxy_set_header    Connection keep-alive;
+        proxy_cookie_path   / &quot;/; secure; HttpOnly; SameSite=strict&quot;;
 
-        <span class="kn">if</span> <span class="s">(!-e</span> <span class="nv">$request_filename</span><span class="s">)</span> <span class="p">{</span>
-            <span class="kn">proxy_pass</span>  <span class="s">http://127.0.0.1:9701</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+        proxy_pass  http://127.0.0.1:9701;
+    }
 
-    <span class="kn">location</span> <span class="p">=</span> <span class="s">/50x.html</span> <span class="p">{</span>
-        <span class="kn">root</span>  <span class="s">/usr/share/nginx/html</span><span class="p">;</span>
-    <span class="p">}</span>
+    location / {
+        proxy_set_header    X-Real-IP $remote_addr;
+        proxy_set_header    Host api.abc.com;
+        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+	proxy_set_header    Access-Control-Expose-Headers Content-Disposition;
+        proxy_http_version  1.1;
+        proxy_set_header    Connection keep-alive;
+        proxy_cookie_path   / &quot;/; secure; HttpOnly; SameSite=strict&quot;;
 
-<span class="p">}</span>
-</code></pre></td></tr></table>
-</div>
-</div><h4 id="gitlab-runner">gitlab runner</h4>
+        if (!-e $request_filename) {
+            proxy_pass  http://127.0.0.1:9701;
+        }
+    }
+
+    location = /50x.html {
+        root  /usr/share/nginx/html;
+    }
+
+}
+</code></pre>
+<h4 id="gitlab-runner">gitlab runner</h4>
 <h4 id="gitlab-ci">gitlab ci</h4>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">

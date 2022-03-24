@@ -6,7 +6,7 @@
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>搭建robot Framework Ride测试框架 - 木木飞</title><meta name="Description" content="木木飞"><meta property="og:title" content="搭建robot Framework Ride测试框架" />
-<meta property="og:description" content="方案1 (直接本地安装) 1 2 3 4 5 6 7 8 9 10 # pip install -U robotframework pip install -U -r https://raw.githubusercontent.com/robotframework/RIDE/master/requirements.txt pip install -U robotframework-ride mkdir project; cd project; pipenv --three pipenv install robotframework-ride robotframework-ride 方案2 (docker方案 , 容器运行ride.py &#43;" />
+<meta property="og:description" content="方案1 (直接本地安装) # pip install -U robotframework pip install -U -r https://raw.githubusercontent.com/robotframework/RIDE/master/requirements.txt pip install -U robotframework-ride mkdir project; cd project; pipenv --three pipenv install robotframework-ride robotframework-ride 方案2 (docker方案 , 容器运行ride.py &#43; xquartz &#43; socat , 完成通讯;)" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mmfei.com/2021/07/%E6%90%AD%E5%BB%BArobot-framework-ride%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/" /><meta property="og:image" content="https://mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-07-14T11:25:41&#43;08:00" />
@@ -16,7 +16,7 @@
 <meta name="twitter:image" content="https://mmfei.com/images/avatar.jpg"/>
 
 <meta name="twitter:title" content="搭建robot Framework Ride测试框架"/>
-<meta name="twitter:description" content="方案1 (直接本地安装) 1 2 3 4 5 6 7 8 9 10 # pip install -U robotframework pip install -U -r https://raw.githubusercontent.com/robotframework/RIDE/master/requirements.txt pip install -U robotframework-ride mkdir project; cd project; pipenv --three pipenv install robotframework-ride robotframework-ride 方案2 (docker方案 , 容器运行ride.py &#43;"/>
+<meta name="twitter:description" content="方案1 (直接本地安装) # pip install -U robotframework pip install -U -r https://raw.githubusercontent.com/robotframework/RIDE/master/requirements.txt pip install -U robotframework-ride mkdir project; cd project; pipenv --three pipenv install robotframework-ride robotframework-ride 方案2 (docker方案 , 容器运行ride.py &#43; xquartz &#43; socat , 完成通讯;)"/>
 <meta name="application-name" content="木木飞">
 <meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/mmfei.com\/2021\/07\/%E6%90%AD%E5%BB%BArobot-framework-ride%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "python, docker, 测试, test, robot Framework","wordcount":  192 ,
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "python, docker, 测试, test, robot Framework","wordcount":  163 ,
         "url": "https:\/\/mmfei.com\/2021\/07\/%E6%90%AD%E5%BB%BArobot-framework-ride%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6\/","datePublished": "2021-07-14T11:25:41+08:00","dateModified": "2021-07-14T11:25:41+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
@@ -124,7 +124,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">搭建robot Framework Ride测试框架</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/robot-framework/"><i class="far fa-folder fa-fw"></i>robot Framework</a>&nbsp;<a href="/categories/%E6%B5%8B%E8%AF%95/"><i class="far fa-folder fa-fw"></i>测试</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-14">2021-07-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 192 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-07-14">2021-07-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 163 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2021/07/%E6%90%AD%E5%BB%BArobot-framework-ride%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/" class="leancloud_visitors" data-flag-title="搭建robot Framework Ride测试框架">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -152,33 +152,18 @@
 <blockquote>
 <p>方案1 (直接本地安装)</p>
 </blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># </span>
+<pre><code class="language-shell"># 
 pip install -U robotframework
 pip install -U -r https://raw.githubusercontent.com/robotframework/RIDE/master/requirements.txt
 pip install -U robotframework-ride
 
-mkdir project<span class="p">;</span>
-<span class="nb">cd</span> project<span class="p">;</span>
+mkdir project;
+cd project;
 pipenv --three
 pipenv install robotframework-ride
 robotframework-ride
-</code></pre></td></tr></table>
-</div>
-</div><blockquote>
+</code></pre>
+<blockquote>
 <p>方案2 (docker方案 , 容器运行ride.py + xquartz + socat , 完成通讯;)</p>
 </blockquote>
 <blockquote>
@@ -186,62 +171,33 @@ robotframework-ride
 <p>osx</p>
 </blockquote>
 </blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 安装xquartz</span>
-<span class="o">[</span>https://www.xquartz.org/<span class="o">](</span>https://www.xquartz.org/<span class="o">)</span>
-<span class="c1"># 安装 socat</span>
+<pre><code class="language-shell"># 安装xquartz
+[https://www.xquartz.org/](https://www.xquartz.org/)
+# 安装 socat
 brew install socat
 
-<span class="c1"># 启动docker里面的ride.py</span>
-socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:<span class="se">\&#34;</span><span class="nv">$DISPLAY</span><span class="se">\&#34;</span>
+# 启动docker里面的ride.py
+socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\&quot;$DISPLAY\&quot;
 open -a XQuartz
 
-git clone https://github.com/mmfei/docker-robotframework-ride<span class="p">;</span>
-<span class="nb">cd</span> docker-robotframework-ride<span class="p">;</span>  <span class="c1"># 目录: /data1/src/script/robots/test</span>
-docker-compose up -d<span class="p">;</span>
+git clone https://github.com/mmfei/docker-robotframework-ride;
+cd docker-robotframework-ride;  # 目录: /data1/src/script/robots/test
+docker-compose up -d;
 
-</code></pre></td></tr></table>
-</div>
-</div><blockquote>
+</code></pre>
+<blockquote>
 <blockquote>
 <p>Windows (请先装好虚拟机和x client)</p>
 </blockquote>
 </blockquote>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">docker run --rm -e <span class="nv">DISPLAY</span><span class="o">=</span><span class="nv">$DISPLAY</span> -v /data1/src/script/robots/test:/robot softsam/robotframework-ride
+<pre><code class="language-shell">docker run --rm -e DISPLAY=$DISPLAY -v /data1/src/script/robots/test:/robot softsam/robotframework-ride
 
-<span class="c1"># 或者</span>
-git clone https://github.com/mmfei/docker-robotframework-ride<span class="p">;</span>
-<span class="nb">cd</span> docker-robotframework-ride<span class="p">;</span>  <span class="c1"># 目录: /data1/src/script/robots/test</span>
-docker-compose up -d<span class="p">;</span>
-</code></pre></td></tr></table>
-</div>
-</div></div><div class="post-footer" id="post-footer">
+# 或者
+git clone https://github.com/mmfei/docker-robotframework-ride;
+cd docker-robotframework-ride;  # 目录: /data1/src/script/robots/test
+docker-compose up -d;
+</code></pre>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
