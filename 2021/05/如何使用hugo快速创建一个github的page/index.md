@@ -67,7 +67,7 @@ ssh-keygen -t rsa -b 4069 -C "abc@abc.com";  # 这里要替换成为你的邮箱
 `ACTIONS_DEPLOY_KEY` 的值为上面生成的pub
 `GH_TOKEN` 的值为上面的MY_GH_TOKEN的值
 
-[/images/posts/如何使用hugo快速创建一个github的page/img.png](/images/posts/如何使用hugo快速创建一个github的page/img.png)
+![/images/posts/如何使用hugo快速创建一个github的page/img.png](/images/posts/如何使用hugo快速创建一个github的page/img.png)
 
 ### 新增algolia搜索功能
 
