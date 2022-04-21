@@ -42,6 +42,8 @@ services:
       - TZ=Asia/Shanghai
 ```
 
+>> 如果不知道root的密码 , 这样可以查看密码 `docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password`
+
 ```shell
 yum install -y yum-utils
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
@@ -81,6 +83,22 @@ Registering runner... succeeded                     runner=adfasdfasdf
 Enter an executor: parallels, ssh, virtualbox, custom, docker, docker-ssh, kubernetes, shell, docker+machine, docker-ssh+machine:
 shell   # 这里选shell即可
 Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded!
+```
+
+#### docker版本注册runner (注意gitlab的名字最好不要用域名,容易掉坑)
+```shell
+gitlab-runner register \
+  --non-interactive \
+  --url "https://gitlab.abc.com" \
+  --registration-token "{token}" \
+  --executor "docker" \
+  --docker-image alpine:latest \
+  --description "docker-runner" \
+  --maintenance-note "Free-form maintainer notes about this runner" \
+  --tag-list "docker_sg" \
+  --run-untagged="true" \
+  --locked="false" \
+  --access-level="not_protected"
 ```
 
 ## 配置本地的nginx服务器

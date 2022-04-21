@@ -97,10 +97,28 @@ chsh -s /bin/zsh
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 cd ~/.oh-my-zsh/themes
 wget https://raw.githubusercontent.com/zakaziko99/agnosterzak-ohmyzsh-theme/master/agnosterzak.zsh-theme
-sed -i 's/ZSH_THEME=".+"/ZSH_THEME="agnosterzak"/' ~/.zshrc
-apt install fonts-powerline -y
+sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="agnosterzak"/' ~/.zshrc
+apt install fonts-powerline git -y
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
-sed -i "s/plugins=\([^\)]+\)/plugins=(git extract z zsh-autosuggestions)/" ~/.zshrc
+sed -i "s/plugins=(git)/plugins=(git extract z zsh-autosuggestions)/" ~/.zshrc
 zsh
 source ~/.zshrc
+```
+
+
+
+## 如果你是在阿里云的ecs
+```shell
+apt update
+apt install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+apt update
+apt install -y docker-ce docker-ce-cli containerd.io
+systemctl status docker
+
+curl -L "https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-$(uname -s| tr '[:upper:]' '[:lower:]')-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+
 ```
