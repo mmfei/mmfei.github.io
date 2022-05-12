@@ -4,7 +4,16 @@
         <link>https://mmfei.com/posts/</link>
         <description>所有文章 | 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 20 Apr 2022 22:59:40 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 12 May 2022 11:18:16 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>一个golang的优秀框架go-zero</title>
+    <link>https://mmfei.com/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/</link>
+    <pubDate>Thu, 12 May 2022 11:18:16 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e4%b8%80%e4%b8%aagolang%e7%9a%84%e4%bc%98%e7%a7%80%e6%a1%86%e6%9e%b6go-zero/featuredImage.png" referrerpolicy="no-referrer">
+            </div>暗中观察了golang的生态 , 变化很快 , 正在迅速成长 喷涌而出的框架 viper ,cobra , beego, martini, iris , gin , goframe , go-zero 包管理从 GOPATH , golide, vgo, godep , govender, gomod 演变 编辑器 vim , sublime text , goland , vscode]]></description>
+</item><item>
     <title>阿里云国内机房拉github代码加速方案</title>
     <link>https://mmfei.com/2022/04/%E9%98%BF%E9%87%8C%E4%BA%91%E5%9B%BD%E5%86%85%E6%9C%BA%E6%88%BF%E6%8B%89github%E4%BB%A3%E7%A0%81%E5%8A%A0%E9%80%9F%E6%96%B9%E6%A1%88/</link>
     <pubDate>Wed, 20 Apr 2022 22:59:40 &#43;0800</pubDate>
@@ -85,14 +94,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/MacBookM1X%e6%90%ad%e5%bb%bamysql%e5%92%8credis%e4%bb%a5%e5%8f%8aphp%e7%9a%84swoole%e5%92%8chyperf%e7%8e%af%e5%a2%83/featuredImage.png" referrerpolicy="no-referrer">
             </div>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole brew install boost; # 在m1x环境 , yasd在编译的时候会找不到这个boost依赖 , 解]]></description>
-</item><item>
-    <title>Mac通过brew安装php7.4&#43;swoole</title>
-    <link>https://mmfei.com/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/</link>
-    <pubDate>Wed, 06 Oct 2021 23:00:38 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/mac%e9%80%9a%e8%bf%87brew%e5%ae%89%e8%a3%85php7.4&#43;swoole/featuredImage.png" referrerpolicy="no-referrer">
-            </div>1 2 3 4 5 brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole 这里会有三四个询问确认的 , 需要注意的是 ssl那个选项 , 要选择 yes --with-openssl-dir=/usr/local/opt/openssl@1.1 启动php服务进行调试(要带-e参数]]></description>
 </item></channel>
 </rss>
