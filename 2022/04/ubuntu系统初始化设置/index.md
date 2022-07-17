@@ -81,7 +81,7 @@ systemctl enable ufw;
 
 ufw enable
 ufw allow 10087
-uft allow 80
+ufw allow 80
 
 
 reboot

@@ -4,9 +4,18 @@
         <link>https://mmfei.com/</link>
         <description>木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 12 May 2022 11:18:16 &#43;0800</lastBuildDate>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sun, 17 Jul 2022 09:03:01 &#43;0800</lastBuildDate>
             <atom:link href="https://mmfei.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Ubuntu安装php8.1和swoole</title>
+    <link>https://mmfei.com/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/</link>
+    <pubDate>Sun, 17 Jul 2022 09:03:01 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/ubuntu%e5%ae%89%e8%a3%85php8.1%e5%92%8cswoole/featuredImage.png" referrerpolicy="no-referrer">
+            </div>hyperf2.2 + swoole + redis + mysql + ubuntu 的环境 (mysql用的是云商的, 本地不安装) 1 2 3 4 5 6 apt-get update apt install php8.1 apt install php8.1-swoole; apt install php8.1-redis; echo &#39;swoole.use_shortname=&#34;Off&#34;&#39; &gt;&gt; /etc/php/8.1/cli/conf.d/25-swoole.ini; # 这个是hyperf需要的设置]]></description>
+</item><item>
     <title>一个golang的优秀框架go-zero</title>
     <link>https://mmfei.com/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/</link>
     <pubDate>Thu, 12 May 2022 11:18:16 &#43;0800</pubDate>
@@ -87,14 +96,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e8%bd%ac%e6%8d%a2%e6%9c%ac%e5%9c%b0%e5%9b%be%e7%89%87%e8%a7%86%e9%a2%91%e4%b8%babase64%e7%9a%84json/featuredImage.png" referrerpolicy="no-referrer">
             </div>最近 , 前端同事有个需求是把本地的图片视频转成base64的json文件. 由于量比较多 , 且繁琐. 我花了点时间写了个简单的工具 https://github.com/mmfei/bash_image_to_base64 使用方式 1 2 3 4]]></description>
-</item><item>
-    <title>MacBookM1X搭建mysql和redis以及php的swoole和hyperf环境</title>
-    <link>https://mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/</link>
-    <pubDate>Sun, 14 Nov 2021 01:59:47 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/MacBookM1X%e6%90%ad%e5%bb%bamysql%e5%92%8credis%e4%bb%a5%e5%8f%8aphp%e7%9a%84swoole%e5%92%8chyperf%e7%8e%af%e5%a2%83/featuredImage.png" referrerpolicy="no-referrer">
-            </div>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole brew install boost; # 在m1x环境 , yasd在编译的时候会找不到这个boost依赖 , 解]]></description>
 </item></channel>
 </rss>

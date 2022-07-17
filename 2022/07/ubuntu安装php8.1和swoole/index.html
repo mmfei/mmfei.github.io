@@ -5,32 +5,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>一个golang的优秀框架go-zero - 木木飞</title><meta name="Description" content="木木飞"><meta property="og:title" content="一个golang的优秀框架go-zero" />
-<meta property="og:description" content="暗中观察了golang的生态 , 变化很快 , 正在迅速成长 喷涌而出的框架 viper ,cobra , beego, martini, iris , gin , goframe , go-zero 包管理从 GOPATH , golide, vgo, godep , govender, gomod 演变 编辑器 vim , sublime text , goland , vscode" />
+        <title>Ubuntu安装php8.1和swoole - 木木飞</title><meta name="Description" content="木木飞"><meta property="og:title" content="Ubuntu安装php8.1和swoole" />
+<meta property="og:description" content="hyperf2.2 &#43; swoole &#43; redis &#43; mysql &#43; ubuntu 的环境 (mysql用的是云商的, 本地不安装) 1 2 3 4 5 6 apt-get update apt install php8.1 apt install php8.1-swoole; apt install php8.1-redis; echo &#39;swoole.use_shortname=&#34;Off&#34;&#39; &gt;&gt; /etc/php/8.1/cli/conf.d/25-swoole.ini; # 这个是hyperf需要的设置" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://mmfei.com/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/" /><meta property="og:image" content="https://mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-05-12T11:18:16&#43;08:00" />
-<meta property="article:modified_time" content="2022-05-12T11:18:16&#43;08:00" />
+<meta property="og:url" content="https://mmfei.com/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/" /><meta property="og:image" content="https://mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-07-17T09:03:01&#43;08:00" />
+<meta property="article:modified_time" content="2022-07-17T09:03:01&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://mmfei.com/images/avatar.jpg"/>
 
-<meta name="twitter:title" content="一个golang的优秀框架go-zero"/>
-<meta name="twitter:description" content="暗中观察了golang的生态 , 变化很快 , 正在迅速成长 喷涌而出的框架 viper ,cobra , beego, martini, iris , gin , goframe , go-zero 包管理从 GOPATH , golide, vgo, godep , govender, gomod 演变 编辑器 vim , sublime text , goland , vscode"/>
+<meta name="twitter:title" content="Ubuntu安装php8.1和swoole"/>
+<meta name="twitter:description" content="hyperf2.2 &#43; swoole &#43; redis &#43; mysql &#43; ubuntu 的环境 (mysql用的是云商的, 本地不安装) 1 2 3 4 5 6 apt-get update apt install php8.1 apt install php8.1-swoole; apt install php8.1-redis; echo &#39;swoole.use_shortname=&#34;Off&#34;&#39; &gt;&gt; /etc/php/8.1/cli/conf.d/25-swoole.ini; # 这个是hyperf需要的设置"/>
 <meta name="application-name" content="木木飞">
 <meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://mmfei.com/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/" /><link rel="prev" href="https://mmfei.com/2022/04/%E9%98%BF%E9%87%8C%E4%BA%91%E5%9B%BD%E5%86%85%E6%9C%BA%E6%88%BF%E6%8B%89github%E4%BB%A3%E7%A0%81%E5%8A%A0%E9%80%9F%E6%96%B9%E6%A1%88/" /><link rel="next" href="https://mmfei.com/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://mmfei.com/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/" /><link rel="prev" href="https://mmfei.com/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "一个golang的优秀框架go-zero",
+        "headline": "Ubuntu安装php8.1和swoole",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/mmfei.com\/2022\/05\/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "golang, go, go-zero","wordcount":  294 ,
-        "url": "https:\/\/mmfei.com\/2022\/05\/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero\/","datePublished": "2022-05-12T11:18:16+08:00","dateModified": "2022-05-12T11:18:16+08:00","publisher": {
+            "@id": "https:\/\/mmfei.com\/2022\/07\/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole\/"
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "ubuntu, php, swoole","wordcount":  67 ,
+        "url": "https:\/\/mmfei.com\/2022\/07\/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole\/","datePublished": "2022-07-17T09:03:01+08:00","dateModified": "2022-07-17T09:03:01+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
                 "@type": "Person",
@@ -54,7 +54,7 @@
         </div>
         <div class="menu">
             <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friend/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/" selected>简体中文</option></select>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/" selected>简体中文</option></select>
                     </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
@@ -108,7 +108,7 @@
                 </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friend/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw"></i>
             </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/" selected>简体中文</option></select>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/" selected>简体中文</option></select>
                 </a></div>
     </div>
 </header>
@@ -122,76 +122,70 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">一个golang的优秀框架go-zero</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/go-zero/"><i class="far fa-folder fa-fw"></i>go-zero</a>&nbsp;<a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>golang</a>&nbsp;<a href="/categories/go/"><i class="far fa-folder fa-fw"></i>go</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-12">2022-05-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 294 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/" class="leancloud_visitors" data-flag-title="一个golang的优秀框架go-zero">
+        </div><article class="page single"><h1 class="single-title animated flipInX">Ubuntu安装php8.1和swoole</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/ubuntu/"><i class="far fa-folder fa-fw"></i>ubuntu</a>&nbsp;<a href="/categories/php/"><i class="far fa-folder fa-fw"></i>php</a>&nbsp;<a href="/categories/swoole/"><i class="far fa-folder fa-fw"></i>swoole</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-07-17">2022-07-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 67 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/" class="leancloud_visitors" data-flag-title="Ubuntu安装php8.1和swoole">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="/images/posts/%e4%b8%80%e4%b8%aagolang%e7%9a%84%e4%bc%98%e7%a7%80%e6%a1%86%e6%9e%b6go-zero/featuredImage.png"
-        data-srcset="/images/posts/%e4%b8%80%e4%b8%aagolang%e7%9a%84%e4%bc%98%e7%a7%80%e6%a1%86%e6%9e%b6go-zero/featuredImage.png, /images/posts/%e4%b8%80%e4%b8%aagolang%e7%9a%84%e4%bc%98%e7%a7%80%e6%a1%86%e6%9e%b6go-zero/featuredImage.png 1.5x, /images/posts/%e4%b8%80%e4%b8%aagolang%e7%9a%84%e4%bc%98%e7%a7%80%e6%a1%86%e6%9e%b6go-zero/featuredImage.png 2x"
+        data-src="/images/posts/ubuntu%e5%ae%89%e8%a3%85php8.1%e5%92%8cswoole/featuredImage.png"
+        data-srcset="/images/posts/ubuntu%e5%ae%89%e8%a3%85php8.1%e5%92%8cswoole/featuredImage.png, /images/posts/ubuntu%e5%ae%89%e8%a3%85php8.1%e5%92%8cswoole/featuredImage.png 1.5x, /images/posts/ubuntu%e5%ae%89%e8%a3%85php8.1%e5%92%8cswoole/featuredImage.png 2x"
         data-sizes="auto"
-        alt="/images/posts/一个golang的优秀框架go-zero/featuredImage.png"
-        title="/images/posts/一个golang的优秀框架go-zero/featuredImage.png" /></div><div class="details toc" id="toc-static"  kept="">
+        alt="/images/posts/ubuntu安装php8.1和swoole/featuredImage.png"
+        title="/images/posts/ubuntu安装php8.1和swoole/featuredImage.png" /></div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
-            </div><div class="content" id="content"><pre><code>暗中观察了golang的生态 , 变化很快 , 正在迅速成长
-喷涌而出的框架 viper ,cobra , beego, martini, iris , gin , goframe , go-zero
-包管理从 GOPATH , golide, vgo, godep , govender, gomod 演变
-编辑器 vim , sublime text , goland , vscode 持续在支持
-</code></pre>
-<p>几年前用过beego开发了一个配置管理服务 , 当时应该是1.15的时候 , 还不够成熟. 就浅尝辄止了.后来试了gin , martini 只是web的框架.
-直到前年开始关注到框架 goframe和go-zero , 暗中观察了很久 , 最后看起来go-zero更适合我</p>
-<p>今天花了半小时看了下官方文档 , 貌似还最近更新了一次 , 我就体验一把先</p>
-<p>go-zero适合做微服务和web , 它已经相对成熟了 , 该有的都有.点个赞</p>
+            </div><div class="content" id="content"><h1 id="hyperf22--swoole--redis--mysql--ubuntu-的环境-mysql用的是云商的-本地不安装">hyperf2.2 + swoole + redis + mysql + ubuntu 的环境 (mysql用的是云商的, 本地不安装)</h1>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> mm<span class="p">;</span>
-go mod init mm<span class="p">;</span>
-goctl api new mm<span class="p">;</span>
-go run mm/mm.go -f ./mm/etc/mm-api.yaml
+<pre class="chroma"><code class="language-bash" data-lang="bash">apt-get update
+apt install php8.1
+apt install php8.1-swoole<span class="p">;</span>
+apt install php8.1-redis<span class="p">;</span>
+
+<span class="nb">echo</span> <span class="s1">&#39;swoole.use_shortname=&#34;Off&#34;&#39;</span> &gt;&gt; /etc/php/8.1/cli/conf.d/25-swoole.ini<span class="p">;</span> <span class="c1"># 这个是hyperf需要的设置</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>后续的等我持续体验了再更新吧</p>
-</div><div class="post-footer" id="post-footer">
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-05-12</span>
+                <span>更新于 2022-07-17</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://mmfei.com/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/" data-title="一个golang的优秀框架go-zero" data-via="mmfei" data-hashtags="golang,go,go-zero"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://mmfei.com/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/" data-hashtag="golang"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://mmfei.com/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/" data-title="一个golang的优秀框架go-zero"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://mmfei.com/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/" data-title="一个golang的优秀框架go-zero"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://mmfei.com/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/" data-title="一个golang的优秀框架go-zero" data-image="/images/posts/一个golang的优秀框架go-zero/featuredImage.png"><i class="fab fa-weibo fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://mmfei.com/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/" data-title="Ubuntu安装php8.1和swoole" data-via="mmfei" data-hashtags="ubuntu,php,swoole"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://mmfei.com/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/" data-hashtag="ubuntu"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://mmfei.com/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/" data-title="Ubuntu安装php8.1和swoole"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://mmfei.com/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/" data-title="Ubuntu安装php8.1和swoole"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://mmfei.com/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/" data-title="Ubuntu安装php8.1和swoole" data-image="/images/posts/ubuntu安装php8.1和swoole/featuredImage.png"><i class="fab fa-weibo fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/golang/">golang</a>,&nbsp;<a href="/tags/go/">go</a>,&nbsp;<a href="/tags/go-zero/">go-zero</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/ubuntu/">ubuntu</a>,&nbsp;<a href="/tags/php/">php</a>,&nbsp;<a href="/tags/swoole/">swoole</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/2022/04/%E9%98%BF%E9%87%8C%E4%BA%91%E5%9B%BD%E5%86%85%E6%9C%BA%E6%88%BF%E6%8B%89github%E4%BB%A3%E7%A0%81%E5%8A%A0%E9%80%9F%E6%96%B9%E6%A1%88/" class="prev" rel="prev" title="阿里云国内机房拉github代码加速方案"><i class="fas fa-angle-left fa-fw"></i>阿里云国内机房拉github代码加速方案</a>
-            <a href="/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/" class="next" rel="next" title="Ubuntu安装php8.1和swoole">Ubuntu安装php8.1和swoole<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/" class="prev" rel="prev" title="一个golang的优秀框架go-zero"><i class="fas fa-angle-left fa-fw"></i>一个golang的优秀框架go-zero</a></div>
 </div>
 
 <div id="comments"><div id="valine" class="comment"></div><noscript>
