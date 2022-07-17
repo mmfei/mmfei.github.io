@@ -8,6 +8,9 @@ apt-get update
 apt install php8.1
 apt install php8.1-swoole;
 apt install php8.1-redis;
+apt install php8.1-xml;
+apt install php8.1-simplexml;
+apt install php8.1-bcmath;
 
 # 这个是hyperf需要的设置
 echo 'swoole.use_shortname="Off"' >> /etc/php/8.1/cli/conf.d/25-swoole.ini; 
