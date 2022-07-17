@@ -12,7 +12,7 @@
     <guid>https://mmfei.com/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/ubuntu%e5%ae%89%e8%a3%85php8.1%e5%92%8cswoole/featuredImage.png" referrerpolicy="no-referrer">
-            </div>hyperf2.2 + php8.1 + swoole + redis + mysql + ubuntu20 的环境 (mysql用的是云商的, 本地不安装) 1 2 3 4 5 6 7 apt-get update apt install php8.1 apt install php8.1-swoole; apt install php8.1-redis; # 这个是hyperf需要的设置 echo &#39;swoole.use_shortname=&#34;Off&#34;&#39; &gt;&gt; /etc/php/8.1/cli/conf.d/25-swoole.ini;]]></description>
+            </div>hyperf2.2 + php8.1 + swoole + redis + mysql + ubuntu20 的环境 1 2 3 4 5 6 7 8 # mysql用的是云商的, 本地不安装 apt-get update apt install php8.1 apt install php8.1-swoole; apt install php8.1-redis; # 这个是hyperf需要的设置 echo &#39;swoole.use_shortname=&#34;Off&#34;&#39; &gt;&gt; /etc/php/8.1/cli/conf.d/25-swoole.ini;]]></description>
 </item><item>
     <title>一个golang的优秀框架go-zero</title>
     <link>https://mmfei.com/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/</link>
