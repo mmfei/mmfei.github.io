@@ -3,6 +3,12 @@
 
 ### hyperf2.2 + php8.1 + swoole + redis + mysql + ubuntu20 的环境
 ```bash
+apt install software-properties-common
+add-apt-repository ppa:ondrej/php
+apt update
+
+
+
 # mysql用的是云商的, 本地不安装
 apt-get update
 apt install php8.1

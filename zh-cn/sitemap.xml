@@ -2,7 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://mmfei.com/categories/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://mmfei.com/categories/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://mmfei.com/en/categories/"
@@ -11,12 +11,12 @@
                     hreflang="zh-cn"
                     href="https://mmfei.com/categories/"
                     /></url><url>
-            <loc>https://mmfei.com/tags/php/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/categories/php/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/posts/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/swoole/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/categories/swoole/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/tags/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://mmfei.com/tags/php/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://mmfei.com/categories/php/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://mmfei.com/posts/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://mmfei.com/tags/swoole/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://mmfei.com/categories/swoole/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://mmfei.com/tags/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://mmfei.com/en/tags/"
@@ -25,10 +25,10 @@
                     hreflang="zh-cn"
                     href="https://mmfei.com/tags/"
                     /></url><url>
-            <loc>https://mmfei.com/tags/ubuntu/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/categories/ubuntu/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://mmfei.com/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://mmfei.com/tags/ubuntu/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://mmfei.com/categories/ubuntu/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://mmfei.com/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://mmfei.com/</loc><lastmod>2022-07-17T09:03:01&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://mmfei.com/en/"
