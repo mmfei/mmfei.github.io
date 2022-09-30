@@ -9,13 +9,13 @@ apt update
 
 # mysql用的是云商的, 本地不安装
 apt-get update
-apt install php8.1
-apt install php8.1-swoole;
-apt install php8.1-redis;
-apt install php8.1-xml;
-apt install php8.1-simplexml;
-apt install php8.1-bcmath;
-apt install zip unzip php-zip;
+apt -y install php8.1
+apt -y install php8.1-swoole;
+apt -y install php8.1-redis;
+apt -y install php8.1-xml;
+apt -y install php8.1-simplexml;
+apt -y install php8.1-bcmath;
+apt -y install zip unzip php-zip;
 
 curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php;
 php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer;
