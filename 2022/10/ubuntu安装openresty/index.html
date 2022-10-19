@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/mmfei.com\/2022\/10\/ubuntu%E5%AE%89%E8%A3%85openresty\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Ubuntu, openresty","wordcount":  253 ,
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Ubuntu, openresty","wordcount":  490 ,
         "url": "https:\/\/mmfei.com\/2022\/10\/ubuntu%E5%AE%89%E8%A3%85openresty\/","datePublished": "2022-10-19T13:43:07+08:00","dateModified": "2022-10-19T13:43:07+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
@@ -124,7 +124,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Ubuntu安装openresty</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/ubuntu/"><i class="far fa-folder fa-fw"></i>Ubuntu</a>&nbsp;<a href="/categories/openresty/"><i class="far fa-folder fa-fw"></i>openresty</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-19">2022-10-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 253 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-19">2022-10-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 490 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2022/10/ubuntu%E5%AE%89%E8%A3%85openresty/" class="leancloud_visitors" data-flag-title="Ubuntu安装openresty">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -270,7 +270,90 @@ cat &gt; /tmp/openresty.service <span class="s">&lt;&lt;EOF
 rm -rf openresty-1.19.3.2 openresty-1.19.3.2.tar.gz
 </code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><blockquote>
+<p>pem的目录: /usr/local/openresty/nginx/conf/pem</p>
+</blockquote>
+<pre><code class="language-conf" data-lang="conf">server {
+    listen       80;
+    server_name  www.mmfei.com
+    error_page   500 502 503 504 /50x.html;
+    error_log    /data/nginx/www.mmfei.com/error.log;
+    access_log   /data/nginx/www.mmfei.com/access_$logdate.log;
+    index    index.html index.htm index.php;
+
+    location = / {
+        proxy_set_header    X-Real-IP $remote_addr;
+        proxy_set_header    Host $http_host;
+        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+	proxy_set_header    Access-Control-Expose-Headers Content-Disposition;
+        proxy_http_version  1.1;
+        proxy_set_header    Connection keep-alive;
+        proxy_pass  http://127.0.0.1:9601;
+    }
+
+    location / {
+        proxy_set_header    X-Real-IP $remote_addr;
+        proxy_set_header    Host $http_host;
+        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+	proxy_set_header    Access-Control-Expose-Headers Content-Disposition;
+        proxy_http_version  1.1;
+        proxy_set_header    Connection keep-alive;
+
+        if (!-e $request_filename) {
+            proxy_pass  http://127.0.0.1:9601;
+        }
+    }
+
+    location = /50x.html {
+        root  /usr/share/nginx/html;
+    }
+}
+server {
+    listen       443 ssl;
+    server_name  www.mmfei.com
+    error_page   500 502 503 504 /50x.html;
+    index        index.html index.htm;
+
+    access_log   /data/nginx/www.mmfei.com/access_$logdate.log;
+    error_log    /data/nginx/www.mmfei.com/error.log;
+
+    ssl_session_cache    shared:SSL:1m;
+    ssl_certificate     pem/www.mmfei.com/cert.pem;  # pem文件的路径
+    ssl_certificate_key  pem/www.mmfei.com/key.pem; # key文件的路径
+
+    ssl_session_timeout  5m;    #缓存有效期
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;    #加密算法
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;    #安全链接可选的加密协议
+    ssl_prefer_server_ciphers on;   #使用服务器端的首选算法
+
+    location = / {
+        proxy_set_header    X-Real-IP $remote_addr;
+        proxy_set_header    Host $http_host;
+        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+	    proxy_set_header    Access-Control-Expose-Headers Content-Disposition;
+        proxy_http_version  1.1;
+        proxy_set_header    Connection keep-alive;
+        proxy_pass  http://127.0.0.1:9601;
+    }
+
+    location / {
+        proxy_set_header    X-Real-IP $remote_addr;
+        proxy_set_header    Host $http_host;
+        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+	proxy_set_header    Access-Control-Expose-Headers Content-Disposition;
+        proxy_http_version  1.1;
+        proxy_set_header    Connection keep-alive;
+
+        if (!-e $request_filename) {
+            proxy_pass  http://127.0.0.1:9601;
+        }
+    }
+
+    location = /50x.html {
+        root  /usr/share/nginx/html;
+    }
+}
+</code></pre></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
