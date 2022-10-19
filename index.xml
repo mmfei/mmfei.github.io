@@ -32,7 +32,7 @@
     <guid>https://mmfei.com/2022/09/%E9%83%A8%E7%BD%B2openresty%E5%92%8Ckafka%E7%9A%84%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E7%B3%BB%E7%BB%9F/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e9%83%a8%e7%bd%b2openresty%e5%92%8ckafka%e7%9a%84%e6%95%b0%e6%8d%ae%e9%87%87%e9%9b%86%e7%b3%bb%e7%bb%9f/featuredImage.png" referrerpolicy="no-referrer">
-            </div>基于Openresty+Lua+Kafka对日志进行实时的采集 install 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 #!/bin/bash #ubuntu apt-get update; apt-get install -y gcc g++ libpcre3 libpcre3-dev zlib1g-dev libssl-dev make git wget curl]]></description>
+            </div>基于Openresty+Lua+Kafka对日志进行实时的采集 openresty 1 2 3 4 5 6 7 8 9 #!/bin/bash ## openresty apt-get -y install --no-install-recommends wget gnupg ca-certificates wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add - echo &#34;deb http://openresty.org/package/ubuntu $(lsb_release -sc)main&#34; &gt; openresty.list cp openresty.list /etc/apt/sources.list.d/]]></description>
 </item><item>
     <title>Ubuntu安装php8.1和swoole</title>
     <link>https://mmfei.com/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/</link>
