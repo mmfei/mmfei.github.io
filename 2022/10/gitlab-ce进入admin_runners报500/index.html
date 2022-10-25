@@ -5,32 +5,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>Ubuntu安装openresty - 木木飞</title><meta name="Description" content="木木飞"><meta property="og:title" content="Ubuntu安装openresty" />
-<meta property="og:description" content="直接执行 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 #!/bin/bash set -e rm -rf" />
+        <title>Gitlab Ce进入admin_runners报500 - 木木飞</title><meta name="Description" content="木木飞"><meta property="og:title" content="Gitlab Ce进入admin_runners报500" />
+<meta property="og:description" content="Internal Server Error 500 while accessing /admin/runners 进入 admin/runners , 页面报错: Whoops, something went wrong on our end logs: (大部分都是迁移后 , 需要处理runner,ssl证书等) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 gitlab-rails/production.log: 16: .table-section.section-10 17:" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://mmfei.com/2022/10/ubuntu%E5%AE%89%E8%A3%85openresty/" /><meta property="og:image" content="https://mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-10-19T13:43:07&#43;08:00" />
-<meta property="article:modified_time" content="2022-10-19T13:43:07&#43;08:00" />
+<meta property="og:url" content="https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/" /><meta property="og:image" content="https://mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-25T22:07:46&#43;08:00" />
+<meta property="article:modified_time" content="2022-10-25T22:07:46&#43;08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://mmfei.com/images/avatar.jpg"/>
 
-<meta name="twitter:title" content="Ubuntu安装openresty"/>
-<meta name="twitter:description" content="直接执行 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 #!/bin/bash set -e rm -rf"/>
+<meta name="twitter:title" content="Gitlab Ce进入admin_runners报500"/>
+<meta name="twitter:description" content="Internal Server Error 500 while accessing /admin/runners 进入 admin/runners , 页面报错: Whoops, something went wrong on our end logs: (大部分都是迁移后 , 需要处理runner,ssl证书等) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 gitlab-rails/production.log: 16: .table-section.section-10 17:"/>
 <meta name="application-name" content="木木飞">
 <meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://mmfei.com/2022/10/ubuntu%E5%AE%89%E8%A3%85openresty/" /><link rel="prev" href="https://mmfei.com/2022/09/mac%E5%AE%89%E8%A3%85clickhouse/" /><link rel="next" href="https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/" /><link rel="prev" href="https://mmfei.com/2022/10/ubuntu%E5%AE%89%E8%A3%85openresty/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Ubuntu安装openresty",
+        "headline": "Gitlab Ce进入admin_runners报500",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/mmfei.com\/2022\/10\/ubuntu%E5%AE%89%E8%A3%85openresty\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Ubuntu, openresty","wordcount":  490 ,
-        "url": "https:\/\/mmfei.com\/2022\/10\/ubuntu%E5%AE%89%E8%A3%85openresty\/","datePublished": "2022-10-19T13:43:07+08:00","dateModified": "2022-10-19T13:43:07+08:00","publisher": {
+            "@id": "https:\/\/mmfei.com\/2022\/10\/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500\/"
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "gitlab, gitlab-runner","wordcount":  329 ,
+        "url": "https:\/\/mmfei.com\/2022\/10\/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500\/","datePublished": "2022-10-25T22:07:46+08:00","dateModified": "2022-10-25T22:07:46+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
                 "@type": "Person",
@@ -54,7 +54,7 @@
         </div>
         <div class="menu">
             <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friend/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
-                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2022/10/ubuntu%E5%AE%89%E8%A3%85openresty/" selected>简体中文</option></select>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/" selected>简体中文</option></select>
                     </a><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
                         <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
@@ -108,7 +108,7 @@
                 </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friend/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw"></i>
             </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/2022/10/ubuntu%E5%AE%89%E8%A3%85openresty/" selected>简体中文</option></select>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/" selected>简体中文</option></select>
                 </a></div>
     </div>
 </header>
@@ -122,26 +122,41 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">Ubuntu安装openresty</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/ubuntu/"><i class="far fa-folder fa-fw"></i>Ubuntu</a>&nbsp;<a href="/categories/openresty/"><i class="far fa-folder fa-fw"></i>openresty</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-19">2022-10-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 490 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2022/10/ubuntu%E5%AE%89%E8%A3%85openresty/" class="leancloud_visitors" data-flag-title="Ubuntu安装openresty">
+        </div><article class="page single"><h1 class="single-title animated flipInX">Gitlab Ce进入admin_runners报500</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/gitlab/"><i class="far fa-folder fa-fw"></i>gitlab</a>&nbsp;<a href="/categories/gitlab-runner/"><i class="far fa-folder fa-fw"></i>gitlab-runner</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-25">2022-10-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 329 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/" class="leancloud_visitors" data-flag-title="Gitlab Ce进入admin_runners报500">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="/images/posts/ubuntu%e5%ae%89%e8%a3%85openresty/featuredImage.png"
-        data-srcset="/images/posts/ubuntu%e5%ae%89%e8%a3%85openresty/featuredImage.png, /images/posts/ubuntu%e5%ae%89%e8%a3%85openresty/featuredImage.png 1.5x, /images/posts/ubuntu%e5%ae%89%e8%a3%85openresty/featuredImage.png 2x"
+        data-src="/images/posts/gitlab-ce%e8%bf%9b%e5%85%a5admin_runners%e6%8a%a5500/featuredImage.png"
+        data-srcset="/images/posts/gitlab-ce%e8%bf%9b%e5%85%a5admin_runners%e6%8a%a5500/featuredImage.png, /images/posts/gitlab-ce%e8%bf%9b%e5%85%a5admin_runners%e6%8a%a5500/featuredImage.png 1.5x, /images/posts/gitlab-ce%e8%bf%9b%e5%85%a5admin_runners%e6%8a%a5500/featuredImage.png 2x"
         data-sizes="auto"
-        alt="/images/posts/ubuntu安装openresty/featuredImage.png"
-        title="/images/posts/ubuntu安装openresty/featuredImage.png" /></div><div class="details toc" id="toc-static"  kept="">
+        alt="/images/posts/gitlab-ce进入admin_runners报500/featuredImage.png"
+        title="/images/posts/gitlab-ce进入admin_runners报500/featuredImage.png" /></div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
-            </div><div class="content" id="content"><h1 id="直接执行">直接执行</h1>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#internal-server-error-500-while-accessing-adminrunners">Internal Server Error 500 while accessing /admin/runners</a>
+      <ul>
+        <li><a href="#logs--大部分都是迁移后--需要处理runnerssl证书等">logs:  (大部分都是迁移后 , 需要处理runner,ssl证书等)</a></li>
+        <li><a href="#修复方式">修复方式:</a></li>
+        <li><a href="#方法1-我是用这个方式修复">方法1: 我是用这个方式修复</a></li>
+        <li><a href="#方法2">方法2:</a></li>
+        <li><a href="#方法3">方法3:</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="internal-server-error-500-while-accessing-adminrunners">Internal Server Error 500 while accessing /admin/runners</h2>
+<pre><code>进入 admin/runners , 页面报错: Whoops, something went wrong on our end
+</code></pre>
+<h3 id="logs--大部分都是迁移后--需要处理runnerssl证书等">logs:  (大部分都是迁移后 , 需要处理runner,ssl证书等)</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -158,228 +173,112 @@
 </span><span class="lnt">12
 </span><span class="lnt">13
 </span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span><span class="lnt">49
-</span><span class="lnt">50
-</span><span class="lnt">51
-</span><span class="lnt">52
-</span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/bash
-</span><span class="cp"></span><span class="nb">set</span> -e
-rm -rf openresty-1.19.3.2 openresty-1.19.3.2.tar.gz
+<pre class="chroma"><code class="language-shell" data-lang="shell">gitlab-rails/production.log:
 
-apt-get update -y
-apt-get install -y libpcre3-dev <span class="se">\
-</span><span class="se"></span>  libssl-dev <span class="se">\
-</span><span class="se"></span>  perl <span class="se">\
-</span><span class="se"></span>  make <span class="se">\
-</span><span class="se"></span>  build-essential <span class="se">\
-</span><span class="se"></span>  curl <span class="se">\
-</span><span class="se"></span>  zlib1g-dev
+16: .table-section.section-10
+17: .table-mobile-header<span class="o">{</span> role: ‘rowheader’ <span class="o">}=</span> _<span class="o">(</span>‘Runner token’<span class="o">)</span>
+18: .table-mobile-content
+19: <span class="o">=</span> link_to runner.short_sha, admin_runner_path<span class="o">(</span>runner<span class="o">)</span>
+20:
+21: .table-section.section-20
+22: .table-mobile-header<span class="o">{</span> role: ‘rowheader’ <span class="o">}=</span> _<span class="o">(</span>‘Description’<span class="o">)</span>
 
-curl -LO https://openresty.org/download/openresty-1.19.3.2.tar.gz
-tar zxf openresty-1.19.3.2.tar.gz
-<span class="nb">cd</span> openresty-1.19.3.2
-
-./configure <span class="se">\
-</span><span class="se"></span>  --with-http_gzip_static_module <span class="se">\
-</span><span class="se"></span>  --with-http_v2_module <span class="se">\
-</span><span class="se"></span>  --with-http_stub_status_module
-
-make
-make install
-
-mkdir -p /usr/lib/systemd/system
-cat &gt; /tmp/openresty.service <span class="s">&lt;&lt;EOF
-</span><span class="s"># Stop dance for OpenResty
-</span><span class="s"># =========================
-</span><span class="s">#
-</span><span class="s"># ExecStop sends SIGSTOP (graceful stop) to OpenResty&#39;s nginx process.
-</span><span class="s"># If, after 5s (--retry QUIT/5) nginx is still running, systemd takes control
-</span><span class="s"># and sends SIGTERM (fast shutdown) to the main process.
-</span><span class="s"># After another 5s (TimeoutStopSec=5), and if nginx is alive, systemd sends
-</span><span class="s"># SIGKILL to all the remaining processes in the process group (KillMode=mixed).
-</span><span class="s">#
-</span><span class="s"># nginx signals reference doc:
-</span><span class="s"># http://nginx.org/en/docs/control.html
-</span><span class="s">#
-</span><span class="s">[Unit]
-</span><span class="s">Description=The OpenResty Application Platform
-</span><span class="s">After=syslog.target network-online.target remote-fs.target nss-lookup.target
-</span><span class="s">Wants=network-online.target
-</span><span class="s">[Service]
-</span><span class="s">Type=forking
-</span><span class="s">PIDFile=/usr/local/openresty/nginx/logs/nginx.pid
-</span><span class="s">ExecStartPre=/usr/local/openresty/nginx/sbin/nginx -t -q -g &#39;daemon on; master_process on;&#39;
-</span><span class="s">ExecStart=/usr/local/openresty/nginx/sbin/nginx -g &#39;daemon on; master_process on;&#39;
-</span><span class="s">ExecReload=/usr/local/openresty/nginx/sbin/nginx -g &#39;daemon on; master_process on;&#39; -s reload
-</span><span class="s">ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /usr/local/openresty/nginx/logs/nginx.pid
-</span><span class="s">TimeoutStopSec=5
-</span><span class="s">KillMode=mixed
-</span><span class="s">[Install]
-</span><span class="s">WantedBy=multi-user.target
-</span><span class="s">EOF</span>
-
-<span class="c1"># systemctl enable openresty</span>
-<span class="c1"># systemctl start openresty</span>
-<span class="c1"># systemctl status openresty</span>
-
-rm -rf openresty-1.19.3.2 openresty-1.19.3.2.tar.gz
+lib/gitlab/crypto_helper.rb:27:in  <span class="sb">`</span>aes256_gcm_decrypt<span class="s1">&#39; app/models/concerns/token_authenticatable_strategies/encrypted.rb:45:in ` get_token’
+</span><span class="s1">app/models/concerns/token_authenticatable.rb:30:in  `block in add_authentication_token_field&#39;</span> app/models/ci/runner.rb:213:in <span class="sb">`</span> short_sha’
+lib/gitlab/metrics/instrumentation.rb:161:in  <span class="sb">`</span>block in short_sha<span class="s1">&#39; lib/gitlab/metrics/method_call.rb:36:in ` measure’
+</span><span class="s1">lib/gitlab/metrics/instrumentation.rb:161:in  `short_sha&#39;</span> app/views/admin/runners/_runner.html.haml:19:in <span class="sb">`</span> _
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
-<p>pem的目录: /usr/local/openresty/nginx/conf/pem</p>
-</blockquote>
-<pre><code class="language-conf" data-lang="conf">server {
-    listen       80;
-    server_name  www.mmfei.com
-    error_page   500 502 503 504 /50x.html;
-    error_log    /data/nginx/www.mmfei.com/error.log;
-    access_log   /data/nginx/www.mmfei.com/access_$logdate.log;
-    index    index.html index.htm index.php;
+</div><h3 id="修复方式">修复方式:</h3>
+<h3 id="方法1-我是用这个方式修复">方法1: 我是用这个方式修复</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gitlab-rails c
+<span class="nv">settings</span> <span class="o">=</span> ApplicationSetting.last
+settings.update_column<span class="o">(</span>:runners_registration_token_encrypted, nil<span class="o">)</span>
 
-    location = / {
-        proxy_set_header    X-Real-IP $remote_addr;
-        proxy_set_header    Host $http_host;
-        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
-	proxy_set_header    Access-Control-Expose-Headers Content-Disposition;
-        proxy_http_version  1.1;
-        proxy_set_header    Connection keep-alive;
-        proxy_pass  http://127.0.0.1:9601;
-    }
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="方法2">方法2:</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gitlab-rails console
+<span class="nv">invalid_projects</span> <span class="o">=</span> Project.all.reject<span class="o">(</span><span class="p">&amp;</span>:valid?<span class="o">)</span><span class="p">;</span> nil
+invalid_projects.count
+invalid_projects.map<span class="o">(</span><span class="p">&amp;</span>:name<span class="o">)</span>
+invalid_projects.map<span class="o">(</span><span class="p">&amp;</span>:id<span class="o">)</span>
 
-    location / {
-        proxy_set_header    X-Real-IP $remote_addr;
-        proxy_set_header    Host $http_host;
-        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
-	proxy_set_header    Access-Control-Expose-Headers Content-Disposition;
-        proxy_http_version  1.1;
-        proxy_set_header    Connection keep-alive;
-
-        if (!-e $request_filename) {
-            proxy_pass  http://127.0.0.1:9601;
-        }
-    }
-
-    location = /50x.html {
-        root  /usr/share/nginx/html;
-    }
-}
-server {
-    listen       443 ssl;
-    server_name  www.mmfei.com
-    error_page   500 502 503 504 /50x.html;
-    index        index.html index.htm;
-
-    access_log   /data/nginx/www.mmfei.com/access_$logdate.log;
-    error_log    /data/nginx/www.mmfei.com/error.log;
-
-    ssl_session_cache    shared:SSL:1m;
-    ssl_certificate     pem/www.mmfei.com/cert.pem;  # pem文件的路径
-    ssl_certificate_key  pem/www.mmfei.com/key.pem; # key文件的路径
-
-    ssl_session_timeout  5m;    #缓存有效期
-    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;    #加密算法
-    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;    #安全链接可选的加密协议
-    ssl_prefer_server_ciphers on;   #使用服务器端的首选算法
-
-    location = / {
-        proxy_set_header    X-Real-IP $remote_addr;
-        proxy_set_header    Host $http_host;
-        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
-	    proxy_set_header    Access-Control-Expose-Headers Content-Disposition;
-        proxy_http_version  1.1;
-        proxy_set_header    Connection keep-alive;
-        proxy_pass  http://127.0.0.1:9601;
-    }
-
-    location / {
-        proxy_set_header    X-Real-IP $remote_addr;
-        proxy_set_header    Host $http_host;
-        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
-	proxy_set_header    Access-Control-Expose-Headers Content-Disposition;
-        proxy_http_version  1.1;
-        proxy_set_header    Connection keep-alive;
-
-        if (!-e $request_filename) {
-            proxy_pass  http://127.0.0.1:9601;
-        }
-    }
-
-    location = /50x.html {
-        root  /usr/share/nginx/html;
-    }
-}
-</code></pre></div><div class="post-footer" id="post-footer">
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="方法3">方法3:</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gitlab-rails dbconsole --database main
+<span class="c1"># 重置运行程序注册令牌,清除项目、组和整个实例的所有标记</span>
+<span class="nv">gitlabhq_production</span><span class="o">=</span>&gt; UPDATE projects SET <span class="nv">runners_token</span> <span class="o">=</span> null, <span class="nv">runners_token_encrypted</span> <span class="o">=</span> null<span class="p">;</span>
+UPDATE <span class="m">16</span>
+<span class="nv">gitlabhq_production</span><span class="o">=</span>&gt; UPDATE namespaces SET <span class="nv">runners_token</span> <span class="o">=</span> null, <span class="nv">runners_token_encrypted</span> <span class="o">=</span> null<span class="p">;</span>
+UPDATE <span class="m">33</span>
+<span class="nv">gitlabhq_production</span><span class="o">=</span>&gt; UPDATE application_settings SET <span class="nv">runners_registration_token_encrypted</span> <span class="o">=</span> null<span class="p">;</span>
+UPDATE <span class="m">1</span>
+<span class="nv">gitlabhq_production</span><span class="o">=</span>&gt; UPDATE ci_runners SET <span class="nv">token</span> <span class="o">=</span> null, <span class="nv">token_encrypted</span> <span class="o">=</span> null<span class="p">;</span>
+UPDATE <span class="m">0</span>
+</code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-10-19</span>
+                <span>更新于 2022-10-25</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/2022/10/ubuntu%E5%AE%89%E8%A3%85openresty/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://mmfei.com/2022/10/ubuntu%E5%AE%89%E8%A3%85openresty/" data-title="Ubuntu安装openresty" data-via="mmfei" data-hashtags="Ubuntu,openresty"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://mmfei.com/2022/10/ubuntu%E5%AE%89%E8%A3%85openresty/" data-hashtag="Ubuntu"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://mmfei.com/2022/10/ubuntu%E5%AE%89%E8%A3%85openresty/" data-title="Ubuntu安装openresty"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://mmfei.com/2022/10/ubuntu%E5%AE%89%E8%A3%85openresty/" data-title="Ubuntu安装openresty"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://mmfei.com/2022/10/ubuntu%E5%AE%89%E8%A3%85openresty/" data-title="Ubuntu安装openresty" data-image="/images/posts/ubuntu安装openresty/featuredImage.png"><i class="fab fa-weibo fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/" data-title="Gitlab Ce进入admin_runners报500" data-via="mmfei" data-hashtags="gitlab,gitlab-runner"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/" data-hashtag="gitlab"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/" data-title="Gitlab Ce进入admin_runners报500"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/" data-title="Gitlab Ce进入admin_runners报500"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/" data-title="Gitlab Ce进入admin_runners报500" data-image="/images/posts/gitlab-ce进入admin_runners报500/featuredImage.png"><i class="fab fa-weibo fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/ubuntu/">Ubuntu</a>,&nbsp;<a href="/tags/openresty/">openresty</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/gitlab/">gitlab</a>,&nbsp;<a href="/tags/gitlab-runner/">gitlab-runner</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/2022/09/mac%E5%AE%89%E8%A3%85clickhouse/" class="prev" rel="prev" title="Mac安装clickhouse"><i class="fas fa-angle-left fa-fw"></i>Mac安装clickhouse</a>
-            <a href="/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/" class="next" rel="next" title="Gitlab Ce进入admin_runners报500">Gitlab Ce进入admin_runners报500<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/2022/10/ubuntu%E5%AE%89%E8%A3%85openresty/" class="prev" rel="prev" title="Ubuntu安装openresty"><i class="fas fa-angle-left fa-fw"></i>Ubuntu安装openresty</a></div>
 </div>
 
 <div id="comments"><div id="valine" class="comment"></div><noscript>
