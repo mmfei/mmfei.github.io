@@ -17,7 +17,7 @@ Host github.com
 ## 链路
 
 ```mermaid
-%%{init: {'theme': 'forest', 'fill': 'white', 'securitylevel': 'loose' } }%%
+%%{init: {'theme': 'forest', 'fill': 'white' } }%%
 sequenceDiagram
     participant 深圳服务器 
     participant 海外服务器
