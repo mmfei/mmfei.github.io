@@ -197,6 +197,35 @@ sequenceDiagram
     <div class="post-nav"><a href="/2023/04/%E4%B8%80%E4%BA%9Bcomposer%E5%A5%BD%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4/" class="prev" rel="prev" title="一些composer好用的命令"><i class="fas fa-angle-left fa-fw"></i>一些composer好用的命令</a></div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.3/mermaid.min.js" integrity="sha512-kxc8+BGu0/ESUMiK6Q/goKwwcoIoFVcXZ4GwMoGupMA/qTGx19BcNn1uiebOZO5f85ZD0oTdvlRKdeNh3RTnVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    
+    Array.from(document.getElementsByClassName("language-mermaid")).forEach(
+        (el) => {
+            el.parentElement.outerHTML = `<div class="mermaid">${el.innerText}</div>`;
+        }
+    );
+    let mermaidConfig = {
+        startOnLoad: true,
+        flowchart: {
+            useMaxWidth: false,
+            htmlLabels: true
+        },
+        theme: "dark"
+    };
+    mermaid.initialize(mermaidConfig);
+</script>
+<style>
+     
+    .mermaid svg {
+        display: block;
+        margin: auto;
+    }
+    .mermaid {
+        background: #F5F5F5;
+    }
+</style>
+
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
             </noscript></div></article></div>
