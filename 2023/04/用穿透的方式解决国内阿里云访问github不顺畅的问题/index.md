@@ -23,8 +23,8 @@ sequenceDiagram
     participant 海外服务器
     participant github
     深圳服务器->>海外服务器: 访问github从海外穿透过去
-    海外服务器->>github.com: 海外去获取github
-    github.com->>海外服务器: github返回
+    海外服务器->>github: 海外去获取github
+    github->>海外服务器: github返回
     海外服务器->>深圳服务器: 海外返回深圳服务器
 ```
 
