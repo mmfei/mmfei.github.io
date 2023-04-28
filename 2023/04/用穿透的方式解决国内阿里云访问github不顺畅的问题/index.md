@@ -21,9 +21,9 @@ Host github.com
 sequenceDiagram
     participant 深圳服务器 
     participant 海外服务器
-    participant github.com
-    深圳服务器->>海外服务器: 访问github , 从海外穿透过去
-    海外服务器->>github.com: 海外去获取github.com
+    participant github
+    深圳服务器->>海外服务器: 访问github从海外穿透过去
+    海外服务器->>github.com: 海外去获取github
     github.com->>海外服务器: github返回
     海外服务器->>深圳服务器: 海外返回深圳服务器
 ```
