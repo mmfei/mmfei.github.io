@@ -4,9 +4,18 @@
         <link>https://mmfei.com/</link>
         <description>木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 25 Oct 2022 22:07:46 &#43;0800</lastBuildDate>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Fri, 28 Apr 2023 05:41:24 &#43;0800</lastBuildDate>
             <atom:link href="https://mmfei.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>一些composer好用的命令</title>
+    <link>https://mmfei.com/2023/04/%E4%B8%80%E4%BA%9Bcomposer%E5%A5%BD%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4/</link>
+    <pubDate>Fri, 28 Apr 2023 05:41:24 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2023/04/%E4%B8%80%E4%BA%9Bcomposer%E5%A5%BD%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e4%b8%80%e4%ba%9bcomposer%e5%a5%bd%e7%94%a8%e7%9a%84%e5%91%bd%e4%bb%a4/featuredImage.png" referrerpolicy="no-referrer">
+            </div>Composer Composer 是 PHP 的一个依赖管理工具。 如果你是一名 PHP 开发人员，那么你很可能每天都在使用它并且频繁的运行命令 require， install 和 update。也许你并没]]></description>
+</item><item>
     <title>Gitlab Ce进入admin_runners报500</title>
     <link>https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/</link>
     <pubDate>Tue, 25 Oct 2022 22:07:46 &#43;0800</pubDate>
@@ -87,14 +96,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/ubuntu%e7%b3%bb%e7%bb%9f%e5%88%9d%e5%a7%8b%e5%8c%96%e8%ae%be%e7%bd%ae/img.png" referrerpolicy="no-referrer">
             </div>由于centos停止维护了 , 这次彻底换个系统吧 要做的东西还是很多的 , 做个笔记 前提: 服务器ip 10.0.0.1 ssh的端口 10087 ssh的用户 root 安装文件在 /data/src/install; 防火墙]]></description>
-</item><item>
-    <title>Centos8安装chromedriver</title>
-    <link>https://mmfei.com/2022/03/centos8%E5%AE%89%E8%A3%85chromedriver/</link>
-    <pubDate>Wed, 23 Mar 2022 11:58:14 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2022/03/centos8%E5%AE%89%E8%A3%85chromedriver/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/centos8%e5%ae%89%e8%a3%85chromedriver/featuredImage.png" referrerpolicy="no-referrer">
-            </div>1 2 3 4 5 6 7 yum install google-chrome-stable pip install selenium yum install chromedriver.x86_64 # 如果版本不一致 , 则找到对应的版本 wget http://chromedriver.storage.googleapis.com/99.0.4844.51/chromedriver_linux64.zip; unzip chromedriver.zip]]></description>
 </item></channel>
 </rss>

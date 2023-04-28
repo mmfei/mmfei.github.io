@@ -29,7 +29,7 @@ make
 make install
 
 mkdir -p /usr/lib/systemd/system
-cat > /tmp/openresty.service <<EOF
+cat > /usr/lib/systemd/system/openresty.service <<EOF
 # Stop dance for OpenResty
 # =========================
 #
