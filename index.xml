@@ -4,9 +4,18 @@
         <link>https://mmfei.com/</link>
         <description>木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Fri, 28 Apr 2023 05:41:24 &#43;0800</lastBuildDate>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sat, 29 Apr 2023 01:04:26 &#43;0800</lastBuildDate>
             <atom:link href="https://mmfei.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>用穿透的方式解决国内阿里云访问github不顺畅的问题</title>
+    <link>https://mmfei.com/2023/04/%E7%94%A8%E7%A9%BF%E9%80%8F%E7%9A%84%E6%96%B9%E5%BC%8F%E8%A7%A3%E5%86%B3%E5%9B%BD%E5%86%85%E9%98%BF%E9%87%8C%E4%BA%91%E8%AE%BF%E9%97%AEgithub%E4%B8%8D%E9%A1%BA%E7%95%85%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+    <pubDate>Sat, 29 Apr 2023 01:04:26 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2023/04/%E7%94%A8%E7%A9%BF%E9%80%8F%E7%9A%84%E6%96%B9%E5%BC%8F%E8%A7%A3%E5%86%B3%E5%9B%BD%E5%86%85%E9%98%BF%E9%87%8C%E4%BA%91%E8%AE%BF%E9%97%AEgithub%E4%B8%8D%E9%A1%BA%E7%95%85%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e7%94%a8%e7%a9%bf%e9%80%8f%e7%9a%84%e6%96%b9%e5%bc%8f%e8%a7%a3%e5%86%b3%e5%9b%bd%e5%86%85%e9%98%bf%e9%87%8c%e4%ba%91%e8%ae%bf%e9%97%aegithub%e4%b8%8d%e9%a1%ba%e7%95%85%e7%9a%84%e9%97%ae%e9%a2%98/featuredImage.png" referrerpolicy="no-referrer">
+            </div>国内阿里云访问github.com , 经常不顺畅 解决方式 , 在海外买一台服务器 国内的服务直接穿透过去 在国内阿里云服务器配置 ~/.ssh/config Host github.com ProxyCommand ssh 用户名@海外]]></description>
+</item><item>
     <title>一些composer好用的命令</title>
     <link>https://mmfei.com/2023/04/%E4%B8%80%E4%BA%9Bcomposer%E5%A5%BD%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4/</link>
     <pubDate>Fri, 28 Apr 2023 05:41:24 &#43;0800</pubDate>
@@ -87,14 +96,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e9%98%bf%e9%87%8c%e4%ba%91%e5%9b%bd%e5%86%85%e6%9c%ba%e6%88%bf%e6%8b%89github%e4%bb%a3%e7%a0%81%e5%8a%a0%e9%80%9f%e6%96%b9%e6%a1%88/featuredImage.png" referrerpolicy="no-referrer">
             </div>绑定host su root vi /etc/hosts 1 2 3 4 5 6 7 8 9 10 # github 204.232.175.78 documentcloud.github.com 207.97.227.239 github.com 204.232.175.94 gist.github.com 107.21.116.220 help.github.com 207.97.227.252 nodeload.github.com 199.27.76.130 raw.github.com 107.22.3.110 status.github.com 204.232.175.78 training.github.com 207.97.227.243 www.github.com 安装神秘客户端 1 2 3 4 5 6 7 8 9 10 11 12 13 cd /opt/ wget https://nodejs.org/dist/v14.0.0/node-v14.0.0-linux-x64.tar.xz tar xvf node-v14.0.0-linux-x64.tar.xz echo &#34;export NODE_HOME=/opt/node-v14.0.0-linux-x64&#34;]]></description>
-</item><item>
-    <title>Ubuntu系统初始化设置</title>
-    <link>https://mmfei.com/2022/04/ubuntu%E7%B3%BB%E7%BB%9F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%AE%BE%E7%BD%AE/</link>
-    <pubDate>Sat, 09 Apr 2022 19:33:26 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2022/04/ubuntu%E7%B3%BB%E7%BB%9F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%AE%BE%E7%BD%AE/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/ubuntu%e7%b3%bb%e7%bb%9f%e5%88%9d%e5%a7%8b%e5%8c%96%e8%ae%be%e7%bd%ae/img.png" referrerpolicy="no-referrer">
-            </div>由于centos停止维护了 , 这次彻底换个系统吧 要做的东西还是很多的 , 做个笔记 前提: 服务器ip 10.0.0.1 ssh的端口 10087 ssh的用户 root 安装文件在 /data/src/install; 防火墙]]></description>
 </item></channel>
 </rss>
