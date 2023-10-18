@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/mmfei.com\/2023\/10\/%E5%9C%A8ubuntu20%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85php8%E5%92%8Cswoole\/"
-        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "ubuntu, swoole, php, php8, linux","wordcount":  237 ,
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "ubuntu, swoole, php, php8, linux","wordcount":  247 ,
         "url": "https:\/\/mmfei.com\/2023\/10\/%E5%9C%A8ubuntu20%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85php8%E5%92%8Cswoole\/","datePublished": "2023-10-18T01:29:34+08:00","dateModified": "2023-10-18T01:29:34+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.png"},"author": {
@@ -124,7 +124,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">在ubuntu20编译安装php8和swoole</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/ubuntu/"><i class="far fa-folder fa-fw"></i>Ubuntu</a>&nbsp;<a href="/categories/swoole/"><i class="far fa-folder fa-fw"></i>swoole</a>&nbsp;<a href="/categories/php/"><i class="far fa-folder fa-fw"></i>php</a>&nbsp;<a href="/categories/php8/"><i class="far fa-folder fa-fw"></i>php8</a>&nbsp;<a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>Linux</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-10-18">2023-10-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 237 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-10-18">2023-10-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 247 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2023/10/%E5%9C%A8ubuntu20%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85php8%E5%92%8Cswoole/" class="leancloud_visitors" data-flag-title="在ubuntu20编译安装php8和swoole">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -230,7 +230,7 @@ pecl install msgpack<span class="p">;</span>
 apt install liblzf-dev
 apt install libzstd-dev
 git clone https://github.com/phpredis/phpredis.git
-<span class="nb">cd</span> phpredis<span class="p">;</span>
+<span class="nb">cd</span> phpredis<span class="p">;</span> <span class="c1"># 切换版本 git checkout -b v5.3.7 5.3.7</span>
 phpize
 ./configure --enable-redis-igbinary --enable-redis-msgpack --enable-redis-lzf --with-liblzf --enable-redis-zstd
 make

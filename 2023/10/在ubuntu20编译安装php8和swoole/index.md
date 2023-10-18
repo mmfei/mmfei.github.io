@@ -42,7 +42,7 @@ echo 'extension=msgpack.so' >> $PHP_INSTALL_DIR/etc/conf.d/10-msgpack.ini
 apt install liblzf-dev
 apt install libzstd-dev
 git clone https://github.com/phpredis/phpredis.git
-cd phpredis;
+cd phpredis; # 切换版本 git checkout -b v5.3.7 5.3.7
 phpize
 ./configure --enable-redis-igbinary --enable-redis-msgpack --enable-redis-lzf --with-liblzf --enable-redis-zstd
 make
