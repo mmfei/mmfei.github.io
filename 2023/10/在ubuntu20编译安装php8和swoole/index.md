@@ -1,5 +1,7 @@
-# 
+# 在ubuntu20编译安装php8和swoole
 
+
+```shell
 apt install -y gcc libxml2-dev pkg-config libkrb5-dev libssl-dev libsqlite3-dev zlib1g-dev libcurl4-openssl-dev libpng-dev libjpeg-dev libfreetype-dev g++ libonig-dev libxslt-dev libzip-dev libbz2-dev
 
 export SOURCE_DIR="/data/src/install"; # 源码下载目录
@@ -44,3 +46,4 @@ phpize
 ./configure --enable-redis-igbinary --enable-redis-msgpack --enable-redis-lzf --with-liblzf --enable-redis-zstd
 make
 make install;
+```
