@@ -31,7 +31,8 @@ phpize;
 make
 make install;
 # 添加ini文件  extension=swoole.so
-
+echo 'extension=swoole.so' >> $PHP_INSTALL_DIR/etc/conf.d/10-swoole.ini
+echo 'swoole.use_shortname="Off"' >> $PHP_INSTALL_DIR/etc/conf.d/10-swoole.ini
 
 cd $SOURCE_DIR;
 pecl install igbinary;
