@@ -4,7 +4,16 @@
         <link>https://mmfei.com/posts/</link>
         <description>所有文章 | 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 18 Oct 2023 01:29:34 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sat, 28 Oct 2023 14:39:24 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>在ubuntu20安装protobuf客户端evans</title>
+    <link>https://mmfei.com/2023/10/%E5%9C%A8ubuntu20%E5%AE%89%E8%A3%85protobuf%E5%AE%A2%E6%88%B7%E7%AB%AFevans/</link>
+    <pubDate>Sat, 28 Oct 2023 14:39:24 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2023/10/%E5%9C%A8ubuntu20%E5%AE%89%E8%A3%85protobuf%E5%AE%A2%E6%88%B7%E7%AB%AFevans/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e5%9c%a8ubuntu20%e5%ae%89%e8%a3%85protobuf%e5%ae%a2%e6%88%b7%e7%ab%afevans/featuredImage.png" referrerpolicy="no-referrer">
+            </div>1 2 3 4 5 wget https://github.com/ktr0731/evans/releases/download/v0.10.11/evans_linux_amd64.tar.gz --no-check-certificate tar xvzf evans_linux_amd64.tar.gz; cp evans /usr/local/bin; which evans; evans]]></description>
+</item><item>
     <title>在ubuntu20编译安装php8和swoole</title>
     <link>https://mmfei.com/2023/10/%E5%9C%A8ubuntu20%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85php8%E5%92%8Cswoole/</link>
     <pubDate>Wed, 18 Oct 2023 01:29:34 &#43;0800</pubDate>
@@ -85,14 +94,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/mac%e5%ae%89%e8%a3%85clickhouse/featuredImage.png" referrerpolicy="no-referrer">
             </div>1 brew install altinity/clickhouse/clickhouse]]></description>
-</item><item>
-    <title>部署openresty和kafka的数据采集系统</title>
-    <link>https://mmfei.com/2022/09/%E9%83%A8%E7%BD%B2openresty%E5%92%8Ckafka%E7%9A%84%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E7%B3%BB%E7%BB%9F/</link>
-    <pubDate>Sat, 10 Sep 2022 22:14:01 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2022/09/%E9%83%A8%E7%BD%B2openresty%E5%92%8Ckafka%E7%9A%84%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E7%B3%BB%E7%BB%9F/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/%e9%83%a8%e7%bd%b2openresty%e5%92%8ckafka%e7%9a%84%e6%95%b0%e6%8d%ae%e9%87%87%e9%9b%86%e7%b3%bb%e7%bb%9f/featuredImage.png" referrerpolicy="no-referrer">
-            </div>基于Openresty+Lua+Kafka对日志进行实时的采集 openresty 1 2 3 4 5 6 7 8 9 #!/bin/bash ## openresty apt-get -y install --no-install-recommends wget gnupg ca-certificates wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add - echo &#34;deb http://openresty.org/package/ubuntu $(lsb_release -sc)main&#34; &gt; openresty.list cp openresty.list /etc/apt/sources.list.d/]]></description>
 </item></channel>
 </rss>
