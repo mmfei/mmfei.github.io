@@ -4,7 +4,16 @@
         <link>https://mmfei.com/posts/</link>
         <description>所有文章 | 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sat, 28 Oct 2023 14:39:24 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 07 Nov 2023 21:30:06 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>phpredis的使用</title>
+    <link>https://mmfei.com/2023/11/phpredis%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+    <pubDate>Tue, 07 Nov 2023 21:30:06 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2023/11/phpredis%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/phpredis%e7%9a%84%e4%bd%bf%e7%94%a8/featuredImage.png" referrerpolicy="no-referrer">
+            </div>1、redis的5种数据类型： string 字符串（可以为整形、浮点型和字符串，统称为元素） list 列表（实现队列,元素不唯一，先入先出原则）-- 理解成水管 set]]></description>
+</item><item>
     <title>在ubuntu20安装protobuf客户端evans</title>
     <link>https://mmfei.com/2023/10/%E5%9C%A8ubuntu20%E5%AE%89%E8%A3%85protobuf%E5%AE%A2%E6%88%B7%E7%AB%AFevans/</link>
     <pubDate>Sat, 28 Oct 2023 14:39:24 &#43;0800</pubDate>
@@ -85,14 +94,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/Mac%e6%90%ad%e5%bb%bacanal%e5%ae%9e%e7%8e%b0mysql%e5%90%8c%e6%ad%a5%e6%95%b0%e6%8d%ae%e5%88%b0clickhouse/featuredImage.png" referrerpolicy="no-referrer">
             </div>mysql配置 1 2 3 4 5 6 -- 在主库开启slave通道 showvariableslike&#39;log_%&#39;;-- 其中 log_bin 要 on -- 在主库创建canal账号 createuser&#39;canal&#39;@&#39;%&#39;IDENTIFIEDBY&#39;123456&#39;;grantselect,replicationclient,replicationslaveon*.*TO&#39;canal&#39;@&#39;%&#39;;flushPRIVILEGES; canal 安装 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]]></description>
-</item><item>
-    <title>Mac安装clickhouse</title>
-    <link>https://mmfei.com/2022/09/mac%E5%AE%89%E8%A3%85clickhouse/</link>
-    <pubDate>Sun, 18 Sep 2022 18:08:01 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2022/09/mac%E5%AE%89%E8%A3%85clickhouse/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/mac%e5%ae%89%e8%a3%85clickhouse/featuredImage.png" referrerpolicy="no-referrer">
-            </div>1 brew install altinity/clickhouse/clickhouse]]></description>
 </item></channel>
 </rss>
