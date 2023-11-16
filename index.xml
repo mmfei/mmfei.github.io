@@ -14,7 +14,7 @@
     <guid>https://mmfei.com/2023/11/%E6%B8%85%E7%90%86chickhouse%E7%A9%BA%E9%97%B4/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e6%b8%85%e7%90%86chickhouse%e7%a9%ba%e9%97%b4/featuredImage.png" referrerpolicy="no-referrer">
-            </div>警告 , 删除数据无法恢复 , 在生产环境使用要想好 !!!! 1 2 3 4 5 6 7 8 9 10 11 12 13 14 -- 查看空间占用 selectpartition,database,table,sum(rows)asrow,formatReadableSize(sum(bytes_on_disk))asused_disk,formatReadableSize(sum(data_uncompressed_bytes))asbefore_compress,formatReadableSize(sum(data_compressed_bytes))asafter_compress,round(sum(data_compressed_bytes)/sum(data_uncompressed_bytes)*100,0)compress_ratefromsystem.parts--and database = &#39;system&#39; groupbytable,database,partitionorderbyrowdesc; 1 2 3 -- 清理比较大的 注意 , 是删除数据 , 无法]]></description>
+            </div>清理chickhouse空间 警告 , 删除数据无法恢复 , 在生产环境使用要想好 !!!! 1 2 3 4 5 6 7 8 9 10 11 12 13 14 -- 查看空间占用 selectpartition,database,table,sum(rows)asrow,formatReadableSize(sum(bytes_on_disk))asused_disk,formatReadableSize(sum(data_uncompressed_bytes))asbefore_compress,formatReadableSize(sum(data_compressed_bytes))asafter_compress,round(sum(data_compressed_bytes)/sum(data_uncompressed_bytes)*100,0)compress_ratefromsystem.parts--and database = &#39;system&#39; groupbytable,database,partitionorderbyrowdesc; 1 2 3 -- 清理比]]></description>
 </item><item>
     <title>phpredis的使用</title>
     <link>https://mmfei.com/2023/11/phpredis%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
