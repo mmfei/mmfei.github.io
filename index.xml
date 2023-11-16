@@ -4,9 +4,18 @@
         <link>https://mmfei.com/</link>
         <description>木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 07 Nov 2023 21:30:06 &#43;0800</lastBuildDate>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 16 Nov 2023 13:56:23 &#43;0800</lastBuildDate>
             <atom:link href="https://mmfei.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>清理chickhouse空间</title>
+    <link>https://mmfei.com/2023/11/%E6%B8%85%E7%90%86chickhouse%E7%A9%BA%E9%97%B4/</link>
+    <pubDate>Thu, 16 Nov 2023 13:56:23 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2023/11/%E6%B8%85%E7%90%86chickhouse%E7%A9%BA%E9%97%B4/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e6%b8%85%e7%90%86chickhouse%e7%a9%ba%e9%97%b4/featuredImage.png" referrerpolicy="no-referrer">
+            </div>警告 , 删除数据无法恢复 , 在生产环境使用要想好 !!!! 1 2 3 4 5 6 7 8 9 10 11 12 13 14 -- 查看空间占用 selectpartition,database,table,sum(rows)asrow,formatReadableSize(sum(bytes_on_disk))asused_disk,formatReadableSize(sum(data_uncompressed_bytes))asbefore_compress,formatReadableSize(sum(data_compressed_bytes))asafter_compress,round(sum(data_compressed_bytes)/sum(data_uncompressed_bytes)*100,0)compress_ratefromsystem.parts--and database = &#39;system&#39; groupbytable,database,partitionorderbyrowdesc; 1 2 3 -- 清理比较大的 注意 , 是删除数据 , 无法]]></description>
+</item><item>
     <title>phpredis的使用</title>
     <link>https://mmfei.com/2023/11/phpredis%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
     <pubDate>Tue, 07 Nov 2023 21:30:06 &#43;0800</pubDate>
@@ -87,14 +96,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/ubuntu%e5%ae%89%e8%a3%85openresty/featuredImage.png" referrerpolicy="no-referrer">
             </div>直接执行 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 #!/bin/bash set -e rm -rf]]></description>
-</item><item>
-    <title>Mac搭建canal实现mysql同步数据到clickhouse</title>
-    <link>https://mmfei.com/2022/10/mac%E6%90%AD%E5%BB%BAcanal%E5%AE%9E%E7%8E%B0mysql%E5%90%8C%E6%AD%A5%E6%95%B0%E6%8D%AE%E5%88%B0clickhouse/</link>
-    <pubDate>Fri, 07 Oct 2022 00:01:30 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2022/10/mac%E6%90%AD%E5%BB%BAcanal%E5%AE%9E%E7%8E%B0mysql%E5%90%8C%E6%AD%A5%E6%95%B0%E6%8D%AE%E5%88%B0clickhouse/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/Mac%e6%90%ad%e5%bb%bacanal%e5%ae%9e%e7%8e%b0mysql%e5%90%8c%e6%ad%a5%e6%95%b0%e6%8d%ae%e5%88%b0clickhouse/featuredImage.png" referrerpolicy="no-referrer">
-            </div>mysql配置 1 2 3 4 5 6 -- 在主库开启slave通道 showvariableslike&#39;log_%&#39;;-- 其中 log_bin 要 on -- 在主库创建canal账号 createuser&#39;canal&#39;@&#39;%&#39;IDENTIFIEDBY&#39;123456&#39;;grantselect,replicationclient,replicationslaveon*.*TO&#39;canal&#39;@&#39;%&#39;;flushPRIVILEGES; canal 安装 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]]></description>
 </item></channel>
 </rss>
