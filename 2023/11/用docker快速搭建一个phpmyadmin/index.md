@@ -1,7 +1,7 @@
 # 用docker快速搭建一个phpmyadmin
 
 
-# phpmyadmin的配置  docker-compose.yml  映射本机的6080端口 , abc.com 请替换成你的域名
+> phpmyadmin的配置  docker-compose.yml  映射本机的6080端口 , abc.com 请替换成你的域名
 ```yml
 version: '3.1'
 services:
