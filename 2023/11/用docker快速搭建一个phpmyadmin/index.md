@@ -56,3 +56,10 @@ server {
     }
 }
 ```
+
+## 使用方式
+
+```bash
+# 进入docker-compose.yml 目录
+docker-compose up -d;
+```
