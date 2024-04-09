@@ -4,9 +4,18 @@
         <link>https://mmfei.com/</link>
         <description>木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 21 Nov 2023 03:07:34 &#43;0800</lastBuildDate>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 09 Apr 2024 13:32:48 &#43;0800</lastBuildDate>
             <atom:link href="https://mmfei.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>swoole内存泄漏例子</title>
+    <link>https://mmfei.com/2024/04/swoole%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E4%BE%8B%E5%AD%90/</link>
+    <pubDate>Tue, 09 Apr 2024 13:32:48 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2024/04/swoole%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E4%BE%8B%E5%AD%90/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/wwoole%e5%86%85%e5%ad%98%e6%b3%84%e6%bc%8f%e4%be%8b%e5%ad%90/featuredImage.png" referrerpolicy="no-referrer">
+            </div>类的静态变量追加数据 1 2 3 4 //不停的调用func1() 内存就会一直涨 function func1(){ ClassA::$array[] = &#34;the string!!!...........&#34;; } 全局变量追加数据 1 2 3 4 //不停的调用foo1() 内存就]]></description>
+</item><item>
     <title>用docker快速搭建一个phpmyadmin</title>
     <link>https://mmfei.com/2023/11/%E7%94%A8docker%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAphpmyadmin/</link>
     <pubDate>Tue, 21 Nov 2023 03:07:34 &#43;0800</pubDate>
@@ -87,14 +96,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e4%b8%80%e4%ba%9bcomposer%e5%a5%bd%e7%94%a8%e7%9a%84%e5%91%bd%e4%bb%a4/featuredImage.png" referrerpolicy="no-referrer">
             </div>Composer Composer 是 PHP 的一个依赖管理工具。 如果你是一名 PHP 开发人员，那么你很可能每天都在使用它并且频繁的运行命令 require， install 和 update。也许你并没]]></description>
-</item><item>
-    <title>Gitlab Ce进入admin_runners报500</title>
-    <link>https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/</link>
-    <pubDate>Tue, 25 Oct 2022 22:07:46 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/gitlab-ce%e8%bf%9b%e5%85%a5admin_runners%e6%8a%a5500/featuredImage.png" referrerpolicy="no-referrer">
-            </div>Internal Server Error 500 while accessing /admin/runners 进入 admin/runners , 页面报错: Whoops, something went wrong on our end logs: (大部分都是迁移后 , 需要处理runner,ssl证书等) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 gitlab-rails/production.log: 16: .table-section.section-10 17:]]></description>
 </item></channel>
 </rss>
