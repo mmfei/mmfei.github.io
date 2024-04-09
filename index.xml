@@ -13,7 +13,7 @@
     <author>作者</author>
     <guid>https://mmfei.com/2024/04/swoole%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E4%BE%8B%E5%AD%90/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/wwoole%e5%86%85%e5%ad%98%e6%b3%84%e6%bc%8f%e4%be%8b%e5%ad%90/featuredImage.png" referrerpolicy="no-referrer">
+                <img src="/images/posts/swoole%e5%86%85%e5%ad%98%e6%b3%84%e6%bc%8f%e4%be%8b%e5%ad%90/featuredImage.png" referrerpolicy="no-referrer">
             </div>类的静态变量追加数据 1 2 3 4 //不停的调用func1() 内存就会一直涨 function func1(){ ClassA::$array[] = &#34;the string!!!...........&#34;; } 全局变量追加数据 1 2 3 4 //不停的调用foo1() 内存就]]></description>
 </item><item>
     <title>用docker快速搭建一个phpmyadmin</title>
