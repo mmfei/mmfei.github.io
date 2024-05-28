@@ -13,6 +13,7 @@ mkdir -p $SOURCE_DIR;
 cd $SOURCE_DIR;
 
 apt -y install libsodium-dev;
+apt -y install libxml2-dev;
 
 wget -c https://www.php.net/distributions/php-$PHP_VERSION.tar.gz;
 tar -zxvf php-$PHP_VERSION.tar.gz;
@@ -24,9 +25,11 @@ mkdir -p $PHP_INSTALL_DIR/etc/conf.d/;
 
 if [[ -f "~/.zshrc" ]] ; then
 echo "export PATH=\"$PHP_INSTALL_DIR/bin/:\$PATH\"" >> ~/.zshrc
+source ~/.zshrc;
 fi
 if [[ -f "~/.bashrc" ]] ; then
 echo "export PATH=\"$PHP_INSTALL_DIR/bin/:\$PATH\"" >> ~/.bashrc # bash环境的选这个
+source ~/.bashrc;
 fi
 
 

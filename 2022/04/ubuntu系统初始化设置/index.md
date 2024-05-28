@@ -92,12 +92,12 @@ sh ./docker_docker-compose_install.sh
 
 ## 安装zsh (可选)
 ```shell
-apt install zsh -y
+apt install git zsh -y
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 cd ~/.oh-my-zsh/themes
 wget https://raw.githubusercontent.com/zakaziko99/agnosterzak-ohmyzsh-theme/master/agnosterzak.zsh-theme
 sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="agnosterzak"/' ~/.zshrc
-apt install fonts-powerline git -y
+apt install fonts-powerline -y
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 sed -i "s/plugins=(git)/plugins=(git extract z zsh-autosuggestions)/" ~/.zshrc
 zsh

@@ -325,12 +325,12 @@ sh ./docker_docker-compose_install.sh
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">apt install zsh -y
+<pre class="chroma"><code class="language-shell" data-lang="shell">apt install git zsh -y
 sh -c <span class="s2">&#34;</span><span class="k">$(</span>curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh<span class="k">)</span><span class="s2">&#34;</span>
 <span class="nb">cd</span> ~/.oh-my-zsh/themes
 wget https://raw.githubusercontent.com/zakaziko99/agnosterzak-ohmyzsh-theme/master/agnosterzak.zsh-theme
 sed -i <span class="s1">&#39;s/ZSH_THEME=&#34;robbyrussell&#34;/ZSH_THEME=&#34;agnosterzak&#34;/&#39;</span> ~/.zshrc
-apt install fonts-powerline git -y
+apt install fonts-powerline -y
 git clone https://github.com/zsh-users/zsh-autosuggestions <span class="nv">$ZSH_CUSTOM</span>/plugins/zsh-autosuggestions
 sed -i <span class="s2">&#34;s/plugins=(git)/plugins=(git extract z zsh-autosuggestions)/&#34;</span> ~/.zshrc
 zsh
