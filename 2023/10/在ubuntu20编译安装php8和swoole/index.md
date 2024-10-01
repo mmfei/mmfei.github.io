@@ -66,4 +66,12 @@ make
 make install;
 echo 'extension=redis.so' >> $PHP_INSTALL_DIR/etc/conf.d/10-redis.ini
 
+
+curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php;
+php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+ln -s /usr/local/php8.1.24/bin//php /usr/local/bin/php
+
+cat > /etc/environment <<EOT
+PATH="/usr/local/php8.1.24/sbin:/usr/local/php8.1.24/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+EOT
 ```
