@@ -2,7 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://mmfei.com/categories/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>https://mmfei.com/categories/</loc><lastmod>2025-08-05T19:30:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://mmfei.com/en/categories/"
@@ -11,10 +11,10 @@
                     hreflang="zh-cn"
                     href="https://mmfei.com/categories/"
                     /></url><url>
-            <loc>https://mmfei.com/posts/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://mmfei.com/tags/redis/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://mmfei.com/categories/redis/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://mmfei.com/tags/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>https://mmfei.com/tags/gitlab/</loc><lastmod>2025-08-05T19:30:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/categories/gitlab/</loc><lastmod>2025-08-05T19:30:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/posts/</loc><lastmod>2025-08-05T19:30:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/</loc><lastmod>2025-08-05T19:30:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://mmfei.com/en/tags/"
@@ -23,10 +23,7 @@
                     hreflang="zh-cn"
                     href="https://mmfei.com/tags/"
                     /></url><url>
-            <loc>https://mmfei.com/tags/ubuntu/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://mmfei.com/categories/ubuntu/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://mmfei.com/2024/08/ubuntu%E5%AE%89%E8%A3%85redis/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://mmfei.com/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>https://mmfei.com/</loc><lastmod>2025-08-05T19:30:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://mmfei.com/en/"
@@ -35,6 +32,12 @@
                     hreflang="zh-cn"
                     href="https://mmfei.com/"
                     /></url><url>
+            <loc>https://mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/</loc><lastmod>2025-08-05T19:30:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://mmfei.com/tags/redis/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/redis/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/tags/ubuntu/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/categories/ubuntu/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://mmfei.com/2024/08/ubuntu%E5%AE%89%E8%A3%85redis/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/tags/mysql/</loc><lastmod>2024-06-14T16:44:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/categories/mysql/</loc><lastmod>2024-06-14T16:44:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/</loc><lastmod>2024-06-14T16:44:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
@@ -79,8 +82,6 @@
             <loc>https://mmfei.com/tags/%E9%98%BF%E9%87%8C%E4%BA%91/</loc><lastmod>2023-04-29T01:04:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/categories/%E9%98%BF%E9%87%8C%E4%BA%91/</loc><lastmod>2023-04-29T01:04:26&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/2023/04/%E4%B8%80%E4%BA%9Bcomposer%E5%A5%BD%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4/</loc><lastmod>2023-04-28T05:41:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://mmfei.com/tags/gitlab/</loc><lastmod>2022-10-25T22:07:46&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://mmfei.com/categories/gitlab/</loc><lastmod>2022-10-25T22:07:46&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/</loc><lastmod>2022-10-25T22:07:46&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/tags/gitlab-runner/</loc><lastmod>2022-10-25T22:07:46&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://mmfei.com/categories/gitlab-runner/</loc><lastmod>2022-10-25T22:07:46&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>

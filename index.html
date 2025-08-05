@@ -120,6 +120,20 @@
         alt="/images/avatar.jpg"
         title="/images/avatar.jpg" /></a></div><h1 class="home-title">木木飞</h1><div class="links"><a href="https://github.com/mmfei" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href="https://twitter.com/mmfei" title="Twitter" target="_blank" rel="noopener noreffer me"><i class="fab fa-twitter fa-fw"></i></a><a href="https://www.instagram.com/daffy_weng" title="Instagram" target="_blank" rel="noopener noreffer me"><i class="fab fa-instagram fa-fw"></i></a><a href="https://facebook.com/mmfei" title="facebook" target="_blank" rel="noopener noreffer me"><i class="fab fa-facebook fa-fw"></i></a><a href="https://t.me/mmfei" title="Telegram" target="_blank" rel="noopener noreffer me"><i class="fab fa-telegram-plane fa-fw"></i></a><a href="mailto:wlfkongl@gmail.com" title="Email" rel=" me"><i class="far fa-envelope fa-fw"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
+            <a href="/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/images/posts/%e8%ae%be%e7%bd%aegitlab-ce%e7%9a%84root%e8%b4%a6%e5%8f%b7%e5%af%86%e7%a0%81/featuredImagePreview.png"
+        data-srcset="/images/posts/%e8%ae%be%e7%bd%aegitlab-ce%e7%9a%84root%e8%b4%a6%e5%8f%b7%e5%af%86%e7%a0%81/featuredImagePreview.png, /images/posts/%e8%ae%be%e7%bd%aegitlab-ce%e7%9a%84root%e8%b4%a6%e5%8f%b7%e5%af%86%e7%a0%81/featuredImagePreview.png 1.5x, /images/posts/%e8%ae%be%e7%bd%aegitlab-ce%e7%9a%84root%e8%b4%a6%e5%8f%b7%e5%af%86%e7%a0%81/featuredImagePreview.png 2x"
+        data-sizes="auto"
+        alt="/images/posts/设置gitlab-ce的root账号密码/featuredImagePreview.png"
+        title="/images/posts/设置gitlab-ce的root账号密码/featuredImagePreview.png" /></a>
+        </div><h1 class="single-title" itemprop="name headline">
+        <a href="/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/">设置gitlab-ce的root账号密码</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2025-08-05">2025-08-05</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/gitlab/"><i class="far fa-folder fa-fw"></i>gitlab</a></span></div><div class="content">1 2 3 4 5 6 7 docker exec -it &lt;gitlab_container_name_or_id&gt; /bin/bash gitlab-rails console -e production user = User.where(id: 1).first # root 用户的 ID 通常是 1 user.password = &#39;新密码&#39; # 替换为你要设置的新密码 user.password_confirmation = &#39;新密码&#3</div><div class="post-footer">
+        <a href="/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/gitlab/">gitlab</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
             <a href="/2024/08/ubuntu%E5%AE%89%E8%A3%85redis/"><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -189,20 +203,6 @@
     </h1><div class="post-meta"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-11-16">2023-11-16</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/clickhouse/"><i class="far fa-folder fa-fw"></i>clickhouse</a></span></div><div class="content">清理chickhouse空间 警告 , 删除数据无法恢复 , 在生产环境使用要想好 !!!! 1 2 3 4 5 6 7 8 9 10 11 12 13 14 -- 查看空间占用 selectpartition,database,table,sum(rows)asrow,formatReadableSize(sum(bytes_on_disk))asused_disk,formatReadableSize(sum(data_uncompressed_bytes))asbefore_compress,formatReadableSize(sum(data_compressed_bytes))asafter_compress,round(sum(data_compressed_bytes)/sum(data_uncompressed_bytes)*100,0)compress_ratefromsystem.parts--and database = &#39;system&#39; groupbytable,database,partitionorderbyrowdesc; 1 2 3 -- 清理比</div><div class="post-footer">
         <a href="/2023/11/%E6%B8%85%E7%90%86chickhouse%E7%A9%BA%E9%97%B4/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/clickhouse/">clickhouse</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="featured-image-preview">
-            <a href="/2023/11/phpredis%E7%9A%84%E4%BD%BF%E7%94%A8/"><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/images/posts/phpredis%e7%9a%84%e4%bd%bf%e7%94%a8/featuredImagePreview.png"
-        data-srcset="/images/posts/phpredis%e7%9a%84%e4%bd%bf%e7%94%a8/featuredImagePreview.png, /images/posts/phpredis%e7%9a%84%e4%bd%bf%e7%94%a8/featuredImagePreview.png 1.5x, /images/posts/phpredis%e7%9a%84%e4%bd%bf%e7%94%a8/featuredImagePreview.png 2x"
-        data-sizes="auto"
-        alt="/images/posts/phpredis的使用/featuredImagePreview.png"
-        title="/images/posts/phpredis的使用/featuredImagePreview.png" /></a>
-        </div><h1 class="single-title" itemprop="name headline">
-        <a href="/2023/11/phpredis%E7%9A%84%E4%BD%BF%E7%94%A8/">phpredis的使用</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2023-11-07">2023-11-07</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis/"><i class="far fa-folder fa-fw"></i>redis</a>&nbsp;<a href="/categories/php/"><i class="far fa-folder fa-fw"></i>php</a></span></div><div class="content">1、redis的5种数据类型： string 字符串（可以为整形、浮点型和字符串，统称为元素） list 列表（实现队列,元素不唯一，先入先出原则）-- 理解成水管 set</div><div class="post-footer">
-        <a href="/2023/11/phpredis%E7%9A%84%E4%BD%BF%E7%94%A8/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/redis/">redis</a>,&nbsp;<a href="/tags/php/">php</a></div></div>
 </article><ul class="pagination"><li class="page-item active">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -219,12 +219,12 @@
                     <span class="page-link" aria-hidden="true">&hellip;</span>
                 </li><li class="page-item ">
                     <span class="page-link">
-                        <a href="/page/9/">9</a>
+                        <a href="/page/10/">10</a>
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://mmfei.com" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://mmfei.com" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
         </div>
     </footer></div>
