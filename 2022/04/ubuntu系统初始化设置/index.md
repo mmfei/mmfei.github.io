@@ -23,6 +23,10 @@
 sed -i 's/#Port 22/Port 10087/' /etc/ssh/sshd_config
 echo '{你的 ~/.ssh/id_rsa.pub 的内容}' >> ~/.ssh/authorized_keys; # 在你电脑 cat ~/.ssh/id_rsa.pub 可以获得
 /etc/init.d/ssh restart
+sudo systemctl stop ssh.socket
+sudo systemctl disable ssh.socket
+sudo systemctl stop ssh
+sudo systemctl start ssh
 
 mkdir -p /data/src/install;
 ```
