@@ -1,0 +1,44 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>mac - 分类 - 木木飞</title>
+        <link>https://mmfei.com/categories/mac/</link>
+        <description>mac - 分类 - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sun, 18 Sep 2022 18:08:01 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/categories/mac/" rel="self" type="application/rss+xml" /><item>
+    <title>Mac安装clickhouse</title>
+    <link>https://mmfei.com/2022/09/mac%E5%AE%89%E8%A3%85clickhouse/</link>
+    <pubDate>Sun, 18 Sep 2022 18:08:01 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2022/09/mac%E5%AE%89%E8%A3%85clickhouse/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/mac%e5%ae%89%e8%a3%85clickhouse/featuredImage.png" referrerpolicy="no-referrer">
+            </div>1 brew install altinity/clickhouse/clickhouse]]></description>
+</item><item>
+    <title>MacBookM1X搭建mysql和redis以及php的swoole和hyperf环境</title>
+    <link>https://mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/</link>
+    <pubDate>Sun, 14 Nov 2021 01:59:47 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/MacBookM1X%e6%90%ad%e5%bb%bamysql%e5%92%8credis%e4%bb%a5%e5%8f%8aphp%e7%9a%84swoole%e5%92%8chyperf%e7%8e%af%e5%a2%83/featuredImage.png" referrerpolicy="no-referrer">
+            </div>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole brew install boost; # 在m1x环境 , yasd在编译的时候会找不到这个boost依赖 , 解]]></description>
+</item><item>
+    <title>Mac通过brew安装php7.4&#43;swoole</title>
+    <link>https://mmfei.com/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/</link>
+    <pubDate>Wed, 06 Oct 2021 23:00:38 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/mac%e9%80%9a%e8%bf%87brew%e5%ae%89%e8%a3%85php7.4&#43;swoole/featuredImage.png" referrerpolicy="no-referrer">
+            </div>1 2 3 4 5 brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole 这里会有三四个询问确认的 , 需要注意的是 ssl那个选项 , 要选择 yes --with-openssl-dir=/usr/local/opt/openssl@1.1 启动php服务进行调试(要带-e参数]]></description>
+</item><item>
+    <title>Mac环境安装grpc的php客户端</title>
+    <link>https://mmfei.com/2021/06/mac%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85grpc%E7%9A%84php%E5%AE%A2%E6%88%B7%E7%AB%AF/</link>
+    <pubDate>Tue, 22 Jun 2021 11:28:31 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/06/mac%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85grpc%E7%9A%84php%E5%AE%A2%E6%88%B7%E7%AB%AF/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/mac%e7%8e%af%e5%a2%83%e5%ae%89%e8%a3%85grpc%e7%9a%84php%e5%ae%a2%e6%88%b7%e7%ab%af/featuredImage.png" referrerpolicy="no-referrer">
+            </div>1 2 3 4 pecl install grpc pecl install protobuf php -m | grep grpc php -m | grep protobuf 安装超好用的grpc客户端EVANS https://github.com/ktr0731/evans 安装 1 2 brew tap ktr0731/evans brew install evans]]></description>
+</item></channel>
+</rss>

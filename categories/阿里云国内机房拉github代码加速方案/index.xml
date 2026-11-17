@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>阿里云国内机房拉github代码加速方案 - 分类 - 木木飞</title>
+        <link>https://mmfei.com/categories/%E9%98%BF%E9%87%8C%E4%BA%91%E5%9B%BD%E5%86%85%E6%9C%BA%E6%88%BF%E6%8B%89github%E4%BB%A3%E7%A0%81%E5%8A%A0%E9%80%9F%E6%96%B9%E6%A1%88/</link>
+        <description>阿里云国内机房拉github代码加速方案 - 分类 - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 20 Apr 2022 22:59:40 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/categories/%E9%98%BF%E9%87%8C%E4%BA%91%E5%9B%BD%E5%86%85%E6%9C%BA%E6%88%BF%E6%8B%89github%E4%BB%A3%E7%A0%81%E5%8A%A0%E9%80%9F%E6%96%B9%E6%A1%88/" rel="self" type="application/rss+xml" /><item>
+    <title>阿里云国内机房拉github代码加速方案</title>
+    <link>https://mmfei.com/2022/04/%E9%98%BF%E9%87%8C%E4%BA%91%E5%9B%BD%E5%86%85%E6%9C%BA%E6%88%BF%E6%8B%89github%E4%BB%A3%E7%A0%81%E5%8A%A0%E9%80%9F%E6%96%B9%E6%A1%88/</link>
+    <pubDate>Wed, 20 Apr 2022 22:59:40 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2022/04/%E9%98%BF%E9%87%8C%E4%BA%91%E5%9B%BD%E5%86%85%E6%9C%BA%E6%88%BF%E6%8B%89github%E4%BB%A3%E7%A0%81%E5%8A%A0%E9%80%9F%E6%96%B9%E6%A1%88/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e9%98%bf%e9%87%8c%e4%ba%91%e5%9b%bd%e5%86%85%e6%9c%ba%e6%88%bf%e6%8b%89github%e4%bb%a3%e7%a0%81%e5%8a%a0%e9%80%9f%e6%96%b9%e6%a1%88/featuredImage.png" referrerpolicy="no-referrer">
+            </div>绑定host su root vi /etc/hosts 1 2 3 4 5 6 7 8 9 10 # github 204.232.175.78 documentcloud.github.com 207.97.227.239 github.com 204.232.175.94 gist.github.com 107.21.116.220 help.github.com 207.97.227.252 nodeload.github.com 199.27.76.130 raw.github.com 107.22.3.110 status.github.com 204.232.175.78 training.github.com 207.97.227.243 www.github.com 安装神秘客户端 1 2 3 4 5 6 7 8 9 10 11 12 13 cd /opt/ wget https://nodejs.org/dist/v14.0.0/node-v14.0.0-linux-x64.tar.xz tar xvf node-v14.0.0-linux-x64.tar.xz echo &#34;export NODE_HOME=/opt/node-v14.0.0-linux-x64&#34;]]></description>
+</item></channel>
+</rss>

@@ -1,0 +1,53 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>hyperf - 分类 - 木木飞</title>
+        <link>https://mmfei.com/categories/hyperf/</link>
+        <description>hyperf - 分类 - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sun, 05 Sep 2021 18:38:39 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/categories/hyperf/" rel="self" type="application/rss+xml" /><item>
+    <title>在hyperf框架的2.2版本的单元测试开启db的事务</title>
+    <link>https://mmfei.com/2021/09/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1/</link>
+    <pubDate>Sun, 05 Sep 2021 18:38:39 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/09/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e5%9c%a8hyperf%e6%a1%86%e6%9e%b6%e7%9a%842.2%e7%89%88%e6%9c%ac%e7%9a%84%e5%8d%95%e5%85%83%e6%b5%8b%e8%af%95%e5%bc%80%e5%90%afdb%e7%9a%84%e4%ba%8b%e5%8a%a1/img_1.png" referrerpolicy="no-referrer">
+            </div>背景 : 我们团队一直在使用优秀的hyperf框架 , 并在内部推行了单元测试 . 一直使用db的事务回滚的方式在测试环境跑得很顺畅 , 这样不会有脏数据.]]></description>
+</item><item>
+    <title>使用gitlab-ci自动部署php服务的openapi接口文档</title>
+    <link>https://mmfei.com/2021/06/%E4%BD%BF%E7%94%A8gitlab-ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2php%E6%9C%8D%E5%8A%A1%E7%9A%84openapi%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/</link>
+    <pubDate>Tue, 22 Jun 2021 18:59:34 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/06/%E4%BD%BF%E7%94%A8gitlab-ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2php%E6%9C%8D%E5%8A%A1%E7%9A%84openapi%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e4%bd%bf%e7%94%a8gitlab-ci%e8%87%aa%e5%8a%a8%e9%83%a8%e7%bd%b2php%e6%9c%8d%e5%8a%a1%e7%9a%84openapi%e6%8e%a5%e5%8f%a3%e6%96%87%e6%a1%a3/img.png" referrerpolicy="no-referrer">
+            </div>前端后端交互流程 前后端频繁通过接口对接 , 维护一个真实的api文档是非常有必要的, 但是这也是一个繁重的工作. 如果你是使用 php(hyperf) + gitlab(托管]]></description>
+</item><item>
+    <title>基于github开发一个php的适用于hyperf的composer包</title>
+    <link>https://mmfei.com/2021/06/%E5%9F%BA%E4%BA%8Egithub%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAphp%E7%9A%84%E9%80%82%E7%94%A8%E4%BA%8Ehyperf%E7%9A%84composer%E5%8C%85/</link>
+    <pubDate>Sat, 05 Jun 2021 19:06:57 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/06/%E5%9F%BA%E4%BA%8Egithub%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAphp%E7%9A%84%E9%80%82%E7%94%A8%E4%BA%8Ehyperf%E7%9A%84composer%E5%8C%85/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e5%9f%ba%e4%ba%8egithub%e5%bc%80%e5%8f%91%e4%b8%80%e4%b8%aaphp%e7%9a%84%e9%80%82%e7%94%a8%e4%ba%8ehyperf%e7%9a%84composer%e5%8c%85/featuredImage.png" referrerpolicy="no-referrer">
+            </div>准备下环境 1 2 3 4 5 6 7 8 9 # 在github创建一个仓库 , 并clone到本地 # 计划 在 your_component 文件夹开发 your_component/your_component 包 composer create-project hyperf/hyperf-skeleton # 主项目 , 它会使用下面那个自建的组]]></description>
+</item><item>
+    <title>MacbookMAMP套件安装yasd扩展调试swoole和hyperf代码</title>
+    <link>https://mmfei.com/2021/05/macbookmamp%E5%A5%97%E4%BB%B6%E5%AE%89%E8%A3%85yasd%E6%89%A9%E5%B1%95%E8%B0%83%E8%AF%95swoole%E5%92%8Chyperf%E4%BB%A3%E7%A0%81/</link>
+    <pubDate>Fri, 28 May 2021 15:16:19 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/05/macbookmamp%E5%A5%97%E4%BB%B6%E5%AE%89%E8%A3%85yasd%E6%89%A9%E5%B1%95%E8%B0%83%E8%AF%95swoole%E5%92%8Chyperf%E4%BB%A3%E7%A0%81/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/MacbookMAMP%e5%a5%97%e4%bb%b6%e5%ae%89%e8%a3%85yasd%e6%89%a9%e5%b1%95%e8%b0%83%e8%af%95swoole%e5%92%8chyperf%e4%bb%a3%e7%a0%81/featuredImage.png" referrerpolicy="no-referrer">
+            </div>这是一个在macbook环境下 , 用MAMP套件的小伙伴 , 如何安装一个yasd扩展进行调试 步骤 下载yasd 编译yasd 配置php.ini 安装y]]></description>
+</item><item>
+    <title>阿里云从零开始搭建hyperf服务器</title>
+    <link>https://mmfei.com/2021/05/%E9%98%BF%E9%87%8C%E4%BA%91%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAhyperf%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+    <pubDate>Fri, 28 May 2021 11:30:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/05/%E9%98%BF%E9%87%8C%E4%BA%91%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAhyperf%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e9%98%bf%e9%87%8c%e4%ba%91%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e6%90%ad%e5%bb%bahyperf%e6%9c%8d%e5%8a%a1%e5%99%a8/featuredImage.png" referrerpolicy="no-referrer">
+            </div>服务需要用到 免密登录配置 openresty php7 swoole nginx config gitlab runner gitlab ci php-redis扩展 一些约定 编译的源码目录 /data/src/install/{包名}/{src]]></description>
+</item></channel>
+</rss>

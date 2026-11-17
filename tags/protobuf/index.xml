@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>protobuf - 标签 - 木木飞</title>
+        <link>https://mmfei.com/tags/protobuf/</link>
+        <description>protobuf - 标签 - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sat, 28 Oct 2023 14:39:24 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/tags/protobuf/" rel="self" type="application/rss+xml" /><item>
+    <title>在ubuntu20安装protobuf客户端evans</title>
+    <link>https://mmfei.com/2023/10/%E5%9C%A8ubuntu20%E5%AE%89%E8%A3%85protobuf%E5%AE%A2%E6%88%B7%E7%AB%AFevans/</link>
+    <pubDate>Sat, 28 Oct 2023 14:39:24 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2023/10/%E5%9C%A8ubuntu20%E5%AE%89%E8%A3%85protobuf%E5%AE%A2%E6%88%B7%E7%AB%AFevans/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e5%9c%a8ubuntu20%e5%ae%89%e8%a3%85protobuf%e5%ae%a2%e6%88%b7%e7%ab%afevans/featuredImage.png" referrerpolicy="no-referrer">
+            </div>1 2 3 4 5 wget https://github.com/ktr0731/evans/releases/download/v0.10.11/evans_linux_amd64.tar.gz --no-check-certificate tar xvzf evans_linux_amd64.tar.gz; cp evans /usr/local/bin; which evans; evans]]></description>
+</item></channel>
+</rss>

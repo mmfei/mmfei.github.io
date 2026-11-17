@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>theme - 标签 - 木木飞</title>
+        <link>https://mmfei.com/tags/theme/</link>
+        <description>theme - 标签 - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 26 May 2021 00:26:15 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/tags/theme/" rel="self" type="application/rss+xml" /><item>
+    <title>hugo增加mermaidjs的支持</title>
+    <link>https://mmfei.com/2021/05/hugo%E5%A2%9E%E5%8A%A0mermaidjs%E7%9A%84%E6%94%AF%E6%8C%81/</link>
+    <pubDate>Wed, 26 May 2021 00:26:15 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/05/hugo%E5%A2%9E%E5%8A%A0mermaidjs%E7%9A%84%E6%94%AF%E6%8C%81/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/hugo%e5%a2%9e%e5%8a%a0mermaidjs%e7%9a%84%e6%94%af%e6%8c%81/featuredImage.png" referrerpolicy="no-referrer">
+            </div>mermaidjs是一个优秀的绘图的js库 , 支持流程图 , 时序图 , 类图 , 状态图等功能. 把它引入到hugo模板 , 写技术方案特别方便. 它的在线编辑]]></description>
+</item></channel>
+</rss>

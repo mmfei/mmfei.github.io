@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>穿透 - 分类 - 木木飞</title>
+        <link>https://mmfei.com/categories/%E7%A9%BF%E9%80%8F/</link>
+        <description>穿透 - 分类 - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sat, 29 Apr 2023 01:04:26 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/categories/%E7%A9%BF%E9%80%8F/" rel="self" type="application/rss+xml" /><item>
+    <title>用穿透的方式解决国内阿里云访问github不顺畅的问题</title>
+    <link>https://mmfei.com/2023/04/%E7%94%A8%E7%A9%BF%E9%80%8F%E7%9A%84%E6%96%B9%E5%BC%8F%E8%A7%A3%E5%86%B3%E5%9B%BD%E5%86%85%E9%98%BF%E9%87%8C%E4%BA%91%E8%AE%BF%E9%97%AEgithub%E4%B8%8D%E9%A1%BA%E7%95%85%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+    <pubDate>Sat, 29 Apr 2023 01:04:26 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2023/04/%E7%94%A8%E7%A9%BF%E9%80%8F%E7%9A%84%E6%96%B9%E5%BC%8F%E8%A7%A3%E5%86%B3%E5%9B%BD%E5%86%85%E9%98%BF%E9%87%8C%E4%BA%91%E8%AE%BF%E9%97%AEgithub%E4%B8%8D%E9%A1%BA%E7%95%85%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e7%94%a8%e7%a9%bf%e9%80%8f%e7%9a%84%e6%96%b9%e5%bc%8f%e8%a7%a3%e5%86%b3%e5%9b%bd%e5%86%85%e9%98%bf%e9%87%8c%e4%ba%91%e8%ae%bf%e9%97%aegithub%e4%b8%8d%e9%a1%ba%e7%95%85%e7%9a%84%e9%97%ae%e9%a2%98/featuredImage.png" referrerpolicy="no-referrer">
+            </div>国内阿里云访问github.com , 经常不顺畅 解决方式 , 在海外买一台服务器 国内的服务直接穿透过去 在国内阿里云服务器配置 ~/.ssh/config Host github.com ProxyCommand ssh 用户名@海外]]></description>
+</item></channel>
+</rss>

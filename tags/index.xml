@@ -1,0 +1,78 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Tags - 标签 - 木木飞</title>
+        <link>https://mmfei.com/tags/</link>
+        <description>Tags - 标签 - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 05 Aug 2025 19:30:35 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>gitlab</title>
+    <link>https://mmfei.com/tags/gitlab/</link>
+    <pubDate>Tue, 05 Aug 2025 19:30:35 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/tags/gitlab/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>redis</title>
+    <link>https://mmfei.com/tags/redis/</link>
+    <pubDate>Wed, 07 Aug 2024 14:52:34 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/tags/redis/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>ubuntu</title>
+    <link>https://mmfei.com/tags/ubuntu/</link>
+    <pubDate>Wed, 07 Aug 2024 14:52:34 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/tags/ubuntu/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>mysql</title>
+    <link>https://mmfei.com/tags/mysql/</link>
+    <pubDate>Fri, 14 Jun 2024 16:44:13 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/tags/mysql/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>swoole</title>
+    <link>https://mmfei.com/tags/swoole/</link>
+    <pubDate>Tue, 09 Apr 2024 13:32:48 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/tags/swoole/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>docker</title>
+    <link>https://mmfei.com/tags/docker/</link>
+    <pubDate>Tue, 21 Nov 2023 03:07:34 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/tags/docker/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>phpmyadmin</title>
+    <link>https://mmfei.com/tags/phpmyadmin/</link>
+    <pubDate>Tue, 21 Nov 2023 03:07:34 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/tags/phpmyadmin/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>clickhouse</title>
+    <link>https://mmfei.com/tags/clickhouse/</link>
+    <pubDate>Thu, 16 Nov 2023 13:56:23 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/tags/clickhouse/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>php</title>
+    <link>https://mmfei.com/tags/php/</link>
+    <pubDate>Tue, 07 Nov 2023 21:30:06 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/tags/php/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>evans</title>
+    <link>https://mmfei.com/tags/evans/</link>
+    <pubDate>Sat, 28 Oct 2023 14:39:24 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/tags/evans/</guid>
+    <description><![CDATA[]]></description>
+</item></channel>
+</rss>

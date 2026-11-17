@@ -1,0 +1,26 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>macbook - 分类 - 木木飞</title>
+        <link>https://mmfei.com/categories/macbook/</link>
+        <description>macbook - 分类 - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 11 Aug 2021 20:43:39 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/categories/macbook/" rel="self" type="application/rss+xml" /><item>
+    <title>自定义macbook的右键菜单在Finder增加右键用vscode打开功能</title>
+    <link>https://mmfei.com/2021/08/%E8%87%AA%E5%AE%9A%E4%B9%89macbook%E7%9A%84%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%E5%9C%A8finder%E5%A2%9E%E5%8A%A0%E5%8F%B3%E9%94%AE%E7%94%A8vscode%E6%89%93%E5%BC%80%E5%8A%9F%E8%83%BD/</link>
+    <pubDate>Wed, 11 Aug 2021 20:43:39 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/08/%E8%87%AA%E5%AE%9A%E4%B9%89macbook%E7%9A%84%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%E5%9C%A8finder%E5%A2%9E%E5%8A%A0%E5%8F%B3%E9%94%AE%E7%94%A8vscode%E6%89%93%E5%BC%80%E5%8A%9F%E8%83%BD/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e8%87%aa%e5%ae%9a%e4%b9%89macbook%e7%9a%84%e5%8f%b3%e9%94%ae%e8%8f%9c%e5%8d%95%e5%9c%a8Finder%e5%a2%9e%e5%8a%a0%e5%8f%b3%e9%94%ae%e7%94%a8vscode%e6%89%93%e5%bc%80%e5%8a%9f%e8%83%bd/img.png" referrerpolicy="no-referrer">
+            </div>Launch Automator Create New Document Create a new Quick Action Select &ldquo;Quick Action&rdquo; Add the Action&hellip; Workflow receives current files and folders from Finder. Add a new Run Shell Script action to the workflow. (drag the &ldquo;Run Shell Script&rdquo; object, highlighted in the screenshot, to the empty window on the right) Configure the Workflow Set the Pass Input to be as arguments Paste the following in the input box: 1]]></description>
+</item><item>
+    <title>MacbookMAMP套件安装yasd扩展调试swoole和hyperf代码</title>
+    <link>https://mmfei.com/2021/05/macbookmamp%E5%A5%97%E4%BB%B6%E5%AE%89%E8%A3%85yasd%E6%89%A9%E5%B1%95%E8%B0%83%E8%AF%95swoole%E5%92%8Chyperf%E4%BB%A3%E7%A0%81/</link>
+    <pubDate>Fri, 28 May 2021 15:16:19 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/05/macbookmamp%E5%A5%97%E4%BB%B6%E5%AE%89%E8%A3%85yasd%E6%89%A9%E5%B1%95%E8%B0%83%E8%AF%95swoole%E5%92%8Chyperf%E4%BB%A3%E7%A0%81/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/MacbookMAMP%e5%a5%97%e4%bb%b6%e5%ae%89%e8%a3%85yasd%e6%89%a9%e5%b1%95%e8%b0%83%e8%af%95swoole%e5%92%8chyperf%e4%bb%a3%e7%a0%81/featuredImage.png" referrerpolicy="no-referrer">
+            </div>这是一个在macbook环境下 , 用MAMP套件的小伙伴 , 如何安装一个yasd扩展进行调试 步骤 下载yasd 编译yasd 配置php.ini 安装y]]></description>
+</item></channel>
+</rss>

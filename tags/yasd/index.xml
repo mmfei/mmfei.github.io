@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>yasd - 标签 - 木木飞</title>
+        <link>https://mmfei.com/tags/yasd/</link>
+        <description>yasd - 标签 - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 06 Oct 2021 23:00:38 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/tags/yasd/" rel="self" type="application/rss+xml" /><item>
+    <title>Mac通过brew安装php7.4&#43;swoole</title>
+    <link>https://mmfei.com/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/</link>
+    <pubDate>Wed, 06 Oct 2021 23:00:38 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/mac%e9%80%9a%e8%bf%87brew%e5%ae%89%e8%a3%85php7.4&#43;swoole/featuredImage.png" referrerpolicy="no-referrer">
+            </div>1 2 3 4 5 brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole 这里会有三四个询问确认的 , 需要注意的是 ssl那个选项 , 要选择 yes --with-openssl-dir=/usr/local/opt/openssl@1.1 启动php服务进行调试(要带-e参数]]></description>
+</item></channel>
+</rss>

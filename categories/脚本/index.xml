@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>脚本 - 分类 - 木木飞</title>
+        <link>https://mmfei.com/categories/%E8%84%9A%E6%9C%AC/</link>
+        <description>脚本 - 分类 - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 29 Jun 2021 20:12:27 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/categories/%E8%84%9A%E6%9C%AC/" rel="self" type="application/rss+xml" /><item>
+    <title>保留最新n个文件的bash脚本</title>
+    <link>https://mmfei.com/2021/06/%E4%BF%9D%E7%95%99%E6%9C%80%E6%96%B0n%E4%B8%AA%E6%96%87%E4%BB%B6%E7%9A%84bash%E8%84%9A%E6%9C%AC/</link>
+    <pubDate>Tue, 29 Jun 2021 20:12:27 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/06/%E4%BF%9D%E7%95%99%E6%9C%80%E6%96%B0n%E4%B8%AA%E6%96%87%E4%BB%B6%E7%9A%84bash%E8%84%9A%E6%9C%AC/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/%e4%bf%9d%e7%95%99%e6%9c%80%e6%96%b0n%e4%b8%aa%e6%96%87%e4%bb%b6%e7%9a%84bash%e8%84%9a%e6%9c%ac/img.png" referrerpolicy="no-referrer">
+            </div>保留最新n个文件的bash脚本 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 #!/bin/sh usage() { echo &#34;Usage: $0dir&#34; echo &#34;Usage: $0dir save_number&#34; echo &#34;Usage: $0dir save_number keyword&#34; exit 1 } if [ $# -lt 1]]></description>
+</item></channel>
+</rss>

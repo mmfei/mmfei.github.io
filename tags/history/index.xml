@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>history - 标签 - 木木飞</title>
+        <link>https://mmfei.com/tags/history/</link>
+        <description>history - 标签 - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 08 Jun 2021 11:47:50 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/tags/history/" rel="self" type="application/rss+xml" /><item>
+    <title>Linux根据历史记录补全bash命令autocomplete</title>
+    <link>https://mmfei.com/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/</link>
+    <pubDate>Tue, 08 Jun 2021 11:47:50 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/posts/linux%e6%a0%b9%e6%8d%ae%e5%8e%86%e5%8f%b2%e8%ae%b0%e5%bd%95%e8%a1%a5%e5%85%a8bash%e5%91%bd%e4%bb%a4autocomplete/img.png" referrerpolicy="no-referrer">
+            </div>在shell输入一个命令后 , 可以通过上下方向箭头翻出最近的历史记录. 这么好用的功能,为啥不内置呢0.0&hellip;. 1 2 3 4 cat &gt;&gt; ~/.inputrc &lt;&lt;&#39;EOF&#39; &#34;\e[A&#34;: history-search-backward]]></description>
+</item></channel>
+</rss>
