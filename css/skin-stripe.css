@@ -756,6 +756,60 @@ body:not([theme="dark"]) .sk-article .post-nav a:hover {
 
 body:not([theme="dark"]) .sk-article .post-nav .next { text-align: right; }
 
+/* ---------- 相关文章 ---------- */
+
+body:not([theme="dark"]) .sk-related {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--sk-hairline);
+}
+
+body:not([theme="dark"]) .sk-related-title {
+    margin: 0 0 14px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--sk-ink);
+}
+
+body:not([theme="dark"]) .sk-related-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+@media (min-width: 720px) {
+    body:not([theme="dark"]) .sk-related-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+body:not([theme="dark"]) .sk-related-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px;
+    border: 1px solid var(--sk-hairline);
+    border-radius: var(--sk-radius-md);
+    background: var(--sk-canvas);
+    text-decoration: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+body:not([theme="dark"]) .sk-related-card:hover {
+    border-color: var(--sk-primary-sub);
+    box-shadow: var(--sk-shadow-l1);
+}
+
+body:not([theme="dark"]) .sk-related-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--sk-ink);
+}
+
+body:not([theme="dark"]) .sk-related-card-meta {
+    font-size: 13px;
+    color: var(--sk-mute);
+}
+
 /* ---------- 分类 / 标签列表 ---------- */
 
 body:not([theme="dark"]) .sk-archive {
