@@ -489,9 +489,50 @@ body:not([theme="dark"]) .sk-page a { text-decoration: none; }
 
 body:not([theme="dark"]) .sk-article {
     width: 100%;
-    max-width: 900px;
+    max-width: 1120px;
     margin-inline: auto;
     padding: 8px 0 40px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0 32px;
+}
+
+/* 宽屏：文章主栏 + 右侧目录侧栏，替代主题绝对定位浮层 */
+@media (min-width: 961px) {
+    body:not([theme="dark"]) .sk-article {
+        grid-template-columns: minmax(0, 1fr) 220px;
+        align-items: start;
+    }
+
+    body:not([theme="dark"]) .sk-single {
+        order: 1;
+        width: 100%;
+        max-width: 780px;
+        margin: 0;
+        justify-self: start;
+    }
+
+    body:not([theme="dark"]) #toc-auto {
+        order: 2;
+        position: sticky !important;
+        top: 5rem;
+        left: auto !important;
+        width: 220px !important;
+        max-width: none !important;
+        padding: 0 0 0 .8rem;
+        border-left: 1px solid var(--sk-hairline);
+        visibility: visible !important;
+    }
+}
+
+/* 窄屏：隐藏浮动目录，沿用主题静态目录卡片 */
+@media (max-width: 960px) {
+    body:not([theme="dark"]) #toc-auto { display: none; }
+}
+
+body:not([theme="dark"]) .sk-single {
+    width: 100%;
+    margin: 0;
 }
 
 body:not([theme="dark"]) .sk-single-head {
