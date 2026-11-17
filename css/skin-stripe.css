@@ -488,7 +488,9 @@ body:not([theme="dark"]) .sk-page a { text-decoration: none; }
 /* ---------- 详情页 ---------- */
 
 body:not([theme="dark"]) .sk-article {
-    max-width: 760px;
+    width: 100%;
+    max-width: 900px;
+    margin-inline: auto;
     padding: 8px 0 40px;
 }
 
