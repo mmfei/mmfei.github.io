@@ -729,32 +729,45 @@ body:not([theme="dark"]) .sk-article .post-tags a:hover {
     color: var(--sk-primary);
 }
 
-body:not([theme="dark"]) .sk-article .post-nav {
+body:not([theme="dark"]) .sk-article .sk-nav {
     display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 12px;
     margin-top: 24px;
 }
 
-@media (min-width: 720px) {
-    body:not([theme="dark"]) .sk-article .post-nav { grid-template-columns: 1fr 1fr; }
-}
-
-body:not([theme="dark"]) .sk-article .post-nav a {
-    display: block;
+body:not([theme="dark"]) .sk-article .sk-nav-btn {
+    box-sizing: border-box;
+    min-width: 0;
     padding: 16px 18px;
     border: 1px solid var(--sk-hairline);
     border-radius: var(--sk-radius-lg);
     color: var(--sk-ink-2);
     font-size: 14px;
+    font-weight: 600;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-body:not([theme="dark"]) .sk-article .post-nav a:hover {
+body:not([theme="dark"]) .sk-article .sk-nav-btn:hover {
     border-color: var(--sk-primary-sub);
     box-shadow: var(--sk-shadow-l1);
 }
 
-body:not([theme="dark"]) .sk-article .post-nav .next { text-align: right; }
+body:not([theme="dark"]) .sk-article .sk-nav-prev {
+    grid-column: 1 / 2;
+    text-align: left;
+}
+
+body:not([theme="dark"]) .sk-article .sk-nav-next {
+    grid-column: 2 / 3;
+    text-align: right;
+}
+
+@media (max-width: 720px) {
+    body:not([theme="dark"]) .sk-article .sk-nav { grid-template-columns: 1fr; }
+    body:not([theme="dark"]) .sk-article .sk-nav-prev { grid-column: 1; }
+    body:not([theme="dark"]) .sk-article .sk-nav-next { grid-column: 1; }
+}
 
 /* ---------- 相关文章 ---------- */
 
