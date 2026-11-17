@@ -1,0 +1,69 @@
+# 木木飞
+
+> 一直在广州的互联网老兵，记录后端、运维与工具链上的排障笔记：PHP / Swoole / Hyperf / Go、Docker、Nginx/OpenResty、Redis、MySQL、消息队列与本地开发环境。
+
+## 站点导航
+
+- [所有文章](https://mmfei.com/posts/): 全部技术笔记，按时间倒序
+- [分类](https://mmfei.com/categories/): 按主题归类的文章
+- [标签](https://mmfei.com/tags/): 按标签检索
+- [关于我](https://mmfei.com/about/): 作者背景与技能
+- [RSS 订阅](https://mmfei.com/index.xml): 站点 RSS Feed
+- [JSON Feed](https://mmfei.com/index.json): 结构化订阅
+
+## 文章索引（共 55 篇）
+- [设置gitlab-ce的root账号密码](https://mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/) — 2025-08-05 · 分类: gitlab · 标签: gitlab
+- [ubuntu安装redis](https://mmfei.com/2024/08/ubuntu%E5%AE%89%E8%A3%85redis/) — 2024-08-07 · 分类: ubuntu, redis · 标签: ubuntu, redis
+- [Ubuntu安装mysql8](https://mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/) — 2024-06-14 · 分类: ubuntu, mysql · 标签: ubuntu, mysql
+- [swoole内存泄漏例子](https://mmfei.com/2024/04/swoole%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E4%BE%8B%E5%AD%90/) — 2024-04-09 · 分类: swoole · 标签: swoole
+- [用docker快速搭建一个phpmyadmin](https://mmfei.com/2023/11/%E7%94%A8docker%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAphpmyadmin/) — 2023-11-21 · 分类: docker, phpmyadmin · 标签: docker, phpmyadmin
+- [清理chickhouse空间](https://mmfei.com/2023/11/%E6%B8%85%E7%90%86chickhouse%E7%A9%BA%E9%97%B4/) — 2023-11-16 · 分类: clickhouse · 标签: clickhouse
+- [phpredis的使用](https://mmfei.com/2023/11/phpredis%E7%9A%84%E4%BD%BF%E7%94%A8/) — 2023-11-07 · 分类: redis, php · 标签: redis, php
+- [在ubuntu20安装protobuf客户端evans](https://mmfei.com/2023/10/%E5%9C%A8ubuntu20%E5%AE%89%E8%A3%85protobuf%E5%AE%A2%E6%88%B7%E7%AB%AFevans/) — 2023-10-28 · 分类: ubuntu, protobuf, evans · 标签: ubuntu, protobuf, evans
+- [在ubuntu20编译安装php8和swoole](https://mmfei.com/2023/10/%E5%9C%A8ubuntu20%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85php8%E5%92%8Cswoole/) — 2023-10-18 · 分类: ubuntu, swoole, php, php8, linux, composer · 标签: ubuntu, swoole, php, php8, linux, composer
+- [在mac用anaconda管理python](https://mmfei.com/2023/05/%E5%9C%A8mac%E7%94%A8anaconda%E7%AE%A1%E7%90%86python/) — 2023-05-08 · 分类: 在mac用anaconda管理python · 标签: tag1
+- [M1芯片编译安装paddle](https://mmfei.com/2023/05/m1%E8%8A%AF%E7%89%87%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85paddle/) — 2023-05-08 · 分类: M1芯片编译安装paddle · 标签: tag1
+- [用穿透的方式解决国内阿里云访问github不顺畅的问题](https://mmfei.com/2023/04/%E7%94%A8%E7%A9%BF%E9%80%8F%E7%9A%84%E6%96%B9%E5%BC%8F%E8%A7%A3%E5%86%B3%E5%9B%BD%E5%86%85%E9%98%BF%E9%87%8C%E4%BA%91%E8%AE%BF%E9%97%AEgithub%E4%B8%8D%E9%A1%BA%E7%95%85%E7%9A%84%E9%97%AE%E9%A2%98/) — 2023-04-29 · 分类: github, 穿透, 阿里云, 访问 · 标签: github, 穿透, 阿里云, 访问
+- [一些composer好用的命令](https://mmfei.com/2023/04/%E4%B8%80%E4%BA%9Bcomposer%E5%A5%BD%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4/) — 2023-04-28 · 分类: php, composer · 标签: php, composer
+- [Gitlab Ce进入admin_runners报500](https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/) — 2022-10-25 · 分类: gitlab, gitlab-runner · 标签: gitlab, gitlab-runner
+- [Ubuntu安装openresty](https://mmfei.com/2022/10/ubuntu%E5%AE%89%E8%A3%85openresty/) — 2022-10-19 · 分类: Ubuntu, openresty · 标签: Ubuntu, openresty
+- [Mac搭建canal实现mysql同步数据到clickhouse](https://mmfei.com/2022/10/mac%E6%90%AD%E5%BB%BAcanal%E5%AE%9E%E7%8E%B0mysql%E5%90%8C%E6%AD%A5%E6%95%B0%E6%8D%AE%E5%88%B0clickhouse/) — 2022-10-07 · 分类: Mac搭建canal实现mysql同步数据到clickhouse · 标签: tag1
+- [Mac安装clickhouse](https://mmfei.com/2022/09/mac%E5%AE%89%E8%A3%85clickhouse/) — 2022-09-18 · 分类: mac, clickhouse · 标签: mac, clickhouse
+- [部署openresty和kafka的数据采集系统](https://mmfei.com/2022/09/%E9%83%A8%E7%BD%B2openresty%E5%92%8Ckafka%E7%9A%84%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E7%B3%BB%E7%BB%9F/) — 2022-09-10 · 分类: kafka, openresty, ubuntu, nginx · 标签: kafka, openresty, ubuntu, nginx
+- [Ubuntu安装php8.1和swoole](https://mmfei.com/2022/07/ubuntu%E5%AE%89%E8%A3%85php8.1%E5%92%8Cswoole/) — 2022-07-17 · 分类: ubuntu, php, swoole · 标签: ubuntu, php, swoole
+- [在ubuntu搭建hyperf](https://mmfei.com/2022/05/%E5%9C%A8ubuntu%E6%90%AD%E5%BB%BAhyperf/) — 2022-05-25 · 分类: 在ubuntu搭建hyperf · 标签: tag1
+- [一个golang的优秀框架go-zero](https://mmfei.com/2022/05/%E4%B8%80%E4%B8%AAgolang%E7%9A%84%E4%BC%98%E7%A7%80%E6%A1%86%E6%9E%B6go-zero/) — 2022-05-12 · 分类: go-zero, golang, go · 标签: golang, go, go-zero
+- [阿里云国内机房拉github代码加速方案](https://mmfei.com/2022/04/%E9%98%BF%E9%87%8C%E4%BA%91%E5%9B%BD%E5%86%85%E6%9C%BA%E6%88%BF%E6%8B%89github%E4%BB%A3%E7%A0%81%E5%8A%A0%E9%80%9F%E6%96%B9%E6%A1%88/) — 2022-04-20 · 分类: 阿里云国内机房拉github代码加速方案 · 标签: tag1
+- [Ubuntu系统初始化设置](https://mmfei.com/2022/04/ubuntu%E7%B3%BB%E7%BB%9F%E5%88%9D%E5%A7%8B%E5%8C%96%E8%AE%BE%E7%BD%AE/) — 2022-04-09 · 分类: Ubuntu系统初始化设置 · 标签: linux, ubuntu, docker, docker-compose
+- [Centos8安装chromedriver](https://mmfei.com/2022/03/centos8%E5%AE%89%E8%A3%85chromedriver/) — 2022-03-23 · 分类: Centos8安装chromedriver · 标签: tag1
+- [Nginx统计网站的pv和uv和ip](https://mmfei.com/2022/03/nginx%E7%BB%9F%E8%AE%A1%E7%BD%91%E7%AB%99%E7%9A%84pv%E5%92%8Cuv%E5%92%8Cip/) — 2022-03-22 · 分类: Nginx统计网站的pv和uv和ip · 标签: tag1
+- [阿里云服务器yum报错Errors_during_downloading_metadata_for_repository_AppStream](https://mmfei.com/2022/03/%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8yum%E6%8A%A5%E9%94%99errors_during_downloading_metadata_for_repository_appstream/) — 2022-03-09 · 分类: 阿里云服务器yum报错Errors_during_downloading_metadata_for_repository_AppStream · 标签: tag1
+- [给openresty服务器的静态网站加上访问密码](https://mmfei.com/2022/01/%E7%BB%99openresty%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99%E5%8A%A0%E4%B8%8A%E8%AE%BF%E9%97%AE%E5%AF%86%E7%A0%81/) — 2022-01-20 · 分类: openresty, host, website, nginx · 标签: openresty, host, website, nginx
+- [阿里云的centos安装docker Compose](https://mmfei.com/2022/01/%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84centos%E5%AE%89%E8%A3%85docker-compose/) — 2022-01-17 · 分类: linux, docker · 标签: docker, docker-compose, centos, aliyun, linux
+- [转换本地图片视频为base64的json](https://mmfei.com/2022/01/%E8%BD%AC%E6%8D%A2%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E8%A7%86%E9%A2%91%E4%B8%BAbase64%E7%9A%84json/) — 2022-01-03 · 分类: tools, shell, bash, json · 标签: json, shell, bash, base64, image, video, mp4, mp3, avi, jpg, jpeg, png, ico, bmp
+- [MacBookM1X搭建mysql和redis以及php的swoole和hyperf环境](https://mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/) — 2021-11-14 · 分类: deploy, mac, php, mysql · 标签: php, swoole, hyperf, macbook, mysql, redis, m1x
+- [Mac通过brew安装php7.4+swoole](https://mmfei.com/2021/10/mac%E9%80%9A%E8%BF%87brew%E5%AE%89%E8%A3%85php7.4-swoole/) — 2021-10-06 · 分类: mac, php, swoole, debug · 标签: debug, yasd, swoole, php, mac
+- [用mediainfo代替ffmpeg读取视频文件的毫秒级的时长](https://mmfei.com/2021/09/%E7%94%A8mediainfo%E4%BB%A3%E6%9B%BFffmpeg%E8%AF%BB%E5%8F%96%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%AB%E7%A7%92%E7%BA%A7%E7%9A%84%E6%97%B6%E9%95%BF/) — 2021-09-15 · 分类: mediainfo, ffmpeg, centos · 标签: mediainfo, ffmpeg, centos
+- [在hyperf框架的2.2版本的单元测试开启db的事务](https://mmfei.com/2021/09/%E5%9C%A8hyperf%E6%A1%86%E6%9E%B6%E7%9A%842.2%E7%89%88%E6%9C%AC%E7%9A%84%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%BC%80%E5%90%AFdb%E7%9A%84%E4%BA%8B%E5%8A%A1/) — 2021-09-05 · 分类: hyperf, testing, unittest, phpuint · 标签: hyperf, testing, unittest, phpuint, 事务, 协程
+- [在centos8系统安装ffmpeg](https://mmfei.com/2021/08/%E5%9C%A8centos8%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85ffmpeg/) — 2021-08-23 · 分类: centos, ffmpeg · 标签: centos, ffmpeg
+- [自定义macbook的右键菜单在Finder增加右键用vscode打开功能](https://mmfei.com/2021/08/%E8%87%AA%E5%AE%9A%E4%B9%89macbook%E7%9A%84%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%E5%9C%A8finder%E5%A2%9E%E5%8A%A0%E5%8F%B3%E9%94%AE%E7%94%A8vscode%E6%89%93%E5%BC%80%E5%8A%9F%E8%83%BD/) — 2021-08-11 · 分类: macbook, vscode · 标签: macbook, vscode
+- [刷newifi路由器冲浪](https://mmfei.com/2021/08/%E5%88%B7newif%E8%B7%AF%E7%94%B1%E5%99%A8%E5%86%B2%E6%B5%AA/) — 2021-08-01 · 分类: openwrt, routes · 标签: mt7621, openwrt, breed, newifi-d2, sysupgrade, v2ray
+- [搭建robot Framework Ride测试框架](https://mmfei.com/2021/07/%E6%90%AD%E5%BB%BArobot-framework-ride%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6/) — 2021-07-14 · 分类: robot Framework, 测试 · 标签: python, docker, 测试, test, robot Framework
+- [每日备份docker部署的gitlab服务的最简单方案](https://mmfei.com/2021/06/%E6%AF%8F%E6%97%A5%E5%A4%87%E4%BB%BDdocker%E9%83%A8%E7%BD%B2%E7%9A%84gitlab%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%9C%80%E7%AE%80%E5%8D%95%E6%96%B9%E6%A1%88/) — 2021-06-29 · 分类: docker, gitlab, backup, 备份 · 标签: docker, gitlab, backup, 备份, rsync
+- [保留最新n个文件的bash脚本](https://mmfei.com/2021/06/%E4%BF%9D%E7%95%99%E6%9C%80%E6%96%B0n%E4%B8%AA%E6%96%87%E4%BB%B6%E7%9A%84bash%E8%84%9A%E6%9C%AC/) — 2021-06-29 · 分类: shell, backup, bash, script, 脚本 · 标签: shell, backup, bash, script, 脚本
+- [使用gitlab-ci自动部署php服务的openapi接口文档](https://mmfei.com/2021/06/%E4%BD%BF%E7%94%A8gitlab-ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2php%E6%9C%8D%E5%8A%A1%E7%9A%84openapi%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/) — 2021-06-22 · 分类: openapi, postman, swagger, gitlab, gitlab-ci, hyperf · 标签: openapi, postman, swagger, gitlab-ci, hyperf
+- [如何在vscode编辑器中通过xdebug调试在docker的运行的服务](https://mmfei.com/2021/06/%E5%A6%82%E4%BD%95%E5%9C%A8vscode%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%AD%E9%80%9A%E8%BF%87xdebug%E8%B0%83%E8%AF%95%E5%9C%A8docker%E7%9A%84%E8%BF%90%E8%A1%8C%E7%9A%84%E6%9C%8D%E5%8A%A1/) — 2021-06-22 · 分类: vscode, xdebug, docker, php, debug · 标签: vscode, xdebug, docker, debug, php
+- [Mac环境安装grpc的php客户端](https://mmfei.com/2021/06/mac%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85grpc%E7%9A%84php%E5%AE%A2%E6%88%B7%E7%AB%AF/) — 2021-06-22 · 分类: mac, grpc, php · 标签: mac, grpc, php
+- [Linux根据历史记录补全bash命令autocomplete](https://mmfei.com/2021/06/linux%E6%A0%B9%E6%8D%AE%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%E8%A1%A5%E5%85%A8bash%E5%91%BD%E4%BB%A4autocomplete/) — 2021-06-08 · 分类: Linux, bash · 标签: linux, bash, autocomplete, history, shell
+- [怎样让nginx的配置支持https](https://mmfei.com/2021/06/%E6%80%8E%E6%A0%B7%E8%AE%A9nginx%E7%9A%84%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81https/) — 2021-06-05 · 分类: nginx, ssl, https · 标签: nginx, https
+- [基于github开发一个php的适用于hyperf的composer包](https://mmfei.com/2021/06/%E5%9F%BA%E4%BA%8Egithub%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAphp%E7%9A%84%E9%80%82%E7%94%A8%E4%BA%8Ehyperf%E7%9A%84composer%E5%8C%85/) — 2021-06-05 · 分类: php, composer, github, hyperf · 标签: hyperf, php, composer, github
+- [最快搭建禅道项目管理系统的方案](https://mmfei.com/2021/05/%E6%9C%80%E5%BF%AB%E6%90%AD%E5%BB%BA%E7%A6%85%E9%81%93%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%96%B9%E6%A1%88/) — 2021-05-31 · 分类: docker, project, 项目管理 · 标签: docker, zentao, 禅道项目管理, 项目管理
+- [Centos8搭建gitlab和gitlab-Runner](https://mmfei.com/2021/05/centos8%E6%90%AD%E5%BB%BAgitlab%E5%92%8Cgitlab-runner/) — 2021-05-29 · 分类: centos, deploy, gitlab, docker · 标签: centos, docker, gitlab, docker-compose, gitlab-runner
+- [MacbookMAMP套件安装yasd扩展调试swoole和hyperf代码](https://mmfei.com/2021/05/macbookmamp%E5%A5%97%E4%BB%B6%E5%AE%89%E8%A3%85yasd%E6%89%A9%E5%B1%95%E8%B0%83%E8%AF%95swoole%E5%92%8Chyperf%E4%BB%A3%E7%A0%81/) — 2021-05-28 · 分类: macbook, mamp, swoole, hyperf, php · 标签: macbook, mamp, swoole, hyperf, php
+- [阿里云从零开始搭建hyperf服务器](https://mmfei.com/2021/05/%E9%98%BF%E9%87%8C%E4%BA%91%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAhyperf%E6%9C%8D%E5%8A%A1%E5%99%A8/) — 2021-05-28 · 分类: deploy, aliyun, hyperf · 标签: aliyun, centos, oss, hyperf, deploy, phpredis
+- [推荐写博客的在线工具](https://mmfei.com/2021/05/%E6%8E%A8%E8%8D%90%E5%86%99%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7/) — 2021-05-28 · 分类: blog · 标签: 博客, 工具
+- [通过gitlab的ci自动部署前端项目到阿里云的oss](https://mmfei.com/2021/05/%E9%80%9A%E8%BF%87gitlab%E7%9A%84ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E5%88%B0%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84oss/) — 2021-05-27 · 分类: deploy, gitlab · 标签: aliyun, gitlab, ci, oss, npm, deploy
+- [如何升级centos的内核版本](https://mmfei.com/2021/05/%E5%A6%82%E4%BD%95%E5%8D%87%E7%BA%A7centos%E7%9A%84%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC/) — 2021-05-26 · 分类: linux · 标签: linux, kernel, centos
+- [Centos_install_bat_a_better_cat](https://mmfei.com/2021/05/centos_install_bat_a_better_cat/) — 2021-05-26 · 分类: install · 标签: centos, bat
+- [hugo增加mermaidjs的支持](https://mmfei.com/2021/05/hugo%E5%A2%9E%E5%8A%A0mermaidjs%E7%9A%84%E6%94%AF%E6%8C%81/) — 2021-05-26 · 分类: hugo · 标签: hugo, theme, mermaid
+- [如何使用hugo快速创建一个github的page](https://mmfei.com/2021/05/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8hugo%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAgithub%E7%9A%84page/) — 2021-05-23 · 分类: hugo, github, github action · 标签: hugo, github
