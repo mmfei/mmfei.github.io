@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>https - 分类 - 木木飞</title>
-        <link>https://mmfei.com/categories/https/</link>
+        <link>https://www.mmfei.com/categories/https/</link>
         <description>https - 分类 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sat, 05 Jun 2021 23:47:17 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/categories/https/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sat, 05 Jun 2021 23:47:17 &#43;0800</lastBuildDate><atom:link href="https://www.mmfei.com/categories/https/" rel="self" type="application/rss+xml" /><item>
     <title>怎样让nginx的配置支持https</title>
-    <link>https://mmfei.com/2021/06/%E6%80%8E%E6%A0%B7%E8%AE%A9nginx%E7%9A%84%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81https/</link>
+    <link>https://www.mmfei.com/2021/06/%E6%80%8E%E6%A0%B7%E8%AE%A9nginx%E7%9A%84%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81https/</link>
     <pubDate>Sat, 05 Jun 2021 23:47:17 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/2021/06/%E6%80%8E%E6%A0%B7%E8%AE%A9nginx%E7%9A%84%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81https/</guid>
+    <guid>https://www.mmfei.com/2021/06/%E6%80%8E%E6%A0%B7%E8%AE%A9nginx%E7%9A%84%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81https/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e6%80%8e%e6%a0%b7%e8%ae%a9nginx%e7%9a%84%e9%85%8d%e7%bd%ae%e6%94%af%e6%8c%81https/featuredImage.png" referrerpolicy="no-referrer">
             </div>server { listen 80; server_name api.dev.com; error_page 500 502 503 504 /50x.html; error_log /data/nginx/api.dev.com/error.log; access_log /data/nginx/api.dev.com/access_$logdate.log; #root /mnt/d/wsl/www/playsmart/; index index.html index.htm index.php; location = / { proxy_set_header X-Real-IP $remote_addr; proxy_set_header Host $http_host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_http_version 1.1; proxy_set_header Connection keep-alive; proxy_cookie_path / &quot;/; secure; HttpOnly; SameSite=strict&quot;; proxy_pass http://127.0.0.1:8080; } location / { proxy_set_header X-Real-IP $remote_addr; proxy_set_header Host $http_host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_http_version 1.1; proxy_set_header Connection keep-alive; proxy_cookie_path / &quot;/; secure;]]></description>

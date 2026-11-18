@@ -1,8 +1,7 @@
 User-agent: *
 
-Disallow: /images/
-Disallow: /js/
-Disallow: /css/
+# 搜索爬虫使用本组。/css/、/js/、/images/ 是页面实际引用的样式、脚本和图片，不再禁止。
+# 下方具名 AI 爬虫组仍只抓正文，继续跳过这些静态目录。
 
 # ===== 放行 AI 爬虫 / 大模型检索代理 =====
 # 以下代理默认允许抓取正文；仅禁止静态资源目录，便于大模型与检索索引读取文章内容。
@@ -85,4 +84,4 @@ Disallow: /
 User-agent: ZoominfoBot
 Disallow: /
 
-Sitemap: https://mmfei.com/en/sitemap.xml
+Sitemap: https://www.mmfei.com/sitemap.xml

@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>M1芯片编译安装paddle - 分类 - 木木飞</title>
-        <link>https://mmfei.com/categories/m1%E8%8A%AF%E7%89%87%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85paddle/</link>
+        <link>https://www.mmfei.com/categories/m1%E8%8A%AF%E7%89%87%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85paddle/</link>
         <description>M1芯片编译安装paddle - 分类 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Mon, 08 May 2023 16:32:13 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/categories/m1%E8%8A%AF%E7%89%87%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85paddle/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Mon, 08 May 2023 16:32:13 &#43;0800</lastBuildDate><atom:link href="https://www.mmfei.com/categories/m1%E8%8A%AF%E7%89%87%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85paddle/" rel="self" type="application/rss+xml" /><item>
     <title>M1芯片编译安装paddle</title>
-    <link>https://mmfei.com/2023/05/m1%E8%8A%AF%E7%89%87%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85paddle/</link>
+    <link>https://www.mmfei.com/2023/05/m1%E8%8A%AF%E7%89%87%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85paddle/</link>
     <pubDate>Mon, 08 May 2023 16:32:13 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/2023/05/m1%E8%8A%AF%E7%89%87%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85paddle/</guid>
+    <guid>https://www.mmfei.com/2023/05/m1%E8%8A%AF%E7%89%87%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85paddle/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/M1%e8%8a%af%e7%89%87%e7%bc%96%e8%af%91%e5%ae%89%e8%a3%85paddle/featuredImage.png" referrerpolicy="no-referrer">
             </div>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 find `dirname $(dirname $(which python3))` -name &#34;libpython3.*.dylib&#34;; echo &#34; export LOCAL_PYTHON=/Users/mmfei/anaconda3/envs/paddle_speed_python3_9 export PYTHON_LIBRARY=$LOCAL_PYTHON/lib export PYTHON_INCLUDE_DIRS=$LOCAL_PYTHON/include export PATH=$LOCAL_PYTHON/bin:$PATHexport LD_LIBRARY_PATH=$LOCAL_PYTHON/lib export DYLD_LIBRARY_PATH=$LOCAL_PYTHON/lib export CPLUS_INCLUDE_PATH=$LOCAL_PYTHON/include/python3.9 &#34; &gt;&gt; ~/.zshrc; git clone https://github.com/PaddlePaddle/Paddle.git; cd Paddle; git checkout release/2.4; mkdir build &amp;&amp; cd build; cmake .. -DPY_VERSION=3.10 -DPYTHON_INCLUDE_DIR=${PYTHON_INCLUDE_DIRS} -DPYTHON_LIBRARY=${PYTHON_LIBRARY} -DWITH_GPU=OFF -DWITH_TESTING=OFF -DCMAKE_BUILD_TYPE=Release -DWITH_AVX=OFF -DWITH_ARM=ON; make -j10; cd]]></description>

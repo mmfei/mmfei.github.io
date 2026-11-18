@@ -1,24 +1,24 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>gitlab-runner - 标签 - 木木飞</title>
-        <link>https://mmfei.com/tags/gitlab-runner/</link>
+        <link>https://www.mmfei.com/tags/gitlab-runner/</link>
         <description>gitlab-runner - 标签 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 25 Oct 2022 22:07:46 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/tags/gitlab-runner/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 25 Oct 2022 22:07:46 &#43;0800</lastBuildDate><atom:link href="https://www.mmfei.com/tags/gitlab-runner/" rel="self" type="application/rss+xml" /><item>
     <title>Gitlab Ce进入admin_runners报500</title>
-    <link>https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/</link>
+    <link>https://www.mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/</link>
     <pubDate>Tue, 25 Oct 2022 22:07:46 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/</guid>
+    <guid>https://www.mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/gitlab-ce%e8%bf%9b%e5%85%a5admin_runners%e6%8a%a5500/featuredImage.png" referrerpolicy="no-referrer">
             </div>Internal Server Error 500 while accessing /admin/runners 进入 admin/runners , 页面报错: Whoops, something went wrong on our end logs: (大部分都是迁移后 , 需要处理runner,ssl证书等) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 gitlab-rails/production.log: 16: .table-section.section-10 17:]]></description>
 </item><item>
     <title>Centos8搭建gitlab和gitlab-Runner</title>
-    <link>https://mmfei.com/2021/05/centos8%E6%90%AD%E5%BB%BAgitlab%E5%92%8Cgitlab-runner/</link>
+    <link>https://www.mmfei.com/2021/05/centos8%E6%90%AD%E5%BB%BAgitlab%E5%92%8Cgitlab-runner/</link>
     <pubDate>Sat, 29 May 2021 16:21:34 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/2021/05/centos8%E6%90%AD%E5%BB%BAgitlab%E5%92%8Cgitlab-runner/</guid>
+    <guid>https://www.mmfei.com/2021/05/centos8%E6%90%AD%E5%BB%BAgitlab%E5%92%8Cgitlab-runner/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/centos8%e6%90%ad%e5%bb%bagitlab%e7%9a%84gitlab-runner/img.png" referrerpolicy="no-referrer">
             </div>docker-compose.yml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 version:&#39;3&#39;services:gitlab.abc.com:container_name:gitlab.abc.comimage:gitlab/gitlab-ce:latest# image: gitlab/gitlab-ce:11.0.1-ce.0restart:alwaysprivileged:trueenvironment:GITLAB_OMNIBUS_CONFIG:|external_url &#39;https://gitlab.abc.com&#39; gitlab_rails[&#39;time_zone&#39;] = &#39;Asia/Shanghai&#39; nginx[&#39;enable&#39;] = false prometheus_monitoring[&#39;enable&#39;] = false gitlab_workhorse[&#39;listen_network&#39;] = &#34;tcp&#34; gitlab_workhorse[&#39;listen_addr&#39;] = &#34;:19900&#34; gitlab_rails[&#39;gitlab_shell_ssh_port&#39;] = 19901ports:- &#34;19900:19900&#34;- &#34;19901:22&#34;- &#34;19091:9090&#34;volumes:- &#34;./ssl:/etc/gitlab/ssl&#34;- &#34;/data/gitlab.abc.com/config:/etc/gitlab:rw&#34;- &#34;/data/gitlab.abc.com/logs:/var/log/gitlab:rw&#34;- &#34;/data/gitlab.abc.com/data:/var/opt/gitlab:rw&#34;- &#34;/data/gitlab.abc.com/backups:/var/opt/gitlab/backups:rw&#34;gitlab-runner:restart:alwaysimage:gitlab/gitlab-runnerdepends_on:- gitlab.abc.comvolumes:- /data/gitlab/gitlab-runner/config:/etc/gitlab-runner:Z-]]></description>

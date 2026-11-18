@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>在mac用anaconda管理python - 分类 - 木木飞</title>
-        <link>https://mmfei.com/categories/%E5%9C%A8mac%E7%94%A8anaconda%E7%AE%A1%E7%90%86python/</link>
+        <link>https://www.mmfei.com/categories/%E5%9C%A8mac%E7%94%A8anaconda%E7%AE%A1%E7%90%86python/</link>
         <description>在mac用anaconda管理python - 分类 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Mon, 08 May 2023 22:19:25 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/categories/%E5%9C%A8mac%E7%94%A8anaconda%E7%AE%A1%E7%90%86python/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Mon, 08 May 2023 22:19:25 &#43;0800</lastBuildDate><atom:link href="https://www.mmfei.com/categories/%E5%9C%A8mac%E7%94%A8anaconda%E7%AE%A1%E7%90%86python/" rel="self" type="application/rss+xml" /><item>
     <title>在mac用anaconda管理python</title>
-    <link>https://mmfei.com/2023/05/%E5%9C%A8mac%E7%94%A8anaconda%E7%AE%A1%E7%90%86python/</link>
+    <link>https://www.mmfei.com/2023/05/%E5%9C%A8mac%E7%94%A8anaconda%E7%AE%A1%E7%90%86python/</link>
     <pubDate>Mon, 08 May 2023 22:19:25 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/2023/05/%E5%9C%A8mac%E7%94%A8anaconda%E7%AE%A1%E7%90%86python/</guid>
+    <guid>https://www.mmfei.com/2023/05/%E5%9C%A8mac%E7%94%A8anaconda%E7%AE%A1%E7%90%86python/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e5%9c%a8mac%e7%94%a8anaconda%e7%ae%a1%e7%90%86python/featuredImage.png" referrerpolicy="no-referrer">
             </div>下载 https://www.anaconda.com/download 搭建独立环境 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 # 直接建立一个基于python3.9的环境 # 查看本地环境 find `dirname $(dirname $(which python3))` -name &#34;libpython3.*.dylib&#34;; # 设置编]]></description>

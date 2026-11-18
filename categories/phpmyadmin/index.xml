@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>phpmyadmin - 分类 - 木木飞</title>
-        <link>https://mmfei.com/categories/phpmyadmin/</link>
+        <link>https://www.mmfei.com/categories/phpmyadmin/</link>
         <description>phpmyadmin - 分类 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 21 Nov 2023 03:07:34 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/categories/phpmyadmin/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 21 Nov 2023 03:07:34 &#43;0800</lastBuildDate><atom:link href="https://www.mmfei.com/categories/phpmyadmin/" rel="self" type="application/rss+xml" /><item>
     <title>用docker快速搭建一个phpmyadmin</title>
-    <link>https://mmfei.com/2023/11/%E7%94%A8docker%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAphpmyadmin/</link>
+    <link>https://www.mmfei.com/2023/11/%E7%94%A8docker%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAphpmyadmin/</link>
     <pubDate>Tue, 21 Nov 2023 03:07:34 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/2023/11/%E7%94%A8docker%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAphpmyadmin/</guid>
+    <guid>https://www.mmfei.com/2023/11/%E7%94%A8docker%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAphpmyadmin/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e7%94%a8docker%e5%bf%ab%e9%80%9f%e6%90%ad%e5%bb%ba%e4%b8%80%e4%b8%aaphpmyadmin/featuredImage.png" referrerpolicy="no-referrer">
             </div>phpmyadmin的配置 docker-compose.yml 映射本机的6080端口 , abc.com 请替换成你的域名 1 2 3 4 5 6 7 8 9 10 11 12 13 version:&#39;3.1&#39;services:phpmyadmin:image:phpmyadminrestart:alwaysports:- 6080:80environment:- PMA_ARBITRARY=3- PMA_PORT=3306- PMA_HOST=你的mysql的h]]></description>

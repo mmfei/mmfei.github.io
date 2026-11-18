@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>m1x - 标签 - 木木飞</title>
-        <link>https://mmfei.com/tags/m1x/</link>
+        <link>https://www.mmfei.com/tags/m1x/</link>
         <description>m1x - 标签 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sun, 14 Nov 2021 01:59:47 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/tags/m1x/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sun, 14 Nov 2021 01:59:47 &#43;0800</lastBuildDate><atom:link href="https://www.mmfei.com/tags/m1x/" rel="self" type="application/rss+xml" /><item>
     <title>MacBookM1X搭建mysql和redis以及php的swoole和hyperf环境</title>
-    <link>https://mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/</link>
+    <link>https://www.mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/</link>
     <pubDate>Sun, 14 Nov 2021 01:59:47 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/</guid>
+    <guid>https://www.mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/MacBookM1X%e6%90%ad%e5%bb%bamysql%e5%92%8credis%e4%bb%a5%e5%8f%8aphp%e7%9a%84swoole%e5%92%8chyperf%e7%8e%af%e5%a2%83/featuredImage.png" referrerpolicy="no-referrer">
             </div>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 brew install php@7.4 brew install openssl pecl install igbinary brew install redis pecl install swoole brew install boost; # 在m1x环境 , yasd在编译的时候会找不到这个boost依赖 , 解]]></description>

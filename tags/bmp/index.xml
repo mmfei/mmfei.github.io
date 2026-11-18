@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>bmp - 标签 - 木木飞</title>
-        <link>https://mmfei.com/tags/bmp/</link>
+        <link>https://www.mmfei.com/tags/bmp/</link>
         <description>bmp - 标签 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Mon, 03 Jan 2022 17:27:31 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/tags/bmp/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Mon, 03 Jan 2022 17:27:31 &#43;0800</lastBuildDate><atom:link href="https://www.mmfei.com/tags/bmp/" rel="self" type="application/rss+xml" /><item>
     <title>转换本地图片视频为base64的json</title>
-    <link>https://mmfei.com/2022/01/%E8%BD%AC%E6%8D%A2%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E8%A7%86%E9%A2%91%E4%B8%BAbase64%E7%9A%84json/</link>
+    <link>https://www.mmfei.com/2022/01/%E8%BD%AC%E6%8D%A2%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E8%A7%86%E9%A2%91%E4%B8%BAbase64%E7%9A%84json/</link>
     <pubDate>Mon, 03 Jan 2022 17:27:31 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/2022/01/%E8%BD%AC%E6%8D%A2%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E8%A7%86%E9%A2%91%E4%B8%BAbase64%E7%9A%84json/</guid>
+    <guid>https://www.mmfei.com/2022/01/%E8%BD%AC%E6%8D%A2%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E8%A7%86%E9%A2%91%E4%B8%BAbase64%E7%9A%84json/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e8%bd%ac%e6%8d%a2%e6%9c%ac%e5%9c%b0%e5%9b%be%e7%89%87%e8%a7%86%e9%a2%91%e4%b8%babase64%e7%9a%84json/featuredImage.png" referrerpolicy="no-referrer">
             </div>最近 , 前端同事有个需求是把本地的图片视频转成base64的json文件. 由于量比较多 , 且繁琐. 我花了点时间写了个简单的工具 https://github.com/mmfei/bash_image_to_base64 使用方式 1 2 3 4]]></description>

@@ -1,15 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>gitlab-runner - 分类 - 木木飞</title>
-        <link>https://mmfei.com/categories/gitlab-runner/</link>
+        <link>https://www.mmfei.com/categories/gitlab-runner/</link>
         <description>gitlab-runner - 分类 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 25 Oct 2022 22:07:46 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/categories/gitlab-runner/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 25 Oct 2022 22:07:46 &#43;0800</lastBuildDate><atom:link href="https://www.mmfei.com/categories/gitlab-runner/" rel="self" type="application/rss+xml" /><item>
     <title>Gitlab Ce进入admin_runners报500</title>
-    <link>https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/</link>
+    <link>https://www.mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/</link>
     <pubDate>Tue, 25 Oct 2022 22:07:46 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/</guid>
+    <guid>https://www.mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/gitlab-ce%e8%bf%9b%e5%85%a5admin_runners%e6%8a%a5500/featuredImage.png" referrerpolicy="no-referrer">
             </div>Internal Server Error 500 while accessing /admin/runners 进入 admin/runners , 页面报错: Whoops, something went wrong on our end logs: (大部分都是迁移后 , 需要处理runner,ssl证书等) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 gitlab-rails/production.log: 16: .table-section.section-10 17:]]></description>

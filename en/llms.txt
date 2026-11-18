@@ -4,11 +4,11 @@
 
 ## 站点导航
 
-- [所有文章](https://mmfei.com/en/posts/): 全部技术笔记，按时间倒序
-- [分类](https://mmfei.com/en/categories/): 按主题归类的文章
-- [标签](https://mmfei.com/en/tags/): 按标签检索
-- [关于我](https://mmfei.com/en/about/): 作者背景与技能
-- [RSS 订阅](https://mmfei.com/en/index.xml): 站点 RSS Feed
-- [JSON Feed](https://mmfei.com/en/index.json): 结构化订阅
+- [所有文章](https://www.mmfei.com/en/posts/): 全部技术笔记，按时间倒序
+- [分类](https://www.mmfei.com/en/categories/): 按主题归类的文章
+- [标签](https://www.mmfei.com/en/tags/): 按标签检索
+- [关于我](https://www.mmfei.com/en/about/): 作者背景与技能
+- [RSS 订阅](https://www.mmfei.com/en/index.xml): 站点 RSS Feed
+- [JSON Feed](https://www.mmfei.com/en/index.json): 结构化订阅
 
 ## 文章索引（共 0 篇）

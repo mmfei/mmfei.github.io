@@ -1,24 +1,24 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>deploy - 标签 - 木木飞</title>
-        <link>https://mmfei.com/tags/deploy/</link>
+        <link>https://www.mmfei.com/tags/deploy/</link>
         <description>deploy - 标签 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Fri, 28 May 2021 11:30:14 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/tags/deploy/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Fri, 28 May 2021 11:30:14 &#43;0800</lastBuildDate><atom:link href="https://www.mmfei.com/tags/deploy/" rel="self" type="application/rss+xml" /><item>
     <title>阿里云从零开始搭建hyperf服务器</title>
-    <link>https://mmfei.com/2021/05/%E9%98%BF%E9%87%8C%E4%BA%91%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAhyperf%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+    <link>https://www.mmfei.com/2021/05/%E9%98%BF%E9%87%8C%E4%BA%91%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAhyperf%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
     <pubDate>Fri, 28 May 2021 11:30:14 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/2021/05/%E9%98%BF%E9%87%8C%E4%BA%91%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAhyperf%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
+    <guid>https://www.mmfei.com/2021/05/%E9%98%BF%E9%87%8C%E4%BA%91%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E6%90%AD%E5%BB%BAhyperf%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e9%98%bf%e9%87%8c%e4%ba%91%e4%bb%8e%e9%9b%b6%e5%bc%80%e5%a7%8b%e6%90%ad%e5%bb%bahyperf%e6%9c%8d%e5%8a%a1%e5%99%a8/featuredImage.png" referrerpolicy="no-referrer">
             </div>服务需要用到 免密登录配置 openresty php7 swoole nginx config gitlab runner gitlab ci php-redis扩展 一些约定 编译的源码目录 /data/src/install/{包名}/{src]]></description>
 </item><item>
     <title>通过gitlab的ci自动部署前端项目到阿里云的oss</title>
-    <link>https://mmfei.com/2021/05/%E9%80%9A%E8%BF%87gitlab%E7%9A%84ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E5%88%B0%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84oss/</link>
+    <link>https://www.mmfei.com/2021/05/%E9%80%9A%E8%BF%87gitlab%E7%9A%84ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E5%88%B0%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84oss/</link>
     <pubDate>Thu, 27 May 2021 00:26:32 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/2021/05/%E9%80%9A%E8%BF%87gitlab%E7%9A%84ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E5%88%B0%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84oss/</guid>
+    <guid>https://www.mmfei.com/2021/05/%E9%80%9A%E8%BF%87gitlab%E7%9A%84ci%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE%E5%88%B0%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84oss/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e9%80%9a%e8%bf%87gitlab%e7%9a%84ci%e8%87%aa%e5%8a%a8%e9%83%a8%e7%bd%b2%e5%89%8d%e7%ab%af%e9%a1%b9%e7%9b%ae%e5%88%b0%e9%98%bf%e9%87%8c%e4%ba%91%e7%9a%84oss/img.png" referrerpolicy="no-referrer">
             </div>通过gitlab的ci自动部署前端项目到阿里云的oss gitlab-ci.yml 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 # 指定使用的镜像image:n]]></description>

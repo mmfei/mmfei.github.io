@@ -1,24 +1,24 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>vscode - 分类 - 木木飞</title>
-        <link>https://mmfei.com/categories/vscode/</link>
+        <link>https://www.mmfei.com/categories/vscode/</link>
         <description>vscode - 分类 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 11 Aug 2021 20:43:39 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/categories/vscode/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 11 Aug 2021 20:43:39 &#43;0800</lastBuildDate><atom:link href="https://www.mmfei.com/categories/vscode/" rel="self" type="application/rss+xml" /><item>
     <title>自定义macbook的右键菜单在Finder增加右键用vscode打开功能</title>
-    <link>https://mmfei.com/2021/08/%E8%87%AA%E5%AE%9A%E4%B9%89macbook%E7%9A%84%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%E5%9C%A8finder%E5%A2%9E%E5%8A%A0%E5%8F%B3%E9%94%AE%E7%94%A8vscode%E6%89%93%E5%BC%80%E5%8A%9F%E8%83%BD/</link>
+    <link>https://www.mmfei.com/2021/08/%E8%87%AA%E5%AE%9A%E4%B9%89macbook%E7%9A%84%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%E5%9C%A8finder%E5%A2%9E%E5%8A%A0%E5%8F%B3%E9%94%AE%E7%94%A8vscode%E6%89%93%E5%BC%80%E5%8A%9F%E8%83%BD/</link>
     <pubDate>Wed, 11 Aug 2021 20:43:39 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/2021/08/%E8%87%AA%E5%AE%9A%E4%B9%89macbook%E7%9A%84%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%E5%9C%A8finder%E5%A2%9E%E5%8A%A0%E5%8F%B3%E9%94%AE%E7%94%A8vscode%E6%89%93%E5%BC%80%E5%8A%9F%E8%83%BD/</guid>
+    <guid>https://www.mmfei.com/2021/08/%E8%87%AA%E5%AE%9A%E4%B9%89macbook%E7%9A%84%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%E5%9C%A8finder%E5%A2%9E%E5%8A%A0%E5%8F%B3%E9%94%AE%E7%94%A8vscode%E6%89%93%E5%BC%80%E5%8A%9F%E8%83%BD/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e8%87%aa%e5%ae%9a%e4%b9%89macbook%e7%9a%84%e5%8f%b3%e9%94%ae%e8%8f%9c%e5%8d%95%e5%9c%a8Finder%e5%a2%9e%e5%8a%a0%e5%8f%b3%e9%94%ae%e7%94%a8vscode%e6%89%93%e5%bc%80%e5%8a%9f%e8%83%bd/img.png" referrerpolicy="no-referrer">
             </div>Launch Automator Create New Document Create a new Quick Action Select &ldquo;Quick Action&rdquo; Add the Action&hellip; Workflow receives current files and folders from Finder. Add a new Run Shell Script action to the workflow. (drag the &ldquo;Run Shell Script&rdquo; object, highlighted in the screenshot, to the empty window on the right) Configure the Workflow Set the Pass Input to be as arguments Paste the following in the input box: 1]]></description>
 </item><item>
     <title>如何在vscode编辑器中通过xdebug调试在docker的运行的服务</title>
-    <link>https://mmfei.com/2021/06/%E5%A6%82%E4%BD%95%E5%9C%A8vscode%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%AD%E9%80%9A%E8%BF%87xdebug%E8%B0%83%E8%AF%95%E5%9C%A8docker%E7%9A%84%E8%BF%90%E8%A1%8C%E7%9A%84%E6%9C%8D%E5%8A%A1/</link>
+    <link>https://www.mmfei.com/2021/06/%E5%A6%82%E4%BD%95%E5%9C%A8vscode%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%AD%E9%80%9A%E8%BF%87xdebug%E8%B0%83%E8%AF%95%E5%9C%A8docker%E7%9A%84%E8%BF%90%E8%A1%8C%E7%9A%84%E6%9C%8D%E5%8A%A1/</link>
     <pubDate>Tue, 22 Jun 2021 18:58:51 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>https://mmfei.com/2021/06/%E5%A6%82%E4%BD%95%E5%9C%A8vscode%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%AD%E9%80%9A%E8%BF%87xdebug%E8%B0%83%E8%AF%95%E5%9C%A8docker%E7%9A%84%E8%BF%90%E8%A1%8C%E7%9A%84%E6%9C%8D%E5%8A%A1/</guid>
+    <guid>https://www.mmfei.com/2021/06/%E5%A6%82%E4%BD%95%E5%9C%A8vscode%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%AD%E9%80%9A%E8%BF%87xdebug%E8%B0%83%E8%AF%95%E5%9C%A8docker%E7%9A%84%E8%BF%90%E8%A1%8C%E7%9A%84%E6%9C%8D%E5%8A%A1/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e5%a6%82%e4%bd%95%e5%9c%a8vscode%e7%bc%96%e8%be%91%e5%99%a8%e4%b8%ad%e9%80%9a%e8%bf%87xdebug%e8%b0%83%e8%af%95%e5%9c%a8docker%e7%9a%84%e8%bf%90%e8%a1%8c%e7%9a%84%e6%9c%8d%e5%8a%a1/img.png" referrerpolicy="no-referrer">
             </div>https://github.com/oh-my-docker-hub/oh-my-docker/blob/master/build/php7/README.php7.md docker hub : omydockerhub/php7 如何Debug容器里面运行的php服务 配置好xdebug 1 2 3 4 5 6 7 8 9 10 11 12 ; conf/conf.d/docker-php-ext-xdebug.ini ; 此文件映射到 /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini [XDebug] xdebug.default_enable=1 xdebug.remote_enable=1 xdebug.remot]]></description>
