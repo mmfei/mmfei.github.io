@@ -11,7 +11,8 @@
 - [RSS 订阅](https://mmfei.com/index.xml): 站点 RSS Feed
 - [JSON Feed](https://mmfei.com/index.json): 结构化订阅
 
-## 文章索引（共 55 篇）
+## 文章索引（共 56 篇）
+- [GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单](https://mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/) — 2026-11-18 · 分类: GitHub Pages, AdSense, 静态博客 · 标签: GitHub Pages, AdSense, 静态博客
 - [设置gitlab-ce的root账号密码](https://mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/) — 2025-08-05 · 分类: gitlab · 标签: gitlab
 - [ubuntu安装redis](https://mmfei.com/2024/08/ubuntu%E5%AE%89%E8%A3%85redis/) — 2024-08-07 · 分类: ubuntu, redis · 标签: ubuntu, redis
 - [Ubuntu安装mysql8](https://mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/) — 2024-06-14 · 分类: ubuntu, mysql · 标签: ubuntu, mysql

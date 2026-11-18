@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单 - 木木飞</title><meta name="Description" content="分清开户、站点审核与广告位，给静态博客接入 AdSense 的代码模板、验证步骤和排错清单。"><meta property="og:title" content="GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单" />
+<meta property="og:description" content="分清开户、站点审核与广告位，给静态博客接入 AdSense 的代码模板、验证步骤和排错清单。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/" /><meta property="og:image" content="https://mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-11-18T08:00:00&#43;07:00" />
+<meta property="article:modified_time" content="2026-11-18T08:00:00&#43;07:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://mmfei.com/images/avatar.jpg"/>
+
+<meta name="twitter:title" content="GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单"/>
+<meta name="twitter:description" content="分清开户、站点审核与广告位，给静态博客接入 AdSense 的代码模板、验证步骤和排错清单。"/>
+<meta name="application-name" content="木木飞">
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/" /><link rel="prev" href="https://mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/mmfei.com\/2026\/11\/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense\/"
+        },"image": ["https:\/\/mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "GitHub Pages, AdSense, 静态博客","wordcount":  1930 ,
+        "url": "https:\/\/mmfei.com\/2026\/11\/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense\/","datePublished": "2026-11-18T08:00:00+07:00","dateModified": "2026-11-18T08:00:00+07:00","publisher": {
+            "@type": "Organization",
+            "name": "mmfei","logo": "https:\/\/mmfei.com\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "mmfei"
+            },"description": "分清开户、站点审核与广告位，给静态博客接入 AdSense 的代码模板、验证步骤和排错清单。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friend/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/" selected>简体中文</option></select>
+                    </a><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a>
+                <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile">
+                <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friend/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<main class="main">
+                <div class="container"><div class="sk-page sk-article"><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div><article class="page single sk-single">
+            <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/github-pages/">GitHub Pages</a><span class="sk-single-kicker-sep">·</span><a href="/categories/adsense/">AdSense</a><span class="sk-single-kicker-sep">·</span><a href="/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/">静态博客</a></p><h1 class="single-title sk-single-title">GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单</h1><div class="post-meta sk-single-meta">
+                    <div class="post-meta-line"><span class="post-author"><a href="https://mmfei.com" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
+                    </div>
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-18">2026-11-18</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1930 字&nbsp;
+                        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/" class="leancloud_visitors" data-flag-title="GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单">
+                                <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                            </span>&nbsp;</div>
+                </div>
+            </header><div class="details toc sk-single-toc" id="toc-static"  kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-先确认托管用途而不是先粘代码">1. 先确认托管用途，而不是先粘代码</a></li>
+    <li><a href="#2-区分三个编号">2. 区分三个编号</a></li>
+    <li><a href="#3-连接站点与审核">3. 连接站点与审核</a></li>
+    <li><a href="#4-手动广告位代码放在哪里">4. 手动广告位代码放在哪里</a></li>
+    <li><a href="#5-adstxt-放在发布根目录">5. ads.txt 放在发布根目录</a></li>
+    <li><a href="#6-审核和上线前检查">6. 审核和上线前检查</a></li>
+    <li><a href="#7-空白广告与回滚">7. 空白广告与回滚</a></li>
+    <li><a href="#官方参考">官方参考</a></li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><p>博客能正常打开，不代表已经具备展示广告的条件。AdSense 开户、连接站点、站点审核和广告位设置是不同步骤。本教程针对自有域名的静态博客，说明每一步该验证什么，不承诺审核通过或收入。</p>
+<blockquote>
+<p>适用范围：能修改站点公共 HTML 模板和发布根目录文件的博客。文中编号均为占位示例，不能原样上线。资料核对日期为 2026 年 11 月 18 日；后台界面以 Google 当前实际页面为准。本文未完成真实广告账号端到端投放测试，不包含任何实测收益。</p>
+</blockquote>
+<h2 id="1-先确认托管用途而不是先粘代码">1. 先确认托管用途，而不是先粘代码</h2>
+<p>GitHub Pages 官方限制说明：它不是用于运行在线业务、电商，或以商业交易、商业 SaaS 为主要目的的网站的免费主机。不要把“技术上能加载广告脚本”理解为所有商业用途都获允许。</p>
+<p>个人原创博客是否适合继续使用现有托管，应结合实际用途与服务条款评估；若计划发展成主要依靠商业经营的站点，应另行评估合适的托管。不要在 Pages 上收集密码、支付卡等敏感交易信息。</p>
+<h2 id="2-区分三个编号">2. 区分三个编号</h2>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>用途</th>
+<th>示例（占位）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GA4 衡量 ID</td>
+<td>访问统计，不负责展示广告</td>
+<td><code>G-XXXXXXXXXX</code></td>
+</tr>
+<tr>
+<td>AdSense 发布商 ID</td>
+<td>识别广告发布者；脚本中带 <code>ca-</code> 前缀</td>
+<td><code>pub-0000000000000000</code></td>
+</tr>
+<tr>
+<td>广告单元 ID</td>
+<td>识别具体的手动广告位</td>
+<td><code>0000000000</code></td>
+</tr>
+</tbody>
+</table>
+<p>不能把 GA4 的 <code>G-…</code> 编号放进 AdSense 脚本。广告代码和发布商编号应从自己的 AdSense 后台复制，不要使用教程作者或其他网站的编号。</p>
+<h2 id="3-连接站点与审核">3. 连接站点与审核</h2>
+<p>在 AdSense 中添加自己的站点，并按后台实际提供的方法验证控制权。某些表单要求使用不带 <code>www</code> 的主域名；按照实际校验提示填写，不必为此更改网站的 HTTPS 或强制跳转设置。</p>
+<p>账号创建成功不等于站点审核通过。应分别检查收款资料、站点连接和审核状态；补齐当前要求的事项后，再按后台提示申请审核，不用页面出现一个空白广告框来判断是否获批。</p>
+<h2 id="4-手动广告位代码放在哪里">4. 手动广告位代码放在哪里</h2>
+<p>下面示例只适用于自己创建的手动展示广告单元。自动广告使用后台提供的设置，不需要照抄同一套手动广告位代码。若只是验证站点，优先按后台提供的验证方式操作。</p>
+<p>全站公共模板的 <code>&lt;head&gt;</code> 内加载一次：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="c">&lt;!-- 两处发布商编号必须替换为自己的真实编号 --&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">async</span>
+  <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0000000000000000&#34;</span>
+  <span class="na">crossorigin</span><span class="o">=</span><span class="s">&#34;anonymous&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在文章模板中希望展示广告的位置，例如正文结束后，放置广告单元：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">ins</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;adsbygoogle&#34;</span>
+     <span class="na">style</span><span class="o">=</span><span class="s">&#34;display:block&#34;</span>
+     <span class="na">data-ad-client</span><span class="o">=</span><span class="s">&#34;ca-pub-0000000000000000&#34;</span>
+     <span class="na">data-ad-slot</span><span class="o">=</span><span class="s">&#34;0000000000&#34;</span>
+     <span class="na">data-ad-format</span><span class="o">=</span><span class="s">&#34;auto&#34;</span>
+     <span class="na">data-full-width-responsive</span><span class="o">=</span><span class="s">&#34;true&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">ins</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+  <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">adsbygoogle</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">adsbygoogle</span> <span class="o">||</span> <span class="p">[]).</span><span class="nx">push</span><span class="p">({});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这些是占位模板，不是真实可投放账号。两处 <code>ca-pub-…</code> 要一致，<code>data-ad-slot</code> 则必须来自对应的广告单元。先查看主题是否已经加载 AdSense，避免在公共模板与文章组件里重复加载库。</p>
+<p>不要直接把脚本粘进可能过滤 HTML 的 Markdown 正文。应使用生成器支持的模板或组件，并预览最终 HTML。广告不应遮挡代码、导航和正文，也不应设计成误导读者点击的下载按钮。</p>
+<h2 id="5-adstxt-放在发布根目录">5. ads.txt 放在发布根目录</h2>
+<p><code>ads.txt</code> 用来声明哪些卖方被授权销售你的广告资源，不是广告加载脚本，也不能替代站点审核。Google 官方说明它并非统一强制要求，但强烈建议使用；具体操作还应遵循后台当前提示。</p>
+<p>从自己的后台复制记录。示例格式如下，里面的发布商 ID 仍是占位符：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+</code></pre></td></tr></table>
+</div>
+</div><p>注意这里是 <code>pub-…</code>，不是 <code>ca-pub-…</code>。将文件放到静态生成器会原样复制至发布根目录的位置，构建后检查产物里是否真的包含 <code>ads.txt</code>，而不只检查源码目录。</p>
+<p>发布后，用浏览器打开自己域名的 <code>/ads.txt</code>，也可执行只读检查。下面的域名是示例，必须替换：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">curl -iL https://example.com/ads.txt
+</code></pre></td></tr></table>
+</div>
+</div><p>检查最终返回内容确实为纯文本记录，而不是 404 页面、首页 HTML、登录页或验证码。若裸域与 <code>www</code> 有跳转，也应检查主域名入口最终可达并返回正确文件。Google 后台更新状态可能有延迟，不要因此反复改发布商编号。</p>
+<h2 id="6-审核和上线前检查">6. 审核和上线前检查</h2>
+<ul>
+<li>站点有完整、可访问的原创内容与正常导航，没有只放标题的空页面。</li>
+<li>隐私政策准确说明实际使用的广告、统计和相关数据处理，而不是复制不符合本站情况的模板。</li>
+<li>若向欧洲经济区（EEA）、英国或瑞士用户投放个性化广告，必须使用经过 Google 认证、且集成 IAB 透明度与同意框架（TCF）的同意管理平台（CMP），不能只加一个普通的 Cookie 提示框。认证不代表已全面满足适用隐私法律，发布者仍需核对实际数据处理与法律义务；中文内容不代表只有中国用户。详见 <a href="https://support.google.com/adsense/answer/13554116?hl=en" target="_blank" rel="noopener noreffer">Google 官方 CMP 要求</a>。</li>
+<li>收款国家、主体及真实身份资料由申请人确认，不因浏览器预填而直接接受。</li>
+<li>不自行点击广告、不请朋友帮忙点击、不购买虚假流量，也不自动刷新刷展示。</li>
+<li>手机和桌面均检查布局、加载和控制台错误，不让广告盖住主要内容。</li>
+</ul>
+<h2 id="7-空白广告与回滚">7. 空白广告与回滚</h2>
+<p>广告没有显示时，先确认账号和站点是否仍待审核，再检查发布商和广告单元编号、脚本请求、浏览器扩展、同意状态与布局空间。广告库存、政策限制等也可能影响展示；一次打开没看到广告，不足以证明代码错误。</p>
+<p>若刚接入就出现布局或性能问题，回滚本次广告模板改动并重新构建，确认正文恢复正常；不要同时改统计、主题和其他配置。需停用投放时，应核对后台对应的广告设置。广告代码回滚不等于注销账号，也不能替代隐私和合规维护。</p>
+<h2 id="官方参考">官方参考</h2>
+<ul>
+<li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits" target="_blank" rel="noopener noreffer">GitHub Pages 使用限制</a></li>
+<li><a href="https://support.google.com/adsense/answer/9274516?hl=zh-Hans" target="_blank" rel="noopener noreffer">AdSense 代码放置位置</a></li>
+<li><a href="https://support.google.com/adsense/answer/9183363?hl=en" target="_blank" rel="noopener noreffer">自适应广告代码说明</a></li>
+<li><a href="https://support.google.com/adsense/answer/7532444?hl=zh-Hans" target="_blank" rel="noopener noreffer">Google ads.txt 指南</a></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-11-18</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/" data-title="GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单" data-via="mmfei" data-hashtags="GitHub Pages,AdSense,静态博客"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/" data-hashtag="GitHub Pages"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/" data-title="GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/" data-title="GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/" data-title="GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/github-pages/">GitHub Pages</a>,&nbsp;<a href="/tags/adsense/">AdSense</a>,&nbsp;<a href="/tags/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/">静态博客</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <nav class="sk-nav" aria-label="文章导航"><a href="/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/" class="sk-nav-btn sk-nav-prev" rel="prev" title="设置gitlab-ce的root账号密码"><i class="fas fa-angle-left fa-fw"></i>设置gitlab-ce的root账号密码</a></nav>
+</div>
+
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article>
+    </div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://mmfei.com" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/css/skin-stripe.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"valine":{"appId":"agrUIy35wmii07cPfX0p0UWx-MdYXbMMI","appKey":"xNDv6FEmi9xqlsf6out3W5c6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://agruiy35.api.lncldglobal.com","visitor":true}}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6" async></script><link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+<div id="pagefind-overlay" class="pf-overlay" aria-hidden="true">
+    <div class="pf-modal" role="dialog" aria-modal="true" aria-label="搜索">
+        <button type="button" class="pf-close" id="pagefind-close" aria-label="清空">&times;</button>
+        <div id="pagefind-ui"></div>
+    </div>
+</div>
+
+<style>
+.pf-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8vh 16px 16px;
+}
+.pf-overlay.open {
+    display: flex;
+}
+.pf-modal {
+    position: relative;
+    width: 560px;
+    max-width: 100%;
+    background: var(--card-background, #fff);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.28);
+    padding: 18px 18px 10px;
+}
+.pf-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--secondary-font-color, #666);
+    cursor: pointer;
+    padding: 6px;
+}
+.pf-close:hover { color: var(--primary-font-color, #111); }
+#pagefind-ui { min-height: 40px; }
+@media (max-width: 680px) {
+    .pf-overlay { padding: 12px 10px; align-items: flex-start; }
+    .pf-modal { padding: 14px 12px 8px; border-radius: 10px; }
+}
+</style>
+
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+(function () {
+    var overlay = document.getElementById('pagefind-overlay');
+    var modal = overlay.querySelector('.pf-modal');
+    var closeBtn = document.getElementById('pagefind-close');
+    var uiMount = document.getElementById('pagefind-ui');
+
+    function open() {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        var input = uiMount.querySelector('input');
+        if (input) { setTimeout(function () { input.focus(); }, 60); }
+    }
+    function close() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    function bindTrigger(id) {
+        var el = document.getElementById(id);
+        if (el) { el.addEventListener('click', function (e) { e.preventDefault(); open(); }); }
+    }
+    bindTrigger('pagefind-trigger-desktop');
+    bindTrigger('pagefind-trigger-mobile');
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) { close(); }
+    });
+
+    if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({
+            element: uiMount,
+            showSubResults: true,
+            showImages: false,
+            highlightQuery: true,
+            translations: {
+                placeholder: '搜索文章标题、标签或内容…',
+                clear_search: '清除',
+                load_more: '加载更多结果',
+                search_label: '搜索',
+                filters_label: '筛选',
+                no_results: '没有找到结果'
+            }
+        });
+    }
+})();
+</script>
+</body>
+</html>

@@ -4,7 +4,28 @@
         <link>https://mmfei.com/categories/</link>
         <description>Categories - 分类 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 05 Aug 2025 19:30:35 &#43;0800</lastBuildDate><atom:link href="https://mmfei.com/categories/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 18 Nov 2026 08:00:00 &#43;0700</lastBuildDate><atom:link href="https://mmfei.com/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>AdSense</title>
+    <link>https://mmfei.com/categories/adsense/</link>
+    <pubDate>Wed, 18 Nov 2026 08:00:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/categories/adsense/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>GitHub Pages</title>
+    <link>https://mmfei.com/categories/github-pages/</link>
+    <pubDate>Wed, 18 Nov 2026 08:00:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/categories/github-pages/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>静态博客</title>
+    <link>https://mmfei.com/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</link>
+    <pubDate>Wed, 18 Nov 2026 08:00:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>gitlab</title>
     <link>https://mmfei.com/categories/gitlab/</link>
     <pubDate>Tue, 05 Aug 2025 19:30:35 &#43;0800</pubDate>
@@ -52,27 +73,6 @@
     <pubDate>Tue, 21 Nov 2023 03:07:34 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://mmfei.com/categories/phpmyadmin/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>clickhouse</title>
-    <link>https://mmfei.com/categories/clickhouse/</link>
-    <pubDate>Thu, 16 Nov 2023 13:56:23 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/categories/clickhouse/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>php</title>
-    <link>https://mmfei.com/categories/php/</link>
-    <pubDate>Tue, 07 Nov 2023 21:30:06 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/categories/php/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>evans</title>
-    <link>https://mmfei.com/categories/evans/</link>
-    <pubDate>Sat, 28 Oct 2023 14:39:24 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://mmfei.com/categories/evans/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>AdSense - 分类 - 木木飞</title>
+        <link>https://mmfei.com/categories/adsense/</link>
+        <description>AdSense - 分类 - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 18 Nov 2026 08:00:00 &#43;0700</lastBuildDate><atom:link href="https://mmfei.com/categories/adsense/" rel="self" type="application/rss+xml" /><item>
+    <title>GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单</title>
+    <link>https://mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/</link>
+    <pubDate>Wed, 18 Nov 2026 08:00:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/</guid>
+    <description><![CDATA[博客能正常打开，不代表已经具备展示广告的条件。AdSense 开户、连接站点、站点审核和广告位设置是不同步骤。本教程针对自有域名的静态博客，说]]></description>
+</item></channel>
+</rss>
