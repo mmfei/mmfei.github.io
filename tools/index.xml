@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>工具 on 木木飞</title>
+    <link>https://www.mmfei.com/tools/</link>
+    <description>Recent content in 工具 on 木木飞</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+    <webMaster>wlfkongl@gmail.com (mmfei)</webMaster>
+    <lastBuildDate>Thu, 19 Nov 2026 12:00:00 +0700</lastBuildDate><atom:link href="https://www.mmfei.com/tools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>免费可商用字体库</title>
+      <link>https://www.mmfei.com/tools/fonts/</link>
+      <pubDate>Thu, 19 Nov 2026 12:00:00 +0700</pubDate>
+      <author>wlfkongl@gmail.com (mmfei)</author>
+      <guid>https://www.mmfei.com/tools/fonts/</guid>
+      <description>输入一次，目录里的字体用同一段文字比较。字体来自 Google Fonts 官方目录的未修改文件，每款都带同目录 OFL。中文手写只收官方分类为手写且含简体中文的家族</description>
+    </item>
+    
+  </channel>
+</rss>

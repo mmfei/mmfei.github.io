@@ -1,0 +1,54 @@
+{
+  "id": "noto-sans-sc",
+  "font_file": "NotoSansSC[wght].ttf",
+  "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf",
+  "source_git_blob": "fb0637bafbcd804fe32152370a1225990745b4bc",
+  "size": 17772300,
+  "sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+  "license_source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/notosanssc/OFL.txt",
+  "license_git_blob": "1c9f43281b8f216c5461fe9ac729afbade7724e4",
+  "license_sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9",
+  "checked_at": "2026-11-19T20:15:38.008815+07:00",
+  "modified": false,
+  "subset": false,
+  "status": "原版完整单文件已下载并与官方目录Git blob核符；安装及网页加载未实测",
+  "font_versions": [
+    "Version 2.004-H2;hotconv 1.0.118;makeotfexe 2.5.65603"
+  ],
+  "family_names": [
+    "Noto Sans SC",
+    "Noto Sans SC Thin"
+  ],
+  "unicode_cmap_entries": 30890,
+  "sample_glyphs": {
+    "中": true,
+    "文": true,
+    "字": true,
+    "体": true,
+    "测": true,
+    "试": true,
+    "A": true,
+    "B": true,
+    "C": true,
+    "a": true,
+    "b": true,
+    "c": true,
+    "0": true,
+    "1": true,
+    "2": true,
+    "3": true,
+    "，": true,
+    "。": true,
+    "!": true,
+    "?": true
+  },
+  "variable_axes": [
+    {
+      "tag": "wght",
+      "min": 100.0,
+      "default": 100.0,
+      "max": 900.0
+    }
+  ],
+  "parse_status": "fontTools解析通过，不等于安装或浏览器验收"
+}

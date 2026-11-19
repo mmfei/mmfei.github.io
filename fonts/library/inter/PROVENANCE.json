@@ -1,0 +1,59 @@
+{
+  "id": "inter",
+  "font_file": "Inter[opsz,wght].ttf",
+  "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf",
+  "source_git_blob": "047c92f6e2212473dc436020afed689527076d44",
+  "size": 876576,
+  "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+  "license_source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/OFL.txt",
+  "license_git_blob": "21f6aff961064c2e429f570995e446bcdd555422",
+  "license_sha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+  "checked_at": "2026-11-19T20:15:37.697420+07:00",
+  "modified": false,
+  "subset": false,
+  "status": "原版完整单文件已下载并与官方目录Git blob核符；安装及网页加载未实测",
+  "font_versions": [
+    "Version 4.001;git-66647c0bb"
+  ],
+  "family_names": [
+    "Inter"
+  ],
+  "unicode_cmap_entries": 2849,
+  "sample_glyphs": {
+    "中": false,
+    "文": false,
+    "字": false,
+    "体": false,
+    "测": false,
+    "试": false,
+    "A": true,
+    "B": true,
+    "C": true,
+    "a": true,
+    "b": true,
+    "c": true,
+    "0": true,
+    "1": true,
+    "2": true,
+    "3": true,
+    "，": false,
+    "。": false,
+    "!": true,
+    "?": true
+  },
+  "variable_axes": [
+    {
+      "tag": "opsz",
+      "min": 14.0,
+      "default": 14.0,
+      "max": 32.0
+    },
+    {
+      "tag": "wght",
+      "min": 100.0,
+      "default": 400.0,
+      "max": 900.0
+    }
+  ],
+  "parse_status": "fontTools解析通过，不等于安装或浏览器验收"
+}
