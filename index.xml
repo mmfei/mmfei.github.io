@@ -14,6 +14,13 @@
     <guid>https://www.mmfei.com/2026/11/ffmpeg-hls%E5%88%87%E7%89%87%E4%B8%8E%E7%AD%BE%E5%90%8D%E9%89%B4%E6%9D%83/</guid>
     <description><![CDATA[为短剧播放页签一个index.m3u8地址，并不意味着视频片段受保护。如果播放列表里的seg000.ts可以直接访问，跳过播放页仍然能拿到内]]></description>
 </item><item>
+    <title>FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐</title>
+    <link>https://www.mmfei.com/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/</link>
+    <pubDate>Thu, 19 Nov 2026 14:50:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/</guid>
+    <description><![CDATA[一条短视频有6秒画面、4秒配音和两段字幕，合成时应该提前结束，还是保留画面并把尾部补静音？输入文件里有多个音轨时，究竟选到了哪一条？这些问题]]></description>
+</item><item>
     <title>Python &#43; SQLite 实现视频任务队列：幂等、重试与租约恢复</title>
     <link>https://www.mmfei.com/2026/11/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/</link>
     <pubDate>Thu, 19 Nov 2026 14:45:00 &#43;0700</pubDate>
@@ -71,14 +78,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e8%ae%be%e7%bd%aegitlab-ce%e7%9a%84root%e8%b4%a6%e5%8f%b7%e5%af%86%e7%a0%81/featuredImage.png" referrerpolicy="no-referrer">
             </div>1 2 3 4 5 6 7 docker exec -it &lt;gitlab_container_name_or_id&gt; /bin/bash gitlab-rails console -e production user = User.where(id: 1).first # root 用户的 ID 通常是 1 user.password = &#39;新密码&#39; # 替换为你要设置的新密码 user.password_confirmation = &#39;新密码&#3]]></description>
-</item><item>
-    <title>ubuntu安装redis</title>
-    <link>https://www.mmfei.com/2024/08/ubuntu%E5%AE%89%E8%A3%85redis/</link>
-    <pubDate>Wed, 07 Aug 2024 14:52:34 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/2024/08/ubuntu%E5%AE%89%E8%A3%85redis/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/ubuntu%e5%ae%89%e8%a3%85redis/featuredImage.png" referrerpolicy="no-referrer">
-            </div>1 2 apt install redis-server systemctl status redis-server.service]]></description>
 </item></channel>
 </rss>

@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>libass - 标签 - 木木飞</title>
+        <link>https://www.mmfei.com/tags/libass/</link>
+        <description>libass - 标签 - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 19 Nov 2026 14:50:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/tags/libass/" rel="self" type="application/rss+xml" /><item>
+    <title>FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐</title>
+    <link>https://www.mmfei.com/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/</link>
+    <pubDate>Thu, 19 Nov 2026 14:50:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/</guid>
+    <description><![CDATA[一条短视频有6秒画面、4秒配音和两段字幕，合成时应该提前结束，还是保留画面并把尾部补静音？输入文件里有多个音轨时，究竟选到了哪一条？这些问题]]></description>
+</item></channel>
+</rss>

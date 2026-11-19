@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐 - 木木飞</title><meta name="Description" content="以短剧后期为场景，用FFmpeg与libass烧录中文字幕、显式选择视频和配音音轨，并通过ffprobe、完整解码与尾部静音检查验证合成结果。"><meta property="og:title" content="FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐" />
+<meta property="og:description" content="以短剧后期为场景，用FFmpeg与libass烧录中文字幕、显式选择视频和配音音轨，并通过ffprobe、完整解码与尾部静音检查验证合成结果。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.mmfei.com/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-11-19T14:50:00&#43;07:00" />
+<meta property="article:modified_time" content="2026-11-19T14:50:00&#43;07:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
+
+<meta name="twitter:title" content="FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐"/>
+<meta name="twitter:description" content="以短剧后期为场景，用FFmpeg与libass烧录中文字幕、显式选择视频和配音音轨，并通过ffprobe、完整解码与尾部静音检查验证合成结果。"/>
+<meta name="application-name" content="木木飞">
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.mmfei.com/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/" /><link rel="prev" href="https://www.mmfei.com/2026/11/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" /><link rel="next" href="https://www.mmfei.com/2026/11/ffmpeg-hls%E5%88%87%E7%89%87%E4%B8%8E%E7%AD%BE%E5%90%8D%E9%89%B4%E6%9D%83/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.mmfei.com\/2026\/11\/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8\/"
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "FFmpeg, 音视频, 字幕, libass","wordcount":  4220 ,
+        "url": "https:\/\/www.mmfei.com\/2026\/11\/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8\/","datePublished": "2026-11-19T14:50:00+07:00","dateModified": "2026-11-19T14:50:00+07:00","publisher": {
+            "@type": "Organization",
+            "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "mmfei"
+            },"description": "以短剧后期为场景，用FFmpeg与libass烧录中文字幕、显式选择视频和配音音轨，并通过ffprobe、完整解码与尾部静音检查验证合成结果。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friend/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a>
+                <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile">
+                <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friend/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<main class="main">
+                <div class="container"><div class="sk-page sk-article"><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div><article class="page single sk-single">
+            <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/">音视频开发</a></p><h1 class="single-title sk-single-title">FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐</h1><div class="post-meta sk-single-meta">
+                    <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
+                    </div>
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-19">2026-11-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4220 字&nbsp;
+                        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;<span id="/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/" class="leancloud_visitors" data-flag-title="FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐">
+                                <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                            </span>&nbsp;</div>
+                </div>
+            </header><div class="details toc sk-single-toc" id="toc-static"  kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#环境和验证范围">环境和验证范围</a></li>
+    <li><a href="#1-先定输出契约">1. 先定输出契约</a></li>
+    <li><a href="#2-完整可复现实验">2. 完整可复现实验</a></li>
+    <li><a href="#3-字幕为什么需要核对字体">3. 字幕为什么需要核对字体</a></li>
+    <li><a href="#4-不止看输出文件存在">4. 不止看输出文件存在</a></li>
+    <li><a href="#5-换成真实素材时的调整">5. 换成真实素材时的调整</a></li>
+    <li><a href="#6-常见故障和上线边界">6. 常见故障和上线边界</a></li>
+    <li><a href="#官方参考">官方参考</a></li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><p>一条短视频有6秒画面、4秒配音和两段字幕，合成时应该提前结束，还是保留画面并把尾部补静音？输入文件里有多个音轨时，究竟选到了哪一条？这些问题比“执行一条FFmpeg命令”更值得先定义。</p>
+<p>本文以短剧片段后期为例，技术主线是显式选流、中文字幕烧录、时长策略和结果核验。素材全部由本地测试源生成，<strong>不下载影视片段、不接TTS、不调用任何付费模型</strong>。</p>
+<h2 id="环境和验证范围">环境和验证范围</h2>
+<p>本次成功路径实际运行于 Linux、FFmpeg 7.1.5-0+deb13u1、libx264、AAC、libass，以及已经能够匹配到 <code>Noto Sans CJK SC</code> 的系统字体。Python 3.13.5 只用于结果断言，不参与视频编码。下面记录的 11 项通过结果，只对应这次环境和这次运行，不代表其他机器也已经通过。</p>
+<p>本例依赖 fontconfig，以及能够提供字体族 <code>Noto Sans CJK SC</code> 的中文字体。在 Debian/Ubuntu 上可以安装：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get install fontconfig fonts-noto-cjk
+</code></pre></td></tr></table>
+</div>
+</div><p>这是文档里的安装示例，用来说明依赖；请在自己的机器上按需执行，本文没有把它当成已经在每台机器装好的前提。其他系统请按本机字体包和 fontconfig 的能力检查，不要假定包名相同。</p>
+<p><code>fc-match</code> 在找不到完全匹配时，仍可能打印某个回退字体。因此，<strong>只要命令有返回值，并不等于目标字体已经存在</strong>。请用下面的方式核对该字体族，结果必须精确为 <code>Noto Sans CJK SC</code>，不能接受普通 Noto、Droid 或空结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ffmpeg -version
+ffprobe -version
+ffmpeg -hide_banner -h <span class="nv">filter</span><span class="o">=</span>subtitles
+ffmpeg -hide_banner -h <span class="nv">encoder</span><span class="o">=</span>libx264
+fc-match -f <span class="s1">&#39;%{family}\n&#39;</span> <span class="s1">&#39;Noto Sans CJK SC:lang=zh-cn&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在另一台使用 FFmpeg 6.1.1、Python 3.12.3 的环境中，系统没有 <code>Noto Sans CJK SC</code> 时，<code>fc-match 'Noto Sans CJK SC'</code> 仍然返回了普通 Noto Sans。随后编码日志出现 <code>Glyph 0x7B2C not found</code>，并回退到 Droid 字体，验证脚本因此失败。命令退出码为 0，或单帧看起来可读，都不能代替字体断言。本文<strong>没有</strong>在那台缺字环境上宣称按修订后的脚本已经跑通。</p>
+<p><code>subtitles</code> 依赖带 libass 的 FFmpeg 构建；不同安装包的编码器、滤镜和字体可能不同。本例跑通不代表 Windows 路径转义、移动浏览器播放或云端转码也已经验证。<code>run-demo.sh</code> 会在生成测试素材之前检查 <code>ffmpeg</code>、<code>ffprobe</code> 和 <code>fc-match</code>，并确认字体族精确匹配；不满足时会向标准错误输出原因，并以非零状态退出。</p>
+<h2 id="1-先定输出契约">1. 先定输出契约</h2>
+<p>本例明确选择：保留6秒画面，使用第二个输入的配音，短缺的2秒补静音，字幕直接烧进画面。输出为H.264视频、AAC音频、yuv420p像素格式的MP4。</p>
+<ul>
+<li><code>-map 0:v:0</code>选第一个输入的第一路视频。</li>
+<li><code>-map 1:a:0</code>选第二个输入的第一路音频，而不是依赖自动选流。</li>
+<li><code>apad</code>补静音，<code>atrim=duration=6</code>将音频控制在6秒，<code>asetpts=PTS-STARTPTS</code>重置该音轨时间戳。</li>
+<li><code>-t 6</code>限制输出时长。这里的6来自我们已知的测试素材，不是对任意业务素材都写死6秒。</li>
+</ul>
+<p><code>-shortest</code>不是自动对齐：单独使用时可能让6秒画面随4秒配音提前结束。若选择“以最短流为准”，就应明确告诉业务方这是有意裁掉尾部，而不是时长对齐成功。</p>
+<h2 id="2-完整可复现实验">2. 完整可复现实验</h2>
+<p>将下列内容保存为 <code>run-demo.sh</code>。脚本每次新建临时目录，打印该目录路径；没有覆盖开关，也不删除已有素材。文件名固定且简单，避免把路径转义问题混进第一次实验。若前置检查失败，它不会创建这段测试视频和测试音。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">#!/usr/bin/env bash
+set -euo pipefail
+
+require_cmd() {
+  if ! command -v &#34;$1&#34; &gt;/dev/null 2&gt;&amp;1; then
+    printf &#39;错误：找不到命令 %s。请先安装后再运行本脚本。\n&#39; &#34;$1&#34; &gt;&amp;2
+    exit 1
+  fi
+}
+
+require_cmd ffmpeg
+require_cmd ffprobe
+require_cmd fc-match
+
+target_family=&#39;Noto Sans CJK SC&#39;
+family_raw=&#34;$(fc-match -f &#39;%{family}\n&#39; &#34;${target_family}:lang=zh-cn&#34; || true)&#34;
+family=&#34;$(printf &#39;%s\n&#39; &#34;$family_raw&#34; | head -n 1 | cut -d, -f1)&#34;
+family=&#34;${family#&#34;${family%%[![:space:]]*}&#34;}&#34;
+family=&#34;${family%&#34;${family##*[![:space:]]}&#34;}&#34;
+
+if [[ -z &#34;$family&#34; || &#34;$family&#34; != &#34;$target_family&#34; ]]; then
+  printf &#39;错误：未匹配到目标字体 Noto Sans CJK SC。\n&#39; &gt;&amp;2
+  printf &#39;错误：fc-match 返回：%s\n&#39; &#34;${family_raw:-（空）}&#34; &gt;&amp;2
+  printf &#39;错误：fc-match 有返回值不等于目标字体已经存在，不能接受普通 Noto、Droid 或空结果。\n&#39; &gt;&amp;2
+  printf &#39;错误：Debian/Ubuntu 可先安装：sudo apt-get update &amp;&amp; sudo apt-get install fontconfig fonts-noto-cjk\n&#39; &gt;&amp;2
+  printf &#39;错误：其他系统请按本机字体包和 fontconfig 的能力检查后再运行。\n&#39; &gt;&amp;2
+  exit 1
+fi
+
+work=$(mktemp -d &#34;${TMPDIR:-/tmp}/ffmpeg-subtitle-demo.XXXXXX&#34;)
+printf &#39;%s\n&#39; &#34;$work&#34;
+cd &#34;$work&#34;
+printf &#39;%s\n&#39; &#34;$family&#34; &gt; font-family.txt
+{
+  printf &#39;confirmed_family=%s\n&#39; &#34;$family&#34;
+  printf &#39;fc-match_query=Noto Sans CJK SC:lang=zh-cn\n&#39;
+  fc-match &#34;${target_family}:lang=zh-cn&#34; || true
+  ffmpeg -version
+  ffprobe -version
+} &gt; versions.txt
+ffmpeg -hide_banner -nostdin -f lavfi -i &#34;testsrc2=size=320x568:rate=25:duration=6&#34; \
+  -an -c:v libx264 -preset veryfast -crf 23 -pix_fmt yuv420p video.mp4 2&gt;source-video.log
+ffmpeg -hide_banner -nostdin -f lavfi -i &#34;sine=frequency=440:sample_rate=48000:duration=4&#34; \
+  -c:a pcm_s16le voice.wav 2&gt;source-audio.log
+cat &gt; captions.srt &lt;&lt;&#39;SRT&#39;
+1
+00:00:00,500 --&gt; 00:00:02,500
+第一幕：测试字幕
+
+2
+00:00:03,000 --&gt; 00:00:05,500
+仅使用合成素材
+SRT
+ffmpeg -hide_banner -nostdin -i video.mp4 -i voice.wav \
+  -map 0:v:0 -map 1:a:0 \
+  -vf &#34;subtitles=filename=captions.srt:force_style=&#39;FontName=Noto Sans CJK SC,FontSize=20,MarginV=24,Outline=1&#39;&#34; \
+  -af &#34;apad,atrim=duration=6,asetpts=PTS-STARTPTS&#34; -t 6 \
+  -c:v libx264 -preset veryfast -crf 23 -pix_fmt yuv420p \
+  -c:a aac -b:a 128k -ar 48000 -movflags +faststart output.mp4 2&gt;encode.log
+ffprobe -v error -show_entries stream=index,codec_type,codec_name,pix_fmt,sample_rate,duration:format=duration \
+  -of json output.mp4 &gt; probe.json
+ffmpeg -hide_banner -nostdin -v error -i output.mp4 -f null - 2&gt;decode-errors.log
+ffmpeg -hide_banner -nostdin -v error -ss 1 -i output.mp4 -frames:v 1 subtitle-frame.png
+</code></pre></td></tr></table>
+</div>
+</div><p>执行并保存它打印的工作目录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">bash run-demo.sh &gt; sandbox-path.txt
+<span class="nv">work</span><span class="o">=</span><span class="k">$(</span>&lt;sandbox-path.txt<span class="k">)</span>
+<span class="nb">printf</span> <span class="s1">&#39;实验目录：%s\n&#39;</span> <span class="s2">&#34;</span><span class="nv">$work</span><span class="s2">&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>工作目录里会生成6秒竖屏测试画面 <code>video.mp4</code>、4秒440Hz测试音 <code>voice.wav</code>、UTF-8字幕 <code>captions.srt</code>、合成结果 <code>output.mp4</code>、探测结果与编码日志，以及记录已确认字体族的 <code>font-family.txt</code>。</p>
+<p>440Hz测试音<strong>不是人的配音</strong>，它只是可控的音频输入。本文验证的是合成流程，不是配音质量、声纹或口型同步。</p>
+<h2 id="3-字幕为什么需要核对字体">3. 字幕为什么需要核对字体</h2>
+<p><code>subtitles</code>通过libass把字幕绘制到视频帧，<code>force_style</code>覆盖字体、字号、描边和底部留白。本例选<code>Noto Sans CJK SC</code>，用的是字体族名称，不是随便编的文件路径。</p>
+<p>不要仅凭命令退出码判断中文字幕正常：字体回退可能成功执行，却出现缺字。应检查编码日志中的字体选择记录和缺字提示，再抽取字幕出现期间的帧核读。即便画面上暂时能读到几个字，只要日志里出现缺字或实际选中的不是目标字体，就不能把这次烧录写成中文字体已经合格。验证脚本会检查日志里是否出现 <code>NotoSansCJK</code>，以及是否包含缺字信息；不能因为回退字体“看起来可读”就删掉这些断言。</p>
+<p>本次在 FFmpeg 7.1.5 环境的 1 秒处抽帧，已确认“第一幕：测试字幕”可读；这只是单帧核验，<strong>没有声称逐帧看过成片或用播放器完整验收</strong>。前面提到的 FFmpeg 6.1.1 环境里，同一句字幕也可能经由 Droid 回退字体画出来，但验证脚本会失败，那次结果不能算通过。</p>
+<p>烧录后字幕属于图像的一部分，本例输出没有独立字幕轨，观众不能切换关闭。需要多语言切换时，应评估外置WebVTT或播放器字幕轨，而不是把所有语言永久烧进同一画面。</p>
+<p>路径包含冒号、反斜杠、引号时，会同时涉及Shell和FFmpeg滤镜解析。生产代码应由服务端生成受控工作目录和安全文件名，限制输入，不能将用户路径直接拼到Shell命令中；仅把Shell调用改成参数数组，也不自动解决滤镜表达式内部的转义。</p>
+<h2 id="4-不止看输出文件存在">4. 不止看输出文件存在</h2>
+<p>把下面保存为同目录下的 <code>verify.py</code>。它读取实验目录中的ffprobe JSON，检查音视频编码、像素格式、时长、解码错误、字体选择以及前段声音和尾部静音。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">probe</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">((</span><span class="n">root</span> <span class="o">/</span> <span class="s2">&#34;probe.json&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
+<span class="n">video</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">probe</span><span class="p">[</span><span class="s2">&#34;streams&#34;</span><span class="p">]</span> <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="s2">&#34;codec_type&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;video&#34;</span><span class="p">]</span>
+<span class="n">audio</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">probe</span><span class="p">[</span><span class="s2">&#34;streams&#34;</span><span class="p">]</span> <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="s2">&#34;codec_type&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;audio&#34;</span><span class="p">]</span>
+<span class="n">checks</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">ok</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">ok</span><span class="p">,</span> <span class="n">name</span>
+    <span class="n">checks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;one H264 video&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">video</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">video</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&#34;codec_name&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;h264&#34;</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;yuv420p video&#34;</span><span class="p">,</span> <span class="n">video</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&#34;pix_fmt&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;yuv420p&#34;</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;one AAC audio&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">audio</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&#34;codec_name&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;aac&#34;</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;48kHz audio&#34;</span><span class="p">,</span> <span class="n">audio</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&#34;sample_rate&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;48000&#34;</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;six-second container within 0.1s&#34;</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">probe</span><span class="p">[</span><span class="s2">&#34;format&#34;</span><span class="p">][</span><span class="s2">&#34;duration&#34;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">6</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;streams within 0.1s&#34;</span><span class="p">,</span> <span class="nb">all</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="s2">&#34;duration&#34;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">6</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="n">video</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">audio</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;no decode errors&#34;</span><span class="p">,</span> <span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="s2">&#34;decode-errors.log&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">log</span> <span class="o">=</span> <span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="s2">&#34;encode.log&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;libass selected CJK font&#34;</span><span class="p">,</span> <span class="s2">&#34;NotoSansCJK&#34;</span> <span class="ow">in</span> <span class="n">log</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;no missing glyph messages&#34;</span><span class="p">,</span> <span class="s2">&#34;Glyph&#34;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">log</span> <span class="ow">and</span> <span class="s2">&#34;glyph&#34;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">log</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">rms</span><span class="p">(</span><span class="n">start</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s2">&#34;ffmpeg&#34;</span><span class="p">,</span> <span class="s2">&#34;-nostdin&#34;</span><span class="p">,</span> <span class="s2">&#34;-v&#34;</span><span class="p">,</span> <span class="s2">&#34;error&#34;</span><span class="p">,</span> <span class="s2">&#34;-ss&#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">start</span><span class="p">),</span>
+        <span class="s2">&#34;-i&#34;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="s2">&#34;output.mp4&#34;</span><span class="p">),</span> <span class="s2">&#34;-t&#34;</span><span class="p">,</span> <span class="s2">&#34;0.8&#34;</span><span class="p">,</span> <span class="s2">&#34;-vn&#34;</span><span class="p">,</span> <span class="s2">&#34;-ac&#34;</span><span class="p">,</span> <span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;-ar&#34;</span><span class="p">,</span> <span class="s2">&#34;48000&#34;</span><span class="p">,</span>
+        <span class="s2">&#34;-f&#34;</span><span class="p">,</span> <span class="s2">&#34;f32le&#34;</span><span class="p">,</span> <span class="s2">&#34;pipe:1&#34;</span><span class="p">])</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&#34;&lt;&#34;</span> <span class="o">+</span> <span class="s2">&#34;f&#34;</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">//</span> <span class="mi">4</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">values</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">values</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+<span class="n">head</span> <span class="o">=</span> <span class="n">rms</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">tail</span> <span class="o">=</span> <span class="n">rms</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;synthetic audio exists before end&#34;</span><span class="p">,</span> <span class="n">head</span> <span class="o">&gt;</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;padded tail is near silence&#34;</span><span class="p">,</span> <span class="n">tail</span> <span class="o">&lt;</span> <span class="mf">0.0001</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&#34;sandbox&#34;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">root</span><span class="p">),</span> <span class="s2">&#34;checks&#34;</span><span class="p">:</span> <span class="n">checks</span><span class="p">,</span> <span class="s2">&#34;count&#34;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">checks</span><span class="p">),</span>
+    <span class="s2">&#34;head_rms&#34;</span><span class="p">:</span> <span class="n">head</span><span class="p">,</span> <span class="s2">&#34;tail_rms&#34;</span><span class="p">:</span> <span class="n">tail</span><span class="p">,</span>
+    <span class="s2">&#34;scope&#34;</span><span class="p">:</span> <span class="s2">&#34;synthetic video/audio; decode and stream assertions; still frame separate; no player or CDN test&#34;</span><span class="p">},</span>
+    <span class="n">ensure_ascii</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>运行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">python3 verify.py <span class="s2">&#34;</span><span class="nv">$work</span><span class="s2">&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>本次在 FFmpeg 7.1.5、Python 3.13.5、且已匹配到 <code>Noto Sans CJK SC</code> 的环境中重跑，11 项断言全部通过：输出只有一路 H.264 视频和一路 AAC 音频，采样率 48kHz，yuv420p；容器和两路流的时长都在 6 秒±0.1 秒内；完整解码无错误；日志选择到了 CJK 字体且没有缺字信息；前段有测试音，尾部抽样接近静音。这是 6 秒画面、4 秒测试音再补 2 秒静音后的结果，不要和其他更短音轨的实验混用。</p>
+<p>另一台 FFmpeg 6.1.1、Python 3.12.3、缺少目标字体的环境没有通过这些字体断言，本文也不声称那台机器在修订后已经通过。</p>
+<p>这些检查证明本例的结构和指定片段音量符合约定，<strong>不证明主观响度合适、全片不存在黑帧或音画绝对同步</strong>。真实配音还要按交付规范测响度、峰值、声道和同步点。<code>ffprobe</code>通过也不能替代目标设备播放测试。</p>
+<h2 id="5-换成真实素材时的调整">5. 换成真实素材时的调整</h2>
+<p>首先用<code>ffprobe</code>查看流、时长、帧率和旋转信息，再决定主时间线。不能假设所有输入都从0开始、都是恒定帧率，也不能忽略已存在的背景音。</p>
+<p>本例会完全替换原音轨；若要保留环境音并混入旁白，应明确取两路音频，经各自重采样、音量处理后混合，不是再加一个<code>-map</code>就完成混音。多路音频映射通常得到多个独立音轨，不等于混在一起。</p>
+<p>若配音更长，可选择延长画面、剪配音或调整节奏。<code>apad</code>只补音频，不会延长视频；不能把参数名字当成业务决策。</p>
+<p>字幕断句、每屏字数、遮挡位置以及多种屏幕安全区也需要另外验收。本例固定320×568，是为了低成本复现，不是推荐发布分辨率，更没有测出生产转码性能。</p>
+<h2 id="6-常见故障和上线边界">6. 常见故障和上线边界</h2>
+<ul>
+<li><code>No such filter: subtitles</code>：当前构建不含所需滤镜，先核对构建能力，不要通过删除字幕步骤伪装成功。</li>
+<li>中文方框或缺字：先看 <code>fc-match</code> 返回的字体族是不是精确的 <code>Noto Sans CJK SC</code>，再核对 libass 日志与 UTF-8 编码；仅看到某个 Noto 或 Droid 字体文件，或命令有输出，还不够。</li>
+<li>片段少了两秒：核对<code>-shortest</code>和主时间线，确认是不是按最短流裁剪。</li>
+<li>音轨错误或无声：核对输入顺序与<code>-map</code>，看ffprobe实际输出流，而不是只看扩展名。</li>
+<li><code>-c:v copy</code>与字幕烧录冲突：修改像素必需解码后重编码，不能要求同时直接拷贝原视频码流。</li>
+<li>上传后不能快起播：本例启用MP4 <code>+faststart</code>，但服务器Range、网络和播放器兼容仍需单独验证，不能归因于一个开关。</li>
+</ul>
+<p>生产转码任务应设置执行超时、资源限制、隔离目录和输出大小限制，使用更新的解码工具处理不可信素材。素材只在允许的目录读写；本例不直接读取网络URL。</p>
+<p>正式替换媒体前，先生成新版本并核验，再按既有流程切换引用。保留原文件直到回滚窗口结束，<strong>不要为运行本文实验删除原始素材</strong>。</p>
+<h2 id="官方参考">官方参考</h2>
+<ul>
+<li><a href="https://ffmpeg.org/ffmpeg-filters.html#subtitles-1" target="_blank" rel="noopener noreffer">FFmpeg subtitles滤镜与libass选项</a></li>
+<li><a href="https://ffmpeg.org/ffmpeg.html#Stream-selection" target="_blank" rel="noopener noreffer">FFmpeg流选择与map</a></li>
+<li><a href="https://ffmpeg.org/ffmpeg-filters.html" target="_blank" rel="noopener noreffer">FFmpeg音频滤镜</a></li>
+</ul>
+<p>在线手册可能随项目版本更新；本例具体可用选项还对照了实际安装版本的<code>-h filter=subtitles</code>帮助。本文没有给出转码速度、云成本或播放器兼容率的估计。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-11-19</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.mmfei.com/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/" data-title="FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐" data-via="mmfei" data-hashtags="FFmpeg,音视频,字幕,libass"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.mmfei.com/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/" data-hashtag="FFmpeg"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.mmfei.com/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/" data-title="FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.mmfei.com/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/" data-title="FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.mmfei.com/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/" data-title="FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/ffmpeg/">FFmpeg</a>,&nbsp;<a href="/tags/%E9%9F%B3%E8%A7%86%E9%A2%91/">音视频</a>,&nbsp;<a href="/tags/%E5%AD%97%E5%B9%95/">字幕</a>,&nbsp;<a href="/tags/libass/">libass</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <nav class="sk-nav" aria-label="文章导航"><a href="/2026/11/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" class="sk-nav-btn sk-nav-prev" rel="prev" title="Python &#43; SQLite 实现视频任务队列：幂等、重试与租约恢复"><i class="fas fa-angle-left fa-fw"></i>Python &#43; SQLite 实现视频任务队列：幂等、重试与租约恢复</a>
+            <a href="/2026/11/ffmpeg-hls%E5%88%87%E7%89%87%E4%B8%8E%E7%AD%BE%E5%90%8D%E9%89%B4%E6%9D%83/" class="sk-nav-btn sk-nav-next" rel="next" title="FFmpeg HLS 切片与签名鉴权：别只保护 m3u8">FFmpeg HLS 切片与签名鉴权：别只保护 m3u8<i class="fas fa-angle-right fa-fw"></i></a></nav>
+</div>
+
+<section class="sk-related">
+                    <h2 class="sk-related-title">相关文章</h2>
+                    <div class="sk-related-grid"><a class="sk-related-card" href="/2026/11/ffmpeg-hls%E5%88%87%E7%89%87%E4%B8%8E%E7%AD%BE%E5%90%8D%E9%89%B4%E6%9D%83/">
+                                    <span class="sk-related-card-title">FFmpeg HLS 切片与签名鉴权：别只保护 m3u8</span>
+                                    <span class="sk-related-card-meta">2026-11-19FFmpeg · HLS · Python · 鉴权</span>
+                                </a></div>
+                </section><div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article>
+    </div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.mmfei.com/" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/css/skin-stripe.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"valine":{"appId":"agrUIy35wmii07cPfX0p0UWx-MdYXbMMI","appKey":"xNDv6FEmi9xqlsf6out3W5c6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://agruiy35.api.lncldglobal.com","visitor":true}}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6" async></script><link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+<div id="pagefind-overlay" class="pf-overlay" aria-hidden="true">
+    <div class="pf-modal" role="dialog" aria-modal="true" aria-label="搜索">
+        <button type="button" class="pf-close" id="pagefind-close" aria-label="清空">&times;</button>
+        <div id="pagefind-ui"></div>
+    </div>
+</div>
+
+<style>
+.pf-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8vh 16px 16px;
+}
+.pf-overlay.open {
+    display: flex;
+}
+.pf-modal {
+    position: relative;
+    width: 560px;
+    max-width: 100%;
+    background: var(--card-background, #fff);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.28);
+    padding: 18px 18px 10px;
+}
+.pf-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--secondary-font-color, #666);
+    cursor: pointer;
+    padding: 6px;
+}
+.pf-close:hover { color: var(--primary-font-color, #111); }
+#pagefind-ui { min-height: 40px; }
+@media (max-width: 680px) {
+    .pf-overlay { padding: 12px 10px; align-items: flex-start; }
+    .pf-modal { padding: 14px 12px 8px; border-radius: 10px; }
+}
+</style>
+
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+(function () {
+    var overlay = document.getElementById('pagefind-overlay');
+    var modal = overlay.querySelector('.pf-modal');
+    var closeBtn = document.getElementById('pagefind-close');
+    var uiMount = document.getElementById('pagefind-ui');
+
+    function open() {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        var input = uiMount.querySelector('input');
+        if (input) { setTimeout(function () { input.focus(); }, 60); }
+    }
+    function close() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    function bindTrigger(id) {
+        var el = document.getElementById(id);
+        if (el) { el.addEventListener('click', function (e) { e.preventDefault(); open(); }); }
+    }
+    bindTrigger('pagefind-trigger-desktop');
+    bindTrigger('pagefind-trigger-mobile');
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) { close(); }
+    });
+
+    if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({
+            element: uiMount,
+            showSubResults: true,
+            showImages: false,
+            highlightQuery: true,
+            translations: {
+                placeholder: '搜索文章标题、标签或内容…',
+                clear_search: '清除',
+                load_more: '加载更多结果',
+                search_label: '搜索',
+                filters_label: '筛选',
+                no_results: '没有找到结果'
+            }
+        });
+    }
+})();
+</script>
+</body>
+</html>
