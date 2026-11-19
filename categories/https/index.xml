@@ -1,10 +1,17 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>https - 分类 - 木木飞</title>
+        <title>HTTPS - 分类 - 木木飞</title>
         <link>https://www.mmfei.com/categories/https/</link>
-        <description>https - 分类 - 木木飞</description>
+        <description>HTTPS - 分类 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sat, 05 Jun 2021 23:47:17 &#43;0800</lastBuildDate><atom:link href="https://www.mmfei.com/categories/https/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 19 Nov 2026 09:50:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/categories/https/" rel="self" type="application/rss+xml" /><item>
+    <title>GitHub Pages 自定义域名：www 与裸域、HTTPS 证书与强制跳转核对清单</title>
+    <link>https://www.mmfei.com/2026/11/github-pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8Dhttps%E6%A0%B8%E5%AF%B9%E6%B8%85%E5%8D%95/</link>
+    <pubDate>Thu, 19 Nov 2026 09:50:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/github-pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8Dhttps%E6%A0%B8%E5%AF%B9%E6%B8%85%E5%8D%95/</guid>
+    <description><![CDATA[站点能在浏览器里打开，不等于自定义域名、证书和跳转都已经按预期工作。裸域与 www 指向不一致、证书还在签发、发布根目录的 CNAME 被生成器覆盖，或页面里的]]></description>
+</item><item>
     <title>怎样让nginx的配置支持https</title>
     <link>https://www.mmfei.com/2021/06/%E6%80%8E%E6%A0%B7%E8%AE%A9nginx%E7%9A%84%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81https/</link>
     <pubDate>Sat, 05 Jun 2021 23:47:17 &#43;0800</pubDate>

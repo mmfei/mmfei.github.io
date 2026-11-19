@@ -4,7 +4,14 @@
         <link>https://www.mmfei.com/categories/github-pages/</link>
         <description>GitHub Pages - 分类 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 18 Nov 2026 08:00:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/categories/github-pages/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 19 Nov 2026 09:50:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/categories/github-pages/" rel="self" type="application/rss+xml" /><item>
+    <title>GitHub Pages 自定义域名：www 与裸域、HTTPS 证书与强制跳转核对清单</title>
+    <link>https://www.mmfei.com/2026/11/github-pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8Dhttps%E6%A0%B8%E5%AF%B9%E6%B8%85%E5%8D%95/</link>
+    <pubDate>Thu, 19 Nov 2026 09:50:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/github-pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8Dhttps%E6%A0%B8%E5%AF%B9%E6%B8%85%E5%8D%95/</guid>
+    <description><![CDATA[站点能在浏览器里打开，不等于自定义域名、证书和跳转都已经按预期工作。裸域与 www 指向不一致、证书还在签发、发布根目录的 CNAME 被生成器覆盖，或页面里的]]></description>
+</item><item>
     <title>GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单</title>
     <link>https://www.mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/</link>
     <pubDate>Wed, 18 Nov 2026 08:00:00 &#43;0700</pubDate>
