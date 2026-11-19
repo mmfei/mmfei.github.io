@@ -123,7 +123,7 @@
 </nav></div>
                 </div><div class="content" id="content"><p>静态托管上的博客通常没有可查询的服务端，把全文搜索交给第三方接口又会引入额外依赖。Pagefind 的做法是：在静态站点生成器完成构建之后，扫描输出目录里的 HTML，生成一份可以一起发布的静态搜索包；浏览器只请求这份包，不必再访问搜索 API。本教程说明如何在 Hugo 站点上安装、在本地或 CI 中生成索引、把搜索界面挂到公共模板，以及如何核验、排错和回滚。</p>
 <blockquote>
-<p>适用范围：能修改 Hugo 公共模板，并且可以在 <code>hugo</code> 生成 <code>public/</code> 之后追加一条索引命令的站点。资料核读日期为 2026 年 11 月 19 日（Asia/Bangkok）。索引命令按 <code>pagefind@1.6.0</code> 核对；同日 npm 上该包的 <code>latest</code> 标签也是 <code>1.6.0</code>。官方文档从 1.5.0 起把 Component UI（<code>pagefind-component-ui.js</code>）作为推荐界面，并写明它取代 Default UI（<code>pagefind-ui.js</code> / <code>PagefindUI</code>）；1.6.0 仍会生成两套资源，Default UI 的说明页也还在。下文以核读日官方文档为准：新接入优先用 Component UI，同时给出仍被文档收录的 Default UI 写法，便于对照已有站点。若你核读时官方最新版或推荐界面又有变化，以当时文档为准，不要把本文冻结成唯一做法。文中命令输出都是官方描述或预期现象。<strong>未在本文环境实测完整接入</strong>，也没有用隔离环境跑通一次从构建到发布的搜索闭环。</p>
+<p>适用范围：能修改 Hugo 公共模板，并且可以在 <code>hugo</code> 生成 <code>public/</code> 之后追加一条索引命令的站点。资料核读日期为 2026 年 11 月 19 日（Asia/Bangkok）。索引命令按 <!--email_off--><code>pagefind@1.6.0</code><!--/email_off--> 核对；同日 npm 上该包的 <code>latest</code> 标签也是 <code>1.6.0</code>。官方文档从 1.5.0 起把 Component UI（<code>pagefind-component-ui.js</code>）作为推荐界面，并写明它取代 Default UI（<code>pagefind-ui.js</code> / <code>PagefindUI</code>）；1.6.0 仍会生成两套资源，Default UI 的说明页也还在。下文以核读日官方文档为准：新接入优先用 Component UI，同时给出仍被文档收录的 Default UI 写法，便于对照已有站点。若你核读时官方最新版或推荐界面又有变化，以当时文档为准，不要把本文冻结成唯一做法。文中命令输出都是官方描述或预期现象。<strong>未在本文环境实测完整接入</strong>，也没有用隔离环境跑通一次从构建到发布的搜索闭环。</p>
 </blockquote>
 <h2 id="环境与边界">环境与边界</h2>
 <p>以会把站点输出到 <code>public/</code> 的 Hugo 为例，版本可对照 <code>hugo version</code>。当前许多静态博客仍使用 Hugo extended（例如 0.83.1 extended）；只要构建产物是静态 HTML，Pagefind 并不依赖某个 Hugo 小版本。需要已安装 Node.js 以便使用官方 npm 包装命令，或者改用官方文档中的 Python 包装、预编译二进制或源码安装。还需要能修改主题或站点的 layouts，把搜索界面写进全站模板，而不是把脚本粘进可能被转义的 Markdown 正文。</p>
@@ -133,6 +133,7 @@
 <p>这对 GitHub Pages 这类只发布静态文件的托管是匹配的：索引和页面一起发布，构建完成后不必再申请搜索服务、也不必在运行时把读者的查询发到第三方。相对地，如果只在主题里放一个每次打开页面都下载整站词库的客户端方案，站点变大后体积和相关度都会更难控制；如果把搜索交给外部 API，则多了一层账号、配额和隐私暴露面。选择 Pagefind，意味着你接受“每次发布都要重新生成索引”，并用发布产物是否包含 <code>pagefind/</code> 来判断搜索能不能用。</p>
 <h2 id="2-安装并在本地生成索引">2. 安装并在本地生成索引</h2>
 <p>官方推荐用包装包来安装。通过 <code>npx</code> 运行时，会下载对应平台的二进制，而且<strong>始终使用 <code>pagefind_extended</code></strong>。官方写明：扩展版体积更大，但包含中文、日文、泰文这类不能靠空白分词的语言支持。中文站点不要改用精简的非 extended 二进制。锁定版本时，把官方示例里的标签换成你要核验的版本：</p>
+<!--email_off-->
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -149,7 +150,8 @@ hugo --minify
 npx --yes pagefind@1.6.0 --site public
 </code></pre></td></tr></table>
 </div>
-</div><p><code>--site</code> 必须指向<strong>已经构建完成的 HTML 目录</strong>。官方文档也以 Hugo 的 <code>public</code> 为例。不要对源码目录 <code>content/</code> 或未构建的开发服务器内存页做索引。官方安装页的版本示例写作 <code>npx pagefind@v1.1.1</code>；2026-11-19 在 npm 上核到的发布号是 <code>1.6.0</code>，没有 <code>v1.6.0</code> 这个标签。本文因此使用 <code>pagefind@1.6.0</code>。若你执行时提示找不到包，先到 npm 核对该版本的实际标签，不要改用来路不明的镜像包。</p>
+</div><!--/email_off-->
+<p><code>--site</code> 必须指向<strong>已经构建完成的 HTML 目录</strong>。官方文档也以 Hugo 的 <code>public</code> 为例。不要对源码目录 <code>content/</code> 或未构建的开发服务器内存页做索引。官方安装页的版本示例写作 <!--email_off--><code>npx pagefind@v1.1.1</code><!--/email_off-->；2026-11-19 在 npm 上核到的发布号是 <code>1.6.0</code>，没有 <code>v1.6.0</code> 这个标签。本文因此使用 <!--email_off--><code>pagefind@1.6.0</code><!--/email_off-->。若你执行时提示找不到包，先到 npm 核对该版本的实际标签，不要改用来路不明的镜像包。</p>
 <p>命令成功后，官方描述会看到类似下面的摘要（数字随站点变化，这是官方示例，不是本文实测）：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -182,6 +184,7 @@ Finished in 2.357 seconds
 </div>
 </div><p><code>pagefind-entry.json</code> 里有版本和语言列表，可用于确认这次索引用的是不是 1.6.0、检测到了哪些 <code>lang</code>。不要把这份文件里的哈希或页面计数抄进文档当成固定值。</p>
 <p>只跑 <code>hugo server</code> / <code>hugo serve</code> 通常看不到可用搜索。官方明确写过：开发服务器不会先写出完整的构建产物，Pagefind 必须索引构建输出。本地预览应先构建，再让 Pagefind 索引；需要立刻查看时，可加上官方的 <code>--serve</code>（不要在 CI 或生产发布里加这个参数）：</p>
+<!--email_off-->
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -192,9 +195,11 @@ Finished in 2.357 seconds
 npx --yes pagefind@1.6.0 --site public --serve
 </code></pre></td></tr></table>
 </div>
-</div><p>官方说预览服务“likely on :1414”，实际端口以命令输出为准。也可用任意静态服务器指向已经包含 <code>pagefind/</code> 的 <code>public/</code>，效果相同。<code>--serve</code> 时官方还会提供 playground；默认情况下，不加 <code>--write-playground</code> 不会把 playground 写进将要上线的产物，这是预期行为。</p>
+</div><!--/email_off-->
+<p>官方说预览服务“likely on :1414”，实际端口以命令输出为准。也可用任意静态服务器指向已经包含 <code>pagefind/</code> 的 <code>public/</code>，效果相同。<code>--serve</code> 时官方还会提供 playground；默认情况下，不加 <code>--write-playground</code> 不会把 playground 写进将要上线的产物，这是预期行为。</p>
 <h2 id="3-在-ci-中生成索引并确保索引进入发布产物">3. 在 CI 中生成索引，并确保索引进入发布产物</h2>
 <p>上线时必须在<strong>每次构建之后、发布之前</strong>再跑一遍同样的索引命令，而且发布步骤必须把 <code>public/pagefind/</code> 一并带上。漏掉任何一段，页面上就会出现搜索框却加载不到索引。下面用 GitHub Actions 举例，只使用 GitHub 官方的 <code>actions/checkout</code> 与 <code>actions/setup-node</code>，并在“已有 Hugo 构建步骤”之后追加 Pagefind。工作流里的运行器、Hugo 安装方式和发布动作请按你现有流水线填写；<strong>不要把这段示例理解成完整可复制的发布工作流，也不要在工作流里写入任何密钥或密钥名称</strong>。主版本号以编写当日官方说明为准。</p>
+<!--email_off-->
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -237,7 +242,8 @@ npx --yes pagefind@1.6.0 --site public --serve
 </span><span class="w">      </span><span class="c"># 下一跳必须发布完整的 public/，其中包含 public/pagefind/</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p>核对发布流水线时，重点看三件事：索引步骤是否发生在 <code>hugo</code> 之后；发布的是不是构建目录的完整内容，而不是只拷了 <code>public</code> 里的部分子目录；是否有忽略规则把 <code>pagefind/</code> 排除在制品之外。如果有人把一次本地生成的 <code>pagefind/</code> 复制进 <code>static/</code> 以求“开发服务器也能搜”，索引会在下次发文后过期，也不要把它当成正式做法。</p>
+</div><!--/email_off-->
+<p>核对发布流水线时，重点看三件事：索引步骤是否发生在 <code>hugo</code> 之后；发布的是不是构建目录的完整内容，而不是只拷了 <code>public</code> 里的部分子目录；是否有忽略规则把 <code>pagefind/</code> 排除在制品之外。如果有人把一次本地生成的 <code>pagefind/</code> 复制进 <code>static/</code> 以求“开发服务器也能搜”，索引会在下次发文后过期，也不要把它当成正式做法。</p>
 <h2 id="4-把搜索界面挂到-hugo-模板">4. 把搜索界面挂到 Hugo 模板</h2>
 <p>官方入门把界面写进页面，是为了构建时 HTML 里已经有挂载点。1.5.0 之后，官方推荐的 Component UI 写法如下，样式和脚本会在索引时写进 <code>/pagefind/</code>：</p>
 <div class="highlight"><div class="chroma">
@@ -372,7 +378,7 @@ curl -sI https://www.example.com/pagefind/pagefind-ui.js
 <li><code>pagefind-entry.json</code> 中的 <code>version</code> 为 <code>1.6.0</code>，并列出了 <code>en</code> 与 <code>zh-cn</code> 两种语言索引。具体页面计数会随站点更新变化，这里不把它写成固定规格。</li>
 <li>抽查文章页 HTML 带有 <code>lang=&quot;zh-CN&quot;</code>，与官方“按 html 语言属性分索引”的说明可以对照，但本文没有在浏览器里逐条验证检索质量，也没有核对分词是否符合预期。</li>
 </ul>
-<p>未在隔离环境执行 <code>hugo</code> 或 <code>npx pagefind@1.6.0</code>，也没有把本次核验当成接入验收通过。</p>
+<p>未在隔离环境执行 <code>hugo</code> 或 <!--email_off--><code>npx pagefind@1.6.0</code><!--/email_off-->，也没有把本次核验当成接入验收通过。</p>
 <h2 id="官方参考">官方参考</h2>
 <ul>
 <li><a href="https://pagefind.app/docs/" target="_blank" rel="noopener noreffer">Getting Started with Pagefind</a></li>
