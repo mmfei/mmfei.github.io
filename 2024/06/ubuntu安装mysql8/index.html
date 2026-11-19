@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>Ubuntu安装mysql8 - 木木飞</title><meta name="Description" content="1 2 3 4 5 6 7 8 sudo apt update ; # 更新包管理器的包列表 sudo apt install mysql-server ; # 安装MySQL 服务器 sudo mysql_secure_installation ; # 安全配置MySQL sudo systemctl start mysql.service ; # 启动MySQL服务 sudo systemctl enable"><meta property="og:title" content="Ubuntu安装mysql8" />
-<meta property="og:description" content="1 2 3 4 5 6 7 8 sudo apt update ; # 更新包管理器的包列表 sudo apt install mysql-server ; # 安装MySQL 服务器 sudo mysql_secure_installation ; # 安全配置MySQL sudo systemctl start mysql.service ; # 启动MySQL服务 sudo systemctl enable" />
+        <title>在 Ubuntu 上安装 MySQL（核验软件源版本） - 木木飞</title><meta name="Description" content="在 Ubuntu 上用 apt 安装 mysql-server：先核验发行版与仓库中的实际大版本，说明 auth_socket 下 sudo mysql 与 mysql -u root -p 的差异，并补齐验证、安全和回滚。"><meta property="og:title" content="在 Ubuntu 上安装 MySQL（核验软件源版本）" />
+<meta property="og:description" content="在 Ubuntu 上用 apt 安装 mysql-server：先核验发行版与仓库中的实际大版本，说明 auth_socket 下 sudo mysql 与 mysql -u root -p 的差异，并补齐验证、安全和回滚。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-06-14T16:44:13&#43;08:00" />
@@ -15,8 +15,8 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
 
-<meta name="twitter:title" content="Ubuntu安装mysql8"/>
-<meta name="twitter:description" content="1 2 3 4 5 6 7 8 sudo apt update ; # 更新包管理器的包列表 sudo apt install mysql-server ; # 安装MySQL 服务器 sudo mysql_secure_installation ; # 安全配置MySQL sudo systemctl start mysql.service ; # 启动MySQL服务 sudo systemctl enable"/>
+<meta name="twitter:title" content="在 Ubuntu 上安装 MySQL（核验软件源版本）"/>
+<meta name="twitter:description" content="在 Ubuntu 上用 apt 安装 mysql-server：先核验发行版与仓库中的实际大版本，说明 auth_socket 下 sudo mysql 与 mysql -u root -p 的差异，并补齐验证、安全和回滚。"/>
 <meta name="application-name" content="木木飞">
 <meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -24,18 +24,18 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Ubuntu安装mysql8",
+        "headline": "在 Ubuntu 上安装 MySQL（核验软件源版本）",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/www.mmfei.com\/2024\/06\/ubuntu%E5%AE%89%E8%A3%85mysql8\/"
-        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "ubuntu, mysql","wordcount":  126 ,
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "ubuntu, mysql","wordcount":  3259 ,
         "url": "https:\/\/www.mmfei.com\/2024\/06\/ubuntu%E5%AE%89%E8%A3%85mysql8\/","datePublished": "2024-06-14T16:44:13+08:00","dateModified": "2024-06-14T16:44:13+08:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
                 "@type": "Person",
                 "name": "mmfei"
-            },"description": ""
+            },"description": "在 Ubuntu 上用 apt 安装 mysql-server：先核验发行版与仓库中的实际大版本，说明 auth_socket 下 sudo mysql 与 mysql -u root -p 的差异，并补齐验证、安全和回滚。"
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -88,12 +88,15 @@
     </div>
 </header>
 <main class="main">
-                <div class="container"><div class="sk-page sk-article"><article class="page single sk-single">
-            <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/ubuntu/">ubuntu</a><span class="sk-single-kicker-sep">·</span><a href="/categories/mysql/">mysql</a></p><h1 class="single-title sk-single-title">Ubuntu安装mysql8</h1><div class="post-meta sk-single-meta">
+                <div class="container"><div class="sk-page sk-article"><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div><article class="page single sk-single">
+            <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/ubuntu/">ubuntu</a><span class="sk-single-kicker-sep">·</span><a href="/categories/mysql/">mysql</a></p><h1 class="single-title sk-single-title">在 Ubuntu 上安装 MySQL（核验软件源版本）</h1><div class="post-meta sk-single-meta">
                     <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
                     </div>
-                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-06-14">2024-06-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 126 字&nbsp;
-                        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;<span id="/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/" class="leancloud_visitors" data-flag-title="Ubuntu安装mysql8">
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2024-06-14">2024-06-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3259 字&nbsp;
+                        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;<span id="/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/" class="leancloud_visitors" data-flag-title="在 Ubuntu 上安装 MySQL（核验软件源版本）">
                                 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                             </span>&nbsp;</div>
                 </div>
@@ -104,29 +107,223 @@
         data-srcset="/images/posts/ubuntu%e5%ae%89%e8%a3%85mysql8/featuredImage.png, /images/posts/ubuntu%e5%ae%89%e8%a3%85mysql8/featuredImage.png 1.5x, /images/posts/ubuntu%e5%ae%89%e8%a3%85mysql8/featuredImage.png 2x"
         data-sizes="auto"
         alt="/images/posts/ubuntu安装mysql8/featuredImage.png"
-        title="/images/posts/ubuntu安装mysql8/featuredImage.png" /></div><div class="content" id="content"><div class="highlight"><div class="chroma">
+        title="在 Ubuntu 上用 apt 安装 mysql-server：先核验发行版与仓库中的实际大版本，说明 auth_socket 下 sudo mysql 与 mysql -u root -p 的差异，并补齐验证、安全和回滚。" /></div><div class="details toc sk-single-toc" id="toc-static"  kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#适用范围">适用范围</a></li>
+    <li><a href="#先核验发行版和仓库中的大版本">先核验发行版和仓库中的大版本</a>
+      <ul>
+        <li><a href="#查阅线索不能代替本机-policy">查阅线索（不能代替本机 policy）</a></li>
+      </ul>
+    </li>
+    <li><a href="#安装">安装</a></li>
+    <li><a href="#验证">验证</a></li>
+    <li><a href="#登录差异sudo-mysql-与-mysql--u-root--p">登录差异：<code>sudo mysql</code> 与 <code>mysql -u root -p</code></a></li>
+    <li><a href="#关于-mysql_secure_installation">关于 <code>mysql_secure_installation</code></a></li>
+    <li><a href="#安全注意">安全注意</a></li>
+    <li><a href="#常见故障">常见故障</a></li>
+    <li><a href="#回滚">回滚</a></li>
+    <li><a href="#相关笔记">相关笔记</a></li>
+    <li><a href="#官方参考核读日期-2026-11-19">官方参考（核读日期 2026-11-19）</a></li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><p>原文标题写「Ubuntu安装mysql8」，正文则是一组 <code>apt install mysql-server</code>、<code>mysql_secure_installation</code> 和 <code>sudo mysql -u root -p</code>。它没有说明这台 Ubuntu 是哪个版本，也没有核验仓库里实际提供的是 MySQL 8.0、8.4 还是其他大版本；登录方式也与 Ubuntu 当前官方安装说明不一致。本文按 2026-11-19 查阅的官方资料修订。标题不再把“一定是 8”写成既成事实。</p>
+<blockquote>
+<p><strong>2026-11-19 更新说明：补充软件源版本核验和认证方式说明。</strong> 本文<strong>未在具体 Ubuntu 版本上实测</strong>这些命令，不编造 <code>systemctl</code>、<code>mysql</code> 或 <code>apt-cache policy</code> 的输出。软件包大版本<strong>不要猜测</strong>，以目标机器上的 <code>lsb_release -a</code>、<code>apt-cache policy mysql-server</code> 以及当时的官方发行说明为准。</p>
+</blockquote>
+<h2 id="适用范围">适用范围</h2>
+<p>本篇只覆盖：在 Ubuntu 上用发行版软件源安装 <code>mysql-server</code>、确认服务状态、按官方说明做本地管理员登录，以及安装后的安全与卸载注意。它不是备份恢复、主从复制，也不把 Docker 或 Oracle 的 MySQL APT 仓库当作默认路径。若目标机已经有 MySQL / MariaDB / 占用 3306 的容器，先停下来核对，不要并行再装一套。</p>
+<p>主要依据：</p>
+<ul>
+<li>Ubuntu Server 文档 <a href="https://ubuntu.com/server/docs/how-to/databases/install-mysql/" target="_blank" rel="noopener noreffer">Install and configure a MySQL server</a>（核读 2026-11-19；该页会重定向，以当时页面为准）</li>
+<li>MySQL 参考手册中的 <a href="https://dev.mysql.com/doc/refman/8.0/en/socket-pluggable-authentication.html" target="_blank" rel="noopener noreffer">Socket Peer-Credential Pluggable Authentication</a> 与 <a href="https://dev.mysql.com/doc/refman/8.0/en/mysql-secure-installation.html" target="_blank" rel="noopener noreffer">mysql_secure_installation</a></li>
+<li>可选对照：<a href="https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/" target="_blank" rel="noopener noreffer">A Quick Guide to Using the MySQL APT Repository</a>（Oracle 官方 APT，与 Ubuntu 仓库不是同一条路径）</li>
+</ul>
+<h2 id="先核验发行版和仓库中的大版本">先核验发行版和仓库中的大版本</h2>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">sudo apt update <span class="p">;</span> <span class="c1"># 更新包管理器的包列表</span>
-sudo apt install mysql-server <span class="p">;</span> <span class="c1"># 安装MySQL 服务器</span>
-sudo mysql_secure_installation <span class="p">;</span> <span class="c1"># 安全配置MySQL</span>
-sudo systemctl start mysql.service <span class="p">;</span> <span class="c1"># 启动MySQL服务</span>
-sudo systemctl <span class="nb">enable</span> mysql.service <span class="p">;</span> <span class="c1"># 使MySQL服务在系统启动时自动启动</span>
-sudo systemctl status mysql.service <span class="p">;</span> <span class="c1"># 检查MySQL服务的状态</span>
-sudo mysql -u root -p <span class="p">;</span> <span class="c1"># 登录到MySQL服务</span>
-
+<pre class="chroma"><code class="language-bash" data-lang="bash">lsb_release -a
+apt-cache policy mysql-server
 </code></pre></td></tr></table>
 </div>
-</div></div><div class="post-footer" id="post-footer">
+</div><p><code>mysql-server</code> 在 Ubuntu 上通常是元包，真正拉进来的服务器版本以 policy 里的候选包为准。原文标题中的 “mysql8” 只反映当年常见情况，不能保证今天所有 LTS 仍然只提供 8.0。</p>
+<h3 id="查阅线索不能代替本机-policy">查阅线索（不能代替本机 policy）</h3>
+<p>截至 <strong>2026-11-19</strong> 查阅 <a href="https://packages.ubuntu.com/search?keywords=mysql-server&amp;searchon=names&amp;exact=1&amp;suite=all&amp;section=all" target="_blank" rel="noopener noreffer">packages.ubuntu.com 上的 mysql-server</a>，当时各套件页公开列出的版本大致如下：</p>
+<table>
+<thead>
+<tr>
+<th>Ubuntu 套件（查阅当日）</th>
+<th>当时页面上的 mysql-server 版本线索</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>22.04 LTS (jammy) / jammy-updates</td>
+<td><code>8.0.46-0ubuntu0.22.04.4</code></td>
+</tr>
+<tr>
+<td>24.04 LTS (noble) / noble-updates</td>
+<td><code>8.0.46-0ubuntu0.24.04.4</code></td>
+</tr>
+<tr>
+<td>26.04 LTS (resolute) / resolute-updates</td>
+<td><code>8.4.11-0ubuntu0.26.04.1</code></td>
+</tr>
+<tr>
+<td>后续开发套件（页面当时还列出 stonking / tenacious）</td>
+<td>出现过 <code>9.7.2-4ubuntu1</code></td>
+</tr>
+</tbody>
+</table>
+<p>也就是说：在查阅当日，22.04 / 24.04 的仓库线索仍是 8.0 系，26.04 已出现 8.4 系，更新的开发套件还出现过 9.x。这些数字只是当天的公开页面，镜像延迟或后续安全更新都会改变它们。<strong>安装前必须以目标机器的 <code>apt-cache policy</code> 为准。</strong></p>
+<p>若你明确需要 Oracle 官方仓库中的某个大版本，应走 MySQL APT Repository 的官方步骤，并先阅读“替换发行版自带 MySQL”的注意事项。本篇不把这条路径写成默认操作。</p>
+<h2 id="安装">安装</h2>
+<p>Ubuntu 官方安装说明中的命令是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo apt update
+sudo apt install mysql-server
+</code></pre></td></tr></table>
+</div>
+</div><p>文档写明：安装完成后，MySQL 服务通常会自动启动。可以用 systemd 查看状态（文档示例是 <code>sudo service mysql status</code>，与 <code>systemctl</code> 等价与否以本机单元名为准）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo systemctl status mysql.service
+</code></pre></td></tr></table>
+</div>
+</div><p>若服务未运行，官方文档给出的启动/重启示例是 <code>sudo service mysql restart</code>。在使用 systemd 的系统上，常见写法是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo systemctl start mysql.service
+sudo systemctl <span class="nb">enable</span> mysql.service
+</code></pre></td></tr></table>
+</div>
+</div><p>是否已经 enable，以 <code>systemctl is-enabled mysql</code> 的本机结果为准，不要假设所有包装都会自动打开开机启动。</p>
+<h2 id="验证">验证</h2>
+<ol>
+<li>
+<p>确认单元状态：<code>sudo systemctl is-active mysql</code>（或本机实际单元名，有的环境是 <code>mysqld</code>）。</p>
+</li>
+<li>
+<p>按 Ubuntu 文档检查监听情况。文档示例为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo ss -tap <span class="p">|</span> grep mysql
+</code></pre></td></tr></table>
+</div>
+</div><p>文档中的示例输出显示监听在 <code>127.0.0.1:mysql</code>。你的机器不一定相同，但若你没有有意开放远程访问，却看到绑定在 <code>0.0.0.0</code> 或 <code>::</code>，应先停下来核对配置，不要当作“安装成功”忽略过去。</p>
+</li>
+<li>
+<p>再次核对版本：<code>apt-cache policy mysql-server</code>，以及登录后的 <code>SELECT VERSION();</code>（输出以本机为准）。</p>
+</li>
+<li>
+<p>需要排错时，Ubuntu 文档建议从 systemd 日志入手：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo journalctl -u mysql
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h2 id="登录差异sudo-mysql-与-mysql--u-root--p">登录差异：<code>sudo mysql</code> 与 <code>mysql -u root -p</code></h2>
+<p>这是原文最容易误导的地方。</p>
+<p>Ubuntu 官方文档写明：默认会提供 <code>'root'@'localhost'</code>，用于本机管理；进入命令行的方式是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo mysql -u root
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>按该 Ubuntu 文档的默认安装，MySQL 本机 root 使用 <code>auth_socket</code>，不要求输入 MySQL 密码；sudo 本身仍可能要求系统密码。</strong> 也就是说，发行版默认把本机管理员入口交给系统的 root（通过 <code>sudo</code>），而不是“安装完立刻用密码登录 root”。</p>
+<p>因此：</p>
+<ul>
+<li>推荐先按官方说明使用 <code>sudo mysql -u root</code>（<code>sudo mysql</code> 通常也可以，以本机客户端行为为准）。</li>
+<li><code>sudo mysql -u root -p</code> 中的 <code>-p</code> 只要求客户端提示输入密码，不能证明服务端实际使用了密码认证，也不能据此断言插件已经改变。认证方式要结合连接方式、匹配账户和下面的 <code>plugin</code> 查询判断；不要反复试密码或为了套用命令而改认证插件。</li>
+<li>不要把“没设过密码”理解成“任何人都可以远程用空密码登录”。<code>auth_socket</code> 约束的是本机系统用户与套接字，和远程密码登录不是同一件事。</li>
+</ul>
+<p>登录后，可用下面语句核对本机 root 的认证插件（不要把输出里的账号细节发到公开地方）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span><span class="w"> </span><span class="k">user</span><span class="p">,</span><span class="w"> </span><span class="k">host</span><span class="p">,</span><span class="w"> </span><span class="n">plugin</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="k">user</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;root&#39;</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>本文未执行该查询，不预填结果。若 <code>plugin</code> 为 <code>auth_socket</code>，应继续用 <code>sudo mysql</code> 管理；若已改成密码类插件，再用 <code>mysql -u root -p</code>。</p>
+<p>如需额外的应用程序账号，Ubuntu 文档建议用 <code>CREATE USER</code>，密码认证示例为 <code>caching_sha2_password</code>，套接字认证示例为 <code>auth_socket</code>，然后再 <code>GRANT</code>。不要把应用程序配成直接使用系统 root 账户。文中的 <code>'username'</code>、<code>'password'</code> 只是文档占位，必须换成自己的值，且不要把真实密码写进笔记或命令历史。</p>
+<h2 id="关于-mysql_secure_installation">关于 <code>mysql_secure_installation</code></h2>
+<p>原文把 <code>sudo mysql_secure_installation</code> 放在安装后的第二步。MySQL 参考手册确实提供这个工具，用于改善新装实例的安全设置。</p>
+<p>但 Ubuntu 这篇官方安装指南<strong>没有</strong>把它列为安装必做步骤；本地管理员入口按文档是 <code>sudo mysql -u root</code> 加 <code>auth_socket</code>。该工具的交互（例如为 root 设置密码、是否删除匿名用户）在 Debian/Ubuntu 默认 <code>auth_socket</code> 环境下，可能和“设完密码就能 <code>mysql -u root -p</code>”的直觉并不一致。</p>
+<p>本文<strong>未实测</strong>该向导在当前各 Ubuntu LTS 上的具体提问与结果，因此不给出逐步点选建议，也不声称运行后 root 一定改成了密码认证。若你决定运行它，先确认自己能用 <code>sudo mysql</code> 登录，跑完后再查一次 <code>mysql.user</code> 的 <code>plugin</code>，并以本机实际提示为准。不要在已经有业务数据的实例上把该向导当成“无害的初始化”。</p>
+<h2 id="安全注意">安全注意</h2>
+<ul>
+<li>默认只监听本机是更稳妥的起点。Ubuntu 文档指出，若要接受网络主机连接，需编辑 <code>/etc/mysql/mysql.conf.d/mysqld.cnf</code> 中的 <code>bind-address</code>，改为合适的地址，然后 <code>sudo systemctl restart mysql.service</code>。不要在没有防火墙、没有专用账号和必要 TLS / 权限约束时，把监听改到所有接口。</li>
+<li>修改 <code>bind-address</code> 之前，用 <code>ip address show</code> 确认地址确实属于这台机器。</li>
+<li>生产库的 root 与业务账号权限应分开；不要把真实密码写进 shell 历史、脚本仓库或公开文章。</li>
+<li>本篇不包含备份或恢复步骤。安装成功不等于已经有可恢复的备份。</li>
+</ul>
+<h2 id="常见故障">常见故障</h2>
+<ul>
+<li><strong><code>mysql -u root -p</code> 无法登录</strong>：先确认当前认证插件是不是仍为 <code>auth_socket</code>。若是，改用 <code>sudo mysql -u root</code>，不要反复猜测密码。</li>
+<li><strong><code>sudo mysql</code> 也被拒绝</strong>：查看错误信息与 <code>journalctl -u mysql</code>，确认服务在运行、套接字路径与客户端一致，以及当前执行的系统用户符合 <code>auth_socket</code> 的对应关系。</li>
+<li><strong>服务启动失败</strong>：同样先看 journal。常见原因包括数据目录不干净、端口占用、配置语法错误。不要删除 <code>/var/lib/mysql</code> 来“重装试试”，除非这是明确可丢弃的空实例并且已经没有需要保留的文件。</li>
+<li><strong>装完发现不是 8.0</strong>：回到 <code>apt-cache policy</code>。这通常是发行版仓库的真实情况，不是命令写错。</li>
+</ul>
+<h2 id="回滚">回滚</h2>
+<p>MySQL 的卸载很容易误删数据。回滚前先取得与本机版本和存储引擎匹配、可恢复的一致性备份，并确认这台机器允许卸载。不能把运行中数据目录的普通复制当作已验证备份；物理备份必须按官方支持的方法确保一致性，逻辑备份也应核对导出结果并演练恢复。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo systemctl stop mysql.service
+</code></pre></td></tr></table>
+</div>
+</div><p>之后按需要 <code>apt remove mysql-server</code> 或 <code>apt purge mysql-server</code>。<code>purge</code> 更可能移除包装标记为配置文件的内容；数据目录 <code>/var/lib/mysql</code> 是否保留或提示是否删除，以 apt/dpkg 的实际行为为准。<strong>未备份时不要在生产机 purge，也不要手工清空数据目录。</strong></p>
+<p>若曾接入 Oracle MySQL APT 源，还要单独处理软件源与替换发行版包装的后果，本篇不演示。</p>
+<h2 id="相关笔记">相关笔记</h2>
+<ul>
+<li><a href="https://www.mmfei.com/2024/08/ubuntu%e5%ae%89%e8%a3%85redis/" target="_blank" rel="noopener noreffer">在 Ubuntu 上用 apt 安装 Redis</a></li>
+<li><a href="https://www.mmfei.com/2023/11/%e7%94%a8docker%e5%bf%ab%e9%80%9f%e6%90%ad%e5%bb%ba%e4%b8%80%e4%b8%aaphpmyadmin/" target="_blank" rel="noopener noreffer">用docker快速搭建一个phpmyadmin</a>（本机管理界面的另一种做法，不是本文的 apt 安装步骤）</li>
+</ul>
+<p>以上两篇在 2026-11-19 以 HTTPS GET 核验为 HTTP 200。</p>
+<h2 id="官方参考核读日期-2026-11-19">官方参考（核读日期 2026-11-19）</h2>
+<ul>
+<li><a href="https://ubuntu.com/server/docs/how-to/databases/install-mysql/" target="_blank" rel="noopener noreffer">Ubuntu Server：Install and configure a MySQL server</a></li>
+<li><a href="https://packages.ubuntu.com/search?keywords=mysql-server&amp;searchon=names&amp;exact=1&amp;suite=all&amp;section=all" target="_blank" rel="noopener noreffer">packages.ubuntu.com：mysql-server</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/8.0/en/socket-pluggable-authentication.html" target="_blank" rel="noopener noreffer">MySQL 8.0：Socket Peer-Credential Pluggable Authentication</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/8.0/en/mysql-secure-installation.html" target="_blank" rel="noopener noreffer">MySQL 8.0：mysql_secure_installation</a></li>
+<li><a href="https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/" target="_blank" rel="noopener noreffer">A Quick Guide to Using the MySQL APT Repository</a>（仅作官方源对照）</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
@@ -139,7 +336,7 @@ sudo mysql -u root -p <span class="p">;</span> <span class="c1"># 登录到MySQL
                             <a class="link-to-markdown" href="/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/" data-title="Ubuntu安装mysql8" data-via="mmfei" data-hashtags="ubuntu,mysql"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/" data-hashtag="ubuntu"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/" data-title="Ubuntu安装mysql8"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/" data-title="Ubuntu安装mysql8"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/" data-title="Ubuntu安装mysql8" data-image="/images/posts/ubuntu安装mysql8/featuredImage.png"><i class="fab fa-weibo fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/" data-title="在 Ubuntu 上安装 MySQL（核验软件源版本）" data-via="mmfei" data-hashtags="ubuntu,mysql"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/" data-hashtag="ubuntu"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/" data-title="在 Ubuntu 上安装 MySQL（核验软件源版本）"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/" data-title="在 Ubuntu 上安装 MySQL（核验软件源版本）"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/" data-title="在 Ubuntu 上安装 MySQL（核验软件源版本）" data-image="/images/posts/ubuntu安装mysql8/featuredImage.png"><i class="fab fa-weibo fa-fw"></i></a></span>
             </div>
         </div>
     </div>

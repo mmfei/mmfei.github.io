@@ -23,7 +23,7 @@
 - [GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单](https://www.mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/) — 2026-11-18 · 分类: GitHub Pages, AdSense, 静态博客 · 标签: GitHub Pages, AdSense, 静态博客
 - [设置gitlab-ce的root账号密码](https://www.mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/) — 2025-08-05 · 分类: gitlab · 标签: gitlab
 - [在 Ubuntu 上用 apt 安装 Redis](https://www.mmfei.com/2024/08/ubuntu%E5%AE%89%E8%A3%85redis/) — 2024-08-07 · 分类: ubuntu, redis · 标签: ubuntu, redis
-- [Ubuntu安装mysql8](https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/) — 2024-06-14 · 分类: ubuntu, mysql · 标签: ubuntu, mysql
+- [在 Ubuntu 上安装 MySQL（核验软件源版本）](https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/) — 2024-06-14 · 分类: ubuntu, mysql · 标签: ubuntu, mysql
 - [swoole内存泄漏例子](https://www.mmfei.com/2024/04/swoole%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E4%BE%8B%E5%AD%90/) — 2024-04-09 · 分类: swoole · 标签: swoole
 - [用docker快速搭建一个phpmyadmin](https://www.mmfei.com/2023/11/%E7%94%A8docker%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAphpmyadmin/) — 2023-11-21 · 分类: docker, phpmyadmin · 标签: docker, phpmyadmin
 - [清理chickhouse空间](https://www.mmfei.com/2023/11/%E6%B8%85%E7%90%86chickhouse%E7%A9%BA%E9%97%B4/) — 2023-11-16 · 分类: clickhouse · 标签: clickhouse

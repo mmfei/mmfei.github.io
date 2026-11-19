@@ -5,14 +5,14 @@
         <description>mysql - 标签 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
             <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Fri, 14 Jun 2024 16:44:13 &#43;0800</lastBuildDate><atom:link href="https://www.mmfei.com/tags/mysql/" rel="self" type="application/rss+xml" /><item>
-    <title>Ubuntu安装mysql8</title>
+    <title>在 Ubuntu 上安装 MySQL（核验软件源版本）</title>
     <link>https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/</link>
     <pubDate>Fri, 14 Jun 2024 16:44:13 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/ubuntu%e5%ae%89%e8%a3%85mysql8/featuredImage.png" referrerpolicy="no-referrer">
-            </div>1 2 3 4 5 6 7 8 sudo apt update ; # 更新包管理器的包列表 sudo apt install mysql-server ; # 安装MySQL 服务器 sudo mysql_secure_installation ; # 安全配置MySQL sudo systemctl start mysql.service ; # 启动MySQL服务 sudo systemctl enable]]></description>
+            </div>原文标题写「Ubuntu安装mysql8」，正文则是一组 apt install mysql-server、mysql_secure_installation 和 sudo]]></description>
 </item><item>
     <title>MacBookM1X搭建mysql和redis以及php的swoole和hyperf环境</title>
     <link>https://www.mmfei.com/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/</link>
