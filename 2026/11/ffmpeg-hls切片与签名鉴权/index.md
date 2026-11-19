@@ -19,7 +19,7 @@ HLS输出包括播放列表和它引用的媒体片段。`-hls_time 2`设置的�
 
 保存为`generate.sh`，运行会新建一个临时目录，不覆盖已有媒体，也不删除目录：
 
-```bash
+```text
 #!/usr/bin/env bash
 set -euo pipefail
 work=$(mktemp -d "${TMPDIR:-/tmp}/hls-auth-demo.XXXXXX")
@@ -27,7 +27,7 @@ printf '%s\n' "$work"
 cd "$work"
 ffmpeg -hide_banner -nostdin -f lavfi -i "testsrc2=size=320x180:rate=25:duration=6" \
   -f lavfi -i "sine=frequency=440:sample_rate=48000:duration=6" \
-  -map 0:v:0 -map 1:a:0 -c:v libx264 -preset veryfast -crf 23 -pix_fmt yuv420p \
+  -map 0{?:}v{?:}0 -map 1{?:}a{?:}0 -c:v libx264 -preset veryfast -crf 23 -pix_fmt yuv420p \
   -g 50 -keyint_min 50 -sc_threshold 0 -flags +cgop \
   -c:a aac -b:a 96k -t 6 -f hls -hls_time 2 -hls_list_size 0 \
   -hls_playlist_type vod -hls_flags independent_segments \

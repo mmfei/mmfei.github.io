@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/www.mmfei.com\/2026\/11\/ffmpeg-hls%E5%88%87%E7%89%87%E4%B8%8E%E7%AD%BE%E5%90%8D%E9%89%B4%E6%9D%83\/"
-        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "FFmpeg, HLS, Python, 鉴权","wordcount":  3937 ,
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "FFmpeg, HLS, Python, 鉴权","wordcount":  3931 ,
         "url": "https:\/\/www.mmfei.com\/2026\/11\/ffmpeg-hls%E5%88%87%E7%89%87%E4%B8%8E%E7%AD%BE%E5%90%8D%E9%89%B4%E6%9D%83\/","datePublished": "2026-11-19T14:52:53+07:00","dateModified": "2026-11-19T14:52:53+07:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
@@ -95,7 +95,7 @@
             <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/">音视频开发</a><span class="sk-single-kicker-sep">·</span><a href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/">后端开发</a></p><h1 class="single-title sk-single-title">FFmpeg HLS 切片与签名鉴权：别只保护 m3u8</h1><div class="post-meta sk-single-meta">
                     <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
                     </div>
-                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-19">2026-11-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3937 字&nbsp;
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-19">2026-11-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3931 字&nbsp;
                         <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/2026/11/ffmpeg-hls%E5%88%87%E7%89%87%E4%B8%8E%E7%AD%BE%E5%90%8D%E9%89%B4%E6%9D%83/" class="leancloud_visitors" data-flag-title="FFmpeg HLS 切片与签名鉴权：别只保护 m3u8">
                                 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                             </span>&nbsp;</div>
@@ -148,18 +148,18 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/usr/bin/env bash
-</span><span class="cp"></span><span class="nb">set</span> -euo pipefail
-<span class="nv">work</span><span class="o">=</span><span class="k">$(</span>mktemp -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">TMPDIR</span><span class="k">:-</span><span class="p">/tmp</span><span class="si">}</span><span class="s2">/hls-auth-demo.XXXXXX&#34;</span><span class="k">)</span>
-<span class="nb">printf</span> <span class="s1">&#39;%s\n&#39;</span> <span class="s2">&#34;</span><span class="nv">$work</span><span class="s2">&#34;</span>
-<span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$work</span><span class="s2">&#34;</span>
-ffmpeg -hide_banner -nostdin -f lavfi -i <span class="s2">&#34;testsrc2=size=320x180:rate=25:duration=6&#34;</span> <span class="se">\
-</span><span class="se"></span>  -f lavfi -i <span class="s2">&#34;sine=frequency=440:sample_rate=48000:duration=6&#34;</span> <span class="se">\
-</span><span class="se"></span>  -map 0✌️0 -map 1🅰️0 -c:v libx264 -preset veryfast -crf <span class="m">23</span> -pix_fmt yuv420p <span class="se">\
-</span><span class="se"></span>  -g <span class="m">50</span> -keyint_min <span class="m">50</span> -sc_threshold <span class="m">0</span> -flags +cgop <span class="se">\
-</span><span class="se"></span>  -c:a aac -b:a 96k -t <span class="m">6</span> -f hls -hls_time <span class="m">2</span> -hls_list_size <span class="m">0</span> <span class="se">\
-</span><span class="se"></span>  -hls_playlist_type vod -hls_flags independent_segments <span class="se">\
-</span><span class="se"></span>  -hls_segment_filename <span class="s1">&#39;seg%03d.ts&#39;</span> index.m3u8 2&gt;encode.log
+<pre class="chroma"><code class="language-text" data-lang="text">#!/usr/bin/env bash
+set -euo pipefail
+work=$(mktemp -d &#34;${TMPDIR:-/tmp}/hls-auth-demo.XXXXXX&#34;)
+printf &#39;%s\n&#39; &#34;$work&#34;
+cd &#34;$work&#34;
+ffmpeg -hide_banner -nostdin -f lavfi -i &#34;testsrc2=size=320x180:rate=25:duration=6&#34; \
+  -f lavfi -i &#34;sine=frequency=440:sample_rate=48000:duration=6&#34; \
+  -map 0:v:0 -map 1:a:0 -c:v libx264 -preset veryfast -crf 23 -pix_fmt yuv420p \
+  -g 50 -keyint_min 50 -sc_threshold 0 -flags +cgop \
+  -c:a aac -b:a 96k -t 6 -f hls -hls_time 2 -hls_list_size 0 \
+  -hls_playlist_type vod -hls_flags independent_segments \
+  -hls_segment_filename &#39;seg%03d.ts&#39; index.m3u8 2&gt;encode.log
 ffmpeg -hide_banner -nostdin -v error -i index.m3u8 -f null - 2&gt;decode-errors.log
 </code></pre></td></tr></table>
 </div>
