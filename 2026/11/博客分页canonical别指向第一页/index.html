@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>博客分页的 canonical 怎么写：别把第二页都指向第一页 - 木木飞</title><meta name="Description" content="依据 Google 分页文档，区分列表分页与重复页，检查每页独立网址、自引用 canonical 和真实翻页链接，附只读 HTML 核对脚本及适用限制。"><meta property="og:title" content="博客分页的 canonical 怎么写：别把第二页都指向第一页" />
+<meta property="og:description" content="依据 Google 分页文档，区分列表分页与重复页，检查每页独立网址、自引用 canonical 和真实翻页链接，附只读 HTML 核对脚本及适用限制。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.mmfei.com/2026/11/%E5%8D%9A%E5%AE%A2%E5%88%86%E9%A1%B5canonical%E5%88%AB%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E9%A1%B5/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-11-19T14:10:00&#43;07:00" />
+<meta property="article:modified_time" content="2026-11-19T14:10:00&#43;07:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
+
+<meta name="twitter:title" content="博客分页的 canonical 怎么写：别把第二页都指向第一页"/>
+<meta name="twitter:description" content="依据 Google 分页文档，区分列表分页与重复页，检查每页独立网址、自引用 canonical 和真实翻页链接，附只读 HTML 核对脚本及适用限制。"/>
+<meta name="application-name" content="木木飞">
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.mmfei.com/2026/11/%E5%8D%9A%E5%AE%A2%E5%88%86%E9%A1%B5canonical%E5%88%AB%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E9%A1%B5/" /><link rel="prev" href="https://www.mmfei.com/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/" /><link rel="next" href="https://www.mmfei.com/2026/11/robots%E4%B8%8Esitemap%E6%8A%93%E5%8F%96%E6%8E%92%E6%9F%A5%E6%B8%85%E5%8D%95/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "博客分页的 canonical 怎么写：别把第二页都指向第一页",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.mmfei.com\/2026\/11\/%E5%8D%9A%E5%AE%A2%E5%88%86%E9%A1%B5canonical%E5%88%AB%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E9%A1%B5\/"
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "canonical, 分页, 技术SEO","wordcount":  2756 ,
+        "url": "https:\/\/www.mmfei.com\/2026\/11\/%E5%8D%9A%E5%AE%A2%E5%88%86%E9%A1%B5canonical%E5%88%AB%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E9%A1%B5\/","datePublished": "2026-11-19T14:10:00+07:00","dateModified": "2026-11-19T14:10:00+07:00","publisher": {
+            "@type": "Organization",
+            "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "mmfei"
+            },"description": "依据 Google 分页文档，区分列表分页与重复页，检查每页独立网址、自引用 canonical 和真实翻页链接，附只读 HTML 核对脚本及适用限制。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friend/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a>
+                <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile">
+                <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friend/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<main class="main">
+                <div class="container"><div class="sk-page sk-article"><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div><article class="page single sk-single">
+            <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/seo/">SEO</a></p><h1 class="single-title sk-single-title">博客分页的 canonical 怎么写：别把第二页都指向第一页</h1><div class="post-meta sk-single-meta">
+                    <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
+                    </div>
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-19">2026-11-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2756 字&nbsp;
+                        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;<span id="/2026/11/%E5%8D%9A%E5%AE%A2%E5%88%86%E9%A1%B5canonical%E5%88%AB%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E9%A1%B5/" class="leancloud_visitors" data-flag-title="博客分页的 canonical 怎么写：别把第二页都指向第一页">
+                                <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                            </span>&nbsp;</div>
+                </div>
+            </header><div class="details toc sk-single-toc" id="toc-static"  kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-分页内容不是天然重复内容">1. 分页内容不是天然重复内容</a></li>
+    <li><a href="#2-每页同时满足三个条件">2. 每页同时满足三个条件</a>
+      <ul>
+        <li><a href="#条件一能直接访问独立-url">条件一：能直接访问独立 URL</a></li>
+        <li><a href="#条件二有可以跟随的翻页链接">条件二：有可以跟随的翻页链接</a></li>
+        <li><a href="#条件三head-中的-canonical-与本页一致">条件三：head 中的 canonical 与本页一致</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-先下载一页再检查声明">3. 先下载一页，再检查声明</a></li>
+    <li><a href="#4-排查静态生成器的模板问题">4. 排查静态生成器的模板问题</a></li>
+    <li><a href="#5-排序筛选页为什么要另看">5. 排序筛选页为什么要另看</a></li>
+    <li><a href="#6-本次检查实际覆盖了什么">6. 本次检查实际覆盖了什么</a></li>
+    <li><a href="#验收和回滚清单">验收和回滚清单</a></li>
+    <li><a href="#官方参考">官方参考</a></li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><p>文章归档第二页展示的是另一批文章，却把 canonical 写成第一页，这不是简单的“集中权重”：它向搜索引擎发送了与分页内容不一致的规范化信号。</p>
+<p>Google 的分页文档明确建议：分页序列中每页使用独立网址，并各自声明 canonical，不要统一指向第一页。本文讨论包含不同条目的博客归档与分类分页，不把筛选排序变体、打印版或跟踪参数页混在一起。</p>
+<blockquote>
+<p>适用范围：服务端或静态生成的 HTML 列表页。官方资料核读于 2026 年 11 月 19 日。下面的本地核对脚本只检查输入 HTML 中的声明与链接，不模拟 Google 渲染、规范网址选择或搜索排名。本文没有改线上模板。</p>
+</blockquote>
+<h2 id="1-分页内容不是天然重复内容">1. 分页内容不是天然重复内容</h2>
+<p>以示例站点为例：</p>
+<table>
+<thead>
+<tr>
+<th>页面</th>
+<th>内容</th>
+<th>预期 canonical 示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/posts/</code></td>
+<td>较新一批文章</td>
+<td><code>https://www.example.com/posts/</code></td>
+</tr>
+<tr>
+<td><code>/posts/page/2/</code></td>
+<td>再早一批文章</td>
+<td><code>https://www.example.com/posts/page/2/</code></td>
+</tr>
+<tr>
+<td><code>/posts/page/3/</code></td>
+<td>更早一批文章</td>
+<td><code>https://www.example.com/posts/page/3/</code></td>
+</tr>
+</tbody>
+</table>
+<p>表中的域名和路径仅用于解释规则，不能直接写进自己的站点。若实际路径使用 <code>?page=2</code>，同样可以有独立网址，不必为了 SEO 强行改成目录形式。</p>
+<p>canonical 适合在重复或高度相似页面之间表达首选版本；它不是重定向，也不是禁止抓取的指令。Google 会综合多个信号选择规范网址，页面写了声明不等于 Google 一定接受。</p>
+<p>分页列表有不同文章，不应只因模板外观相同，就全部合并到第一页。相反，如果 <code>/posts/page/1/</code> 与 <code>/posts/</code> 确实是同一份内容，这两个入口才需要一致的规范化处理，具体使用已有路由的重定向或 canonical 机制，应在确认托管能力与兼容性后选择。</p>
+<h2 id="2-每页同时满足三个条件">2. 每页同时满足三个条件</h2>
+<h3 id="条件一能直接访问独立-url">条件一：能直接访问独立 URL</h3>
+<p>复制第二页网址，在新的访问环境中直接打开，应能得到第二页内容，而不是必须先点第一页按钮。不要只用 <code>#page=2</code> 表示不同分页：Google 通常忽略 URL fragment，不能把它当作独立可抓取分页地址。</p>
+<p>还要检查空页和越界页。一个根本不存在的第 999 页如果返回首页内容和 200，问题不是简单补一个 canonical 就结束；先明确路由对无效分页的处理。</p>
+<h3 id="条件二有可以跟随的翻页链接">条件二：有可以跟随的翻页链接</h3>
+<p>静态 HTML 示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;/posts/&#34;</span><span class="p">&gt;</span>第一页<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;/posts/page/3/&#34;</span><span class="p">&gt;</span>下一页<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Google 通常从锚点的 href 发现网址，不会像读者那样主动点击一个需要交互才加载数据的按钮。无限滚动或“加载更多”需要另外提供可抓取的分页路径与发现机制；本篇不能替代完整的 JavaScript 渲染审计。</p>
+<p>Google 已不再使用 <code>rel=&quot;next&quot;</code> 与 <code>rel=&quot;prev&quot;</code> 理解分页关系。保留这些标签可能仍服务其他工具，但不能把添加它们当成 Google 已发现全部文章的证据。真正的页面链接和内容可访问性仍要检查。</p>
+<h3 id="条件三head-中的-canonical-与本页一致">条件三：head 中的 canonical 与本页一致</h3>
+<p>第二页的说明性示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;canonical&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;https://www.example.com/posts/page/2/&#34;</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>使用完整绝对地址，避免同时由主题、插件和自定义模板输出几份互相冲突的 canonical。第一步是定位最终 HTML，不是先在三个地方都加一遍。</p>
+<h2 id="3-先下载一页再检查声明">3. 先下载一页，再检查声明</h2>
+<p>需要 curl 和 Python 3。先把下列站点名换成自己的；文件输出放在新临时目录，不覆盖已有项目文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">URL</span><span class="o">=</span><span class="s1">&#39;https://www.example.com/posts/page/2/&#39;</span>
+<span class="nv">WORK</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>mktemp -d<span class="k">)</span><span class="s2">&#34;</span>
+curl --fail --show-error --silent --location --max-time <span class="m">30</span> <span class="se">\
+</span><span class="se"></span>  --dump-header <span class="s2">&#34;</span><span class="nv">$WORK</span><span class="s2">/page.headers&#34;</span> <span class="se">\
+</span><span class="se"></span>  --output <span class="s2">&#34;</span><span class="nv">$WORK</span><span class="s2">/page.html&#34;</span> <span class="s2">&#34;</span><span class="nv">$URL</span><span class="s2">&#34;</span>
+<span class="nb">printf</span> <span class="s1">&#39;检查目录：%s\n&#39;</span> <span class="s2">&#34;</span><span class="nv">$WORK</span><span class="s2">&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>先确认 curl 成功，查看响应头中的最终状态和跳转。若最终到了第一页，先解决访问路径问题，不用第二页的预期 URL 去强行“验过”第一页内容。</p>
+<p>把下面代码保存为临时目录里的 <code>check_head.py</code>。它只读本地文件，不访问网络、不执行页面脚本，也不会修改 HTML：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">html.parser</span> <span class="kn">import</span> <span class="n">HTMLParser</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="k">class</span> <span class="nc">PageHead</span><span class="p">(</span><span class="n">HTMLParser</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_head</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canonicals</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">robots</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">handle_starttag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&#34;head&#34;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">in_head</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_head</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&#34;link&#34;</span><span class="p">:</span>
+            <span class="n">rels</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;rel&#34;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s2">&#34;canonical&#34;</span> <span class="ow">in</span> <span class="n">rels</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">canonicals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;href&#34;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&#34;meta&#34;</span> <span class="ow">and</span> <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&#34;robots&#34;</span><span class="p">,</span> <span class="s2">&#34;googlebot&#34;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">robots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;content&#34;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">handle_endtag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&#34;head&#34;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">in_head</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="s2">&#34;用法：python3 check_head.py 本地HTML文件 预期绝对canonical&#34;</span><span class="p">)</span>
+
+<span class="n">page</span> <span class="o">=</span> <span class="n">PageHead</span><span class="p">()</span>
+<span class="n">page</span><span class="o">.</span><span class="n">feed</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&#34;utf-8&#34;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;canonical:&#34;</span><span class="p">,</span> <span class="n">page</span><span class="o">.</span><span class="n">canonicals</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;robots meta:&#34;</span><span class="p">,</span> <span class="n">page</span><span class="o">.</span><span class="n">robots</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">page</span><span class="o">.</span><span class="n">canonicals</span> <span class="o">!=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]]:</span>
+    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="s2">&#34;未通过：不是唯一且符合预期的 HTML head canonical&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;通过：仅表示 HTML head canonical 与输入预期一致&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>运行时，用 curl 请求后的<strong>实际最终地址</strong>作为预期值；下面仍是示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">python3 <span class="s2">&#34;</span><span class="nv">$WORK</span><span class="s2">/check_head.py&#34;</span> <span class="s2">&#34;</span><span class="nv">$WORK</span><span class="s2">/page.html&#34;</span> <span class="se">\
+</span><span class="se"></span>  <span class="s1">&#39;https://www.example.com/posts/page/2/&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>通过的含义很窄：恰好找到一个 head canonical，字符串与输入一致。它没有核对 HTTP <code>Link</code> 头中的另一份 canonical、HTTP <code>X-Robots-Tag</code>、JavaScript 运行后改写的内容，也不验证 URL 的业务正确性。若站点用这些机制，需要进一步检查对应响应或渲染结果。</p>
+<p>该脚本按常规完整 HTML 编写；文件不是 UTF-8、HTML 残缺或省略 head 时，先处理输入条件。不要用一个简易解析脚本证明所有浏览器与爬虫都能正确理解页面。</p>
+<h2 id="4-排查静态生成器的模板问题">4. 排查静态生成器的模板问题</h2>
+<p>不必立刻写一套新模板，先定位已有 canonical 是谁输出的：</p>
+<ol>
+<li>在归档第一页、第二页和一个普通文章页的最终 HTML 中各查一次。</li>
+<li>检查布局、SEO partial 或插件是否有重复输出。</li>
+<li>查看列表分页上下文拿到的是当前分页地址，还是列表集合第一页地址。</li>
+<li>只修负责该输出的入口，再生成静态产物复核。</li>
+<li>对分类分页单独回归，不能因文章归档修好就假定分类也走同一分支。</li>
+</ol>
+<p>生成器版本和主题上下文不同，不应把“某个变量始终代表当前分页”当作跨主题保证。需要修改 Hugo 模板时，应以实际项目的分页对象和构建结果为准；本文提供验收逻辑，不提供未经当前主题验证的万能 Go 模板替换。</p>
+<h2 id="5-排序筛选页为什么要另看">5. 排序筛选页为什么要另看</h2>
+<p><code>?sort=date</code>、标签筛选和 <code>?page=2</code> 不是同一类问题。排序可能只是同一集合的不同顺序，筛选也可能形成有独立价值的集合，是否索引要结合内容、内链规模和业务目的决定。</p>
+<p>不要把本篇的“分页自引用”机械扩展成“所有参数变体都自引用”，也不要把“不希望索引的筛选页”策略反过来套在所有分页上。robots、noindex、canonical 各有用途，不能相互替代。</p>
+<p>Google 文档还说明：同一个分页序列的各页可以使用相同标题和描述。因此第二页没有单独改描述，不等于违反分页建议。若要增加页码以便读者识别，可以做，但不能把每页改几个字当成分页问题已解决。</p>
+<h2 id="6-本次检查实际覆盖了什么">6. 本次检查实际覆盖了什么</h2>
+<p>2026 年 11 月 19 日 14:08（曼谷时间），本次只读获取本博客 <code>/posts/</code> 与 <code>/posts/page/2/</code>，两者均返回 200。解析保存的 HTML，分别找到唯一的对应 www 自引用 canonical，两页中均存在指向文章归档分页的锚点链接。</p>
+<p>文中的核对脚本另外用本地 HTML 样本检查通过与失败分支，并用于上述两份保存的 HTML。该结论不等于已对所有分类、全部页码、HTTP 规范头或浏览器交互做全站验证，更不等于 Google 已选用声明中的规范网址。</p>
+<h2 id="验收和回滚清单">验收和回滚清单</h2>
+<p>发布分页模板改动前后，至少抽查归档第一页、中间页、末页、一个分类分页和普通文章页；核对状态、不同文章条目、翻页 href 和唯一 canonical。不要为了修分页改变旧文章永久链接。</p>
+<p>若出现所有分页 canonical 相同、分页断链或文章页 canonical 被误改，回退对应模板改动并重新生成；随后检查线上响应，而不是只看构建成功。模板修复与搜索系统重新处理有时间差，别以短期排名作为唯一的发布验收。</p>
+<h2 id="官方参考">官方参考</h2>
+<ul>
+<li><a href="https://developers.google.com/search/docs/specialty/ecommerce/pagination-and-incremental-page-loading" target="_blank" rel="noopener noreffer">Google 分页与增量加载最佳实践</a></li>
+<li><a href="https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls" target="_blank" rel="noopener noreffer">指定 canonical 的方法与限制</a></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-11-19</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2026/11/%E5%8D%9A%E5%AE%A2%E5%88%86%E9%A1%B5canonical%E5%88%AB%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E9%A1%B5/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.mmfei.com/2026/11/%E5%8D%9A%E5%AE%A2%E5%88%86%E9%A1%B5canonical%E5%88%AB%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E9%A1%B5/" data-title="博客分页的 canonical 怎么写：别把第二页都指向第一页" data-via="mmfei" data-hashtags="canonical,分页,技术SEO"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.mmfei.com/2026/11/%E5%8D%9A%E5%AE%A2%E5%88%86%E9%A1%B5canonical%E5%88%AB%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E9%A1%B5/" data-hashtag="canonical"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.mmfei.com/2026/11/%E5%8D%9A%E5%AE%A2%E5%88%86%E9%A1%B5canonical%E5%88%AB%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E9%A1%B5/" data-title="博客分页的 canonical 怎么写：别把第二页都指向第一页"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.mmfei.com/2026/11/%E5%8D%9A%E5%AE%A2%E5%88%86%E9%A1%B5canonical%E5%88%AB%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E9%A1%B5/" data-title="博客分页的 canonical 怎么写：别把第二页都指向第一页"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.mmfei.com/2026/11/%E5%8D%9A%E5%AE%A2%E5%88%86%E9%A1%B5canonical%E5%88%AB%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E9%A1%B5/" data-title="博客分页的 canonical 怎么写：别把第二页都指向第一页"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/canonical/">canonical</a>,&nbsp;<a href="/tags/%E5%88%86%E9%A1%B5/">分页</a>,&nbsp;<a href="/tags/%E6%8A%80%E6%9C%AFseo/">技术SEO</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <nav class="sk-nav" aria-label="文章导航"><a href="/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/" class="sk-nav-btn sk-nav-prev" rel="prev" title="Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框"><i class="fas fa-angle-left fa-fw"></i>Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框</a>
+            <a href="/2026/11/robots%E4%B8%8Esitemap%E6%8A%93%E5%8F%96%E6%8E%92%E6%9F%A5%E6%B8%85%E5%8D%95/" class="sk-nav-btn sk-nav-next" rel="next" title="robots.txt 与 sitemap 不是收录开关：静态博客的抓取排查清单">robots.txt 与 sitemap 不是收录开关：静态博客的抓取排查清单<i class="fas fa-angle-right fa-fw"></i></a></nav>
+</div>
+
+<section class="sk-related">
+                    <h2 class="sk-related-title">相关文章</h2>
+                    <div class="sk-related-grid"><a class="sk-related-card" href="/2026/11/robots%E4%B8%8Esitemap%E6%8A%93%E5%8F%96%E6%8E%92%E6%9F%A5%E6%B8%85%E5%8D%95/">
+                                    <span class="sk-related-card-title">robots.txt 与 sitemap 不是收录开关：静态博客的抓取排查清单</span>
+                                    <span class="sk-related-card-meta">2026-11-19robots.txt · sitemap · 技术SEO</span>
+                                </a></div>
+                </section><div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article>
+    </div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.mmfei.com/" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/css/skin-stripe.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"valine":{"appId":"agrUIy35wmii07cPfX0p0UWx-MdYXbMMI","appKey":"xNDv6FEmi9xqlsf6out3W5c6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://agruiy35.api.lncldglobal.com","visitor":true}}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6" async></script><link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+<div id="pagefind-overlay" class="pf-overlay" aria-hidden="true">
+    <div class="pf-modal" role="dialog" aria-modal="true" aria-label="搜索">
+        <button type="button" class="pf-close" id="pagefind-close" aria-label="清空">&times;</button>
+        <div id="pagefind-ui"></div>
+    </div>
+</div>
+
+<style>
+.pf-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8vh 16px 16px;
+}
+.pf-overlay.open {
+    display: flex;
+}
+.pf-modal {
+    position: relative;
+    width: 560px;
+    max-width: 100%;
+    background: var(--card-background, #fff);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.28);
+    padding: 18px 18px 10px;
+}
+.pf-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--secondary-font-color, #666);
+    cursor: pointer;
+    padding: 6px;
+}
+.pf-close:hover { color: var(--primary-font-color, #111); }
+#pagefind-ui { min-height: 40px; }
+@media (max-width: 680px) {
+    .pf-overlay { padding: 12px 10px; align-items: flex-start; }
+    .pf-modal { padding: 14px 12px 8px; border-radius: 10px; }
+}
+</style>
+
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+(function () {
+    var overlay = document.getElementById('pagefind-overlay');
+    var modal = overlay.querySelector('.pf-modal');
+    var closeBtn = document.getElementById('pagefind-close');
+    var uiMount = document.getElementById('pagefind-ui');
+
+    function open() {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        var input = uiMount.querySelector('input');
+        if (input) { setTimeout(function () { input.focus(); }, 60); }
+    }
+    function close() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    function bindTrigger(id) {
+        var el = document.getElementById(id);
+        if (el) { el.addEventListener('click', function (e) { e.preventDefault(); open(); }); }
+    }
+    bindTrigger('pagefind-trigger-desktop');
+    bindTrigger('pagefind-trigger-mobile');
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) { close(); }
+    });
+
+    if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({
+            element: uiMount,
+            showSubResults: true,
+            showImages: false,
+            highlightQuery: true,
+            translations: {
+                placeholder: '搜索文章标题、标签或内容…',
+                clear_search: '清除',
+                load_more: '加载更多结果',
+                search_label: '搜索',
+                filters_label: '筛选',
+                no_results: '没有找到结果'
+            }
+        });
+    }
+})();
+</script>
+</body>
+</html>

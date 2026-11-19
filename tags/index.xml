@@ -5,6 +5,13 @@
         <description>Tags - 标签 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
             <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>canonical</title>
+    <link>https://www.mmfei.com/tags/canonical/</link>
+    <pubDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/tags/canonical/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>robots.txt</title>
     <link>https://www.mmfei.com/tags/robots.txt/</link>
     <pubDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</pubDate>
@@ -17,6 +24,13 @@
     <pubDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</pubDate>
     <author>作者</author>
     <guid>https://www.mmfei.com/tags/sitemap/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>分页</title>
+    <link>https://www.mmfei.com/tags/%E5%88%86%E9%A1%B5/</link>
+    <pubDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/tags/%E5%88%86%E9%A1%B5/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>技术SEO</title>
@@ -59,20 +73,6 @@
     <pubDate>Wed, 18 Nov 2026 08:00:00 &#43;0700</pubDate>
     <author>作者</author>
     <guid>https://www.mmfei.com/tags/github-pages/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>gitlab</title>
-    <link>https://www.mmfei.com/tags/gitlab/</link>
-    <pubDate>Tue, 05 Aug 2025 19:30:35 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/tags/gitlab/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>redis</title>
-    <link>https://www.mmfei.com/tags/redis/</link>
-    <pubDate>Wed, 07 Aug 2024 14:52:34 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/tags/redis/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
