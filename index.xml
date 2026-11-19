@@ -7,6 +7,13 @@
             <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</lastBuildDate>
             <atom:link href="https://www.mmfei.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>GA4 自然搜索会话为什么对不上 Search Console 点击：博客数据核对清单</title>
+    <link>https://www.mmfei.com/2026/11/ga4%E8%87%AA%E7%84%B6%E6%90%9C%E7%B4%A2%E5%AF%B9%E4%B8%8D%E4%B8%8Asearch-console%E7%82%B9%E5%87%BB/</link>
+    <pubDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/ga4%E8%87%AA%E7%84%B6%E6%90%9C%E7%B4%A2%E5%AF%B9%E4%B8%8D%E4%B8%8Asearch-console%E7%82%B9%E5%87%BB/</guid>
+    <description><![CDATA[Search Console 显示的 Google 搜索点击，与 GA4 里的自然搜索会话，不应该被当成必须完全相等的两列数据。它们记录的环节、计数方式和采集条件都不同。 真正要解决的是：在]]></description>
+</item><item>
     <title>robots.txt 与 sitemap 不是收录开关：静态博客的抓取排查清单</title>
     <link>https://www.mmfei.com/2026/11/robots%E4%B8%8Esitemap%E6%8A%93%E5%8F%96%E6%8E%92%E6%9F%A5%E6%B8%85%E5%8D%95/</link>
     <pubDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</pubDate>
@@ -79,14 +86,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e7%94%a8docker%e5%bf%ab%e9%80%9f%e6%90%ad%e5%bb%ba%e4%b8%80%e4%b8%aaphpmyadmin/featuredImage.png" referrerpolicy="no-referrer">
             </div>phpmyadmin的配置 docker-compose.yml 映射本机的6080端口 , abc.com 请替换成你的域名 1 2 3 4 5 6 7 8 9 10 11 12 13 version:&#39;3.1&#39;services:phpmyadmin:image:phpmyadminrestart:alwaysports:- 6080:80environment:- PMA_ARBITRARY=3- PMA_PORT=3306- PMA_HOST=你的mysql的h]]></description>
-</item><item>
-    <title>清理chickhouse空间</title>
-    <link>https://www.mmfei.com/2023/11/%E6%B8%85%E7%90%86chickhouse%E7%A9%BA%E9%97%B4/</link>
-    <pubDate>Thu, 16 Nov 2023 13:56:23 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/2023/11/%E6%B8%85%E7%90%86chickhouse%E7%A9%BA%E9%97%B4/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/%e6%b8%85%e7%90%86chickhouse%e7%a9%ba%e9%97%b4/featuredImage.png" referrerpolicy="no-referrer">
-            </div>清理chickhouse空间 警告 , 删除数据无法恢复 , 在生产环境使用要想好 !!!! 1 2 3 4 5 6 7 8 9 10 11 12 13 14 -- 查看空间占用 selectpartition,database,table,sum(rows)asrow,formatReadableSize(sum(bytes_on_disk))asused_disk,formatReadableSize(sum(data_uncompressed_bytes))asbefore_compress,formatReadableSize(sum(data_compressed_bytes))asafter_compress,round(sum(data_compressed_bytes)/sum(data_uncompressed_bytes)*100,0)compress_ratefromsystem.parts--and database = &#39;system&#39; groupbytable,database,partitionorderbyrowdesc; 1 2 3 -- 清理比]]></description>
 </item></channel>
 </rss>

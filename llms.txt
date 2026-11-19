@@ -11,9 +11,10 @@
 - [RSS 订阅](https://www.mmfei.com/index.xml): 站点 RSS Feed
 - [JSON Feed](https://www.mmfei.com/index.json): 结构化订阅
 
-## 文章索引（共 59 篇）
+## 文章索引（共 60 篇）
 - [博客分页的 canonical 怎么写：别把第二页都指向第一页](https://www.mmfei.com/2026/11/%E5%8D%9A%E5%AE%A2%E5%88%86%E9%A1%B5canonical%E5%88%AB%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E9%A1%B5/) — 2026-11-19 · 分类: SEO · 标签: canonical, 分页, 技术SEO
 - [robots.txt 与 sitemap 不是收录开关：静态博客的抓取排查清单](https://www.mmfei.com/2026/11/robots%E4%B8%8Esitemap%E6%8A%93%E5%8F%96%E6%8E%92%E6%9F%A5%E6%B8%85%E5%8D%95/) — 2026-11-19 · 分类: SEO · 标签: robots.txt, sitemap, 技术SEO
+- [GA4 自然搜索会话为什么对不上 Search Console 点击：博客数据核对清单](https://www.mmfei.com/2026/11/ga4%E8%87%AA%E7%84%B6%E6%90%9C%E7%B4%A2%E5%AF%B9%E4%B8%8D%E4%B8%8Asearch-console%E7%82%B9%E5%87%BB/) — 2026-11-19 · 分类: SEO, 数据分析 · 标签: GA4, Search Console, 数据分析
 - [Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框](https://www.mmfei.com/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/) — 2026-11-19 · 分类: Hugo, Pagefind, 静态博客 · 标签: Hugo, Pagefind, 静态博客
 - [GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单](https://www.mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/) — 2026-11-18 · 分类: GitHub Pages, AdSense, 静态博客 · 标签: GitHub Pages, AdSense, 静态博客
 - [设置gitlab-ce的root账号密码](https://www.mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/) — 2025-08-05 · 分类: gitlab · 标签: gitlab

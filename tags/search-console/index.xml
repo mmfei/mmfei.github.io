@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Search Console - 标签 - 木木飞</title>
+        <link>https://www.mmfei.com/tags/search-console/</link>
+        <description>Search Console - 标签 - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/tags/search-console/" rel="self" type="application/rss+xml" /><item>
+    <title>GA4 自然搜索会话为什么对不上 Search Console 点击：博客数据核对清单</title>
+    <link>https://www.mmfei.com/2026/11/ga4%E8%87%AA%E7%84%B6%E6%90%9C%E7%B4%A2%E5%AF%B9%E4%B8%8D%E4%B8%8Asearch-console%E7%82%B9%E5%87%BB/</link>
+    <pubDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/ga4%E8%87%AA%E7%84%B6%E6%90%9C%E7%B4%A2%E5%AF%B9%E4%B8%8D%E4%B8%8Asearch-console%E7%82%B9%E5%87%BB/</guid>
+    <description><![CDATA[Search Console 显示的 Google 搜索点击，与 GA4 里的自然搜索会话，不应该被当成必须完全相等的两列数据。它们记录的环节、计数方式和采集条件都不同。 真正要解决的是：在]]></description>
+</item></channel>
+</rss>
