@@ -4,7 +4,21 @@
         <link>https://www.mmfei.com/categories/</link>
         <description>Categories - 分类 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/categories/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 19 Nov 2026 14:45:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>Python</title>
+    <link>https://www.mmfei.com/categories/python/</link>
+    <pubDate>Thu, 19 Nov 2026 14:45:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/categories/python/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>后端开发</title>
+    <link>https://www.mmfei.com/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/</link>
+    <pubDate>Thu, 19 Nov 2026 14:45:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>SEO</title>
     <link>https://www.mmfei.com/categories/seo/</link>
     <pubDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</pubDate>
@@ -59,20 +73,6 @@
     <pubDate>Thu, 19 Nov 2026 09:40:00 &#43;0700</pubDate>
     <author>作者</author>
     <guid>https://www.mmfei.com/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>AdSense</title>
-    <link>https://www.mmfei.com/categories/adsense/</link>
-    <pubDate>Wed, 18 Nov 2026 08:00:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/categories/adsense/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>gitlab</title>
-    <link>https://www.mmfei.com/categories/gitlab/</link>
-    <pubDate>Tue, 05 Aug 2025 19:30:35 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/categories/gitlab/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

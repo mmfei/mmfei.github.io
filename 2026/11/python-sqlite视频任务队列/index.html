@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Python &#43; SQLite 实现视频任务队列：幂等、重试与租约恢复 - 木木飞</title><meta name="Description" content="用Python标准库与SQLite实现一个可复现的单机任务队列，以模拟视频生成接口演示重复提交、退避重试、租约过期恢复和旧worker确认隔离，明确外部幂等的边界。"><meta property="og:title" content="Python &#43; SQLite 实现视频任务队列：幂等、重试与租约恢复" />
+<meta property="og:description" content="用Python标准库与SQLite实现一个可复现的单机任务队列，以模拟视频生成接口演示重复提交、退避重试、租约过期恢复和旧worker确认隔离，明确外部幂等的边界。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.mmfei.com/2026/11/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-11-19T14:45:00&#43;07:00" />
+<meta property="article:modified_time" content="2026-11-19T14:45:00&#43;07:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
+
+<meta name="twitter:title" content="Python &#43; SQLite 实现视频任务队列：幂等、重试与租约恢复"/>
+<meta name="twitter:description" content="用Python标准库与SQLite实现一个可复现的单机任务队列，以模拟视频生成接口演示重复提交、退避重试、租约过期恢复和旧worker确认隔离，明确外部幂等的边界。"/>
+<meta name="application-name" content="木木飞">
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.mmfei.com/2026/11/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" /><link rel="prev" href="https://www.mmfei.com/2026/11/ga4%E8%87%AA%E7%84%B6%E6%90%9C%E7%B4%A2%E5%AF%B9%E4%B8%8D%E4%B8%8Asearch-console%E7%82%B9%E5%87%BB/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Python + SQLite 实现视频任务队列：幂等、重试与租约恢复",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.mmfei.com\/2026\/11\/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97\/"
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Python, SQLite, 任务队列, 幂等","wordcount":  3529 ,
+        "url": "https:\/\/www.mmfei.com\/2026\/11\/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97\/","datePublished": "2026-11-19T14:45:00+07:00","dateModified": "2026-11-19T14:45:00+07:00","publisher": {
+            "@type": "Organization",
+            "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "mmfei"
+            },"description": "用Python标准库与SQLite实现一个可复现的单机任务队列，以模拟视频生成接口演示重复提交、退避重试、租约过期恢复和旧worker确认隔离，明确外部幂等的边界。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friend/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a>
+                <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile">
+                <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friend/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<main class="main">
+                <div class="container"><div class="sk-page sk-article"><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div><article class="page single sk-single">
+            <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/python/">Python</a><span class="sk-single-kicker-sep">·</span><a href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/">后端开发</a></p><h1 class="single-title sk-single-title">Python + SQLite 实现视频任务队列：幂等、重试与租约恢复</h1><div class="post-meta sk-single-meta">
+                    <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
+                    </div>
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-19">2026-11-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3529 字&nbsp;
+                        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/2026/11/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" class="leancloud_visitors" data-flag-title="Python &#43; SQLite 实现视频任务队列：幂等、重试与租约恢复">
+                                <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                            </span>&nbsp;</div>
+                </div>
+            </header><div class="details toc sk-single-toc" id="toc-static"  kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#环境与适用范围">环境与适用范围</a></li>
+    <li><a href="#1-先定义状态与两层幂等">1. 先定义状态与两层幂等</a></li>
+    <li><a href="#2-为什么需要租约和领取token">2. 为什么需要租约和领取token</a></li>
+    <li><a href="#3-完整实现">3. 完整实现</a></li>
+    <li><a href="#4-用故障模拟验证不靠正常路径自证">4. 用故障模拟验证，不靠正常路径自证</a></li>
+    <li><a href="#5-接真实模型接口时该改什么">5. 接真实模型接口时该改什么</a></li>
+    <li><a href="#6-从sqlite迁移到redis或服务型队列">6. 从SQLite迁移到Redis或服务型队列</a></li>
+    <li><a href="#运维安全与回滚">运维、安全与回滚</a></li>
+    <li><a href="#官方参考">官方参考</a></li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><p>用户重复点“生成视频”，接口超时后前端又重试，worker 提交模型任务后还没写回状态就退出：三种现象可能都导致重复提交与重复计费。仅给队列消息加一个唯一 ID，并不能自动解决外部接口的重复副作用。</p>
+<p>本文用 Python 标准库和 SQLite 写一个单机最小实现。业务场景是提交视频生成任务，技术重点是持久化状态、幂等键、领取租约和有边界的重试。外部提供方使用单独数据库的模拟实现，<strong>不调用模型、不生成视频、不发生API费用</strong>。</p>
+<h2 id="环境与适用范围">环境与适用范围</h2>
+<p>本次使用 Linux、Python 3.13.5 与内置 sqlite3 运行示例。代码是教学用单机队列，不是 Redis、Celery 或分布式调度系统；SQLite 同时只有一个写事务，不应把本例的逻辑验证当成高并发吞吐证明。数据库应放本机受控目录，不把它当共享网络盘队列。</p>
+<p>资料依据为 Python 3.13 的 sqlite3 文档与 SQLite 事务文档。Python 文档推荐明确选择事务控制方式；本例有意使用 <code>isolation_level=None</code> 配合显式 <code>BEGIN IMMEDIATE</code>，不混用隐式事务。数据库忙等超时是5秒，并未实现数据库故障自动恢复。</p>
+<h2 id="1-先定义状态与两层幂等">1. 先定义状态与两层幂等</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">提交请求 → 幂等键检查 → pending
+                        ↓ worker领取
+                      running（token + lease_until）
+                        ├─ 提交成功并确认 → done
+                        ├─ 可重试失败 → pending（available延后）
+                        └─ 永久错误/次数耗尽 → failed
+</code></pre></td></tr></table>
+</div>
+</div><p>这里的 <code>done</code> <strong>只表示“提交到模拟提供方并保存其任务ID成功”</strong>，不表示视频已经生成。真实视频后端通常还要有独立的 <code>rendering / succeeded / failed</code> 状态，接收回调或轮询提供方，并核验输出文件。</p>
+<p>幂等分两层：</p>
+<ul>
+<li>本地提交：同一个键和相同规范化 payload 返回同一条记录；同键不同 payload 报冲突，不能悄悄复用旧任务。</li>
+<li>外部提交：重试时向提供方传同一个键，依赖提供方持久化去重。本例 FakeProvider 用独立数据库模拟这个契约，不是把本地事务跨网络扩展成原子提交。</li>
+</ul>
+<p>示例键形如 <code>tenant-a:job-1</code>。真实服务必须从已认证用户确定租户并校验权限，不能信任请求中随意传入的 tenant，也不能允许别人仅凭幂等键查询任务。还要验证字段、限制提示词长度和分辨率/时长范围；示例仅展示队列机制。</p>
+<h2 id="2-为什么需要租约和领取token">2. 为什么需要租约和领取token</h2>
+<p>只写 <code>running=true</code>，worker 崩溃后可能永远无人处理。用到期租约允许其他worker回收任务，但又产生一个风险：旧worker恢复后把新worker的结果覆盖掉。</p>
+<p>因此每次领取生成新token，完成或失败写回都带上“状态仍running、token一致、租约未到期”的条件。数据库只认可当前领取者的确认。注意，这仅隔离本地状态写回，<strong>不能阻止过期worker已经发出的外部网络请求</strong>；外部副作用仍依赖提供方幂等或额外的协调机制。</p>
+<p><code>BEGIN IMMEDIATE</code> 把选择候选任务和更新领取状态放在同一写事务内，避免两个领取者都先读到同一条pending再分别更新。实际网络调用必须放到领取事务之外，不能长时间占有SQLite写锁。</p>
+<h2 id="3-完整实现">3. 完整实现</h2>
+<p>在新的练习目录保存 <code>durable_queue.py</code>。需要可写的本地目录，不需要生产数据库连接。所有SQL变量用参数绑定，不拼接提示词。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
+
+
+<span class="k">def</span> <span class="nf">canonical</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s2">&#34;,&#34;</span><span class="p">,</span> <span class="s2">&#34;:&#34;</span><span class="p">),</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">allow_nan</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">isolation_level</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">row_factory</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Row</span>
+    <span class="k">return</span> <span class="n">db</span>
+
+
+<span class="nd">@contextmanager</span>
+<span class="k">def</span> <span class="nf">transaction</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;BEGIN IMMEDIATE&#34;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;COMMIT&#34;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">BaseException</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">db</span><span class="o">.</span><span class="n">in_transaction</span><span class="p">:</span>
+            <span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;ROLLBACK&#34;</span><span class="p">)</span>
+        <span class="k">raise</span>
+
+
+<span class="k">class</span> <span class="nc">Queue</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">max_attempts</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">max_attempts</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">max_attempts</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;max_attempts must be positive&#34;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">connect</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_attempts</span> <span class="o">=</span> <span class="n">max_attempts</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;&#34;&#34;CREATE TABLE IF NOT EXISTS jobs(
+</span><span class="s2">            id TEXT PRIMARY KEY, payload TEXT NOT NULL,
+</span><span class="s2">            state TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0,
+</span><span class="s2">            available REAL NOT NULL, lease_until REAL,
+</span><span class="s2">            token TEXT, result TEXT, error TEXT)&#34;&#34;&#34;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">submit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">now</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;invalid idempotency key&#34;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">canonical</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">transaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">):</span>
+            <span class="n">old</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;SELECT payload FROM jobs WHERE id=?&#34;</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,))</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">old</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">old</span><span class="p">[</span><span class="s2">&#34;payload&#34;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">data</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;same key with different payload&#34;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">key</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;INSERT INTO jobs(id,payload,state,available) VALUES(?,?,&#39;pending&#39;,?)&#34;</span><span class="p">,</span>
+                            <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">now</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">key</span>
+
+    <span class="k">def</span> <span class="nf">claim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">now</span><span class="p">,</span> <span class="n">lease_seconds</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">lease_seconds</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;lease must be positive&#34;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">transaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">):</span>
+            <span class="c1"># Exhausted and abandoned work must not stay running forever.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;&#34;&#34;UPDATE jobs SET state=&#39;failed&#39;,token=NULL,error=&#39;lease exhausted&#39;
+</span><span class="s2">                WHERE state=&#39;running&#39; AND lease_until&lt;=? AND attempts&gt;=?&#34;&#34;&#34;</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">now</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_attempts</span><span class="p">))</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;&#34;&#34;SELECT * FROM jobs WHERE attempts&lt;? AND
+</span><span class="s2">                ((state=&#39;pending&#39; AND available&lt;=?) OR
+</span><span class="s2">                 (state=&#39;running&#39; AND lease_until&lt;=?))
+</span><span class="s2">                ORDER BY available,id LIMIT 1&#34;&#34;&#34;</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_attempts</span><span class="p">,</span> <span class="n">now</span><span class="p">,</span> <span class="n">now</span><span class="p">))</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">row</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">None</span>
+            <span class="n">token</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;&#34;&#34;UPDATE jobs SET state=&#39;running&#39;,attempts=attempts+1,
+</span><span class="s2">                lease_until=?,token=? WHERE id=?&#34;&#34;&#34;</span><span class="p">,</span> <span class="p">(</span><span class="n">now</span> <span class="o">+</span> <span class="n">lease_seconds</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s2">&#34;id&#34;</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;SELECT * FROM jobs WHERE id=?&#34;</span><span class="p">,</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&#34;id&#34;</span><span class="p">],))</span><span class="o">.</span><span class="n">fetchone</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">now</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;&#34;&#34;UPDATE jobs SET state=&#39;done&#39;,result=?,token=NULL,error=NULL
+</span><span class="s2">            WHERE id=? AND state=&#39;running&#39; AND token=? AND lease_until&gt;?&#34;&#34;&#34;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">canonical</span><span class="p">(</span><span class="n">result</span><span class="p">),</span> <span class="n">job</span><span class="p">[</span><span class="s2">&#34;id&#34;</span><span class="p">],</span> <span class="n">job</span><span class="p">[</span><span class="s2">&#34;token&#34;</span><span class="p">],</span> <span class="n">now</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">rowcount</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">fail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">now</span><span class="p">,</span> <span class="n">retryable</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="c1"># An application must classify errors; never retry all exceptions blindly.</span>
+        <span class="n">retry</span> <span class="o">=</span> <span class="n">retryable</span> <span class="ow">and</span> <span class="n">job</span><span class="p">[</span><span class="s2">&#34;attempts&#34;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_attempts</span>
+        <span class="n">delay</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">job</span><span class="p">[</span><span class="s2">&#34;attempts&#34;</span><span class="p">])</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;&#34;&#34;UPDATE jobs SET state=?,available=?,token=NULL,error=?
+</span><span class="s2">            WHERE id=? AND state=&#39;running&#39; AND token=? AND lease_until&gt;?&#34;&#34;&#34;</span><span class="p">,</span>
+            <span class="p">(</span><span class="s2">&#34;pending&#34;</span> <span class="k">if</span> <span class="n">retry</span> <span class="k">else</span> <span class="s2">&#34;failed&#34;</span><span class="p">,</span> <span class="n">now</span> <span class="o">+</span> <span class="n">delay</span><span class="p">,</span>
+             <span class="s2">&#34;retryable&#34;</span> <span class="k">if</span> <span class="n">retryable</span> <span class="k">else</span> <span class="s2">&#34;permanent&#34;</span><span class="p">,</span> <span class="n">job</span><span class="p">[</span><span class="s2">&#34;id&#34;</span><span class="p">],</span> <span class="n">job</span><span class="p">[</span><span class="s2">&#34;token&#34;</span><span class="p">],</span> <span class="n">now</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">rowcount</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;SELECT * FROM jobs WHERE id=?&#34;</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,))</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">if</span> <span class="n">row</span> <span class="k">else</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">FakeProvider</span><span class="p">:</span>
+    <span class="s2">&#34;&#34;&#34;Separate storage models an external provider accepting an idempotency key.
+</span><span class="s2">    This is not a real network call or a video model.
+</span><span class="s2">    &#34;&#34;&#34;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">connect</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;&#34;&#34;CREATE TABLE IF NOT EXISTS effects(
+</span><span class="s2">            key TEXT PRIMARY KEY, payload_hash TEXT NOT NULL, result TEXT NOT NULL)&#34;&#34;&#34;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">payload</span><span class="p">):</span>
+        <span class="n">digest</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">canonical</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">transaction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">):</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;SELECT * FROM effects WHERE key=?&#34;</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,))</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">row</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s2">&#34;payload_hash&#34;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">digest</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;provider key conflict&#34;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&#34;result&#34;</span><span class="p">])</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;provider_task_id&#34;</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span><span class="p">,</span> <span class="s2">&#34;status&#34;</span><span class="p">:</span> <span class="s2">&#34;accepted&#34;</span><span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;INSERT INTO effects VALUES(?,?,?)&#34;</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">digest</span><span class="p">,</span> <span class="n">canonical</span><span class="p">(</span><span class="n">result</span><span class="p">)))</span>
+            <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;SELECT count(*) FROM effects&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="4-用故障模拟验证不靠正常路径自证">4. 用故障模拟验证，不靠正常路径自证</h2>
+<p>保存下面的 <code>test_queue.py</code>，与上一文件放在同一目录。它会新建唯一临时目录，保留本地队列与模拟提供方的数据库，不删除已有目录。测试时间由参数推进，不实际等待退避时间。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">durable_queue</span> <span class="kn">import</span> <span class="n">Queue</span><span class="p">,</span> <span class="n">FakeProvider</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&#34;video-queue-test-&#34;</span><span class="p">))</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="s2">&#34;queue.sqlite&#34;</span><span class="p">)</span>
+<span class="n">other</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="s2">&#34;queue.sqlite&#34;</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">FakeProvider</span><span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="s2">&#34;provider.sqlite&#34;</span><span class="p">)</span>
+<span class="n">checks</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">ok</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">ok</span><span class="p">,</span> <span class="n">name</span>
+    <span class="n">checks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;prompt&#34;</span><span class="p">:</span> <span class="s2">&#34;synthetic example&#34;</span><span class="p">,</span> <span class="s2">&#34;seconds&#34;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
+<span class="n">q</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&#34;tenant-a:job-1&#34;</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">q</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&#34;tenant-a:job-1&#34;</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;duplicate submit creates one row&#34;</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;SELECT count(*) FROM jobs&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">q</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&#34;tenant-a:job-1&#34;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&#34;seconds&#34;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&#34;must reject key conflict&#34;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="n">checks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&#34;same key different payload rejected&#34;</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">claim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;second connection cannot claim live lease&#34;</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">claim</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
+<span class="n">result1</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="s2">&#34;id&#34;</span><span class="p">],</span> <span class="n">payload</span><span class="p">)</span>
+<span class="c1"># Simulate crash AFTER provider accepted, BEFORE local acknowledgement.</span>
+<span class="n">q</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="s2">&#34;queue.sqlite&#34;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">claim</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;restart recovers expired lease&#34;</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="s2">&#34;attempts&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">b</span><span class="p">[</span><span class="s2">&#34;token&#34;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">a</span><span class="p">[</span><span class="s2">&#34;token&#34;</span><span class="p">])</span>
+<span class="n">result2</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="s2">&#34;id&#34;</span><span class="p">],</span> <span class="n">payload</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;provider idempotency avoids second effect&#34;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">result1</span> <span class="o">==</span> <span class="n">result2</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;stale worker ack rejected&#34;</span><span class="p">,</span> <span class="ow">not</span> <span class="n">q</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">result1</span><span class="p">))</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;new worker ack accepted&#34;</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">result2</span><span class="p">))</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;done job not reclaimed&#34;</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">claim</span><span class="p">(</span><span class="mi">99</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
+<span class="n">q</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&#34;tenant-a:retry&#34;</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">j</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">claim</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;transient failure scheduled&#34;</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="mi">101</span><span class="p">))</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;backoff not due&#34;</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">claim</span><span class="p">(</span><span class="mi">102</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
+<span class="n">j</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">claim</span><span class="p">(</span><span class="mi">103</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;backoff due&#34;</span><span class="p">,</span> <span class="n">j</span><span class="p">[</span><span class="s2">&#34;attempts&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;retry second failure&#34;</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="mi">104</span><span class="p">))</span>
+<span class="n">j</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">claim</span><span class="p">(</span><span class="mi">108</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;third attempt exists&#34;</span><span class="p">,</span> <span class="n">j</span><span class="p">[</span><span class="s2">&#34;attempts&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">q</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="mi">109</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;retry bounded by attempts&#34;</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="s2">&#34;id&#34;</span><span class="p">])[</span><span class="s2">&#34;state&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;failed&#34;</span><span class="p">)</span>
+<span class="n">q</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&#34;tenant-a:bad-request&#34;</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">j</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">claim</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">q</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="n">retryable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;permanent error not retried&#34;</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="s2">&#34;id&#34;</span><span class="p">])[</span><span class="s2">&#34;state&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;failed&#34;</span><span class="p">)</span>
+<span class="n">q</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&#34;tenant-a:crash-limit&#34;</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">311</span><span class="p">,</span> <span class="mi">322</span><span class="p">):</span>
+    <span class="n">check</span><span class="p">(</span><span class="s2">&#34;expired lease claim &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">q</span><span class="o">.</span><span class="n">claim</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
+<span class="n">check</span><span class="p">(</span><span class="s2">&#34;exhausted crash does not stay running&#34;</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">claim</span><span class="p">(</span><span class="mi">333</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;tenant-a:crash-limit&#34;</span><span class="p">)[</span><span class="s2">&#34;state&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;failed&#34;</span><span class="p">)</span>
+<span class="n">q</span><span class="o">.</span><span class="n">close</span><span class="p">();</span> <span class="n">other</span><span class="o">.</span><span class="n">close</span><span class="p">();</span> <span class="n">p</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&#34;sandbox&#34;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">root</span><span class="p">),</span> <span class="s2">&#34;checks&#34;</span><span class="p">:</span> <span class="n">checks</span><span class="p">,</span> <span class="s2">&#34;count&#34;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">checks</span><span class="p">),</span>
+                  <span class="s2">&#34;limits&#34;</span><span class="p">:</span> <span class="s2">&#34;local sequential multi-connection fault simulation; no real API, no process kill, no load test&#34;</span><span class="p">},</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>运行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">python3 test_queue.py
+</code></pre></td></tr></table>
+</div>
+</div><p>本次实际运行完成19个断言，重点覆盖：重复提交只有一条记录；同键异参拒绝；第二连接不能领取有效租约；关闭并重开本地连接后回收过期租约；提供方已接受但本地未确认时重投只保留一次模拟副作用；旧token确认被拒绝；退避时机、永久错误和重试次数上限正确；连续放弃租约到达次数上限后转failed，不永久挂running。</p>
+<p>测试是<strong>顺序驱动的双连接与状态故障模拟</strong>，不是同时多进程抢占压测，也没有真的kill进程、断电或调用远端模型。关闭连接并重开覆盖持久化读取，但不能替代系统级崩溃恢复测试。这些限制不能在转述时删去。</p>
+<h2 id="5-接真实模型接口时该改什么">5. 接真实模型接口时该改什么</h2>
+<p>worker的生产逻辑应以“领取 → 在事务外提交 → 条件确认”为边界：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 示意流程，不是已对接任何提供方的SDK。</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">claim</span><span class="p">(</span><span class="n">now</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">lease_seconds</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">job</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="c1"># provider应设置网络超时，并明确支持幂等键契约。</span>
+    <span class="c1"># 成功后用当前时间调用finish；失败先按错误类别处理。</span>
+    <span class="k">pass</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这段只是接入位置说明，不能直接运行成一个生产worker。真实适配层还需要：</p>
+<ol>
+<li>明确提供方幂等键保存多久、作用域是什么、超时后能否按键查询。没有这个能力时，本例不能保证避免重复计费。</li>
+<li>区分认证失败、参数错误、额度不足、限速、临时网络错误与“结果未知”。不能把所有4xx或所有异常都无限重试。</li>
+<li>服务端确认远程任务已创建但客户端超时时，先按提供方能力查询，不随意换新键重新创建。</li>
+<li>处理 Retry-After、退避上限与随机抖动。本例固定指数退避便于测试，<strong>没有抖动，也没有解析HTTP响应</strong>。</li>
+<li>明确网络超时小于租约，或实现条件续租。视频任务通常长于一次提交请求，不能简单把租约设为整个视频时长就不再管理。</li>
+<li>回调验签、回调幂等、轮询间隔、对象存储地址有效期和权限要单独实现。</li>
+</ol>
+<h2 id="6-从sqlite迁移到redis或服务型队列">6. 从SQLite迁移到Redis或服务型队列</h2>
+<p>选择SQLite是为了用标准库复现状态机，不意味着Redis多余。需要多机、复杂调度、监控和较高并发时，应评估成熟队列与数据库方案。</p>
+<p>迁移时仍保留业务任务表、幂等键唯一约束和提供方任务ID；队列消息只负责唤醒，不要成为唯一业务真相。若“业务入库”与“消息投递”跨系统，需另外设计事务消息或outbox，不能把本地事务写法直接复制成跨系统原子性保证。</p>
+<h2 id="运维安全与回滚">运维、安全与回滚</h2>
+<ul>
+<li>关注pending积压、最老等待时间、running租约过期、重试率、failed及提供方账单；测试没有给出任何吞吐或成本数字。</li>
+<li>不把模型密钥写进数据库payload、日志或公开测试文件；提示词和素材地址也可能含私人信息，应按业务需要最小化保存。</li>
+<li>程序退出前关闭连接；数据库错误向上报告，不能悄悄标done。磁盘满、IO错误、时钟回拨及任务取消不在本例覆盖范围。</li>
+<li>示例没有删除和保留策略。生产中应先确定幂等记录保留期，过早清理会让旧键再次触发副作用。</li>
+<li>回滚worker版本前先停止新领取并评估在途任务。不要删除队列数据库“重新跑”，也不要把failed批量改pending而不评估重复费用。</li>
+</ul>
+<h2 id="官方参考">官方参考</h2>
+<ul>
+<li><a href="https://docs.python.org/3.13/library/sqlite3.html#transaction-control" target="_blank" rel="noopener noreffer">Python 3.13 sqlite3事务控制</a></li>
+<li><a href="https://www.sqlite.org/lang_transaction.html" target="_blank" rel="noopener noreffer">SQLite事务、单写者与BEGIN IMMEDIATE</a></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-11-19</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2026/11/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.mmfei.com/2026/11/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" data-title="Python &#43; SQLite 实现视频任务队列：幂等、重试与租约恢复" data-via="mmfei" data-hashtags="Python,SQLite,任务队列,幂等"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.mmfei.com/2026/11/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" data-hashtag="Python"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.mmfei.com/2026/11/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" data-title="Python &#43; SQLite 实现视频任务队列：幂等、重试与租约恢复"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.mmfei.com/2026/11/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" data-title="Python &#43; SQLite 实现视频任务队列：幂等、重试与租约恢复"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.mmfei.com/2026/11/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" data-title="Python &#43; SQLite 实现视频任务队列：幂等、重试与租约恢复"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/python/">Python</a>,&nbsp;<a href="/tags/sqlite/">SQLite</a>,&nbsp;<a href="/tags/%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/">任务队列</a>,&nbsp;<a href="/tags/%E5%B9%82%E7%AD%89/">幂等</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <nav class="sk-nav" aria-label="文章导航"><a href="/2026/11/ga4%E8%87%AA%E7%84%B6%E6%90%9C%E7%B4%A2%E5%AF%B9%E4%B8%8D%E4%B8%8Asearch-console%E7%82%B9%E5%87%BB/" class="sk-nav-btn sk-nav-prev" rel="prev" title="GA4 自然搜索会话为什么对不上 Search Console 点击：博客数据核对清单"><i class="fas fa-angle-left fa-fw"></i>GA4 自然搜索会话为什么对不上 Search Console 点击：博客数据核对清单</a></nav>
+</div>
+
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article>
+    </div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.mmfei.com/" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/css/skin-stripe.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"valine":{"appId":"agrUIy35wmii07cPfX0p0UWx-MdYXbMMI","appKey":"xNDv6FEmi9xqlsf6out3W5c6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://agruiy35.api.lncldglobal.com","visitor":true}}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6" async></script><link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+<div id="pagefind-overlay" class="pf-overlay" aria-hidden="true">
+    <div class="pf-modal" role="dialog" aria-modal="true" aria-label="搜索">
+        <button type="button" class="pf-close" id="pagefind-close" aria-label="清空">&times;</button>
+        <div id="pagefind-ui"></div>
+    </div>
+</div>
+
+<style>
+.pf-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8vh 16px 16px;
+}
+.pf-overlay.open {
+    display: flex;
+}
+.pf-modal {
+    position: relative;
+    width: 560px;
+    max-width: 100%;
+    background: var(--card-background, #fff);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.28);
+    padding: 18px 18px 10px;
+}
+.pf-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--secondary-font-color, #666);
+    cursor: pointer;
+    padding: 6px;
+}
+.pf-close:hover { color: var(--primary-font-color, #111); }
+#pagefind-ui { min-height: 40px; }
+@media (max-width: 680px) {
+    .pf-overlay { padding: 12px 10px; align-items: flex-start; }
+    .pf-modal { padding: 14px 12px 8px; border-radius: 10px; }
+}
+</style>
+
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+(function () {
+    var overlay = document.getElementById('pagefind-overlay');
+    var modal = overlay.querySelector('.pf-modal');
+    var closeBtn = document.getElementById('pagefind-close');
+    var uiMount = document.getElementById('pagefind-ui');
+
+    function open() {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        var input = uiMount.querySelector('input');
+        if (input) { setTimeout(function () { input.focus(); }, 60); }
+    }
+    function close() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    function bindTrigger(id) {
+        var el = document.getElementById(id);
+        if (el) { el.addEventListener('click', function (e) { e.preventDefault(); open(); }); }
+    }
+    bindTrigger('pagefind-trigger-desktop');
+    bindTrigger('pagefind-trigger-mobile');
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) { close(); }
+    });
+
+    if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({
+            element: uiMount,
+            showSubResults: true,
+            showImages: false,
+            highlightQuery: true,
+            translations: {
+                placeholder: '搜索文章标题、标签或内容…',
+                clear_search: '清除',
+                load_more: '加载更多结果',
+                search_label: '搜索',
+                filters_label: '筛选',
+                no_results: '没有找到结果'
+            }
+        });
+    }
+})();
+</script>
+</body>
+</html>
