@@ -21,7 +21,7 @@
 - [GitHub Pages 自定义域名：www 与裸域、HTTPS 证书与强制跳转核对清单](https://www.mmfei.com/2026/11/github-pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8Dhttps%E6%A0%B8%E5%AF%B9%E6%B8%85%E5%8D%95/) — 2026-11-19 · 分类: GitHub Pages, HTTPS, 自定义域名 · 标签: GitHub Pages, HTTPS, 自定义域名
 - [Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框](https://www.mmfei.com/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/) — 2026-11-19 · 分类: Hugo, Pagefind, 静态博客 · 标签: Hugo, Pagefind, 静态博客
 - [GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单](https://www.mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/) — 2026-11-18 · 分类: GitHub Pages, AdSense, 静态博客 · 标签: GitHub Pages, AdSense, 静态博客
-- [设置gitlab-ce的root账号密码](https://www.mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/) — 2025-08-05 · 分类: gitlab · 标签: gitlab
+- [重置 GitLab CE 的 root 密码](https://www.mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/) — 2025-08-05 · 分类: gitlab · 标签: gitlab
 - [在 Ubuntu 上用 apt 安装 Redis](https://www.mmfei.com/2024/08/ubuntu%E5%AE%89%E8%A3%85redis/) — 2024-08-07 · 分类: ubuntu, redis · 标签: ubuntu, redis
 - [在 Ubuntu 上安装 MySQL（核验软件源版本）](https://www.mmfei.com/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/) — 2024-06-14 · 分类: ubuntu, mysql · 标签: ubuntu, mysql
 - [swoole内存泄漏例子](https://www.mmfei.com/2024/04/swoole%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E4%BE%8B%E5%AD%90/) — 2024-04-09 · 分类: swoole · 标签: swoole

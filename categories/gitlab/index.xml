@@ -5,14 +5,14 @@
         <description>gitlab - 分类 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
             <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 05 Aug 2025 19:30:35 &#43;0800</lastBuildDate><atom:link href="https://www.mmfei.com/categories/gitlab/" rel="self" type="application/rss+xml" /><item>
-    <title>设置gitlab-ce的root账号密码</title>
+    <title>重置 GitLab CE 的 root 密码</title>
     <link>https://www.mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/</link>
     <pubDate>Tue, 05 Aug 2025 19:30:35 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://www.mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/%e8%ae%be%e7%bd%aegitlab-ce%e7%9a%84root%e8%b4%a6%e5%8f%b7%e5%af%86%e7%a0%81/featuredImage.png" referrerpolicy="no-referrer">
-            </div>1 2 3 4 5 6 7 docker exec -it &lt;gitlab_container_name_or_id&gt; /bin/bash gitlab-rails console -e production user = User.where(id: 1).first # root 用户的 ID 通常是 1 user.password = &#39;新密码&#39; # 替换为你要设置的新密码 user.password_confirmation = &#39;新密码&#3]]></description>
+            </div>原文只给出一段 docker exec 进入容器后启动 gitlab-rails console，再用 User.where(id: 1) 改密码的命令。GitLab 官方文档把 Rake 任务作为重置密码的标准方法之一，并单独说明了]]></description>
 </item><item>
     <title>Gitlab Ce进入admin_runners报500</title>
     <link>https://www.mmfei.com/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/</link>
