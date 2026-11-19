@@ -4,7 +4,14 @@
         <link>https://www.mmfei.com/posts/</link>
         <description>所有文章 | 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 19 Nov 2026 09:40:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>robots.txt 与 sitemap 不是收录开关：静态博客的抓取排查清单</title>
+    <link>https://www.mmfei.com/2026/11/robots%E4%B8%8Esitemap%E6%8A%93%E5%8F%96%E6%8E%92%E6%9F%A5%E6%B8%85%E5%8D%95/</link>
+    <pubDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/robots%E4%B8%8Esitemap%E6%8A%93%E5%8F%96%E6%8E%92%E6%9F%A5%E6%B8%85%E5%8D%95/</guid>
+    <description><![CDATA[把文章放进 sitemap，再在 robots.txt 写一句 Allow，并不能保证 Google 收录。前者提供发现网址的线索，后者表达爬虫能否抓取；页面是否被抓取、如何被索引]]></description>
+</item><item>
     <title>Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框</title>
     <link>https://www.mmfei.com/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/</link>
     <pubDate>Thu, 19 Nov 2026 09:40:00 &#43;0700</pubDate>
@@ -81,14 +88,5 @@
     <description><![CDATA[<div class="featured-image">
                 <img src="/images/posts/phpredis%e7%9a%84%e4%bd%bf%e7%94%a8/featuredImage.png" referrerpolicy="no-referrer">
             </div>1、redis的5种数据类型： string 字符串（可以为整形、浮点型和字符串，统称为元素） list 列表（实现队列,元素不唯一，先入先出原则）-- 理解成水管 set]]></description>
-</item><item>
-    <title>在ubuntu20安装protobuf客户端evans</title>
-    <link>https://www.mmfei.com/2023/10/%E5%9C%A8ubuntu20%E5%AE%89%E8%A3%85protobuf%E5%AE%A2%E6%88%B7%E7%AB%AFevans/</link>
-    <pubDate>Sat, 28 Oct 2023 14:39:24 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/2023/10/%E5%9C%A8ubuntu20%E5%AE%89%E8%A3%85protobuf%E5%AE%A2%E6%88%B7%E7%AB%AFevans/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/%e5%9c%a8ubuntu20%e5%ae%89%e8%a3%85protobuf%e5%ae%a2%e6%88%b7%e7%ab%afevans/featuredImage.png" referrerpolicy="no-referrer">
-            </div>1 2 3 4 5 wget https://github.com/ktr0731/evans/releases/download/v0.10.11/evans_linux_amd64.tar.gz --no-check-certificate tar xvzf evans_linux_amd64.tar.gz; cp evans /usr/local/bin; which evans; evans]]></description>
 </item></channel>
 </rss>
