@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/www.mmfei.com\/2026\/11\/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8\/"
-        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "FFmpeg, 音视频, 字幕, libass","wordcount":  4220 ,
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "FFmpeg, 音视频, 字幕, libass","wordcount":  4307 ,
         "url": "https:\/\/www.mmfei.com\/2026\/11\/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8\/","datePublished": "2026-11-19T14:50:00+07:00","dateModified": "2026-11-19T14:50:00+07:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
@@ -53,7 +53,7 @@
         title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friend/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friend/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="/topics/video-processing/"> 专题 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
                     <i class="fas fa-search fa-fw"></i>
                 </a>
                 <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
@@ -82,7 +82,7 @@
         <div class="menu" id="menu-mobile">
                 <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
                     <i class="fas fa-search fa-fw"></i>
-                </a><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friend/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                </a><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friend/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="/topics/video-processing/" title="">专题</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw"></i>
             </a></div>
     </div>
@@ -95,7 +95,7 @@
             <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%BC%80%E5%8F%91/">音视频开发</a></p><h1 class="single-title sk-single-title">FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐</h1><div class="post-meta sk-single-meta">
                     <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
                     </div>
-                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-19">2026-11-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4220 字&nbsp;
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-19">2026-11-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4307 字&nbsp;
                         <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;<span id="/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/" class="leancloud_visitors" data-flag-title="FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐">
                                 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                             </span>&nbsp;</div>
@@ -115,6 +115,7 @@
     <li><a href="#5-换成真实素材时的调整">5. 换成真实素材时的调整</a></li>
     <li><a href="#6-常见故障和上线边界">6. 常见故障和上线边界</a></li>
     <li><a href="#官方参考">官方参考</a></li>
+    <li><a href="#同专题">同专题</a></li>
   </ul>
 </nav></div>
                 </div><div class="content" id="content"><p>一条短视频有6秒画面、4秒配音和两段字幕，合成时应该提前结束，还是保留画面并把尾部补静音？输入文件里有多个音轨时，究竟选到了哪一条？这些问题比“执行一条FFmpeg命令”更值得先定义。</p>
@@ -439,6 +440,8 @@ ffmpeg -hide_banner -nostdin -v error -ss 1 -i output.mp4 -frames:v 1 subtitle-f
 <li><a href="https://ffmpeg.org/ffmpeg-filters.html" target="_blank" rel="noopener noreffer">FFmpeg音频滤镜</a></li>
 </ul>
 <p>在线手册可能随项目版本更新；本例具体可用选项还对照了实际安装版本的<code>-h filter=subtitles</code>帮助。本文没有给出转码速度、云成本或播放器兼容率的估计。</p>
+<h2 id="同专题">同专题</h2>
+<p>这三篇可以单独阅读。说明见 <a href="/topics/video-processing/" rel="">视频任务与交付：三个可独立复现的技术示例</a>。上一篇是 <a href="/2026/11/python-sqlite%e8%a7%86%e9%a2%91%e4%bb%bb%e5%8a%a1%e9%98%9f%e5%88%97/" rel="">Python + SQLite 实现视频任务队列：幂等、重试与租约恢复</a>，下一篇是 <a href="/2026/11/ffmpeg-hls%e5%88%87%e7%89%87%e4%b8%8e%e7%ad%be%e5%90%8d%e9%89%b4%e6%9d%83/" rel="">FFmpeg HLS 切片与签名鉴权：别只保护 m3u8</a>。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

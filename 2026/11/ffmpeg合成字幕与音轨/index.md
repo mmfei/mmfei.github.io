@@ -227,3 +227,7 @@ python3 verify.py "$work"
 
 在线手册可能随项目版本更新；本例具体可用选项还对照了实际安装版本的`-h filter=subtitles`帮助。本文没有给出转码速度、云成本或播放器兼容率的估计。
 
+## 同专题
+
+这三篇可以单独阅读。说明见 [视频任务与交付：三个可独立复现的技术示例](/topics/video-processing/)。上一篇是 [Python + SQLite 实现视频任务队列：幂等、重试与租约恢复](/2026/11/python-sqlite视频任务队列/)，下一篇是 [FFmpeg HLS 切片与签名鉴权：别只保护 m3u8](/2026/11/ffmpeg-hls切片与签名鉴权/)。
+

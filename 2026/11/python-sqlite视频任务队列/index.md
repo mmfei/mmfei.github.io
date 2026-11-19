@@ -287,3 +287,7 @@ if job is not None:
 - [Python 3.13 sqlite3事务控制](https://docs.python.org/3.13/library/sqlite3.html#transaction-control)
 - [SQLite事务、单写者与BEGIN IMMEDIATE](https://www.sqlite.org/lang_transaction.html)
 
+## 同专题
+
+这三篇可以单独阅读。说明见 [视频任务与交付：三个可独立复现的技术示例](/topics/video-processing/)。下一篇是 [FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐](/2026/11/ffmpeg合成字幕与音轨/)。
+

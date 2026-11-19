@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/www.mmfei.com\/2026\/11\/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97\/"
-        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Python, SQLite, 任务队列, 幂等","wordcount":  3529 ,
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Python, SQLite, 任务队列, 幂等","wordcount":  3594 ,
         "url": "https:\/\/www.mmfei.com\/2026\/11\/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97\/","datePublished": "2026-11-19T14:45:00+07:00","dateModified": "2026-11-19T14:45:00+07:00","publisher": {
             "@type": "Organization",
             "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
@@ -53,7 +53,7 @@
         title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friend/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friend/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><a class="menu-item" href="/topics/video-processing/"> 专题 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
                     <i class="fas fa-search fa-fw"></i>
                 </a>
                 <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
@@ -82,7 +82,7 @@
         <div class="menu" id="menu-mobile">
                 <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
                     <i class="fas fa-search fa-fw"></i>
-                </a><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friend/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                </a><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friend/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a class="menu-item" href="/topics/video-processing/" title="">专题</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
                 <i class="fas fa-adjust fa-fw"></i>
             </a></div>
     </div>
@@ -95,7 +95,7 @@
             <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/python/">Python</a><span class="sk-single-kicker-sep">·</span><a href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/">后端开发</a></p><h1 class="single-title sk-single-title">Python + SQLite 实现视频任务队列：幂等、重试与租约恢复</h1><div class="post-meta sk-single-meta">
                     <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
                     </div>
-                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-19">2026-11-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3529 字&nbsp;
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-19">2026-11-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3594 字&nbsp;
                         <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/2026/11/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/" class="leancloud_visitors" data-flag-title="Python &#43; SQLite 实现视频任务队列：幂等、重试与租约恢复">
                                 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                             </span>&nbsp;</div>
@@ -116,6 +116,7 @@
     <li><a href="#6-从sqlite迁移到redis或服务型队列">6. 从SQLite迁移到Redis或服务型队列</a></li>
     <li><a href="#运维安全与回滚">运维、安全与回滚</a></li>
     <li><a href="#官方参考">官方参考</a></li>
+    <li><a href="#同专题">同专题</a></li>
   </ul>
 </nav></div>
                 </div><div class="content" id="content"><p>用户重复点“生成视频”，接口超时后前端又重试，worker 提交模型任务后还没写回状态就退出：三种现象可能都导致重复提交与重复计费。仅给队列消息加一个唯一 ID，并不能自动解决外部接口的重复副作用。</p>
@@ -591,6 +592,8 @@
 <li><a href="https://docs.python.org/3.13/library/sqlite3.html#transaction-control" target="_blank" rel="noopener noreffer">Python 3.13 sqlite3事务控制</a></li>
 <li><a href="https://www.sqlite.org/lang_transaction.html" target="_blank" rel="noopener noreffer">SQLite事务、单写者与BEGIN IMMEDIATE</a></li>
 </ul>
+<h2 id="同专题">同专题</h2>
+<p>这三篇可以单独阅读。说明见 <a href="/topics/video-processing/" rel="">视频任务与交付：三个可独立复现的技术示例</a>。下一篇是 <a href="/2026/11/ffmpeg%e5%90%88%e6%88%90%e5%ad%97%e5%b9%95%e4%b8%8e%e9%9f%b3%e8%bd%a8/" rel="">FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐</a>。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

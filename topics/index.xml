@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Topics on 木木飞</title>
+    <link>https://www.mmfei.com/topics/</link>
+    <description>Recent content in Topics on 木木飞</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+    <webMaster>wlfkongl@gmail.com (mmfei)</webMaster>
+    <lastBuildDate>Thu, 19 Nov 2026 20:15:00 +0700</lastBuildDate><atom:link href="https://www.mmfei.com/topics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>视频任务与交付：三个可独立复现的技术示例</title>
+      <link>https://www.mmfei.com/topics/video-processing/</link>
+      <pubDate>Thu, 19 Nov 2026 20:15:00 +0700</pubDate>
+      <author>wlfkongl@gmail.com (mmfei)</author>
+      <guid>https://www.mmfei.com/topics/video-processing/</guid>
+      <description>从任务提交到媒体处理、再到视频交付，最容易出问题的不是一个API怎么调用，而是失败后是否重复提交、媒体流是否选错、播放列表和片段是否都受保护</description>
+    </item>
+    
+  </channel>
+</rss>
