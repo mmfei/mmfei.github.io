@@ -2,17 +2,22 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>https://www.mmfei.com/categories/</loc><lastmod>2026-11-19T09:40:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/tags/hugo/</loc><lastmod>2026-11-19T09:40:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/categories/hugo/</loc><lastmod>2026-11-19T09:40:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/</loc><lastmod>2026-11-19T09:40:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/tags/pagefind/</loc><lastmod>2026-11-19T09:40:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/categories/pagefind/</loc><lastmod>2026-11-19T09:40:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/posts/</loc><lastmod>2026-11-19T09:40:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/tags/</loc><lastmod>2026-11-19T09:40:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/</loc><lastmod>2026-11-19T09:40:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/tags/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</loc><lastmod>2026-11-19T09:40:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</loc><lastmod>2026-11-19T09:40:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/tags/adsense/</loc><lastmod>2026-11-18T08:00:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/categories/adsense/</loc><lastmod>2026-11-18T08:00:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://www.mmfei.com/categories/</loc><lastmod>2026-11-18T08:00:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/tags/github-pages/</loc><lastmod>2026-11-18T08:00:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/categories/github-pages/</loc><lastmod>2026-11-18T08:00:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/</loc><lastmod>2026-11-18T08:00:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://www.mmfei.com/posts/</loc><lastmod>2026-11-18T08:00:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://www.mmfei.com/tags/</loc><lastmod>2026-11-18T08:00:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://www.mmfei.com/</loc><lastmod>2026-11-18T08:00:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://www.mmfei.com/tags/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</loc><lastmod>2026-11-18T08:00:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://www.mmfei.com/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</loc><lastmod>2026-11-18T08:00:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/tags/gitlab/</loc><lastmod>2025-08-05T19:30:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://www.mmfei.com/categories/gitlab/</loc><lastmod>2025-08-05T19:30:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://www.mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/</loc><lastmod>2025-08-05T19:30:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
@@ -236,8 +241,6 @@
             <loc>https://www.mmfei.com/tags/bat/</loc><lastmod>2021-06-27T01:10:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://www.mmfei.com/2021/05/centos_install_bat_a_better_cat/</loc><lastmod>2021-06-27T01:10:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://www.mmfei.com/categories/install/</loc><lastmod>2021-06-27T01:10:13&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://www.mmfei.com/tags/hugo/</loc><lastmod>2021-05-26T00:26:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://www.mmfei.com/categories/hugo/</loc><lastmod>2021-05-26T00:26:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://www.mmfei.com/2021/05/hugo%E5%A2%9E%E5%8A%A0mermaidjs%E7%9A%84%E6%94%AF%E6%8C%81/</loc><lastmod>2021-05-26T00:26:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://www.mmfei.com/tags/mermaid/</loc><lastmod>2021-05-26T00:26:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://www.mmfei.com/tags/theme/</loc><lastmod>2021-05-26T00:26:15&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>

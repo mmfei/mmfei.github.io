@@ -11,7 +11,8 @@
 - [RSS 订阅](https://www.mmfei.com/index.xml): 站点 RSS Feed
 - [JSON Feed](https://www.mmfei.com/index.json): 结构化订阅
 
-## 文章索引（共 56 篇）
+## 文章索引（共 57 篇）
+- [Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框](https://www.mmfei.com/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/) — 2026-11-19 · 分类: Hugo, Pagefind, 静态博客 · 标签: Hugo, Pagefind, 静态博客
 - [GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单](https://www.mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/) — 2026-11-18 · 分类: GitHub Pages, AdSense, 静态博客 · 标签: GitHub Pages, AdSense, 静态博客
 - [设置gitlab-ce的root账号密码](https://www.mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/) — 2025-08-05 · 分类: gitlab · 标签: gitlab
 - [ubuntu安装redis](https://www.mmfei.com/2024/08/ubuntu%E5%AE%89%E8%A3%85redis/) — 2024-08-07 · 分类: ubuntu, redis · 标签: ubuntu, redis

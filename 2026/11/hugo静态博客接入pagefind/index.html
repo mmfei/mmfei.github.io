@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框 - 木木飞</title><meta name="Description" content="在 Hugo 构建之后用 Pagefind 1.6.0 生成纯静态搜索索引，把搜索框挂到模板，并给出 CI、核验、排错和回滚步骤。"><meta property="og:title" content="Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框" />
+<meta property="og:description" content="在 Hugo 构建之后用 Pagefind 1.6.0 生成纯静态搜索索引，把搜索框挂到模板，并给出 CI、核验、排错和回滚步骤。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.mmfei.com/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-11-19T09:40:00&#43;07:00" />
+<meta property="article:modified_time" content="2026-11-19T09:40:00&#43;07:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
+
+<meta name="twitter:title" content="Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框"/>
+<meta name="twitter:description" content="在 Hugo 构建之后用 Pagefind 1.6.0 生成纯静态搜索索引，把搜索框挂到模板，并给出 CI、核验、排错和回滚步骤。"/>
+<meta name="application-name" content="木木飞">
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.mmfei.com/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/" /><link rel="prev" href="https://www.mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.mmfei.com\/2026\/11\/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind\/"
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Hugo, Pagefind, 静态博客","wordcount":  7080 ,
+        "url": "https:\/\/www.mmfei.com\/2026\/11\/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind\/","datePublished": "2026-11-19T09:40:00+07:00","dateModified": "2026-11-19T09:40:00+07:00","publisher": {
+            "@type": "Organization",
+            "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "mmfei"
+            },"description": "在 Hugo 构建之后用 Pagefind 1.6.0 生成纯静态搜索索引，把搜索框挂到模板，并给出 CI、核验、排错和回滚步骤。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/friend/"> 友链 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a>
+                <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile">
+                <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/friend/" title="">友链</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<main class="main">
+                <div class="container"><div class="sk-page sk-article"><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div><article class="page single sk-single">
+            <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/hugo/">hugo</a><span class="sk-single-kicker-sep">·</span><a href="/categories/pagefind/">Pagefind</a><span class="sk-single-kicker-sep">·</span><a href="/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/">静态博客</a></p><h1 class="single-title sk-single-title">Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框</h1><div class="post-meta sk-single-meta">
+                    <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
+                    </div>
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-19">2026-11-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 7080 字&nbsp;
+                        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 15 分钟&nbsp;<span id="/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/" class="leancloud_visitors" data-flag-title="Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框">
+                                <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                            </span>&nbsp;</div>
+                </div>
+            </header><div class="details toc sk-single-toc" id="toc-static"  kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#环境与边界">环境与边界</a></li>
+    <li><a href="#1-为什么用纯静态搜索">1. 为什么用纯静态搜索</a></li>
+    <li><a href="#2-安装并在本地生成索引">2. 安装并在本地生成索引</a></li>
+    <li><a href="#3-在-ci-中生成索引并确保索引进入发布产物">3. 在 CI 中生成索引，并确保索引进入发布产物</a></li>
+    <li><a href="#4-把搜索界面挂到-hugo-模板">4. 把搜索界面挂到 Hugo 模板</a></li>
+    <li><a href="#5-中文分词语言属性和排除页面">5. 中文分词、语言属性和排除页面</a></li>
+    <li><a href="#6-验证方法">6. 验证方法</a></li>
+    <li><a href="#7-常见故障">7. 常见故障</a></li>
+    <li><a href="#8-安全与隐私">8. 安全与隐私</a></li>
+    <li><a href="#9-回滚">9. 回滚</a></li>
+    <li><a href="#附录对公开站点的只读核验不是完整接入实测">附录：对公开站点的只读核验（不是完整接入实测）</a></li>
+    <li><a href="#官方参考">官方参考</a></li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><p>静态托管上的博客通常没有可查询的服务端，把全文搜索交给第三方接口又会引入额外依赖。Pagefind 的做法是：在静态站点生成器完成构建之后，扫描输出目录里的 HTML，生成一份可以一起发布的静态搜索包；浏览器只请求这份包，不必再访问搜索 API。本教程说明如何在 Hugo 站点上安装、在本地或 CI 中生成索引、把搜索界面挂到公共模板，以及如何核验、排错和回滚。</p>
+<blockquote>
+<p>适用范围：能修改 Hugo 公共模板，并且可以在 <code>hugo</code> 生成 <code>public/</code> 之后追加一条索引命令的站点。资料核读日期为 2026 年 11 月 19 日（Asia/Bangkok）。索引命令按 <code>pagefind@1.6.0</code> 核对；同日 npm 上该包的 <code>latest</code> 标签也是 <code>1.6.0</code>。官方文档从 1.5.0 起把 Component UI（<code>pagefind-component-ui.js</code>）作为推荐界面，并写明它取代 Default UI（<code>pagefind-ui.js</code> / <code>PagefindUI</code>）；1.6.0 仍会生成两套资源，Default UI 的说明页也还在。下文以核读日官方文档为准：新接入优先用 Component UI，同时给出仍被文档收录的 Default UI 写法，便于对照已有站点。若你核读时官方最新版或推荐界面又有变化，以当时文档为准，不要把本文冻结成唯一做法。文中命令输出都是官方描述或预期现象。<strong>未在本文环境实测完整接入</strong>，也没有用隔离环境跑通一次从构建到发布的搜索闭环。</p>
+</blockquote>
+<h2 id="环境与边界">环境与边界</h2>
+<p>以会把站点输出到 <code>public/</code> 的 Hugo 为例，版本可对照 <code>hugo version</code>。当前许多静态博客仍使用 Hugo extended（例如 0.83.1 extended）；只要构建产物是静态 HTML，Pagefind 并不依赖某个 Hugo 小版本。需要已安装 Node.js 以便使用官方 npm 包装命令，或者改用官方文档中的 Python 包装、预编译二进制或源码安装。还需要能修改主题或站点的 layouts，把搜索界面写进全站模板，而不是把脚本粘进可能被转义的 Markdown 正文。</p>
+<p>本篇是通用教程，不是某个私有仓库的变更日志，也不展示任何密钥、令牌或私有工作流。若主题已经自带基于 Fuse.js 等方案的前端搜索，接入前先确认不要同时露出两套搜索框。示例路径、域名和仓库名都是占位符，必须换成自己的值。</p>
+<h2 id="1-为什么用纯静态搜索">1. 为什么用纯静态搜索</h2>
+<p>Pagefind 官方把它定位为静态生成器跑完之后的后处理步骤：它读取已经生成好的 HTML，在站点输出目录里写出一个搜索包（默认是 <code>public/pagefind/</code>），里面包含浏览器脚本、样式和索引文件。搜索发生在读者的浏览器里，Pagefind 本身没有服务端组件。官方还说明，<code>--serve</code> 只是“先生成索引，再用任意静态服务器预览”的快捷方式，并不等于上线后还要跑一个搜索服务。</p>
+<p>这对 GitHub Pages 这类只发布静态文件的托管是匹配的：索引和页面一起发布，构建完成后不必再申请搜索服务、也不必在运行时把读者的查询发到第三方。相对地，如果只在主题里放一个每次打开页面都下载整站词库的客户端方案，站点变大后体积和相关度都会更难控制；如果把搜索交给外部 API，则多了一层账号、配额和隐私暴露面。选择 Pagefind，意味着你接受“每次发布都要重新生成索引”，并用发布产物是否包含 <code>pagefind/</code> 来判断搜索能不能用。</p>
+<h2 id="2-安装并在本地生成索引">2. 安装并在本地生成索引</h2>
+<p>官方推荐用包装包来安装。通过 <code>npx</code> 运行时，会下载对应平台的二进制，而且<strong>始终使用 <code>pagefind_extended</code></strong>。官方写明：扩展版体积更大，但包含中文、日文、泰文这类不能靠空白分词的语言支持。中文站点不要改用精简的非 extended 二进制。锁定版本时，把官方示例里的标签换成你要核验的版本：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 先生成静态站点。默认输出目录是 public/</span>
+hugo --minify
+
+<span class="c1"># 锁定 1.6.0；--yes 用于非交互环境自动确认 npx 安装</span>
+npx --yes pagefind@1.6.0 --site public
+</code></pre></td></tr></table>
+</div>
+</div><p><code>--site</code> 必须指向<strong>已经构建完成的 HTML 目录</strong>。官方文档也以 Hugo 的 <code>public</code> 为例。不要对源码目录 <code>content/</code> 或未构建的开发服务器内存页做索引。官方安装页的版本示例写作 <code>npx pagefind@v1.1.1</code>；2026-11-19 在 npm 上核到的发布号是 <code>1.6.0</code>，没有 <code>v1.6.0</code> 这个标签。本文因此使用 <code>pagefind@1.6.0</code>。若你执行时提示找不到包，先到 npm 核对该版本的实际标签，不要改用来路不明的镜像包。</p>
+<p>命令成功后，官方描述会看到类似下面的摘要（数字随站点变化，这是官方示例，不是本文实测）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">Indexed 2496 pages
+Indexed 22852 words
+Indexed 0 filters
+Created 27 index chunks
+Finished in 2.357 seconds
+</code></pre></td></tr></table>
+</div>
+</div><p>同时，<code>public/pagefind/</code> 会被写出来。官方称这个目录是搜索包，既包含浏览器依赖，也包含检索所需的索引。本地可用下面的只读检查确认目录在，但<strong>把列出文件当成“已经验证搜索可用”是不够的</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ls public/pagefind
+<span class="c1"># 预期现象：至少能看到 pagefind.js、pagefind-entry.json，</span>
+<span class="c1"># 以及界面资源（1.6.0 预期同时包含 Component UI 与 Default UI 的 js/css）</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><code>pagefind-entry.json</code> 里有版本和语言列表，可用于确认这次索引用的是不是 1.6.0、检测到了哪些 <code>lang</code>。不要把这份文件里的哈希或页面计数抄进文档当成固定值。</p>
+<p>只跑 <code>hugo server</code> / <code>hugo serve</code> 通常看不到可用搜索。官方明确写过：开发服务器不会先写出完整的构建产物，Pagefind 必须索引构建输出。本地预览应先构建，再让 Pagefind 索引；需要立刻查看时，可加上官方的 <code>--serve</code>（不要在 CI 或生产发布里加这个参数）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">hugo --minify
+npx --yes pagefind@1.6.0 --site public --serve
+</code></pre></td></tr></table>
+</div>
+</div><p>官方说预览服务“likely on :1414”，实际端口以命令输出为准。也可用任意静态服务器指向已经包含 <code>pagefind/</code> 的 <code>public/</code>，效果相同。<code>--serve</code> 时官方还会提供 playground；默认情况下，不加 <code>--write-playground</code> 不会把 playground 写进将要上线的产物，这是预期行为。</p>
+<h2 id="3-在-ci-中生成索引并确保索引进入发布产物">3. 在 CI 中生成索引，并确保索引进入发布产物</h2>
+<p>上线时必须在<strong>每次构建之后、发布之前</strong>再跑一遍同样的索引命令，而且发布步骤必须把 <code>public/pagefind/</code> 一并带上。漏掉任何一段，页面上就会出现搜索框却加载不到索引。下面用 GitHub Actions 举例，只使用 GitHub 官方的 <code>actions/checkout</code> 与 <code>actions/setup-node</code>，并在“已有 Hugo 构建步骤”之后追加 Pagefind。工作流里的运行器、Hugo 安装方式和发布动作请按你现有流水线填写；<strong>不要把这段示例理解成完整可复制的发布工作流，也不要在工作流里写入任何密钥或密钥名称</strong>。主版本号以编写当日官方说明为准。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">jobs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">build</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
+</span><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v4</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/setup-node@v4</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;22&#34;</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 此处保留你现有的 Hugo 安装与构建步骤，必须已经生成 public/</span><span class="w">
+</span><span class="w">      </span><span class="c"># - name: Build site</span><span class="w">
+</span><span class="w">      </span><span class="c">#   run: hugo --minify</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Generate Pagefind index</span><span class="w">
+</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">npx --yes pagefind@1.6.0 --site public</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 下一跳必须发布完整的 public/，其中包含 public/pagefind/</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>核对发布流水线时，重点看三件事：索引步骤是否发生在 <code>hugo</code> 之后；发布的是不是构建目录的完整内容，而不是只拷了 <code>public</code> 里的部分子目录；是否有忽略规则把 <code>pagefind/</code> 排除在制品之外。如果有人把一次本地生成的 <code>pagefind/</code> 复制进 <code>static/</code> 以求“开发服务器也能搜”，索引会在下次发文后过期，也不要把它当成正式做法。</p>
+<h2 id="4-把搜索界面挂到-hugo-模板">4. 把搜索界面挂到 Hugo 模板</h2>
+<p>官方入门把界面写进页面，是为了构建时 HTML 里已经有挂载点。1.5.0 之后，官方推荐的 Component UI 写法如下，样式和脚本会在索引时写进 <code>/pagefind/</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;/pagefind/pagefind-component-ui.css&#34;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;/pagefind/pagefind-component-ui.js&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;module&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">pagefind-modal-trigger</span><span class="p">&gt;&lt;/</span><span class="nt">pagefind-modal-trigger</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">pagefind-modal</span><span class="p">&gt;&lt;/</span><span class="nt">pagefind-modal</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>注意官方脚本带有 <code>type=&quot;module&quot;</code>。把这段放进站点公共布局，例如 <code>layouts/partials/pagefind.html</code>，再在页脚或公共头尾的模板里引入，这样文章页和列表页都能用。不要把脚本写进 Markdown 正文。路径如果不是站点根路径，见下文的 <code>bundle-path</code> / <code>bundlePath</code>。</p>
+<p>仅创建 <code>layouts/partials/pagefind.html</code> 不会自动渲染。还需要在实际参与构建的公共布局中调用它一次。先核对主题文档与模板调用链：若主题提供页脚扩展钩子，在站点自己的 <code>layouts/</code> 中实现该钩子并放入下面这一行；否则在站点覆盖的公共布局中、<code>&lt;/body&gt;</code> 前合适位置调用。不要直接修改 <code>themes/</code>，也不要假定所有主题都有同名钩子。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go-html-template" data-lang="go-html-template"><span class="cp">{{</span><span class="w"> </span><span class="nx">partial</span><span class="w"> </span><span class="s">&#34;pagefind.html&#34;</span><span class="w"> </span><span class="na">.</span><span class="w"> </span><span class="cp">}}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上面调用位于公共布局上下文，<code>.</code> 是当前页面上下文；partial 内放第一个 HTML 代码块的资源标签与两个自定义元素。不要同时在 <code>baseof.html</code>、页脚及每篇文章模板重复调用。若主题有自己的覆盖机制，应按该主题实际文件名集成，不要新建一个只含此调用的 <code>baseof.html</code> 覆盖完整页面。构建后检查文章页和列表页的 HTML：搜索触发器与 modal 各出现一次，脚本与样式未重复引入；再做浏览器检索验证。仅检查模板文件存在不算入口生效。</p>
+<p>Default UI 在 1.6.0 里仍然随搜索包生成，官方“Using the Default UI”页仍给出如下写法。新接入应按核读日文档优先用 Component UI；若维护的是已经在用 Default UI 的站点，也可以继续对照这一段，但要清楚它已被官方标注为被取代的界面：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;/pagefind/pagefind-ui.css&#34;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;/pagefind/pagefind-ui.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;search&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+  <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&#34;DOMContentLoaded&#34;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">new</span> <span class="nx">PagefindUI</span><span class="p">({</span> <span class="nx">element</span><span class="o">:</span> <span class="s2">&#34;#search&#34;</span><span class="p">,</span> <span class="nx">showSubResults</span><span class="o">:</span> <span class="kc">true</span> <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Default UI 的文案会尝试按页面语言选择内置翻译，找不到时回退到英文。需要中文提示时，可按官方说明传入 <code>translations</code>。官方还提供 <code>showImages</code>、<code>showSubResults</code>、<code>highlightQuery</code> 等选项，完整列表见 <a href="https://pagefind.app/docs/ui/" target="_blank" rel="noopener noreffer">Pagefind UI 配置</a>。站点如果位于子路径，结果链接可能需要设置搜索配置里的 <code>baseUrl</code>；若控制台提示无法检测包路径，再按官方说明显式设置 <code>bundlePath</code>（Default UI）或 <code>&lt;pagefind-config bundle-path=&quot;...&quot;&gt;</code>（Component UI）。多数情况下，包路径会从脚本 URL 自动检测，不必先改。</p>
+<p>你可以用自己的按钮去打开官方提供的搜索框或模态框，这属于模板层的展示问题。只要最终加载的是构建产物里的官方资源，并且挂载点存在即可。不要把某一站点的私有覆盖层样式当成必须步骤。</p>
+<p>若当前主题已经在菜单里插入了搜索按钮，应关掉或替换主题自带搜索，避免两个入口、两套脚本同时工作。改模板后重新执行“构建 + 索引”，再用静态服务器打开，而不是只刷新 <code>hugo server</code>。</p>
+<h2 id="5-中文分词语言属性和排除页面">5. 中文分词、语言属性和排除页面</h2>
+<p>官方建议为 <code>&lt;html&gt;</code> 设置正确的 <code>lang</code>，索引会按该属性为每种语言单独建索引；浏览器里初始化时也读取同一属性，只检索对应语言。中文页面应使用 <code>zh</code>、<code>zh-cn</code> 或 <code>zh-tw</code>（大小写以你站点生成的 HTML 为准，但必须稳定、一致）。如果部分页面漏写、或中英文 <code>lang</code> 混用且不符合预期，结果会落在不同索引里，表现为“明明有这篇文章却搜不到”。若你希望全站共用一个索引，官方提供 <code>--force-language</code>（配置键 <code>force_language</code>），传入 ISO 639-1 代码，例如 <code>zh</code>；这会忽略自动检测。</p>
+<p>中文、日文、泰文的专门支持只存在于 extended 发行版，<code>npx pagefind</code> 默认就是这个版本。官方说明：这些语言目前没有词干化（stemming），但对没有空格分隔的文本做分词。官方例子：页面标记为中文时，<code>每個月都</code> 会被切成包含 <code>每個</code>、<code>月</code>、<code>都</code> 的词；在浏览器里单独搜这些词可以命中，搜 <code>每個月都</code> 会先分词再匹配各词；搜 <code>每個 月 都</code> 是各词任意顺序；用引号搜 <code>&quot;每個 月 都&quot;</code> 则要求精确匹配 <code>每個月都</code>。若中文完全不能按词检索，先核对是不是误用了非 extended 二进制，再核对 <code>lang</code> 是否被识别为中文。</p>
+<p>控制“哪些内容进索引”应使用官方的 HTML 标记或 CLI 选项，而不是事后删文件：</p>
+<ul>
+<li>默认从 <code>html</code> 根开始索引。把正文容器标成 <code>data-pagefind-body</code> 后，<strong>只要全站任何页面出现了这个属性，没有该属性的页面就不会被索引</strong>。这常用来只收录文章、排除首页或标签页；若希望首页也能搜到，就要同样加上该属性。</li>
+<li>单段内容可用 <code>data-pagefind-ignore</code>（默认为 <code>index</code>：不进正文索引，但仍可能提取标题、图片或元数据）。需要连同元数据一起忽略时，使用 <code>data-pagefind-ignore=&quot;all&quot;</code>。</li>
+<li>不想改模板时，可用配置文件的 <code>exclude_selectors</code>，或 CLI 的 <code>--exclude-selectors</code>。官方提醒：命令行和环境变量一次只接受一个选择器参数，但可以用逗号写成组合选择器。</li>
+<li><code>--glob</code> 默认是 <code>**/*.{html}</code>，可用来限制读入哪些 HTML。</li>
+<li>导航、脚本、样式等组织性元素官方会默认跳过，不必再全部手工排除。</li>
+</ul>
+<p>这些规则在构建时生效。页面上的 <code>noindex</code>、<code>robots.txt</code> 或“请勿收录”说明，<strong>不会自动阻止 Pagefind 扫描已经生成到 <code>public/</code> 的 HTML</strong>。不想被搜索到的内容，正确做法是不要把它发布进构建产物，或按上面的方式排除。</p>
+<h2 id="6-验证方法">6. 验证方法</h2>
+<p>本节给出的是可重复的核对步骤和预期现象，<strong>不是本文已经跑通的实测记录</strong>。未在本文环境执行完整的 Hugo 构建、Pagefind 索引、本地检索和发布闭环。</p>
+<p>构建并索引后，先在产物里确认搜索包：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">test</span> -f public/pagefind/pagefind.js
+<span class="nb">test</span> -f public/pagefind/pagefind-entry.json
+<span class="c1"># 新接入 Component UI 时，还应确认下面两个文件存在：</span>
+<span class="nb">test</span> -f public/pagefind/pagefind-component-ui.js
+<span class="nb">test</span> -f public/pagefind/pagefind-component-ui.css
+</code></pre></td></tr></table>
+</div>
+</div><p>查看 <code>pagefind-entry.json</code> 的 <code>version</code> 是否为 <code>1.6.0</code>，<code>languages</code> 是否包含你在 HTML 里设置的语言，页面计数是否和预期收录范围大致相当（例如你用 <code>data-pagefind-body</code> 只索引文章时，计数不应接近“所有列表页 + 标签页 + 文章”的总和）。然后用 <code>--serve</code> 或静态服务器打开站点，在搜索框输入一篇文章里独有的短语，预期能看到对应结果；再输入一段不应被索引的导航重复文本或已排除页面的内容，预期不应作为有效结果出现。打开浏览器开发者工具，确认 <code>/pagefind/</code> 下的脚本、样式和索引请求不是 404，控制台没有包路径检测失败的警告。</p>
+<p>发布后，把下面命令里的域名换成自己的站点：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">curl -sI https://www.example.com/pagefind/pagefind.js
+curl -sI https://www.example.com/pagefind/pagefind-entry.json
+curl -sI https://www.example.com/pagefind/pagefind-component-ui.js
+curl -sI https://www.example.com/pagefind/pagefind-ui.js
+</code></pre></td></tr></table>
+</div>
+</div><p>预期现象是这些具体文件返回成功的 HTTP 状态（通常是 200）和对应的 JavaScript / JSON / CSS 类型。<code>https://www.example.com/pagefind/</code> 这个目录 URL 本身可能返回 404，因为发布目录里通常没有 <code>pagefind/index.html</code>；这不等于索引缺失，要以具体文件为准。</p>
+<h2 id="7-常见故障">7. 常见故障</h2>
+<p><strong>搜索框在，结果为空或脚本 404。</strong> 先看发布产物，而不是只看源码仓库。常见原因是 CI 先发布后索引、发布步骤没带上 <code>pagefind/</code>、忽略规则排除了该目录，或本地一次索引没有进入生产构建。回滚或修复后要重新构建并发布，不要只清浏览器缓存就下结论。</p>
+<p><strong>路径不对。</strong> 站点如果发布在 <code>https://www.example.com/blog/</code> 这类子路径，却仍写绝对路径 <code>/pagefind/...</code>，浏览器会去域名根下加载。应按实际公共 URL 调整资源路径，并在需要时设置官方的 <code>bundlePath</code> / <code>bundle-path</code> 和 <code>baseUrl</code>。模板里的路径与真实发布路径必须一致。</p>
+<p><strong>中文搜不准或完全搜不到。</strong> 核对是否使用 extended（<code>npx</code> 默认是），<code>lang</code> 是否为 <code>zh</code> / <code>zh-cn</code> / <code>zh-tw</code>，以及是否误把中文页标成 <code>en</code>。不要指望中文有英文那样的词干化。</p>
+<p><strong>部分页面失踪。</strong> 一旦启用 <code>data-pagefind-body</code>，未标记的页面会被全部排除，这是官方设计，不是偶发 bug。标签页、关于页、首页若需要可搜，要显式加上，或收紧/放宽 glob。</p>
+<p><strong>排除没有生效。</strong> <code>data-pagefind-ignore</code> 默认仍可能提取标题或元数据；要彻底排除需 <code>all</code>。命令行 <code>--exclude-selectors</code> 不能像 YAML 列表那样重复多次传一组值，应使用配置文件或逗号组合选择器。</p>
+<p><strong>主题搜索与 Pagefind 抢入口。</strong> 表现为点放大镜出现另一套搜索、控制台报重复初始化，或样式冲突。先停用主题自带搜索再判断 Pagefind 本身是否正常。</p>
+<h2 id="8-安全与隐私">8. 安全与隐私</h2>
+<p>Pagefind 会索引构建产物里未被排除的 HTML。不要把未公开草稿、内部备忘、令牌、账号或仅登录可见的内容输出到 <code>public/</code>，再指望搜索框“自动保密”。回滚搜索界面也不会从已经发布过的旧制品里收回这些文本。</p>
+<p>默认不要用 <code>--write-playground</code> 把 playground 写进线上站点；官方写明该选项默认为关闭，playground 文件始终可在 <code>--serve</code> 时使用。若你有意开放 playground，应把它视为公开工具，而不是调试后门。</p>
+<p>纯静态搜索的一个优点是：读者的查询默认在浏览器本地完成，不必经过你自己的搜索后端或第三方检索服务。这不能代替全站的隐私政策，也不表示页面本身的统计脚本或其他第三方资源不存在。索引仍然是公开静态文件，任何人都可以下载 <code>pagefind/</code> 并查看被收录的内容。</p>
+<h2 id="9-回滚">9. 回滚</h2>
+<p>回滚应只撤销本次搜索接入，不要顺便改主题、统计或域名：</p>
+<ol>
+<li>从公共模板中移除搜索部分模板及其引用，恢复主题原有搜索入口（若你曾关闭它）。</li>
+<li>从 CI 中删除 Pagefind 索引步骤。</li>
+<li>重新构建并发布。未再生成时，新的发布产物中不应再包含 <code>public/pagefind/</code>；若该目录被错误地放进了 <code>static/</code> 或发布分支，需要一并删除后再发布。</li>
+<li>发布后再次请求 <code>https://www.example.com/pagefind/pagefind.js</code>，预期为 404 或不再返回原先的搜索脚本；页面源码中也不应再加载 <code>pagefind-component-ui.js</code> 或 <code>pagefind-ui.js</code>。</li>
+</ol>
+<p>回滚完成后，搜索框消失或失效是预期现象。若旧制品被 CDN 缓存，核对时应看发布时间与响应头，避免把缓存当成回滚失败。</p>
+<h2 id="附录对公开站点的只读核验不是完整接入实测">附录：对公开站点的只读核验（不是完整接入实测）</h2>
+<p>2026-11-19（Asia/Bangkok）对 <code>https://www.mmfei.com/</code> 做了只读检查，目的是观察公开页面是否已经挂有 Pagefind 前端和索引资源。这只能说明“当前公开站点看得到什么”，<strong>不能代替一次从修改模板、本地构建、CI 索引到发布的完整接入实测</strong>，也不能用来推断未公开的工作流细节。</p>
+<p>当时能确认的现象如下：</p>
+<ul>
+<li>首页和文章页源码中有搜索入口，并加载了 <code>/pagefind/pagefind-ui.css</code> 与 <code>/pagefind/pagefind-ui.js</code>，脚本里使用 <code>new PagefindUI(...)</code> 挂载到页面上的容器。这是 Default UI 的公开用法，不代表新接入还必须沿用同一套自定义覆盖层。</li>
+<li><code>https://www.mmfei.com/pagefind/pagefind.js</code>、<code>pagefind-ui.js</code>、<code>pagefind-ui.css</code>、<code>pagefind-entry.json</code> 以及 <code>pagefind-component-ui.js</code>、<code>pagefind-component-ui.css</code> 均返回 HTTP 200。搜索包目录 URL <code>https://www.mmfei.com/pagefind/</code> 返回 404，符合“目录没有索引页、但具体文件可访问”的常见情况，不能单独当成索引缺失。</li>
+<li><code>pagefind-entry.json</code> 中的 <code>version</code> 为 <code>1.6.0</code>，并列出了 <code>en</code> 与 <code>zh-cn</code> 两种语言索引。具体页面计数会随站点更新变化，这里不把它写成固定规格。</li>
+<li>抽查文章页 HTML 带有 <code>lang=&quot;zh-CN&quot;</code>，与官方“按 html 语言属性分索引”的说明可以对照，但本文没有在浏览器里逐条验证检索质量，也没有核对分词是否符合预期。</li>
+</ul>
+<p>未在隔离环境执行 <code>hugo</code> 或 <code>npx pagefind@1.6.0</code>，也没有把本次核验当成接入验收通过。</p>
+<h2 id="官方参考">官方参考</h2>
+<ul>
+<li><a href="https://pagefind.app/docs/" target="_blank" rel="noopener noreffer">Getting Started with Pagefind</a></li>
+<li><a href="https://pagefind.app/docs/installation/" target="_blank" rel="noopener noreffer">Installing and running Pagefind</a></li>
+<li><a href="https://pagefind.app/docs/running-pagefind/" target="_blank" rel="noopener noreffer">Running Pagefind</a></li>
+<li><a href="https://pagefind.app/docs/indexing/" target="_blank" rel="noopener noreffer">Configuring what content is indexed</a></li>
+<li><a href="https://pagefind.app/docs/config-options/" target="_blank" rel="noopener noreffer">Pagefind CLI configuration options</a></li>
+<li><a href="https://pagefind.app/docs/multilingual/" target="_blank" rel="noopener noreffer">Multilingual search</a></li>
+<li><a href="https://pagefind.app/docs/ui-usage/" target="_blank" rel="noopener noreffer">Using the Default UI</a></li>
+<li><a href="https://pagefind.app/docs/ui/" target="_blank" rel="noopener noreffer">Pagefind UI configuration options</a></li>
+<li><a href="https://pagefind.app/docs/search-config/" target="_blank" rel="noopener noreffer">Configuring the Pagefind search in the browser</a></li>
+<li><a href="https://pagefind.app/llms-component-ui.txt" target="_blank" rel="noopener noreffer">Component UI 说明</a>（官方从 1.5.0 起给出的推荐界面指南）</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-11-19</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.mmfei.com/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/" data-title="Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框" data-via="mmfei" data-hashtags="Hugo,Pagefind,静态博客"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.mmfei.com/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/" data-hashtag="Hugo"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.mmfei.com/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/" data-title="Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.mmfei.com/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/" data-title="Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.mmfei.com/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/" data-title="Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/hugo/">hugo</a>,&nbsp;<a href="/tags/pagefind/">Pagefind</a>,&nbsp;<a href="/tags/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/">静态博客</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <nav class="sk-nav" aria-label="文章导航"><a href="/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/" class="sk-nav-btn sk-nav-prev" rel="prev" title="GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单"><i class="fas fa-angle-left fa-fw"></i>GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单</a></nav>
+</div>
+
+<section class="sk-related">
+                    <h2 class="sk-related-title">相关文章</h2>
+                    <div class="sk-related-grid"><a class="sk-related-card" href="/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/">
+                                    <span class="sk-related-card-title">GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单</span>
+                                    <span class="sk-related-card-meta">2026-11-18GitHub Pages · AdSense · 静态博客</span>
+                                </a></div>
+                </section><div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article>
+    </div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.mmfei.com/" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/css/skin-stripe.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"valine":{"appId":"agrUIy35wmii07cPfX0p0UWx-MdYXbMMI","appKey":"xNDv6FEmi9xqlsf6out3W5c6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://agruiy35.api.lncldglobal.com","visitor":true}}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6" async></script><link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+<div id="pagefind-overlay" class="pf-overlay" aria-hidden="true">
+    <div class="pf-modal" role="dialog" aria-modal="true" aria-label="搜索">
+        <button type="button" class="pf-close" id="pagefind-close" aria-label="清空">&times;</button>
+        <div id="pagefind-ui"></div>
+    </div>
+</div>
+
+<style>
+.pf-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8vh 16px 16px;
+}
+.pf-overlay.open {
+    display: flex;
+}
+.pf-modal {
+    position: relative;
+    width: 560px;
+    max-width: 100%;
+    background: var(--card-background, #fff);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.28);
+    padding: 18px 18px 10px;
+}
+.pf-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--secondary-font-color, #666);
+    cursor: pointer;
+    padding: 6px;
+}
+.pf-close:hover { color: var(--primary-font-color, #111); }
+#pagefind-ui { min-height: 40px; }
+@media (max-width: 680px) {
+    .pf-overlay { padding: 12px 10px; align-items: flex-start; }
+    .pf-modal { padding: 14px 12px 8px; border-radius: 10px; }
+}
+</style>
+
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+(function () {
+    var overlay = document.getElementById('pagefind-overlay');
+    var modal = overlay.querySelector('.pf-modal');
+    var closeBtn = document.getElementById('pagefind-close');
+    var uiMount = document.getElementById('pagefind-ui');
+
+    function open() {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        var input = uiMount.querySelector('input');
+        if (input) { setTimeout(function () { input.focus(); }, 60); }
+    }
+    function close() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    function bindTrigger(id) {
+        var el = document.getElementById(id);
+        if (el) { el.addEventListener('click', function (e) { e.preventDefault(); open(); }); }
+    }
+    bindTrigger('pagefind-trigger-desktop');
+    bindTrigger('pagefind-trigger-mobile');
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) { close(); }
+    });
+
+    if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({
+            element: uiMount,
+            showSubResults: true,
+            showImages: false,
+            highlightQuery: true,
+            translations: {
+                placeholder: '搜索文章标题、标签或内容…',
+                clear_search: '清除',
+                load_more: '加载更多结果',
+                search_label: '搜索',
+                filters_label: '筛选',
+                no_results: '没有找到结果'
+            }
+        });
+    }
+})();
+</script>
+</body>
+</html>

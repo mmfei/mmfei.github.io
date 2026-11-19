@@ -4,7 +4,28 @@
         <link>https://www.mmfei.com/categories/</link>
         <description>Categories - 分类 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 18 Nov 2026 08:00:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/categories/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 19 Nov 2026 09:40:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>hugo</title>
+    <link>https://www.mmfei.com/categories/hugo/</link>
+    <pubDate>Thu, 19 Nov 2026 09:40:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/categories/hugo/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>Pagefind</title>
+    <link>https://www.mmfei.com/categories/pagefind/</link>
+    <pubDate>Thu, 19 Nov 2026 09:40:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/categories/pagefind/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>静态博客</title>
+    <link>https://www.mmfei.com/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</link>
+    <pubDate>Thu, 19 Nov 2026 09:40:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>AdSense</title>
     <link>https://www.mmfei.com/categories/adsense/</link>
     <pubDate>Wed, 18 Nov 2026 08:00:00 &#43;0700</pubDate>
@@ -17,13 +38,6 @@
     <pubDate>Wed, 18 Nov 2026 08:00:00 &#43;0700</pubDate>
     <author>作者</author>
     <guid>https://www.mmfei.com/categories/github-pages/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>静态博客</title>
-    <link>https://www.mmfei.com/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</link>
-    <pubDate>Wed, 18 Nov 2026 08:00:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/categories/%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>gitlab</title>
@@ -59,20 +73,6 @@
     <pubDate>Tue, 09 Apr 2024 13:32:48 &#43;0800</pubDate>
     <author>作者</author>
     <guid>https://www.mmfei.com/categories/swoole/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>docker</title>
-    <link>https://www.mmfei.com/categories/docker/</link>
-    <pubDate>Tue, 21 Nov 2023 03:07:34 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/categories/docker/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>phpmyadmin</title>
-    <link>https://www.mmfei.com/categories/phpmyadmin/</link>
-    <pubDate>Tue, 21 Nov 2023 03:07:34 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/categories/phpmyadmin/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
