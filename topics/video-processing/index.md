@@ -35,3 +35,13 @@
 
 核验记录日期为2026-11-19。以上为现有脚本历史实测，重新打包不扩大支持范围。Windows/macOS及未列版本标为未验证；“官方支持”若后续加入，须逐条附官方版本来源，与实测分开。
 
+## 示例包
+
+下面三个地址是同一版下载包。解压后按包内说明运行。上面的版本表是此前已审的历史记录，这一节不改那张表，也不把本轮结果写成 7.1.5 或 Python 3.13.5。
+
+2026-11-19 从这一版解压目录隔离运行：Python 3.12.3。队列 19 项通过。字幕与音轨在 FFmpeg 6.1.1-3ubuntu5、`fc-match` 精确返回 Noto Sans CJK SC 时 11 项通过；没有听音，静帧没有做画面阅读，缺字体的默认环境没有重做。HLS 在同一 FFmpeg 与 Python 下 23 项通过，只覆盖本地 TS VOD 和 127.0.0.1 HMAC。
+
+- [SQLite 任务队列](/downloads/examples/sqlite-task-queue/20261119.1/sqlite-task-queue-20261119.1.zip)，整包 SHA-256 `b4c36e5f6681d0f417e67daaaa35d66cd20f59edd9c85ea28fd2b59557d8d957`
+- [字幕与音轨](/downloads/examples/ffmpeg-subtitle-audio/20261119.1/ffmpeg-subtitle-audio-20261119.1.zip)，整包 SHA-256 `f92c7f08b7391bc10b71f8477b36d5dc1afd4db86093c971c2a4360a491cf2e7`
+- [HLS 鉴权](/downloads/examples/hls-signed-vod/20261119.1/hls-signed-vod-20261119.1.zip)，整包 SHA-256 `7cba92041e136b9f6fac5452a6af592acf43cdfe7fd33ad0cdb684fc0e3cb8e1`
+
