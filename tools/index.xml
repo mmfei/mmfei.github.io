@@ -10,6 +10,15 @@
     <webMaster>wlfkongl@gmail.com (mmfei)</webMaster>
     <lastBuildDate>Thu, 19 Nov 2026 12:00:00 +0700</lastBuildDate><atom:link href="https://www.mmfei.com/tools/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>UI交互示例与CSS动效在线预览</title>
+      <link>https://www.mmfei.com/tools/ui-motion/</link>
+      <pubDate>Thu, 19 Nov 2026 12:00:00 +0700</pubDate>
+      <author>wlfkongl@gmail.com (mmfei)</author>
+      <guid>https://www.mmfei.com/tools/ui-motion/</guid>
+      <description>点选体验交互，调节动效并复制代码。按钮、表单、弹窗和列表只在这页操作，不附带各自的完整代码。</description>
+    </item>
+    
+    <item>
       <title>免费可商用字体库</title>
       <link>https://www.mmfei.com/tools/fonts/</link>
       <pubDate>Thu, 19 Nov 2026 12:00:00 +0700</pubDate>

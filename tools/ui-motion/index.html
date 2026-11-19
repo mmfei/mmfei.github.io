@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>UI交互示例与CSS动效在线预览 - 木木飞</title><meta name="Description" content="在线体验按钮、表单反馈、模态弹窗和列表状态，调整CSS微动效的时长与缓动，预览并复制动效示例代码，支持减少动态。"><meta property="og:title" content="UI交互示例与CSS动效在线预览" />
+<meta property="og:description" content="在线体验按钮、表单反馈、模态弹窗和列表状态，调整CSS微动效的时长与缓动，预览并复制动效示例代码，支持减少动态。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.mmfei.com/tools/ui-motion/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/><meta property="article:section" content="tools" />
+<meta property="article:published_time" content="2026-11-19T12:00:00&#43;07:00" />
+<meta property="article:modified_time" content="2026-11-19T20:26:10&#43;00:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
+
+<meta name="twitter:title" content="UI交互示例与CSS动效在线预览"/>
+<meta name="twitter:description" content="在线体验按钮、表单反馈、模态弹窗和列表状态，调整CSS微动效的时长与缓动，预览并复制动效示例代码，支持减少动态。"/>
+<meta name="application-name" content="木木飞">
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.mmfei.com/tools/ui-motion/" /><link rel="prev" href="https://www.mmfei.com/tools/fonts/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-desktop" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-desktop"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a>
+                <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile">
+                <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-mobile" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-mobile"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<style>
+#header-desktop .header-wrapper .menu { overflow: visible; }
+#header-desktop .menu-has-sub { position: relative; display: inline-block; }
+#header-desktop .menu-parent-link,
+#header-mobile .menu-parent-link { color: inherit; text-decoration: none; }
+#header-desktop .menu-has-sub.active .menu-parent-link { font-weight: 900; }
+#header-desktop .menu-sub-toggle {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: 1;
+    padding: 0 2px;
+    cursor: pointer;
+}
+#header-desktop .menu-sub {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 8.5rem;
+    margin: 0;
+    padding: 6px 0;
+    text-align: left;
+    background: #f8f8f8;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .12);
+    z-index: 220;
+}
+#header-desktop .menu-has-sub:hover > .menu-sub,
+#header-desktop .menu-has-sub:focus-within > .menu-sub,
+#header-desktop .menu-has-sub.is-open > .menu-sub { display: block; }
+#header-desktop .menu-sub a { display: block; padding: 6px 14px; white-space: nowrap; color: inherit; text-decoration: none; }
+body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: #363636; }
+#header-mobile .menu-has-sub,
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub,
+#header-mobile .menu-sub a { display: block; }
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub a { line-height: 2.5rem; }
+#header-mobile .menu-sub-toggle { display: none; }
+</style>
+<script>
+(function () {
+    var buttons = document.querySelectorAll(".menu-sub-toggle");
+    Array.prototype.forEach.call(buttons, function (button) {
+        button.addEventListener("click", function () {
+            var item = button.parentNode;
+            var open = item.classList.toggle("is-open");
+            button.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key !== "Escape") return;
+        Array.prototype.forEach.call(buttons, function (button) {
+            button.parentNode.classList.remove("is-open");
+            button.setAttribute("aria-expanded", "false");
+        });
+    });
+})();
+</script>
+<main class="main">
+                <div class="container"><link rel="stylesheet" href="/css/ui-motion.css">
+<div class="um">
+    <h1>交互与动效预览</h1>
+    <p class="um-lead">点选体验交互，调节动效并复制代码。已上线的入口在 <a href="/tools/">工具总览</a>。</p>
+    <nav class="um-jumps" aria-label="本页模块">
+        <a href="#um-buttons">按钮状态</a>
+        <a href="#um-feedback">表单反馈</a>
+        <a href="#um-dialog-section">模态弹窗</a>
+        <a href="#um-states">列表状态</a>
+        <a href="#um-motion">CSS微动效</a>
+    </nav>
+
+    <h2 id="um-buttons">按钮状态</h2>
+    <p class="um-note">用真正的 button。焦点环在键盘聚焦时出现，不要用去掉 outline 代替。</p>
+    <div class="um-panel">
+        <div class="um-row">
+            <button type="button" class="um-btn" id="um-save" aria-pressed="false">标记已看</button>
+            <button type="button" class="um-btn" disabled>不可用</button>
+        </div>
+        <p class="um-status" id="um-save-status" role="status">还没有标记。</p>
+    </div>
+    <ul class="um-tips">
+        <li>何时使用：一个明确动作，例如保存、打开、重试。</li>
+        <li>常见错误：用 div 充当按钮，键盘到不了；禁用按钮上只放说明，读屏用户点不到。</li>
+    </ul>
+
+    <h2 id="um-feedback">表单反馈</h2>
+    <p class="um-note">空着提交会指出缺什么。成功不单靠绿色。数据只留在这一个页面里。</p>
+    <form class="um-panel" id="um-form" action="#">
+        <label for="um-note">给自己的一句备注</label>
+        <input id="um-note" name="note" type="text" autocomplete="off" aria-describedby="um-error">
+        <p class="um-msg bad" id="um-error" hidden>请先写一句备注。空字符串不会被当成已保存。</p>
+        <p class="um-msg good" id="um-ok" hidden></p>
+        <div class="um-row" style="margin-top:.7rem">
+            <button type="submit" class="um-btn">检查并记下</button>
+            <button type="button" class="um-btn ghost" id="um-reset">重置</button>
+        </div>
+    </form>
+    <ul class="um-tips">
+        <li>何时使用：用户刚提交，需要知道缺了哪一项或已经记下。</li>
+        <li>常见错误：只把边框变红；用 placeholder 代替标签；空输入仍显示成功。</li>
+    </ul>
+
+    <h2 id="um-dialog-section">模态弹窗</h2>
+    <p class="um-note">这是必须看完再继续的说明框，不是“已保存”那种轻提示。页面加载时它是关着的。</p>
+    <div class="um-panel">
+        <button type="button" class="um-btn" id="um-open">打开说明</button>
+    </div>
+    <div class="um-dialog" id="um-dialog" role="dialog" aria-modal="true" aria-labelledby="um-dialog-title" aria-describedby="um-dialog-desc" hidden>
+        <div class="um-sheet">
+            <h2 id="um-dialog-title">先看这一句</h2>
+            <p id="um-dialog-desc">关闭后焦点回到“打开说明”。按 Escape 或点“关闭”都能关。点遮罩只是附加方式。</p>
+            <div class="um-row" style="margin-top:.8rem">
+                <button type="button" class="um-btn" id="um-close">关闭</button>
+                <button type="button" class="um-btn ghost" id="um-ack">知道了</button>
+            </div>
+        </div>
+    </div>
+    <ul class="um-tips">
+        <li>何时使用：不处理完就不能继续，例如确认删除。成功提示不要用它。</li>
+        <li>常见错误：Tab 跑到遮罩后面；关掉后焦点丢了；只能点遮罩才能关。本页用 inert 挡住后面的控件。</li>
+    </ul>
+
+    <h2 id="um-states">列表状态</h2>
+    <p class="um-note">三种状态都有文字。加载不是只有一个转圈。</p>
+    <div class="um-panel">
+        <div class="um-row">
+            <button type="button" class="um-btn ghost" data-um-state="empty" aria-pressed="true">空</button>
+            <button type="button" class="um-btn ghost" data-um-state="loading" aria-pressed="false">加载</button>
+            <button type="button" class="um-btn ghost" data-um-state="error" aria-pressed="false">错误</button>
+            <button type="button" class="um-btn ghost" data-um-state="ready" aria-pressed="false">有记录</button>
+        </div>
+        <div id="um-empty" style="margin-top:.7rem"><strong>还没有记录。</strong> 换一个筛选，或等你自己添加。示例里没有上传。</div>
+        <div id="um-loading" hidden style="margin-top:.7rem" aria-busy="false">正在准备这页上的两条示例，没有请求服务器。</div>
+        <div id="um-failed" hidden style="margin-top:.7rem">
+            <strong>这次没有拿到列表。</strong>
+            <button type="button" class="um-btn" id="um-retry" style="margin-left:.4rem">改看本地示例</button>
+        </div>
+        <ul id="um-ready" hidden>
+            <li>本地示例一</li>
+            <li>本地示例二</li>
+        </ul>
+    </div>
+    <ul class="um-tips">
+        <li>何时使用：列表可能没有数据、还在等，或失败了。</li>
+        <li>常见错误：空白页不说话；失败没有下一步；加载动画在减少动态时仍一直转。</li>
+    </ul>
+
+    <h2 id="um-motion">CSS微动效</h2>
+    <p class="um-note">默认不播放。播放中可暂停，并可改时长和缓动。缓动名用的是 CSS 关键字，不是某套产品的私有曲线。下面三个同页标签按 <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/">WAI-ARIA tabs</a> 的手动激活：左右方向键只移动焦点，Enter 或空格才显示面板。上下方向键不拦截。</p>
+    <div class="um-panel">
+        <div class="um-row">
+            <button type="button" class="um-btn" id="um-play" aria-pressed="false">播放</button>
+            <button type="button" class="um-btn ghost" id="um-pause">暂停</button>
+            <label>时长 <input id="um-duration" type="range" min="120" max="600" value="240" aria-valuemin="120" aria-valuemax="600" aria-valuenow="240" aria-valuetext="240 毫秒"></label>
+            <label>缓动
+                <select id="um-easing">
+                    <option value="ease-out">ease-out</option>
+                    <option value="ease">ease</option>
+                    <option value="linear">linear</option>
+                </select>
+            </label>
+            <label><input id="um-reduce" type="checkbox"> 减少动态</label>
+        </div>
+        <div class="um-tabs" id="um-tablist" role="tablist" aria-label="微动效的预览、代码和常见错误">
+            <button type="button" role="tab" id="um-tab-preview" aria-selected="true" aria-controls="um-panel-preview" tabindex="0">预览</button>
+            <button type="button" role="tab" id="um-tab-code" aria-selected="false" aria-controls="um-panel-code" tabindex="-1">代码</button>
+            <button type="button" role="tab" id="um-tab-notes" aria-selected="false" aria-controls="um-panel-notes" tabindex="-1">常见错误</button>
+        </div>
+        <div role="tabpanel" id="um-panel-preview" aria-labelledby="um-tab-preview">
+            <div class="um-stage" id="um-stage"><div class="um-dot" id="um-dot"></div></div>
+        </div>
+        <div role="tabpanel" id="um-panel-code" aria-labelledby="um-tab-code" hidden>
+            <pre><code id="um-code">&lt;div class="dot"&gt;&lt;/div&gt;
+&lt;style&gt;
+.dot {
+  width: 40px;
+  height: 40px;
+  background: #3d3a9a;
+  animation: slide 240ms ease-out infinite alternate;
+}
+@keyframes slide {
+  from { transform: translateX(0); }
+  to { transform: translateX(96px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dot { animation: none; transform: none; }
+}
+&lt;/style&gt;</code></pre>
+            <div class="um-row" style="margin-top:.6rem">
+                <button type="button" class="um-btn ghost" id="um-copy">复制这段示例</button>
+                <p class="um-status" id="um-copy-status" role="status"></p>
+            </div>
+        </div>
+        <div role="tabpanel" id="um-panel-notes" aria-labelledby="um-tab-notes" hidden>
+            <ul class="um-tips">
+                <li>何时使用：短反馈，例如进入或按下。时长用毫秒。</li>
+                <li>常见错误：进页就自动循环；系统已要求减少动态仍继续位移；复制出来的代码和正在播放的参数不一致。</li>
+                <li>左右方向键只在这组标签里移动焦点。上下方向键仍留给页面滚动。这不是底部导航。</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2 id="um-sources">说明与来源</h2>
+    <p class="um-note">原则来自下面三份公开文档，示例和代码是本页自己的。没有测量任何竞品界面。Motion 仓库的 README 写核心库是 MIT，并把 Motion+ 示例和额外 API 标成付费；本页没有安装或引用 motion，这一小段位移只用 CSS animation。弹簧和拖拽不在这批。</p>
+    <ul class="um-tips">
+        <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/">WAI-ARIA 模态对话框</a>：打开后焦点进入对话框，Tab 不跑出去，Escape 关闭。</li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html">WCAG 2.2 理解文档 2.3.3</a>：交互触发的动画应能关掉，除非它是理解信息所必需的。</li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/easing-function">MDN easing-function</a> 与 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion">prefers-reduced-motion</a>：缓动是 CSS 关键字；系统开启减少动态时去掉非必要位移动画。</li>
+    </ul>
+    <p class="um-note">导航、卡片栅格、轻提示、抽屉、页面转场和配色不在这页。按钮、表单、弹窗和列表只在这页操作，不提供各自的完整代码。已上线的 <a href="/tools/fonts/">字体对比</a> 在工具总览里。</p>
+</div>
+<script src="/js/ui-motion.js"></script>
+<script>
+document.getElementById("um-save").addEventListener("click", function (event) {
+    var on = event.currentTarget.getAttribute("aria-pressed") !== "true";
+    event.currentTarget.setAttribute("aria-pressed", on ? "true" : "false");
+    document.getElementById("um-save-status").textContent = on ? "已标记。只改变这个按钮，没有提交。" : "已取消标记。";
+});
+</script></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.mmfei.com/" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/css/skin-stripe.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6" async></script><link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+<div id="pagefind-overlay" class="pf-overlay" aria-hidden="true">
+    <div class="pf-modal" role="dialog" aria-modal="true" aria-label="搜索">
+        <button type="button" class="pf-close" id="pagefind-close" aria-label="清空">&times;</button>
+        <div id="pagefind-ui"></div>
+    </div>
+</div>
+
+<style>
+.pf-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8vh 16px 16px;
+}
+.pf-overlay.open {
+    display: flex;
+}
+.pf-modal {
+    position: relative;
+    width: 560px;
+    max-width: 100%;
+    background: var(--card-background, #fff);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.28);
+    padding: 18px 18px 10px;
+}
+.pf-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--secondary-font-color, #666);
+    cursor: pointer;
+    padding: 6px;
+}
+.pf-close:hover { color: var(--primary-font-color, #111); }
+#pagefind-ui { min-height: 40px; }
+@media (max-width: 680px) {
+    .pf-overlay { padding: 12px 10px; align-items: flex-start; }
+    .pf-modal { padding: 14px 12px 8px; border-radius: 10px; }
+}
+</style>
+
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+(function () {
+    var overlay = document.getElementById('pagefind-overlay');
+    var modal = overlay.querySelector('.pf-modal');
+    var closeBtn = document.getElementById('pagefind-close');
+    var uiMount = document.getElementById('pagefind-ui');
+
+    function open() {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        var input = uiMount.querySelector('input');
+        if (input) { setTimeout(function () { input.focus(); }, 60); }
+    }
+    function close() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    function bindTrigger(id) {
+        var el = document.getElementById(id);
+        if (el) { el.addEventListener('click', function (e) { e.preventDefault(); open(); }); }
+    }
+    bindTrigger('pagefind-trigger-desktop');
+    bindTrigger('pagefind-trigger-mobile');
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) { close(); }
+    });
+
+    if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({
+            element: uiMount,
+            showSubResults: true,
+            showImages: false,
+            highlightQuery: true,
+            translations: {
+                placeholder: '搜索文章标题、标签或内容…',
+                clear_search: '清除',
+                load_more: '加载更多结果',
+                search_label: '搜索',
+                filters_label: '筛选',
+                no_results: '没有找到结果'
+            }
+        });
+    }
+})();
+</script>
+</body>
+</html>
