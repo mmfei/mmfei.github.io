@@ -19,12 +19,12 @@
     </item>
     
     <item>
-      <title>免费可商用字体库</title>
+      <title>字体对比</title>
       <link>https://www.mmfei.com/tools/fonts/</link>
       <pubDate>Thu, 19 Nov 2026 12:00:00 +0700</pubDate>
       <author>wlfkongl@gmail.com (mmfei)</author>
       <guid>https://www.mmfei.com/tools/fonts/</guid>
-      <description>输入一次，目录里的字体用同一段文字比较。字体来自 Google Fonts 官方目录的未修改文件，每款都带同目录 OFL。中文手写只收官方分类为手写且含简体中文的家族</description>
+      <description>同一段文字比较目录里的字体。文字只留在这一页，不上传，也不写入浏览器。 文件里没有的字会标成「中文缺字」。这是说明，不是用系统字体冒充这款字。</description>
     </item>
     
   </channel>

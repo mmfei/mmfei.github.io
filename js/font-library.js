@@ -1,77 +1,85 @@
 (function () {
   var MAX_ACTIVE = 2;
+  var MAX_PICK = 3;
+  var SIZE_MIN = 16;
+  var SIZE_MAX = 40;
+  var LEAD_MIN = 1.2;
+  var LEAD_MAX = 2.2;
+  var SHORT = "马上开球 Kickoff";
+  var LONG = "挑选适合的字体\nHello, 2026.\n中文与 English，标点：，。！？";
+  var CAT_ORDER = ["中文手写", "中文无衬线", "西文无衬线", "西文衬线", "西文等宽", "西文手写"];
+  var WEIGHT_NAME = {
+    100: "Thin",
+    200: "ExtraLight",
+    300: "Light",
+    400: "Regular",
+    500: "Medium",
+    600: "SemiBold",
+    700: "Bold",
+    800: "ExtraBold",
+    900: "Black"
+  };
+
   var fonts = [];
   var filter = "全部";
   var query = "";
-  var lastSize = 22;
-  var lastLead = 1.6;
+  var picked = [];
+  var view = "browse";
+  var detailId = null;
+  var detailFrom = "browse";
+  var savedScroll = 0;
+  var returnFocus = null;
+  var sizeLocked = false;
+  var leadLocked = false;
+  var sizePx = 32;
+  var lead = 1.4;
+  var composing = false;
   var queue = [];
   var active = 0;
+  var weightsOpen = false;
+
+  var custom = document.getElementById("fl-custom");
+  var browseEl = document.getElementById("fl-browse");
   var list = document.getElementById("fl-list");
   var status = document.getElementById("fl-status");
-  var countEl = document.getElementById("fl-count");
-  var filtersEl = document.getElementById("fl-filters");
-  var custom = document.getElementById("fl-custom");
-  var sizeInput = document.getElementById("fl-size");
-  var leadInput = document.getElementById("fl-leading");
-  var weightInput = document.getElementById("fl-weight");
+  var catsEl = document.getElementById("fl-cats");
+  var searchRow = document.getElementById("fl-search-row");
   var searchInput = document.getElementById("fl-search");
   var emptyEl = document.getElementById("fl-empty");
-  var defaultText = custom.value;
+  var emptyDetail = document.getElementById("fl-empty-detail");
+  var limitEl = document.getElementById("fl-limit");
+  var typeEl = document.getElementById("fl-type");
+  var detailEl = document.getElementById("fl-detail");
+  var compareEl = document.getElementById("fl-compare");
 
   function setStatus(text) {
     status.textContent = text;
   }
 
-  function userText() {
-    return custom.value;
-  }
-
-  function readBounded(input, min, max, last, decimals) {
-    var raw = String(input.value).trim();
-    var n = Number(raw);
-    if (raw === "" || !isFinite(n) || n < min || n > max) return last;
-    var stepped = decimals ? Math.round(n * 10) / 10 : Math.round(n);
-    if (stepped < min || stepped > max) return last;
-    return stepped;
+  function autoSize() {
+    return window.matchMedia("(max-width: 720px)").matches ? 28 : 32;
   }
 
   function currentSize() {
-    var n = readBounded(sizeInput, 16, 40, lastSize, false);
-    if (n !== lastSize || String(sizeInput.value).trim() !== "") lastSize = n;
-    return lastSize;
+    return sizeLocked ? sizePx : autoSize();
   }
 
   function currentLead() {
-    var n = readBounded(leadInput, 1.2, 2.2, lastLead, true);
-    lastLead = n;
-    return lastLead;
+    return leadLocked ? lead : 1.4;
   }
 
-  function commitInputs() {
-    var sizeOk = readBounded(sizeInput, 16, 40, null, false);
-    lastSize = sizeOk == null ? lastSize : sizeOk;
-    sizeInput.value = String(lastSize);
-    var leadOk = readBounded(leadInput, 1.2, 2.2, null, true);
-    lastLead = leadOk == null ? lastLead : leadOk;
-    leadInput.value = lastLead.toFixed(1);
-  }
-  function licenseLine(font) {
-    var line = font.sizeLabel + " · ";
-    if (font.variable) line += "可变 " + font.axisMin + "–" + font.axisMax;
-    else line += "静态 " + font.staticWeight;
-    line += " · OFL 1.1，可按条款商用，不可单独售卖字体";
-    if (font.rfn) line += "。保留名称：" + font.rfn;
-    return line;
+  function previewText() {
+    if (!custom.value.trim()) return LONG;
+    return custom.value;
   }
 
-  function firstLine(text) {
-    var index = text.indexOf("\n");
-    return index === -1 ? text : text.slice(0, index);
+  function fitInput() {
+    custom.style.height = "48px";
+    custom.style.height = Math.max(48, custom.scrollHeight) + "px";
   }
 
   function encodePath(url) {
-    return url.split("/").map(function (part) {
+    return String(url).split("/").map(function (part) {
       return encodeURIComponent(part);
     }).join("/");
   }
@@ -95,22 +103,31 @@
     return !font.coverageSet.has(cp);
   }
 
+  function foldMissing(buf) {
+    var fold = false;
+    charsOf(buf).forEach(function (ch) {
+      if (ch.codePointAt(0) > 0x7F) fold = true;
+    });
+    return fold;
+  }
+
   function paint(el, text, font) {
     el.replaceChildren();
-    el.style.fontFamily = "inherit";
     var chars = charsOf(text);
     var buf = "";
     var missing = false;
     function flush() {
       if (!buf) return;
       var span = document.createElement("span");
-      span.textContent = buf;
       if (missing) {
-        span.className = "fl-unsupported";
-        span.title = "这个字不在「" + font.family + "」文件里。若还能看见，是系统字体补的，不是这款字体。";
-        span.style.fontFamily = "inherit";
+        span.className = "fl-miss";
+        span.textContent = foldMissing(buf) ? "中文缺字" : buf;
+        span.title = "这些字符不在「" + font.family + "」文件里，显示的不是这款字体。";
       } else {
+        span.textContent = buf;
         span.style.fontFamily = '"' + font.face + '"';
+        span.style.fontWeight = String(activeWeight(font));
+        span.style.fontSynthesis = "none";
       }
       el.appendChild(span);
       buf = "";
@@ -124,10 +141,11 @@
     flush();
   }
 
-  function setPlain(el, text) {
-    el.replaceChildren();
-    el.style.fontFamily = "inherit";
-    el.textContent = text;
+  function applyMetrics(el) {
+    if (sizeLocked) el.style.fontSize = sizePx + "px";
+    else el.style.fontSize = "";
+    if (leadLocked) el.style.lineHeight = String(lead);
+    else el.style.lineHeight = "";
   }
 
   function clampWeight(font, want) {
@@ -135,7 +153,7 @@
     var min = Number(font.axisMin);
     var max = Number(font.axisMax);
     var value = Number(want);
-    if (!isFinite(value)) value = 400;
+    if (!isFinite(value)) value = Number(font.axisDefault || 400);
     value = Math.round(value / 100) * 100;
     if (value < min) value = Math.ceil(min / 100) * 100;
     if (value > max) value = Math.floor(max / 100) * 100;
@@ -144,80 +162,47 @@
     return value;
   }
 
-  function weights(font) {
-    if (!font.variable) {
-      var w = String(font.staticWeight || 400);
-      return { title: w, body: w, titleLabel: "静态字重 " + w, bodyLabel: "静态字重 " + w };
-    }
-    var body = clampWeight(font, weightInput.value);
-    var title = clampWeight(font, 700);
-    return { title: String(title), body: String(body), titleLabel: "标题 " + title, bodyLabel: "正文 " + body };
+  function activeWeight(font) {
+    var base = font.previewWeight != null ? font.previewWeight : (font.variable ? (font.axisDefault || 400) : (font.staticWeight || 400));
+    return clampWeight(font, base);
   }
 
-  function applyMetrics(font) {
-    var size = currentSize();
-    var lead = currentLead();
-    var w = weights(font);
-    font.els.title.style.fontWeight = w.title;
-    font.els.title.style.fontSize = Math.round(size * 1.35) + "px";
-    font.els.title.style.lineHeight = String(lead);
-    font.els.title.style.fontSynthesis = "none";
-    font.els.body.style.fontWeight = w.body;
-    font.els.body.style.fontSize = size + "px";
-    font.els.body.style.lineHeight = String(lead);
-    font.els.body.style.fontSynthesis = "none";
-    font.els.titleKicker.textContent = w.titleLabel;
-    font.els.bodyKicker.textContent = w.bodyLabel;
+  function weightSteps(font) {
+    if (!font.variable) return [Number(font.staticWeight || 400)];
+    var min = Number(font.axisMin);
+    var max = Number(font.axisMax);
+    var start = Math.ceil(min / 100) * 100;
+    var out = [];
+    for (var w = start; w <= max; w += 100) out.push(w);
+    if (!out.length) out.push(Math.round(min));
+    return out;
   }
 
-  function renderFont(font) {
-    applyMetrics(font);
-    if (font.state !== "ready") {
-      var text = font.state === "failed"
-        ? "加载失败。不用系统字体代替 " + font.family + "。"
-        : (font.state === "loading"
-          ? "正在加载 " + font.sizeLabel + "。完成前不显示比较文字。"
-          : "滚到这里后加载字体文件。当前还不是 " + font.family + "。");
-      setPlain(font.els.title, text);
-      setPlain(font.els.body, text);
-      return;
-    }
-    if (font.variable) paint(font.els.title, firstLine(userText()), font);
-    paint(font.els.body, userText(), font);
+  function weightLabel(font) {
+    var w = activeWeight(font);
+    var name = WEIGHT_NAME[w] || "";
+    if (!font.variable) return "固定 " + w + (name ? " · " + name : "");
+    return w + (name ? " · " + name : "");
   }
 
-  function renderAll() {
-    fonts.forEach(function (font) {
-      if (!font.els.card.hidden) renderFont(font);
-    });
-    var shown = fonts.filter(function (font) { return !font.els.card.hidden; });
-    var ready = shown.filter(function (font) { return font.state === "ready"; }).length;
-    var loading = shown.filter(function (font) { return font.state === "loading"; }).length;
-    var failed = shown.filter(function (font) { return font.state === "failed"; }).length;
-    setStatus("命中 " + shown.length + " 款。已加载 " + ready + "，正在加载 " + loading + "，失败 " + failed + "，未滚到 " + (shown.length - ready - loading - failed) + "。");
-    if (emptyEl) emptyEl.hidden = shown.length !== 0;
+  function shortVersion(font) {
+    var v = String(font.version || "").replace(/^Version\s+/i, "");
+    var cut = v.search(/[;；（(]/);
+    if (cut > 0) v = v.slice(0, cut);
+    return v.trim();
   }
 
-  function drawFilters() {
-    var cats = ["全部"];
-    fonts.forEach(function (font) {
-      if (cats.indexOf(font.category) === -1) cats.push(font.category);
-    });
-    filtersEl.replaceChildren();
-    cats.forEach(function (cat) {
-      var button = document.createElement("button");
-      button.type = "button";
-      button.textContent = cat === "全部" ? "全部" : cat;
-      button.setAttribute("aria-pressed", cat === filter ? "true" : "false");
-      button.addEventListener("click", function () {
-        filter = cat;
-        Array.prototype.forEach.call(filtersEl.children, function (el) {
-          el.setAttribute("aria-pressed", el === button ? "true" : "false");
-        });
-        applyFilter();
-      });
-      filtersEl.appendChild(button);
-    });
+  function groupBytes(n) {
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  function findFont(id) {
+    for (var i = 0; i < fonts.length; i++) if (fonts[i].id === id) return fonts[i];
+    return null;
+  }
+
+  function isPicked(font) {
+    return picked.indexOf(font.id) !== -1;
   }
 
   function fontMatches(font) {
@@ -225,6 +210,105 @@
     if (!query) return true;
     var hay = ((font.family || "") + " " + (font.nameZh || "") + " " + (font.id || "")).toLowerCase();
     return hay.indexOf(query) !== -1;
+  }
+
+  function countCategory(cat) {
+    var n = 0;
+    fonts.forEach(function (font) {
+      if (cat === "全部" || font.category === cat) n += 1;
+    });
+    return n;
+  }
+
+  function renderSample(font, el) {
+    if (font.state !== "ready") return;
+    paint(el, previewText(), font);
+    applyMetrics(el);
+  }
+
+  function renderCard(font) {
+    var ready = font.state === "ready";
+    font.els.sample.hidden = !ready;
+    font.els.msg.hidden = ready;
+    font.els.retry.hidden = font.state !== "failed";
+    font.els.source.hidden = font.state !== "failed";
+    if (!ready) {
+      font.els.msg.textContent = font.state === "failed"
+        ? "字体加载失败"
+        : (font.state === "loading" ? "正在加载该字体…" : "尚未加载");
+    } else {
+      renderSample(font, font.els.sample);
+    }
+    font.els.picked.hidden = !isPicked(font);
+  }
+
+  function shownFonts() {
+    return fonts.filter(function (font) { return !font.els.card.hidden; });
+  }
+
+  function renderAll() {
+    fonts.forEach(function (font) {
+      if (font.els.card.hidden && view === "browse") return;
+      renderCard(font);
+    });
+    if (view === "detail") renderDetail();
+    if (view === "compare") renderCompare();
+    updateChrome();
+  }
+
+  function updateChrome() {
+    var button = document.getElementById("fl-candidates");
+    button.textContent = "候选 " + picked.length;
+    var current = document.getElementById("fl-filter-current");
+    current.textContent = (filter === "全部" ? "全部" : filter) + " " + countCategory(filter);
+    current.setAttribute("aria-pressed", filter === "全部" ? "true" : "false");
+    var shown = fonts.length ? shownFonts() : [];
+    emptyEl.hidden = shown.length !== 0 || !fonts.length;
+    list.hidden = shown.length === 0;
+    if (!shown.length && fonts.length) {
+      var cat = filter === "全部" ? "全部 " + fonts.length : filter + " " + countCategory(filter);
+      var typed = searchInput.value.trim();
+      emptyDetail.textContent = (typed ? "搜索：" + typed + " · " : "搜索：空 · ") + "分类：" + cat;
+    }
+    var ready = shown.filter(function (font) { return font.state === "ready"; }).length;
+    var loading = shown.filter(function (font) { return font.state === "loading"; }).length;
+    var failed = shown.filter(function (font) { return font.state === "failed"; }).length;
+    if (!fonts.length) return;
+    var waiting = shown.length - ready - loading - failed;
+    if (!shown.length) setStatus("没有同时符合名称和分类的字体。");
+    else if (failed) setStatus("有 " + failed + " 款没有加载成功，可以在卡片里重试。");
+    else if (loading || waiting) setStatus("已就绪 " + ready + " 款。往下滚，继续加载其余字体。");
+    else setStatus("这 " + shown.length + " 款都已用各自的字体文件显示。");
+    renderType();
+  }
+
+  function categoryNames() {
+    var names = CAT_ORDER.filter(function (name) {
+      return fonts.some(function (font) { return font.category === name; });
+    });
+    fonts.forEach(function (font) {
+      if (names.indexOf(font.category) === -1) names.push(font.category);
+    });
+    return names;
+  }
+
+  function drawFilters() {
+    catsEl.replaceChildren();
+    ["全部"].concat(categoryNames()).forEach(function (cat) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "fl-quiet";
+      button.textContent = (cat === "全部" ? "全部" : cat) + " " + countCategory(cat);
+      button.setAttribute("aria-pressed", cat === filter ? "true" : "false");
+      button.addEventListener("click", function () {
+        filter = cat;
+        Array.prototype.forEach.call(catsEl.children, function (el) {
+          el.setAttribute("aria-pressed", el === button ? "true" : "false");
+        });
+        applyFilter();
+      });
+      catsEl.appendChild(button);
+    });
   }
 
   function applyFilter() {
@@ -235,91 +319,108 @@
     kickVisible();
   }
 
+  function clearSearchOnly() {
+    searchInput.value = "";
+    query = "";
+    searchRow.hidden = false;
+    document.getElementById("fl-search-toggle").setAttribute("aria-expanded", "true");
+    applyFilter();
+    searchInput.focus();
+  }
+
+  function resetFilters() {
+    searchInput.value = "";
+    query = "";
+    filter = "全部";
+    drawFilters();
+    applyFilter();
+  }
+
   function drawCards() {
     list.replaceChildren();
-    fonts.forEach(function (font) {
+    fonts.forEach(function (font, index) {
       var card = document.createElement("article");
       card.className = "fl-card";
+      card.setAttribute("data-testid", "font-card");
       card.setAttribute("data-id", font.id);
-      var heading = document.createElement("h2");
-      heading.textContent = font.nameZh || font.family;
-      var english = document.createElement("p");
-      english.className = "fl-name-en";
-      if (font.nameZh) english.textContent = font.family + (font.version ? " · " + font.version : "");
-      else english.textContent = font.version || "";
-      if (!english.textContent) english.hidden = true;
-      var cardStatus = document.createElement("p");
-      cardStatus.className = "fl-card-status";
-      cardStatus.textContent = "尚未加载";
-      var titleKicker = document.createElement("p");
-      titleKicker.className = "fl-kicker";
-      var title = document.createElement("div");
-      title.className = "fl-sample fl-title";
-      var bodyKicker = document.createElement("p");
-      bodyKicker.className = "fl-kicker";
-      var body = document.createElement("div");
-      body.className = "fl-sample fl-body";
-      var meta = document.createElement("p");
-      meta.className = "fl-meta";
-      meta.textContent = licenseLine(font);
-      var links = document.createElement("p");
-      links.className = "fl-links";
-      var license = document.createElement("a");
-      license.href = encodePath(font.licenseFile);
-      license.textContent = "OFL 原文";
+      card.style.animationDelay = (Math.min(index, 8) * 40) + "ms";
+      var sample = document.createElement("div");
+      sample.className = "fl-sample";
+      sample.setAttribute("data-testid", "font-sample");
+      var msg = document.createElement("p");
+      msg.className = "fl-card-msg";
+      msg.textContent = "尚未加载";
+      var retry = document.createElement("button");
+      retry.type = "button";
+      retry.className = "fl-quiet";
+      retry.textContent = "重试加载";
+      retry.hidden = true;
+      retry.addEventListener("click", function () { retryFont(font); });
       var source = document.createElement("a");
+      source.className = "fl-quiet";
       source.href = font.source;
-      source.textContent = "官方目录";
-      links.appendChild(license);
-      links.appendChild(source);
-      var dlStatus = document.createElement("p");
-      dlStatus.className = "fl-dl";
-      card.appendChild(heading);
-      card.appendChild(english);
-      card.appendChild(cardStatus);
-      card.appendChild(titleKicker);
-      card.appendChild(title);
-      card.appendChild(bodyKicker);
-      card.appendChild(body);
-      card.appendChild(meta);
-      if (font.zip) {
-        var download = document.createElement("button");
-        download.type = "button";
-        download.textContent = "下载完整安装包";
-        download.addEventListener("click", function () { downloadZip(font, download, dlStatus); });
-        card.appendChild(download);
-      } else {
-        dlStatus.textContent = "仅网页预览。本站没有这款安装包，原文件见官方目录。";
-      }
-      card.appendChild(dlStatus);
-      card.appendChild(links);
-      var details = document.createElement("details");
-      var summary = document.createElement("summary");
-      summary.textContent = "来源与覆盖";
-      var detail = document.createElement("p");
-      detail.textContent = (font.commercial ? font.commercial + " " : "") + (font.note || "");
-      details.appendChild(summary);
-      details.appendChild(detail);
-      card.appendChild(details);
+      source.target = "_blank";
+      source.rel = "noopener noreferrer";
+      source.textContent = "官方来源";
+      source.hidden = true;
+      var idRow = document.createElement("div");
+      idRow.className = "fl-id";
+      var family = document.createElement("p");
+      family.className = "fl-family";
+      family.textContent = font.family;
+      var pickedMark = document.createElement("span");
+      pickedMark.className = "fl-picked";
+      pickedMark.textContent = "已加入";
+      pickedMark.hidden = true;
+      var more = document.createElement("button");
+      more.type = "button";
+      more.className = "fl-more";
+      more.setAttribute("aria-label", "查看 " + font.family);
+      more.setAttribute("data-testid", "font-more");
+      var icon = document.createElement("img");
+      icon.src = "/img/font-more.svg";
+      icon.width = 20;
+      icon.height = 20;
+      icon.alt = "";
+      more.appendChild(icon);
+      more.addEventListener("click", function () { openDetail(font, more); });
+      idRow.appendChild(family);
+      idRow.appendChild(pickedMark);
+      idRow.appendChild(more);
+      card.appendChild(sample);
+      card.appendChild(msg);
+      card.appendChild(retry);
+      card.appendChild(source);
+      card.appendChild(idRow);
       list.appendChild(card);
-      font.els = { card: card, status: cardStatus, title: title, body: body, titleKicker: titleKicker, bodyKicker: bodyKicker, dl: dlStatus };
+      font.els = {
+        card: card,
+        sample: sample,
+        msg: msg,
+        retry: retry,
+        source: source,
+        picked: pickedMark
+      };
       font.state = "idle";
       font.requested = false;
-      if (!font.variable) {
-        titleKicker.hidden = true;
-        title.hidden = true;
-      }
     });
   }
 
   function enqueue(font) {
-    if (!font || font.requested || font.els.card.hidden) return;
+    if (!font || font.requested || (view === "browse" && font.els.card.hidden)) return;
     font.requested = true;
     font.state = "loading";
-    font.els.status.textContent = "正在加载 " + font.sizeLabel;
-    renderFont(font);
+    renderCard(font);
     queue.push(font);
     pump();
+  }
+
+  function retryFont(font) {
+    font.requested = false;
+    font.state = "idle";
+    font.coverageSet = null;
+    font.els.card.classList.remove("is-failed", "is-ready");
+    enqueue(font);
   }
 
   function pump() {
@@ -352,7 +453,7 @@
       if (!loaded || loaded.status !== "loaded") throw new Error("status");
       document.fonts.add(loaded);
       return document.fonts.ready.then(function () {
-        var spec = font.variable ? "400 32px" : (String(font.staticWeight || 400) + " 32px");
+        var spec = String(activeWeight(font)) + " 32px";
         if (!document.fonts.check(spec + ' "' + font.face + '"')) {
           document.fonts.delete(loaded);
           throw new Error("check");
@@ -362,12 +463,10 @@
     Promise.all([coverageTask, faceTask]).then(function () {
       font.state = "ready";
       font.els.card.classList.add("is-ready");
-      font.els.status.textContent = "已用这份字体文件。";
       renderAll();
     }).catch(function () {
       font.state = "failed";
       font.els.card.classList.add("is-failed");
-      font.els.status.textContent = "加载失败";
       renderAll();
     }).then(function () {
       active -= 1;
@@ -376,6 +475,7 @@
   }
 
   function kickVisible() {
+    if (view !== "browse") return;
     fonts.forEach(function (font) {
       if (font.requested || font.els.card.hidden) return;
       var rect = font.els.card.getBoundingClientRect();
@@ -383,15 +483,18 @@
     });
   }
 
-  function downloadZip(font, button, output) {
+  function downloadZip(font) {
+    var button = document.getElementById("fl-download");
+    var output = document.getElementById("fl-dl-status");
+    var requested = font.id;
     button.disabled = true;
-    output.textContent = "正在核对 " + font.zipName + "。";
+    output.textContent = "正在核对安装包…";
     fetch(font.zip).then(function (response) {
       if (!response.ok) throw new Error("http");
       return response.arrayBuffer();
     }).then(function (buffer) {
       return crypto.subtle.digest("SHA-256", buffer).then(function (digest) {
-        var hex = Array.from(new Uint8Array(digest)).map(function (b) {
+        var hex = Array.prototype.map.call(new Uint8Array(digest), function (b) {
           return b.toString(16).padStart(2, "0");
         }).join("");
         if (hex !== font.zipSha256) throw new Error("hash");
@@ -404,58 +507,363 @@
         link.click();
         link.remove();
         URL.revokeObjectURL(url);
-        output.textContent = font.zipName + " 的 SHA-256 与页面记录一致。";
+        if (detailId === requested) output.textContent = "已核对，已发起保存。";
       });
     }).catch(function () {
-      output.textContent = "下载失败或校验不一致，没有把文件标成成功。";
+      if (detailId === requested) output.textContent = "校验失败，未保存安装包。";
     }).then(function () {
-      button.disabled = false;
+      if (detailId === requested) button.disabled = false;
     });
   }
 
-  var samples = {
-    title: "把句子写清楚",
-    body: "字体是否适合长时间阅读，要看一整段中文的灰度和换行，而不是只看几个大字。",
-    mix: "2026-11-19  13:20\nHello, 字体 100%。\n标点：，。！？"
-  };
+  function showLimit() {
+    limitEl.hidden = false;
+  }
 
-  custom.addEventListener("input", renderAll);
-  sizeInput.addEventListener("input", renderAll);
-  leadInput.addEventListener("input", renderAll);
-  weightInput.addEventListener("change", renderAll);
-  sizeInput.addEventListener("blur", function () { commitInputs(); renderAll(); });
-  leadInput.addEventListener("blur", function () { commitInputs(); renderAll(); });
+  function togglePick(font) {
+    var index = picked.indexOf(font.id);
+    if (index !== -1) {
+      picked.splice(index, 1);
+      limitEl.hidden = true;
+    } else if (picked.length >= MAX_PICK) {
+      showLimit();
+      return false;
+    } else {
+      picked.push(font.id);
+      limitEl.hidden = true;
+    }
+    renderAll();
+    return true;
+  }
+
+  function paintViews() {
+    browseEl.hidden = view !== "browse";
+    typeEl.hidden = view !== "type";
+    detailEl.hidden = view !== "detail";
+    compareEl.hidden = view !== "compare";
+    if (view === "browse") kickVisible();
+  }
+
+  function enter(next, focusEl) {
+    if (view === "browse" && next !== "browse") {
+      savedScroll = window.scrollY;
+      returnFocus = focusEl || document.activeElement;
+    }
+    view = next;
+    paintViews();
+    if (next === "browse") {
+      window.scrollTo(0, savedScroll);
+      if (returnFocus && returnFocus.focus) returnFocus.focus();
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  function backToBrowse() {
+    view = "browse";
+    paintViews();
+    window.scrollTo(0, savedScroll);
+    if (returnFocus && returnFocus.focus) returnFocus.focus();
+  }
+
+  function renderType() {
+    var sizeNow = currentSize();
+    var leadNow = currentLead();
+    document.getElementById("fl-size-value").textContent = sizeNow + " px";
+    document.getElementById("fl-lead-value").textContent = leadNow.toFixed(1);
+    document.getElementById("fl-size-dec").disabled = sizeNow <= SIZE_MIN;
+    document.getElementById("fl-size-inc").disabled = sizeNow >= SIZE_MAX;
+    document.getElementById("fl-lead-dec").disabled = leadNow <= LEAD_MIN + 0.001;
+    document.getElementById("fl-lead-inc").disabled = leadNow >= LEAD_MAX - 0.001;
+  }
+
+  function stepSize(dir) {
+    var next = currentSize() + dir;
+    if (next < SIZE_MIN || next > SIZE_MAX) return;
+    sizeLocked = true;
+    sizePx = next;
+    renderAll();
+  }
+
+  function stepLead(dir) {
+    var next = Math.round((currentLead() + dir) * 10) / 10;
+    if (next < LEAD_MIN || next > LEAD_MAX) return;
+    leadLocked = true;
+    lead = next;
+    renderAll();
+  }
+
+  function resetType() {
+    sizeLocked = false;
+    leadLocked = false;
+    sizePx = autoSize();
+    lead = 1.4;
+    fonts.forEach(function (font) { font.previewWeight = null; });
+    renderAll();
+  }
+
+  function openDetail(font, focusEl) {
+    detailId = font.id;
+    detailFrom = view === "compare" ? "compare" : "browse";
+    weightsOpen = false;
+    enqueue(font);
+    enter("detail", focusEl);
+    renderDetail();
+    document.getElementById("fl-detail-close").focus();
+  }
+
+  function renderDetail() {
+    var font = findFont(detailId);
+    if (!font) return;
+    document.getElementById("fl-detail-title").textContent = font.family;
+    var zh = document.getElementById("fl-detail-zh");
+    zh.hidden = !font.nameZh;
+    zh.textContent = font.nameZh || "";
+    var sample = document.getElementById("fl-detail-sample");
+    var msg = document.getElementById("fl-detail-msg");
+    var retry = document.getElementById("fl-detail-retry");
+    if (font.state === "ready") {
+      sample.hidden = false;
+      msg.hidden = true;
+      retry.hidden = true;
+      renderSample(font, sample);
+    } else {
+      sample.hidden = true;
+      msg.hidden = false;
+      retry.hidden = font.state !== "failed";
+      msg.textContent = font.state === "failed"
+        ? "字体加载失败。这里不用系统字体冒充预览。"
+        : "正在加载该字体…";
+    }
+    var pick = document.getElementById("fl-pick");
+    if (isPicked(font)) pick.textContent = "移出候选";
+    else if (picked.length >= MAX_PICK) pick.textContent = "候选已满";
+    else pick.textContent = "加入候选";
+    document.getElementById("fl-detail-weight").textContent = weightLabel(font);
+    var toggle = document.getElementById("fl-weight-toggle");
+    var listEl = document.getElementById("fl-weight-list");
+    var note = document.getElementById("fl-weight-note");
+    if (font.variable) {
+      toggle.hidden = false;
+      note.textContent = "可选字重 " + font.axisMin + "–" + font.axisMax + "。不会超出这款文件的轴。";
+      listEl.hidden = !weightsOpen;
+      listEl.replaceChildren();
+      weightSteps(font).forEach(function (w) {
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className = "fl-quiet";
+        button.textContent = w + (WEIGHT_NAME[w] ? " " + WEIGHT_NAME[w] : "");
+        button.setAttribute("aria-pressed", w === activeWeight(font) ? "true" : "false");
+        button.addEventListener("click", function () {
+          font.previewWeight = w;
+          renderAll();
+        });
+        listEl.appendChild(button);
+      });
+    } else {
+      toggle.hidden = true;
+      listEl.hidden = true;
+      note.textContent = "这款是静态字重，不会模拟粗体。";
+    }
+    var download = document.getElementById("fl-download");
+    var zipLine = document.getElementById("fl-zip-line");
+    download.hidden = !font.zip;
+    if (font.zip) {
+      var bytes = font.zipBytes ? " · ZIP " + groupBytes(font.zipBytes) + " 字节" : "";
+      zipLine.textContent = font.family + " " + shortVersion(font) + bytes;
+    } else {
+      zipLine.textContent = "这款没有本站安装包。其余字体只预览，并前往官方来源。";
+    }
+    var source = document.getElementById("fl-source");
+    source.href = font.source;
+    var license = document.getElementById("fl-license");
+    license.href = encodePath(font.licenseFile);
+    var rfn = document.getElementById("fl-rfn");
+    rfn.hidden = !font.rfn;
+    rfn.textContent = font.rfn ? "保留名称：" + font.rfn : "";
+  }
+
+  function renderCompare() {
+    var box = document.getElementById("fl-compare-list");
+    var empty = document.getElementById("fl-compare-empty");
+    box.replaceChildren();
+    empty.hidden = picked.length !== 0;
+    picked.forEach(function (id) {
+      var font = findFont(id);
+      if (!font) return;
+      enqueue(font);
+      var card = document.createElement("article");
+      card.className = "fl-card";
+      var sample = document.createElement("div");
+      sample.className = "fl-sample";
+      var msg = document.createElement("p");
+      msg.className = "fl-card-msg";
+      if (font.state === "ready") {
+        msg.hidden = true;
+        renderSample(font, sample);
+      } else {
+        sample.hidden = true;
+        msg.textContent = font.state === "failed" ? "字体加载失败" : "正在加载该字体…";
+      }
+      var row = document.createElement("div");
+      row.className = "fl-id";
+      var family = document.createElement("p");
+      family.className = "fl-family";
+      family.textContent = font.family;
+      var more = document.createElement("button");
+      more.type = "button";
+      more.className = "fl-more";
+      more.setAttribute("aria-label", "查看 " + font.family);
+      var icon = document.createElement("img");
+      icon.src = "/img/font-more.svg";
+      icon.width = 20;
+      icon.height = 20;
+      icon.alt = "";
+      more.appendChild(icon);
+      more.addEventListener("click", function () { openDetail(font, more); });
+      row.appendChild(family);
+      row.appendChild(more);
+      var remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "fl-quiet";
+      remove.textContent = "移除 " + font.family;
+      remove.addEventListener("click", function () {
+        var at = picked.indexOf(font.id);
+        if (at !== -1) picked.splice(at, 1);
+        limitEl.hidden = true;
+        renderAll();
+      });
+      card.appendChild(sample);
+      card.appendChild(msg);
+      card.appendChild(row);
+      box.appendChild(card);
+      box.appendChild(remove);
+    });
+  }
+
+  custom.addEventListener("compositionstart", function () { composing = true; });
+  custom.addEventListener("compositionend", function () {
+    composing = false;
+    fitInput();
+    renderAll();
+  });
+  custom.addEventListener("input", function () {
+    fitInput();
+    if (!composing) renderAll();
+  });
+
+  document.getElementById("fl-candidates").addEventListener("click", function () {
+    enter("compare", this);
+    renderCompare();
+    document.getElementById("fl-compare-close").focus();
+  });
+  document.getElementById("fl-filter-current").addEventListener("click", function () {
+    if (filter === "全部") return;
+    filter = "全部";
+    drawFilters();
+    applyFilter();
+  });
+  document.getElementById("fl-cat-toggle").addEventListener("click", function () {
+    var open = catsEl.hidden;
+    catsEl.hidden = !open;
+    this.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  document.getElementById("fl-search-toggle").addEventListener("click", function () {
+    var open = searchRow.hidden;
+    searchRow.hidden = !open;
+    this.setAttribute("aria-expanded", open ? "true" : "false");
+    if (open) searchInput.focus();
+  });
   searchInput.addEventListener("input", function () {
     query = searchInput.value.trim().toLowerCase();
     applyFilter();
   });
-  document.getElementById("fl-search-clear").addEventListener("click", function () {
-    searchInput.value = "";
-    query = "";
-    filter = "全部";
-    Array.prototype.forEach.call(filtersEl.children, function (el) {
-      el.setAttribute("aria-pressed", el.textContent === "全部" ? "true" : "false");
-    });
-    applyFilter();
+  document.getElementById("fl-search-clear").addEventListener("click", clearSearchOnly);
+  document.getElementById("fl-empty-search").addEventListener("click", clearSearchOnly);
+  document.getElementById("fl-empty-reset").addEventListener("click", function () {
+    resetFilters();
     searchInput.focus();
   });
-  Array.prototype.forEach.call(document.querySelectorAll("[data-sample]"), function (button) {
-    button.addEventListener("click", function () {
-      var key = button.getAttribute("data-sample");
-      custom.value = key === "default" ? defaultText : samples[key];
-      renderAll();
-    });
+  document.getElementById("fl-type-open").addEventListener("click", function () {
+    enter("type", this);
+    renderType();
+    document.getElementById("fl-type-close").focus();
+  });
+  document.getElementById("fl-type-close").addEventListener("click", backToBrowse);
+  document.getElementById("fl-size-dec").addEventListener("click", function () { stepSize(-1); });
+  document.getElementById("fl-size-inc").addEventListener("click", function () { stepSize(1); });
+  document.getElementById("fl-lead-dec").addEventListener("click", function () { stepLead(-0.1); });
+  document.getElementById("fl-lead-inc").addEventListener("click", function () { stepLead(0.1); });
+  document.getElementById("fl-type-reset").addEventListener("click", resetType);
+  document.getElementById("fl-sample-reset").addEventListener("click", function () {
+    custom.value = LONG;
+    fitInput();
+    renderAll();
+  });
+  document.getElementById("fl-help-open").addEventListener("click", function () {
+    var help = document.getElementById("fl-help");
+    var open = help.hidden;
+    help.hidden = !open;
+    this.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  document.getElementById("fl-detail-close").addEventListener("click", function () {
+    if (detailFrom === "compare") {
+      view = "compare";
+      paintViews();
+      renderCompare();
+      document.getElementById("fl-compare-close").focus();
+      return;
+    }
+    backToBrowse();
+  });
+  document.getElementById("fl-detail-retry").addEventListener("click", function () {
+    var font = findFont(detailId);
+    if (font) retryFont(font);
+  });
+  document.getElementById("fl-pick").addEventListener("click", function () {
+    var font = findFont(detailId);
+    if (!font) return;
+    togglePick(font);
+    renderDetail();
+  });
+  document.getElementById("fl-weight-toggle").addEventListener("click", function () {
+    weightsOpen = !weightsOpen;
+    this.setAttribute("aria-expanded", weightsOpen ? "true" : "false");
+    renderDetail();
+  });
+  document.getElementById("fl-download").addEventListener("click", function () {
+    var font = findFont(detailId);
+    if (font && font.zip) downloadZip(font);
+  });
+  document.getElementById("fl-compare-close").addEventListener("click", backToBrowse);
+  document.getElementById("fl-compare-exit").addEventListener("click", backToBrowse);
+  document.getElementById("fl-compare-clear").addEventListener("click", function () {
+    picked = [];
+    limitEl.hidden = true;
+    renderAll();
+  });
+  document.addEventListener("keydown", function (event) {
+    if (event.key !== "Escape" || view === "browse") return;
+    if (view === "detail" && detailFrom === "compare") {
+      view = "compare";
+      paintViews();
+      renderCompare();
+      return;
+    }
+    backToBrowse();
   });
   window.addEventListener("scroll", kickVisible, { passive: true });
-  window.addEventListener("resize", kickVisible);
+  window.addEventListener("resize", function () {
+    if (!sizeLocked) renderAll();
+    kickVisible();
+  });
 
+  fitInput();
   fetch("/fonts/library/catalog.json").then(function (response) {
     if (!response.ok) throw new Error("catalog");
     return response.json();
   }).then(function (data) {
     fonts = data.fonts || [];
-    var hand = fonts.filter(function (font) { return font.category === "中文手写"; }).length;
-    countEl.textContent = "已核实并放进目录的字体家族 " + fonts.length + " 个，其中中文手写 " + hand + " 个。同一家族的字重或斜体没有另算。";
     drawCards();
     drawFilters();
     renderAll();

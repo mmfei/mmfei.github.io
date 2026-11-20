@@ -5,18 +5,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>免费可商用字体库 - 木木飞</title><meta name="Description" content="输入一段文字，用本站已核实的字体家族平铺比较，可筛选中文手写。许可按每款 OFL 条款说明，免费不等于无限制可商用。只有 Noto Sans SC 与 Inter 提供已核验安装 ZIP。"><meta property="og:title" content="免费可商用字体库" />
-<meta property="og:description" content="输入一段文字，用本站已核实的字体家族平铺比较，可筛选中文手写。许可按每款 OFL 条款说明，免费不等于无限制可商用。只有 Noto Sans SC 与 Inter 提供已核验安装 ZIP。" />
+        <title>字体对比 - 木木飞</title><meta name="Description" content="输入一段文字，用本站已核实的字体家族比较，可筛选分类，最多选出 3 款并排看。缺字会标明。许可按每款 OFL 条款，免费不等于无限制可商用。只有 Noto Sans SC 与 Inter 提供已核验安装 ZIP。"><meta property="og:title" content="字体对比" />
+<meta property="og:description" content="输入一段文字，用本站已核实的字体家族比较，可筛选分类，最多选出 3 款并排看。缺字会标明。许可按每款 OFL 条款，免费不等于无限制可商用。只有 Noto Sans SC 与 Inter 提供已核验安装 ZIP。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.mmfei.com/tools/fonts/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/><meta property="article:section" content="tools" />
 <meta property="article:published_time" content="2026-11-19T12:00:00&#43;07:00" />
-<meta property="article:modified_time" content="2026-11-19T14:18:18&#43;00:00" />
+<meta property="article:modified_time" content="2026-11-20T08:01:49&#43;07:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
 
-<meta name="twitter:title" content="免费可商用字体库"/>
-<meta name="twitter:description" content="输入一段文字，用本站已核实的字体家族平铺比较，可筛选中文手写。许可按每款 OFL 条款说明，免费不等于无限制可商用。只有 Noto Sans SC 与 Inter 提供已核验安装 ZIP。"/>
+<meta name="twitter:title" content="字体对比"/>
+<meta name="twitter:description" content="输入一段文字，用本站已核实的字体家族比较，可筛选分类，最多选出 3 款并排看。缺字会标明。许可按每款 OFL 条款，免费不等于无限制可商用。只有 Noto Sans SC 与 Inter 提供已核验安装 ZIP。"/>
 <meta name="application-name" content="木木飞">
 <meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -144,55 +144,121 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
 })();
 </script>
 <main class="main">
-                <div class="container"><div class="fl">
-        <h1>免费可商用字体库</h1>
-        <div class="content">
-            <p>输入一次，目录里的字体用同一段文字比较。字体来自 Google Fonts 官方目录的未修改文件，每款都带同目录 OFL。中文手写只收官方分类为手写且含简体中文的家族。西文手写不能当成中文手写。OFL 允许在条款下商用和嵌入网页，但不能单独售卖字体，也不是无限制免费。只有 Noto Sans SC 和 Inter 提供交接时的原安装 ZIP。输入只留在这一页。</p>
+                <div class="container"><div class="fl" data-testid="font-compare">
+        <div class="fl-head">
+            <h1>字体对比</h1>
+            <button type="button" class="fl-quiet" id="fl-candidates" data-testid="candidates">候选 0</button>
+        </div>
+        <div class="fl-bar">
+            <label class="fl-sr" for="fl-custom">预览文字，只在本页处理，不保存</label>
+            <textarea id="fl-custom" class="fl-input" rows="1" data-testid="preview-input" autocomplete="off" spellcheck="false">马上开球 Kickoff</textarea>
+        </div>
 
+        <div id="fl-browse">
+            <div class="fl-tools" id="fl-tools">
+                <button type="button" class="fl-quiet" id="fl-filter-current" data-testid="filter-current" aria-pressed="true">全部</button>
+                <button type="button" class="fl-quiet" id="fl-cat-toggle" data-testid="category-toggle" aria-expanded="false" aria-controls="fl-cats">分类</button>
+                <button type="button" class="fl-quiet" id="fl-search-toggle" data-testid="search-toggle" aria-expanded="false" aria-controls="fl-search-row">找字体</button>
+                <span class="fl-tools-gap"></span>
+                <button type="button" class="fl-quiet" id="fl-type-open" data-testid="type-open">排版</button>
+            </div>
+            <div id="fl-cats" class="fl-cats" data-testid="category-list" hidden></div>
+            <div id="fl-search-row" class="fl-search-row" hidden>
+                <label class="fl-sr" for="fl-search">字体名称</label>
+                <input id="fl-search" type="search" data-testid="search-input" autocomplete="off" placeholder="中文名或英文名">
+                <button type="button" class="fl-quiet" id="fl-search-clear" data-testid="search-clear">清空搜索</button>
+            </div>
+            <p id="fl-limit" class="fl-note" data-testid="candidate-limit" hidden>最多比较 3 款，请先移除一款。</p>
+            <p id="fl-status" class="fl-status" role="status">正在读取字体目录。</p>
+            <div id="fl-empty" class="fl-empty" data-testid="empty" hidden>
+                <p class="fl-empty-title">没有匹配的字体</p>
+                <p id="fl-empty-detail"></p>
+                <button type="button" class="fl-quiet" id="fl-empty-search" data-testid="empty-clear-search">清空搜索词</button>
+                <button type="button" class="fl-quiet" id="fl-empty-reset" data-testid="empty-reset">重置全部筛选</button>
+            </div>
+            <div id="fl-list" class="fl-grid" data-testid="font-grid"></div>
+            <button type="button" class="fl-quiet" id="fl-help-open" data-testid="help-open" aria-expanded="false" aria-controls="fl-help">使用帮助与字体许可</button>
+            <div id="fl-help" class="fl-help" hidden>
+                <p>同一段文字比较目录里的字体。文字只留在这一页，不上传，也不写入浏览器。</p>
+<p>文件里没有的字会标成「中文缺字」。这是说明，不是用系统字体冒充这款字。</p>
+<p>最多把 3 款放进候选再并排比较。移除或清空候选不会改你的文字和排版。</p>
+<p>只有 Noto Sans SC 和 Inter 提供本站安装包。下载前核对 SHA-256，不一致就不会保存。其余字体可以预览，并链到官方目录。</p>
+<p>许可按每款 OFL 1.1 执行：可以按条款商用和嵌入网页，不能单独售卖字体，再分发要附上版权声明和许可全文。</p>
+
+            </div>
         </div>
-        <p class="fl-note">输入一次，下面每款字用同一段文字比较。滚到卡片才加载，一次最多两款。浅色底表示这个字不在该文件里。只有两款提供本站完整安装包，其余是网页预览并链到官方目录。</p>
-        <label for="fl-custom">比较文字。只留在这一页，不上传，也不写入浏览器。</label>
-        <textarea id="fl-custom" class="fl-input" rows="4" autocomplete="off" spellcheck="false">挑选适合的字体
+
+        <section id="fl-type" class="fl-panel" data-testid="type-panel" hidden>
+            <div class="fl-panel-head">
+                <h2>排版</h2>
+                <button type="button" class="fl-quiet" id="fl-type-close" data-testid="type-close">关闭</button>
+            </div>
+            <p class="fl-note">默认已适合预览，无需先设置。</p>
+            <div class="fl-step">
+                <span class="fl-step-name">字号</span>
+                <button type="button" class="fl-quiet" id="fl-size-dec" data-testid="size-dec">减小</button>
+                <span class="fl-step-value" id="fl-size-value" data-testid="size-value">32 px</span>
+                <button type="button" class="fl-quiet" id="fl-size-inc" data-testid="size-inc">增大</button>
+            </div>
+            <p class="fl-note">16–40 px，步长 1。</p>
+            <div class="fl-step">
+                <span class="fl-step-name">行距</span>
+                <button type="button" class="fl-quiet" id="fl-lead-dec" data-testid="lead-dec">减小</button>
+                <span class="fl-step-value" id="fl-lead-value" data-testid="lead-value">1.4</span>
+                <button type="button" class="fl-quiet" id="fl-lead-inc" data-testid="lead-inc">增大</button>
+            </div>
+            <p class="fl-note">1.2–2.2，步长 0.1。</p>
+            <div class="fl-step">
+                <span class="fl-step-name fl-mute">字重</span>
+                <span>各款常规字重</span>
+            </div>
+            <p class="fl-note">具体字重在该字体详情中选择。静态字体不模拟粗体。</p>
+            <button type="button" class="fl-quiet" id="fl-type-reset" data-testid="type-reset">恢复排版</button>
+            <button type="button" class="fl-quiet" id="fl-sample-reset" data-testid="sample-reset">恢复三行默认样字</button>
+            <p class="fl-long" id="fl-long-preview">挑选适合的字体
 Hello, 2026.
-中文与 English，标点：，。！？</textarea>
-        <div class="fl-stick" id="fl-adjust">
-            <div class="fl-controls">
-                <label>找字体
-                    <input id="fl-search" type="search" autocomplete="off" placeholder="中文名或英文名">
-                </label>
-                <button type="button" id="fl-search-clear">清空搜索</button>
-                <label>字号（px）
-                    <input id="fl-size" type="number" min="16" max="40" step="1" value="22" inputmode="numeric">
-                </label>
-                <label>行距
-                    <input id="fl-leading" type="number" min="1.2" max="2.2" step="0.1" value="1.6" inputmode="decimal">
-                </label>
-                <label>比较字重
-                    <select id="fl-weight">
-                        <option value="100">100</option>
-                        <option value="200">200</option>
-                        <option value="300">300</option>
-                        <option value="400" selected>400</option>
-                        <option value="500">500</option>
-                        <option value="600">600</option>
-                        <option value="700">700</option>
-                        <option value="800">800</option>
-                        <option value="900">900</option>
-                    </select>
-                </label>
+中文与 English，标点：，。！？</p>
+            <p class="fl-note">预览文字仅在本页本地处理。</p>
+        </section>
+
+        <section id="fl-detail" class="fl-panel" data-testid="detail-panel" hidden>
+            <div class="fl-panel-head">
+                <h2 id="fl-detail-title">字体</h2>
+                <button type="button" class="fl-quiet" id="fl-detail-close" data-testid="detail-close">关闭</button>
             </div>
-            <div class="fl-examples">
-                <button type="button" data-sample="title">标题示例</button>
-                <button type="button" data-sample="body">正文示例</button>
-                <button type="button" data-sample="mix">中英数字标点</button>
-                <button type="button" data-sample="default">恢复默认</button>
+            <p id="fl-detail-zh" class="fl-note" hidden></p>
+            <div id="fl-detail-sample" class="fl-detail-sample" data-testid="detail-sample"></div>
+            <p id="fl-detail-msg" class="fl-note" hidden></p>
+            <button type="button" class="fl-quiet" id="fl-detail-retry" data-testid="detail-retry" hidden>重试加载</button>
+            <button type="button" class="fl-quiet" id="fl-pick" data-testid="pick">加入候选</button>
+            <div class="fl-step">
+                <span class="fl-step-name fl-mute">当前字重</span>
+                <span id="fl-detail-weight" data-testid="detail-weight"></span>
             </div>
-        </div>
-        <div id="fl-filters" class="fl-filters"></div>
-        <p id="fl-count" class="fl-count"></p>
-        <p id="fl-status" class="fl-status" role="status">正在读取字体目录。</p>
-        <p id="fl-empty" class="fl-empty" hidden>没有同时符合名称和分类的字体。</p>
-        <div id="fl-list" class="fl-grid"></div>
+            <button type="button" class="fl-quiet" id="fl-weight-toggle" data-testid="weight-toggle" hidden>选择可用字重</button>
+            <div id="fl-weight-list" class="fl-weights" data-testid="weight-list" hidden></div>
+            <p id="fl-weight-note" class="fl-note"></p>
+            <button type="button" class="fl-quiet" id="fl-download" data-testid="download" hidden>下载本站完整 ZIP</button>
+            <p id="fl-zip-line" class="fl-note"></p>
+            <p id="fl-dl-status" class="fl-note" role="status" data-testid="download-status"></p>
+            <a class="fl-quiet" id="fl-source" data-testid="source-link" href="#" target="_blank" rel="noopener noreferrer">官方来源（外链）</a>
+            <a class="fl-quiet" id="fl-license" data-testid="license-link" href="#">查看 OFL-1.1 全文</a>
+            <p id="fl-rfn" class="fl-note" hidden></p>
+            <p class="fl-note">使用前须遵守本款许可；不代表所有使用场景无限制。</p>
+        </section>
+
+        <section id="fl-compare" class="fl-panel" data-testid="compare-panel" hidden>
+            <div class="fl-panel-head">
+                <h2>候选比较</h2>
+                <button type="button" class="fl-quiet" id="fl-compare-close" data-testid="compare-close">关闭</button>
+            </div>
+            <div class="fl-tools">
+                <button type="button" class="fl-quiet" id="fl-compare-exit" data-testid="compare-exit">退出比较</button>
+                <button type="button" class="fl-quiet" id="fl-compare-clear" data-testid="compare-clear">清空候选</button>
+            </div>
+            <p id="fl-compare-empty" class="fl-note" data-testid="compare-empty" hidden>还没有候选。在字体详情里加入，最多 3 款。</p>
+            <div id="fl-compare-list" class="fl-compare-list" data-testid="compare-list"></div>
+        </section>
     </div>
     <link rel="stylesheet" href="/css/font-library.css">
     <script src="/js/font-library.js" defer></script></div>
