@@ -180,12 +180,9 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
         data-srcset="/images/posts/ubuntu%e5%ae%89%e8%a3%85mysql8/featuredImage.png, /images/posts/ubuntu%e5%ae%89%e8%a3%85mysql8/featuredImage.png 1.5x, /images/posts/ubuntu%e5%ae%89%e8%a3%85mysql8/featuredImage.png 2x"
         data-sizes="auto"
         alt="/images/posts/ubuntu安装mysql8/featuredImage.png"
-        title="在 Ubuntu 上用 apt 安装 mysql-server：先核验发行版与仓库中的实际大版本，说明 auth_socket 下 sudo mysql 与 mysql -u root -p 的差异，并补齐验证、安全和回滚。" /></div><div class="details toc sk-single-toc" id="toc-static"  kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fas fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+        title="在 Ubuntu 上用 apt 安装 mysql-server：先核验发行版与仓库中的实际大版本，说明 auth_socket 下 sudo mysql 与 mysql -u root -p 的差异，并补齐验证、安全和回滚。" /></div><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#适用范围">适用范围</a></li>
     <li><a href="#先核验发行版和仓库中的大版本">先核验发行版和仓库中的大版本</a>
@@ -204,7 +201,7 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
     <li><a href="#官方参考核读日期-2026-11-19">官方参考（核读日期 2026-11-19）</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><p>原文标题写「Ubuntu安装mysql8」，正文则是一组 <code>apt install mysql-server</code>、<code>mysql_secure_installation</code> 和 <code>sudo mysql -u root -p</code>。它没有说明这台 Ubuntu 是哪个版本，也没有核验仓库里实际提供的是 MySQL 8.0、8.4 还是其他大版本；登录方式也与 Ubuntu 当前官方安装说明不一致。本文按 2026-11-19 查阅的官方资料修订。标题不再把“一定是 8”写成既成事实。</p>
+                </details><div class="content" id="content"><p>原文标题写「Ubuntu安装mysql8」，正文则是一组 <code>apt install mysql-server</code>、<code>mysql_secure_installation</code> 和 <code>sudo mysql -u root -p</code>。它没有说明这台 Ubuntu 是哪个版本，也没有核验仓库里实际提供的是 MySQL 8.0、8.4 还是其他大版本；登录方式也与 Ubuntu 当前官方安装说明不一致。本文按 2026-11-19 查阅的官方资料修订。标题不再把“一定是 8”写成既成事实。</p>
 <blockquote>
 <p><strong>2026-11-19 更新说明：补充软件源版本核验和认证方式说明。</strong> 本文<strong>未在具体 Ubuntu 版本上实测</strong>这些命令，不编造 <code>systemctl</code>、<code>mysql</code> 或 <code>apt-cache policy</code> 的输出。软件包大版本<strong>不要猜测</strong>，以目标机器上的 <code>lsb_release -a</code>、<code>apt-cache policy mysql-server</code> 以及当时的官方发行说明为准。</p>
 </blockquote>

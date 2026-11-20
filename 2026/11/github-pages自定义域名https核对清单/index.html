@@ -173,12 +173,9 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
                                 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                             </span>&nbsp;</div>
                 </div>
-            </header><div class="details toc sk-single-toc" id="toc-static"  kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fas fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#环境与边界">环境与边界</a></li>
     <li><a href="#1-这份清单要核对什么">1. 这份清单要核对什么</a></li>
@@ -194,7 +191,7 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
     <li><a href="#官方参考">官方参考</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><p>站点能在浏览器里打开，不等于自定义域名、证书和跳转都已经按预期工作。裸域与 <code>www</code> 指向不一致、证书还在签发、发布根目录的 <code>CNAME</code> 被生成器覆盖，或页面里的 canonical 仍写着旧主机名，都会让读者、搜索引擎和后续的站点校验看到分裂的入口。本篇按 GitHub Pages 官方文档，整理一份可重复执行的核对清单，说明每一步该看什么、用什么命令验证，以及常见故障和回滚边界。</p>
+                </details><div class="content" id="content"><p>站点能在浏览器里打开，不等于自定义域名、证书和跳转都已经按预期工作。裸域与 <code>www</code> 指向不一致、证书还在签发、发布根目录的 <code>CNAME</code> 被生成器覆盖，或页面里的 canonical 仍写着旧主机名，都会让读者、搜索引擎和后续的站点校验看到分裂的入口。本篇按 GitHub Pages 官方文档，整理一份可重复执行的核对清单，说明每一步该看什么、用什么命令验证，以及常见故障和回滚边界。</p>
 <blockquote>
 <p>适用范围：已经拥有域名、能够查看仓库的 GitHub Pages 设置，并可以查询该域名 DNS 的站点维护者。资料核读日期为 2026 年 11 月 19 日（Asia/Bangkok），依据当时的 GitHub Pages 官方说明：自定义域名、管理自定义域名、HTTPS、故障排除以及域名验证。文中的 <code>example.com</code>、<code>www.example.com</code>、<code>USERNAME</code>、<code>ORGANIZATION</code> 都是官方文档常用的占位符，<strong>必须换成你自己的域名和账户</strong>，不要直接查询或修改示例名。本篇是核对与配置对照，<strong>未在本文环境对某个演练域名完整走一遍“改 DNS、等证书、开强制 HTTPS”的实测</strong>。不涉及广告代码或付费配置，也不建议绕过平台限制。GitHub Pages 官方提醒：不要把该服务用于发送密码、支付卡号等敏感交易。</p>
 </blockquote>

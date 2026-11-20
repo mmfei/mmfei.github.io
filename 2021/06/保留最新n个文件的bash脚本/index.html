@@ -173,12 +173,9 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
                                 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                             </span>&nbsp;</div>
                 </div>
-            </header><div class="details toc sk-single-toc" id="toc-static"  kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fas fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#原文实现为什么不能继续用">原文实现为什么不能继续用</a></li>
     <li><a href="#适用范围">适用范围</a></li>
@@ -192,7 +189,7 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
     <li><a href="#官方依据2026-11-19-核读">官方依据（2026-11-19 核读）</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><blockquote>
+                </details><div class="content" id="content"><blockquote>
 <p><strong>2026-11-19 更新说明：</strong> 保留原发布日期和原网址，重写为可预览、可校验的安全脚本。原文那份 <code>ls | xargs rm -rf</code> 示例在空格文件名、前导短横线、目录路径和匹配范围上都不安全，不能靠文末补一句警告继续使用。本文给出完整可运行实现，并写明测试范围与做不到的保证。</p>
 </blockquote>
 <p>原文只有一段三十多行的脚本：进入目标目录，用 <code>ls -lrt</code> 取出“最新 N 个”名字，再把其余项交给 <code>xargs rm -rf</code>。它默认保留 5 个文件，也可按关键字过滤，但没有预览、没有路径限制，也没有把文件名当作不可拆分的完整字符串处理。</p>

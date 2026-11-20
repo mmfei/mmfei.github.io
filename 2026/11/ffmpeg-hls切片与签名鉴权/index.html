@@ -173,12 +173,9 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
                                 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                             </span>&nbsp;</div>
                 </div>
-            </header><div class="details toc sk-single-toc" id="toc-static"  kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fas fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#环境与边界">环境与边界</a></li>
     <li><a href="#1-切片长度先与gop对齐">1. 切片长度先与GOP对齐</a></li>
@@ -196,7 +193,7 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
     <li><a href="#同专题">同专题</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><p>为短剧播放页签一个<code>index.m3u8</code>地址，并不意味着视频片段受保护。如果播放列表里的<code>seg000.ts</code>可以直接访问，跳过播放页仍然能拿到内容。</p>
+                </details><div class="content" id="content"><p>为短剧播放页签一个<code>index.m3u8</code>地址，并不意味着视频片段受保护。如果播放列表里的<code>seg000.ts</code>可以直接访问，跳过播放页仍然能拿到内容。</p>
 <p>本文从技术实现出发：先用FFmpeg生成HLS点播素材，再用最小HMAC服务验证<strong>播放列表和每个片段都要鉴权</strong>，并用自动化测试覆盖过期、签名错误和直连绕过。短剧只是这个访问控制问题的业务场景。</p>
 <h2 id="环境与边界">环境与边界</h2>
 <p>本次实际使用Linux、FFmpeg 7.1.5-0+deb13u1和Python 3.13.5。素材是6秒本地合成画面与测试音，单码率、MPEG-TS、点播，不涉及真实剧集、订单、模型调用或付费服务。</p>

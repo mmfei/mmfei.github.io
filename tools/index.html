@@ -143,15 +143,54 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
 })();
 </script>
 <main class="main">
-                <div class="container"><div class="page single special">
-        <h1 class="single-title animated pulse faster">工具</h1>
-        <div class="content" id="content"><p>这里只列出已经上线的入口。</p>
-<ul><li>
-                            <a href="/tools/ui-motion/">交互与动效预览</a>：在线体验按钮、表单反馈、模态弹窗和列表状态，调整CSS微动效的时长与缓动，预览并复制动效示例代码，支持减少动态。</li><li>
-                            <a href="/tools/fonts/">字体对比</a>：输入一段文字，用本站已核实的字体家族比较，可筛选分类，最多选出 3 款并排看。缺字会标明。许可按每款 OFL 条款，免费不等于无限制可商用。只有 Noto Sans SC 与 Inter 提供已核验安装 ZIP。</li><li>
-                            <a href="/resources/">资源导航</a>：已核实的 AI 工具、游戏开发与模型选型资料，附官方链接和许可说明。</li><li>
-                            <a href="/tools/srt-offset/">SRT 时间偏移</a>：在浏览器本地把整份 SRT 提前或延后整数毫秒。字幕不上传。负时间整次拒绝，不截成 0。每条都必须开始早于结束。</li></ul></div>
-    </div></div>
+                <div class="container"><link rel="stylesheet" href="/css/nav-pages.css">
+<div class="nv" data-testid="tools-overview">
+    <div class="nv-intro">
+        <h1>工具</h1>
+        <p class="nv-lead">选一个，直接开始。</p>
+    </div>
+    <section class="nv-block" aria-labelledby="nv-online">
+        <h2 id="nv-online">在线工具</h2>
+        <div class="nv-grid">
+            <a class="nv-card" href="/tools/fonts/" data-testid="tool-fonts">
+                <span class="nv-name">字体对比</span>
+                <span class="nv-body">用同一段文字预览不同字体。</span>
+                <span class="nv-scope">53 款预览 · 4 款中文手写 · 仅 2 款本站 ZIP</span>
+                <span class="nv-go">打开字体对比<img src="/img/nav-arrow.svg" alt="" width="16" height="16"></span>
+            </a>
+            <a class="nv-card" href="/tools/srt-offset/" data-testid="tool-srt">
+                <span class="nv-name">SRT 时间偏移</span>
+                <span class="nv-body">整份字幕统一提前或延后。</span>
+                <span class="nv-scope">整数毫秒 · 本地处理 · 不处理越播越不同步</span>
+                <span class="nv-go">打开 SRT 时间偏移<img src="/img/nav-arrow.svg" alt="" width="16" height="16"></span>
+            </a>
+            <a class="nv-card" href="/tools/ui-motion/" data-testid="tool-motion">
+                <span class="nv-name">交互与动效预览</span>
+                <span class="nv-body">体验常见交互，预览并复制微动效 CSS。</span>
+                <span class="nv-scope">仅微动效 CSS 可复制</span>
+                <span class="nv-go">打开交互与动效预览<img src="/img/nav-arrow.svg" alt="" width="16" height="16"></span>
+            </a>
+        </div>
+    </section>
+    <section class="nv-block" aria-labelledby="nv-docs">
+        <h2 id="nv-docs">资料入口</h2>
+        <a class="nv-card" href="/resources/" data-testid="tool-resources">
+            <span class="nv-name">资源导航</span>
+            <span class="nv-body">AI 工具、游戏开发与模型选型。</span>
+            <span class="nv-scope">6 条官方资料 · 软件与权重许可分别看</span>
+            <span class="nv-go">浏览资源导航<img src="/img/nav-arrow.svg" alt="" width="16" height="16"></span>
+        </a>
+    </section>
+    <details class="nv-bounds" data-testid="tool-bounds">
+        <summary>使用边界<img src="/img/nav-chevron.svg" alt="" width="16" height="16"></summary>
+        <div class="nv-detail">
+            <p>字体：53 款可预览；仅 Noto Sans SC、Inter 提供本站完整 ZIP，其余 51 款保留预览与官方来源。免费不等于无条件商用，使用前核各款许可。</p>
+            <p>SRT：单份最多 1 MiB、10,000 条；统一偏移整数毫秒，不处理越播越不同步。任一时间变负或结束不晚于开始时整次拒绝，不截为 0。交叉字幕只提示，不因此拒绝或重排。正文、换行、序号顺序保持。在浏览器本地处理。</p>
+            <p>资源：只提供官方选型资料，不代运行、不托管软件或模型，不统一承诺全部免费或商用。</p>
+            <p>交互与动效预览：按钮、表单、弹窗和列表在页面体验；只有微动效 CSS 可预览并复制。不是所有交互都能导出代码，不含弹簧、拖拽、配色或页面转场。</p>
+        </div>
+    </details>
+</div></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.mmfei.com/" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
                     <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>

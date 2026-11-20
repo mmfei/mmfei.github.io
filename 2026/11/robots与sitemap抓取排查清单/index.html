@@ -173,12 +173,9 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
                                 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                             </span>&nbsp;</div>
                 </div>
-            </header><div class="details toc sk-single-toc" id="toc-static"  kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fas fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#先分清三个问题">先分清三个问题</a></li>
     <li><a href="#1-先保存响应不从配置源文件猜线上状态">1. 先保存响应，不从配置源文件猜线上状态</a></li>
@@ -191,7 +188,7 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
     <li><a href="#官方参考">官方参考</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><p>把文章放进 sitemap，再在 robots.txt 写一句 Allow，并不能保证 Google 收录。前者提供发现网址的线索，后者表达爬虫能否抓取；页面是否被抓取、如何被索引，还受页面响应、索引指令、重复内容和搜索引擎判断影响。</p>
+                </details><div class="content" id="content"><p>把文章放进 sitemap，再在 robots.txt 写一句 Allow，并不能保证 Google 收录。前者提供发现网址的线索，后者表达爬虫能否抓取；页面是否被抓取、如何被索引，还受页面响应、索引指令、重复内容和搜索引擎判断影响。</p>
 <p>这篇清单解决的是“静态博客发布后，从哪里开始排查”，不是承诺收录或排名。适用于 Hugo 等生成静态 HTML 的博客，也适用于从其他生成器发布的站点；不要求安装 SEO 插件。官方资料核读日期为 2026 年 11 月 19 日。文末列出本次实际只读观察，其他配置片段是说明用途的示例，<strong>没有修改任何站点配置，也没有验证 Google 的实际抓取或收录</strong>。</p>
 <h2 id="先分清三个问题">先分清三个问题</h2>
 <table>

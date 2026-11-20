@@ -173,12 +173,9 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
                                 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                             </span>&nbsp;</div>
                 </div>
-            </header><div class="details toc sk-single-toc" id="toc-static"  kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fas fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#1-先选能比较的指标">1. 先选能比较的指标</a></li>
     <li><a href="#2-第一轮只做范围对齐">2. 第一轮只做范围对齐</a>
@@ -196,7 +193,7 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
     <li><a href="#官方参考">官方参考</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><p>Search Console 显示的 Google 搜索点击，与 GA4 里的自然搜索会话，不应该被当成必须完全相等的两列数据。它们记录的环节、计数方式和采集条件都不同。</p>
+                </details><div class="content" id="content"><p>Search Console 显示的 Google 搜索点击，与 GA4 里的自然搜索会话，不应该被当成必须完全相等的两列数据。它们记录的环节、计数方式和采集条件都不同。</p>
 <p>真正要解决的是：在口径尽量一致后，两边趋势是否出现值得排查的偏离；如果偏离，证据指向采集、范围、时区还是页面映射，而不是先宣布某个工具“统计错了”。</p>
 <p>本文适用于已有网站的 GA4 和 Search Console 数据核对。依据两项产品当前官方说明整理，资料核读日期为 2026 年 11 月 19 日。**本文没有访问任何私人 Search Console 报表，没有进行两个真实账户的对账，也没有生成真实流量结论。**下文是可执行的分析清单，不是某个博客已经通过核验的案例报告。</p>
 <h2 id="1-先选能比较的指标">1. 先选能比较的指标</h2>

@@ -173,12 +173,9 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
                                 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                             </span>&nbsp;</div>
                 </div>
-            </header><div class="details toc sk-single-toc" id="toc-static"  kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fas fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#环境和验证范围">环境和验证范围</a></li>
     <li><a href="#1-先定输出契约">1. 先定输出契约</a></li>
@@ -191,7 +188,7 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
     <li><a href="#同专题">同专题</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><p>一条短视频有6秒画面、4秒配音和两段字幕，合成时应该提前结束，还是保留画面并把尾部补静音？输入文件里有多个音轨时，究竟选到了哪一条？这些问题比“执行一条FFmpeg命令”更值得先定义。</p>
+                </details><div class="content" id="content"><p>一条短视频有6秒画面、4秒配音和两段字幕，合成时应该提前结束，还是保留画面并把尾部补静音？输入文件里有多个音轨时，究竟选到了哪一条？这些问题比“执行一条FFmpeg命令”更值得先定义。</p>
 <p>本文以短剧片段后期为例，技术主线是显式选流、中文字幕烧录、时长策略和结果核验。素材全部由本地测试源生成，<strong>不下载影视片段、不接TTS、不调用任何付费模型</strong>。</p>
 <h2 id="环境和验证范围">环境和验证范围</h2>
 <p>本次成功路径实际运行于 Linux、FFmpeg 7.1.5-0+deb13u1、libx264、AAC、libass，以及已经能够匹配到 <code>Noto Sans CJK SC</code> 的系统字体。Python 3.13.5 只用于结果断言，不参与视频编码。下面记录的 11 项通过结果，只对应这次环境和这次运行，不代表其他机器也已经通过。</p>

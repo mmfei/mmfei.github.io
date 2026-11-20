@@ -173,12 +173,9 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
                                 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                             </span>&nbsp;</div>
                 </div>
-            </header><div class="details toc sk-single-toc" id="toc-static"  kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fas fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#环境与适用范围">环境与适用范围</a></li>
     <li><a href="#1-先定义状态与两层幂等">1. 先定义状态与两层幂等</a></li>
@@ -192,7 +189,7 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
     <li><a href="#同专题">同专题</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><p>用户重复点“生成视频”，接口超时后前端又重试，worker 提交模型任务后还没写回状态就退出：三种现象可能都导致重复提交与重复计费。仅给队列消息加一个唯一 ID，并不能自动解决外部接口的重复副作用。</p>
+                </details><div class="content" id="content"><p>用户重复点“生成视频”，接口超时后前端又重试，worker 提交模型任务后还没写回状态就退出：三种现象可能都导致重复提交与重复计费。仅给队列消息加一个唯一 ID，并不能自动解决外部接口的重复副作用。</p>
 <p>本文用 Python 标准库和 SQLite 写一个单机最小实现。业务场景是提交视频生成任务，技术重点是持久化状态、幂等键、领取租约和有边界的重试。外部提供方使用单独数据库的模拟实现，<strong>不调用模型、不生成视频、不发生API费用</strong>。</p>
 <h2 id="环境与适用范围">环境与适用范围</h2>
 <p>本次使用 Linux、Python 3.13.5 与内置 sqlite3 运行示例。代码是教学用单机队列，不是 Redis、Celery 或分布式调度系统；SQLite 同时只有一个写事务，不应把本例的逻辑验证当成高并发吞吐证明。数据库应放本机受控目录，不把它当共享网络盘队列。</p>

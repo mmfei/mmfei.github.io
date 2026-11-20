@@ -180,12 +180,9 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
         data-srcset="/images/posts/ubuntu%e5%ae%89%e8%a3%85redis/featuredImage.png, /images/posts/ubuntu%e5%ae%89%e8%a3%85redis/featuredImage.png 1.5x, /images/posts/ubuntu%e5%ae%89%e8%a3%85redis/featuredImage.png 2x"
         data-sizes="auto"
         alt="/images/posts/ubuntu安装redis/featuredImage.png"
-        title="在 Ubuntu 上用发行版软件源安装 redis-server：先核验系统与仓库版本，再完成安装、状态检查、绑定地址与保护模式核验，并说明回滚注意。" /></div><div class="details toc sk-single-toc" id="toc-static"  kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fas fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+        title="在 Ubuntu 上用发行版软件源安装 redis-server：先核验系统与仓库版本，再完成安装、状态检查、绑定地址与保护模式核验，并说明回滚注意。" /></div><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#适用范围与两条安装路径">适用范围与两条安装路径</a></li>
     <li><a href="#环境前提">环境前提</a>
@@ -202,7 +199,7 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
     <li><a href="#官方参考核读日期-2026-11-19">官方参考（核读日期 2026-11-19）</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><p>原文只用 <code>apt install redis-server</code> 和 <code>systemctl status</code> 两条命令，没有说明 Ubuntu 版本、软件包实际版本、官方来源，也没有绑定地址、保护模式、验证和回滚。本文按 2026-11-19 查阅的官方资料补全这些步骤。</p>
+                </details><div class="content" id="content"><p>原文只用 <code>apt install redis-server</code> 和 <code>systemctl status</code> 两条命令，没有说明 Ubuntu 版本、软件包实际版本、官方来源，也没有绑定地址、保护模式、验证和回滚。本文按 2026-11-19 查阅的官方资料补全这些步骤。</p>
 <blockquote>
 <p><strong>2026-11-19 更新说明：补充版本核验、安装验证和安全边界。</strong> 本文<strong>未在具体 Ubuntu 版本上实测</strong>这些命令，不把预期现象写成已跑通的终端输出。仓库中的 Redis 大版本随发行版变化，<strong>不要猜测本机版本</strong>，一律以目标机器上的 <code>lsb_release -a</code>、<code>apt-cache policy redis-server</code>（或 <code>apt policy redis-server</code>）以及当时的官方发行说明为准。</p>
 </blockquote>

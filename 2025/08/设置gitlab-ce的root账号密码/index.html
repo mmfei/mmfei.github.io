@@ -173,12 +173,9 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
                                 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                             </span>&nbsp;</div>
                 </div>
-            </header><div class="details toc sk-single-toc" id="toc-static"  kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fas fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#适用范围与前提">适用范围与前提</a></li>
     <li><a href="#先确认安装形态">先确认安装形态</a></li>
@@ -195,7 +192,7 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
     <li><a href="#官方参考核读日期-2026-11-19">官方参考（核读日期 2026-11-19）</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><p>原文只给出一段 <code>docker exec</code> 进入容器后启动 <code>gitlab-rails console</code>，再用 <code>User.where(id: 1)</code> 改密码的命令。GitLab 官方文档把 <strong>Rake 任务</strong>作为重置密码的标准方法之一，并单独说明了 root 账户与故障排查。本文按 2026-11-19 核读的官方说明修订，保留容器场景，但不再把 Rails console 当作唯一做法。标题改为“重置”，更贴近实际操作；</p>
+                </details><div class="content" id="content"><p>原文只给出一段 <code>docker exec</code> 进入容器后启动 <code>gitlab-rails console</code>，再用 <code>User.where(id: 1)</code> 改密码的命令。GitLab 官方文档把 <strong>Rake 任务</strong>作为重置密码的标准方法之一，并单独说明了 root 账户与故障排查。本文按 2026-11-19 核读的官方说明修订，保留容器场景，但不再把 Rails console 当作唯一做法。标题改为“重置”，更贴近实际操作；</p>
 <blockquote>
 <p><strong>2026-11-19 更新说明：补充交互式重置入口与生产风险。</strong> 本文<strong>未对任何 GitLab 实例实测</strong>这些命令，不编造 rake、console 或登录结果。文中密码一律写作「新密码」，不要把真实密码写进命令、截图、工单或文章。</p>
 </blockquote>

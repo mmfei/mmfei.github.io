@@ -173,12 +173,9 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
                                 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                             </span>&nbsp;</div>
                 </div>
-            </header><div class="details toc sk-single-toc" id="toc-static"  kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fas fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#1-分页内容不是天然重复内容">1. 分页内容不是天然重复内容</a></li>
     <li><a href="#2-每页同时满足三个条件">2. 每页同时满足三个条件</a>
@@ -196,7 +193,7 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
     <li><a href="#官方参考">官方参考</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><p>文章归档第二页展示的是另一批文章，却把 canonical 写成第一页，这不是简单的“集中权重”：它向搜索引擎发送了与分页内容不一致的规范化信号。</p>
+                </details><div class="content" id="content"><p>文章归档第二页展示的是另一批文章，却把 canonical 写成第一页，这不是简单的“集中权重”：它向搜索引擎发送了与分页内容不一致的规范化信号。</p>
 <p>Google 的分页文档明确建议：分页序列中每页使用独立网址，并各自声明 canonical，不要统一指向第一页。本文讨论包含不同条目的博客归档与分类分页，不把筛选排序变体、打印版或跟踪参数页混在一起。</p>
 <blockquote>
 <p>适用范围：服务端或静态生成的 HTML 列表页。官方资料核读于 2026 年 11 月 19 日。下面的本地核对脚本只检查输入 HTML 中的声明与链接，不模拟 Google 渲染、规范网址选择或搜索排名。本文没有改线上模板。</p>

@@ -173,12 +173,9 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
                                 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                             </span>&nbsp;</div>
                 </div>
-            </header><div class="details toc sk-single-toc" id="toc-static"  kept="">
-                    <div class="details-summary toc-title">
-                        <span>目录</span>
-                        <span><i class="details-icon fas fa-angle-right"></i></span>
-                    </div>
-                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#环境与边界">环境与边界</a></li>
     <li><a href="#1-为什么用纯静态搜索">1. 为什么用纯静态搜索</a></li>
@@ -194,7 +191,7 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
     <li><a href="#官方参考">官方参考</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><p>静态托管上的博客通常没有可查询的服务端，把全文搜索交给第三方接口又会引入额外依赖。Pagefind 的做法是：在静态站点生成器完成构建之后，扫描输出目录里的 HTML，生成一份可以一起发布的静态搜索包；浏览器只请求这份包，不必再访问搜索 API。本教程说明如何在 Hugo 站点上安装、在本地或 CI 中生成索引、把搜索界面挂到公共模板，以及如何核验、排错和回滚。</p>
+                </details><div class="content" id="content"><p>静态托管上的博客通常没有可查询的服务端，把全文搜索交给第三方接口又会引入额外依赖。Pagefind 的做法是：在静态站点生成器完成构建之后，扫描输出目录里的 HTML，生成一份可以一起发布的静态搜索包；浏览器只请求这份包，不必再访问搜索 API。本教程说明如何在 Hugo 站点上安装、在本地或 CI 中生成索引、把搜索界面挂到公共模板，以及如何核验、排错和回滚。</p>
 <blockquote>
 <p>适用范围：能修改 Hugo 公共模板，并且可以在 <code>hugo</code> 生成 <code>public/</code> 之后追加一条索引命令的站点。资料核读日期为 2026 年 11 月 19 日（Asia/Bangkok）。索引命令按 <!--email_off--><code>pagefind@1.6.0</code><!--/email_off--> 核对；同日 npm 上该包的 <code>latest</code> 标签也是 <code>1.6.0</code>。官方文档从 1.5.0 起把 Component UI（<code>pagefind-component-ui.js</code>）作为推荐界面，并写明它取代 Default UI（<code>pagefind-ui.js</code> / <code>PagefindUI</code>）；1.6.0 仍会生成两套资源，Default UI 的说明页也还在。下文以核读日官方文档为准：新接入优先用 Component UI，同时给出仍被文档收录的 Default UI 写法，便于对照已有站点。若你核读时官方最新版或推荐界面又有变化，以当时文档为准，不要把本文冻结成唯一做法。文中命令输出都是官方描述或预期现象。<strong>未在本文环境实测完整接入</strong>，也没有用隔离环境跑通一次从构建到发布的搜索闭环。</p>
 </blockquote>
