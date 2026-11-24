@@ -4,7 +4,28 @@
         <link>https://www.mmfei.com/posts/</link>
         <description>所有文章 | 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Thu, 19 Nov 2026 14:52:53 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 24 Nov 2026 19:46:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）</title>
+    <link>https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/</link>
+    <pubDate>Tue, 24 Nov 2026 19:46:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/</guid>
+    <description><![CDATA[接口突然变慢，怀疑是数据库，第一步通常是看慢查询日志。但很多人卡在这几步：日志没开、找不到文件、看不懂内容、不知道先优化哪条 SQL；日志开了]]></description>
+</item><item>
+    <title>GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测</title>
+    <link>https://www.mmfei.com/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/</link>
+    <pubDate>Tue, 24 Nov 2026 19:45:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/</guid>
+    <description><![CDATA[在国内服务器上 git clone GitHub 仓库，常见的是速度只有几十 KB/s、clone 到一半断开，或者 SSH 直接连不上。网上很多“加速”教程要么让你改 hosts，要]]></description>
+</item><item>
+    <title>Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治</title>
+    <link>https://www.mmfei.com/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/</link>
+    <pubDate>Tue, 24 Nov 2026 19:40:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/</guid>
+    <description><![CDATA[服务器磁盘报警，du 一查，/var/lib/docker/containers/ 下某个 *-json.log 有几十 GB。这是 Docker 默认日志配置下很常见的情况：默认的]]></description>
+</item><item>
     <title>FFmpeg HLS 切片与签名鉴权：别只保护 m3u8</title>
     <link>https://www.mmfei.com/2026/11/ffmpeg-hls%E5%88%87%E7%89%87%E4%B8%8E%E7%AD%BE%E5%90%8D%E9%89%B4%E6%9D%83/</link>
     <pubDate>Thu, 19 Nov 2026 14:52:53 &#43;0700</pubDate>
@@ -53,28 +74,5 @@
     <author>作者</author>
     <guid>https://www.mmfei.com/2026/11/github-pages%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8Dhttps%E6%A0%B8%E5%AF%B9%E6%B8%85%E5%8D%95/</guid>
     <description><![CDATA[站点能在浏览器里打开，不等于自定义域名、证书和跳转都已经按预期工作。裸域与 www 指向不一致、证书还在签发、发布根目录的 CNAME 被生成器覆盖，或页面里的]]></description>
-</item><item>
-    <title>Hugo 静态博客接入 Pagefind：构建时生成索引并挂上搜索框</title>
-    <link>https://www.mmfei.com/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/</link>
-    <pubDate>Thu, 19 Nov 2026 09:40:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/2026/11/hugo%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5pagefind/</guid>
-    <description><![CDATA[静态托管上的博客通常没有可查询的服务端，把全文搜索交给第三方接口又会引入额外依赖。Pagefind 的做法是：在静态站点生成器完成构建之后，扫]]></description>
-</item><item>
-    <title>GitHub Pages 博客接入 AdSense：广告代码、ads.txt 与审核前检查清单</title>
-    <link>https://www.mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/</link>
-    <pubDate>Wed, 18 Nov 2026 08:00:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/</guid>
-    <description><![CDATA[博客能正常打开，不代表已经具备展示广告的条件。AdSense 开户、连接站点、站点审核和广告位设置是不同步骤。本教程针对自有域名的静态博客，说]]></description>
-</item><item>
-    <title>重置 GitLab CE 的 root 密码</title>
-    <link>https://www.mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/</link>
-    <pubDate>Tue, 05 Aug 2025 19:30:35 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/</guid>
-    <description><![CDATA[<div class="featured-image">
-                <img src="/images/posts/%e8%ae%be%e7%bd%aegitlab-ce%e7%9a%84root%e8%b4%a6%e5%8f%b7%e5%af%86%e7%a0%81/featuredImage.png" referrerpolicy="no-referrer">
-            </div>原文只给出一段 docker exec 进入容器后启动 gitlab-rails console，再用 User.where(id: 1) 改密码的命令。GitLab 官方文档把 Rake 任务作为重置密码的标准方法之一，并单独说明了]]></description>
 </item></channel>
 </rss>

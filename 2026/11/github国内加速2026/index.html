@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测 - 木木飞</title><meta name="Description" content="国内服务器 clone GitHub 慢或断开时，按只给 github.com 配 git 代理、SSH 改走 443、浅克隆减少下载量、Release 下载后校验 SHA256 的顺序处理，并说明 hosts 和镜像站为什么不可靠。附实测输出。"><meta property="og:title" content="GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测" />
+<meta property="og:description" content="国内服务器 clone GitHub 慢或断开时，按只给 github.com 配 git 代理、SSH 改走 443、浅克隆减少下载量、Release 下载后校验 SHA256 的顺序处理，并说明 hosts 和镜像站为什么不可靠。附实测输出。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.mmfei.com/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-11-24T19:45:00&#43;07:00" />
+<meta property="article:modified_time" content="2026-11-24T19:45:00&#43;07:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
+
+<meta name="twitter:title" content="GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测"/>
+<meta name="twitter:description" content="国内服务器 clone GitHub 慢或断开时，按只给 github.com 配 git 代理、SSH 改走 443、浅克隆减少下载量、Release 下载后校验 SHA256 的顺序处理，并说明 hosts 和镜像站为什么不可靠。附实测输出。"/>
+<meta name="application-name" content="木木飞">
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.mmfei.com/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/" /><link rel="prev" href="https://www.mmfei.com/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/" /><link rel="next" href="https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.mmfei.com\/2026\/11\/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026\/"
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "GitHub, git, 代理, SSH, 国内加速","wordcount":  4644 ,
+        "url": "https:\/\/www.mmfei.com\/2026\/11\/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026\/","datePublished": "2026-11-24T19:45:00+07:00","dateModified": "2026-11-24T19:45:00+07:00","publisher": {
+            "@type": "Organization",
+            "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "mmfei"
+            },"description": "国内服务器 clone GitHub 慢或断开时，按只给 github.com 配 git 代理、SSH 改走 443、浅克隆减少下载量、Release 下载后校验 SHA256 的顺序处理，并说明 hosts 和镜像站为什么不可靠。附实测输出。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-desktop" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-desktop"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a>
+                <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile">
+                <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-mobile" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-mobile"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<style>
+#header-desktop .header-wrapper .menu { overflow: visible; }
+#header-desktop .menu-has-sub { position: relative; display: inline-block; }
+#header-desktop .menu-parent-link,
+#header-mobile .menu-parent-link { color: inherit; text-decoration: none; }
+#header-desktop .menu-has-sub.active .menu-parent-link { font-weight: 900; }
+#header-desktop .menu-sub-toggle {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: 1;
+    padding: 0 2px;
+    cursor: pointer;
+}
+#header-desktop .menu-sub {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 8.5rem;
+    margin: 0;
+    padding: 6px 0;
+    text-align: left;
+    background: #f8f8f8;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .12);
+    z-index: 220;
+}
+#header-desktop .menu-has-sub:hover > .menu-sub,
+#header-desktop .menu-has-sub:focus-within > .menu-sub,
+#header-desktop .menu-has-sub.is-open > .menu-sub { display: block; }
+#header-desktop .menu-sub a { display: block; padding: 6px 14px; white-space: nowrap; color: inherit; text-decoration: none; }
+body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: #363636; }
+#header-mobile .menu-has-sub,
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub,
+#header-mobile .menu-sub a { display: block; }
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub a { line-height: 2.5rem; }
+#header-mobile .menu-sub-toggle { display: none; }
+</style>
+<script>
+(function () {
+    var buttons = document.querySelectorAll(".menu-sub-toggle");
+    Array.prototype.forEach.call(buttons, function (button) {
+        button.addEventListener("click", function () {
+            var item = button.parentNode;
+            var open = item.classList.toggle("is-open");
+            button.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key !== "Escape") return;
+        Array.prototype.forEach.call(buttons, function (button) {
+            button.parentNode.classList.remove("is-open");
+            button.setAttribute("aria-expanded", "false");
+        });
+    });
+})();
+</script>
+<main class="main">
+                <div class="container"><div class="sk-page sk-article"><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div><article class="page single sk-single">
+            <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/github/">github</a></p><h1 class="single-title sk-single-title">GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测</h1><div class="post-meta sk-single-meta">
+                    <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
+                    </div>
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-24">2026-11-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4644 字&nbsp;
+                        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;<span id="/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/" class="leancloud_visitors" data-flag-title="GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测">
+                                <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                            </span>&nbsp;</div>
+                </div>
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#先说结论">先说结论</a></li>
+    <li><a href="#实测环境与边界">实测环境与边界</a></li>
+    <li><a href="#1-只给-githubcom-配-git-代理">1. 只给 github.com 配 git 代理</a></li>
+    <li><a href="#2-浅克隆先少下数据">2. 浅克隆：先少下数据</a></li>
+    <li><a href="#3-ssh-改走-443-端口">3. SSH 改走 443 端口</a></li>
+    <li><a href="#4-只有-http-代理时让-ssh-也走代理">4. 只有 HTTP 代理时，让 SSH 也走代理</a></li>
+    <li><a href="#5-release-下载下载后一定要校验">5. Release 下载：下载后一定要校验</a></li>
+    <li><a href="#6-镜像站和加速链接的风险">6. 镜像站和“加速链接”的风险</a></li>
+    <li><a href="#7-为什么不再推荐改-hosts">7. 为什么不再推荐改 hosts</a></li>
+    <li><a href="#常见故障">常见故障</a></li>
+    <li><a href="#安全注意">安全注意</a></li>
+    <li><a href="#回滚">回滚</a></li>
+    <li><a href="#官方参考">官方参考</a></li>
+  </ul>
+</nav></div>
+                </details><div class="content" id="content"><p>在国内服务器上 <code>git clone</code> GitHub 仓库，常见的是速度只有几十 KB/s、clone 到一半断开，或者 SSH 直接连不上。网上很多“加速”教程要么让你改 hosts，要么推荐来路不明的镜像站。本文只写合法、能自己核实的做法：把 git 流量交给你已有的合规代理、SSH 改走 443 端口、用浅克隆少下数据、Release 下载后校验 SHA256。</p>
+<p>站内 2022 年那篇<a href="https://www.mmfei.com/2022/04/%e9%98%bf%e9%87%8c%e4%ba%91%e5%9b%bd%e5%86%85%e6%9c%ba%e6%88%bf%e6%8b%89github%e4%bb%a3%e7%a0%81%e5%8a%a0%e9%80%9f%e6%96%b9%e6%a1%88/" target="_blank" rel="noopener noreffer">阿里云国内机房拉GitHub代码加速方案</a>记录了当时的三种做法（绑 hosts、装代理客户端、换海外机器）。本文是它的 2026 年补充：解释 hosts 为什么不再推荐，并把代理的配置范围收窄到只影响 GitHub。</p>
+<h2 id="先说结论">先说结论</h2>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐做法</th>
+<th>本文实测情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTPS clone 慢或断开</td>
+<td>只给 <code>https://github.com</code> 配 <code>http.&lt;url&gt;.proxy</code></td>
+<td>已实测，流量确实经过代理</td>
+</tr>
+<tr>
+<td>只需要最新代码（CI、部署）</td>
+<td><code>--depth 1</code> 或 <code>--filter=blob:none</code></td>
+<td>已实测，nginx 仓库下载量 76.41 MiB 降到 1.40 MiB</td>
+</tr>
+<tr>
+<td>SSH 22 端口被拦</td>
+<td>改用 <code>ssh.github.com:443</code></td>
+<td>测试机网络拦截 SSH，未能跑通，需运维在国内服务器复测</td>
+</tr>
+<tr>
+<td>公司只给 HTTP 代理</td>
+<td>SSH 用 <code>ProxyCommand nc -X connect</code> 走代理的 443</td>
+<td>已实测：代理放行 443，拒绝 22（403）</td>
+</tr>
+<tr>
+<td>下载 Release 二进制</td>
+<td>走代理下载后用官方 checksums 校验</td>
+<td>已实测，篡改 1 字节即校验失败</td>
+</tr>
+<tr>
+<td>改 hosts</td>
+<td>不推荐</td>
+<td>解释原因；测试机出口有透明代理，无法验证任何 IP</td>
+</tr>
+</tbody>
+</table>
+<h2 id="实测环境与边界">实测环境与边界</h2>
+<ul>
+<li>测试时间：2026-11-24，曼谷时间 19:20 至 19:25。</li>
+<li>工具版本：git 2.47.3、OpenSSH 10.0p2、curl 8.14.1、tinyproxy 1.11.2，Debian 13（内核 6.12）。</li>
+<li>代理：本机临时起的 tinyproxy（<code>127.0.0.1:18888</code>），代替你自己的合规代理，只用来证明流量确实经过了代理，不代表任何代理产品。</li>
+<li>所有 git 和 ssh 配置都写在临时目录里，没有改本机全局配置，测试结束已删除。</li>
+<li><strong>测试机不在中国大陆网络，并且出口有一层按 TLS SNI 转发的透明代理</strong>（把 github.com 指到 Cloudflare 的 1.1.1.1，也拿到了 <code>CN=github.com</code> 的证书）。所以文中耗时只能说明相对差异，不代表国内速度；hosts 方案和 SSH 直连在这台机器上无法验证。</li>
+</ul>
+<p>代理请使用所在单位、云厂商提供的或其他符合当地法律法规的网络出口。本文不推荐任何付费 VPN 或代理服务，也不提供速度对比数据。</p>
+<h2 id="1-只给-githubcom-配-git-代理">1. 只给 github.com 配 git 代理</h2>
+<p>不要直接设全局 <code>http.proxy</code>，否则访问 Gitee、公司内网 GitLab 也会被送到代理。git 支持按 URL 匹配配置（官方文档 <code>http.&lt;url&gt;.*</code>），只给 GitHub 生效：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 把 127.0.0.1:18888 换成你自己的代理地址</span>
+git config --global http.https://github.com.proxy http://127.0.0.1:18888
+</code></pre></td></tr></table>
+</div>
+</div><p>核对哪些地址会走代理：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">git config --get-urlmatch http.proxy https://github.com/nginx/nginx.git
+git config --get-urlmatch http.proxy https://gitee.com/x/y.git <span class="p">;</span> <span class="nb">echo</span> <span class="nv">exit</span><span class="o">=</span><span class="nv">$?</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>实测输出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">$ cat ~/.gitconfig
+[http &#34;https://github.com&#34;]
+	proxy = http://127.0.0.1:18888
+$ git config --get-urlmatch http.proxy https://github.com/nginx/nginx.git
+http://127.0.0.1:18888
+$ git config --get-urlmatch http.proxy https://gitee.com/x/y.git ; echo exit=$?
+exit=1
+</code></pre></td></tr></table>
+</div>
+</div><p><code>exit=1</code> 表示 Gitee 没有匹配到代理配置，会直连。clone 时代理日志里只出现了 <code>CONNECT github.com:443</code>。</p>
+<p>几个相关用法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 只对这一次命令生效，不写配置文件</span>
+git -c http.https://github.com.proxy<span class="o">=</span>http://127.0.0.1:18888 clone https://github.com/OWNER/REPO.git
+
+<span class="c1"># 代理要账号时，官方允许只写用户名，密码由 git 的凭据机制询问，避免明文写进配置</span>
+git config --global http.https://github.com.proxy http://proxyuser@10.0.0.8:3128
+
+<span class="c1"># 撤销</span>
+git config --global --unset http.https://github.com.proxy
+</code></pre></td></tr></table>
+</div>
+</div><p>git 官方文档特别提醒：代理必须完全透明，不能修改、转换或缓冲请求和响应，否则会出现各种异常。所以“会改写内容”的网页加速服务不适合给 git 用。</p>
+<p>代理挂掉时报错长这样，看到 <code>127.0.0.1 port 18888</code> 就知道是代理的问题，不是 GitHub 的问题：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">$ git ls-remote https://github.com/nginx/nginx.git HEAD
+fatal: unable to access &#39;https://github.com/nginx/nginx.git/&#39;: Failed to connect to 127.0.0.1 port 18888 after 0 ms: Could not connect to server
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="2-浅克隆先少下数据">2. 浅克隆：先少下数据</h2>
+<p>很多时候慢不是因为连不上，而是仓库历史太大。CI 构建、服务器部署通常只要最新代码，用浅克隆或部分克隆就够了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 只要最新一次提交</span>
+git clone --depth <span class="m">1</span> https://github.com/nginx/nginx.git
+
+<span class="c1"># 保留完整提交历史，但文件内容按需再下载（之后 checkout 旧版本会再联网）</span>
+git clone --filter<span class="o">=</span>blob:none https://github.com/nginx/nginx.git
+
+<span class="c1"># 只要一个分支的最新提交</span>
+git clone --depth <span class="m">1</span> --filter<span class="o">=</span>blob:none --single-branch https://github.com/nginx/nginx.git
+
+<span class="c1"># 浅克隆之后需要更多历史</span>
+git fetch --deepen<span class="o">=</span><span class="m">50</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>用 nginx 官方仓库实测，四种方式都经过代理：</p>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>本地对象大小（size-pack）</th>
+<th>提交数</th>
+<th>工作区文件数</th>
+<th>耗时（仅供相对比较）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>完整 clone</td>
+<td>76.41 MiB</td>
+<td>8810</td>
+<td>544</td>
+<td>13.2s</td>
+</tr>
+<tr>
+<td><code>--depth 1</code></td>
+<td>1.40 MiB</td>
+<td>1</td>
+<td>544</td>
+<td>5.0s</td>
+</tr>
+<tr>
+<td><code>--filter=blob:none</code></td>
+<td>8.77 MiB</td>
+<td>8810</td>
+<td>544</td>
+<td>13.4s</td>
+</tr>
+<tr>
+<td><code>--depth 1 --filter=blob:none --single-branch</code></td>
+<td>1.43 MiB</td>
+<td>1</td>
+<td>544</td>
+<td>9.3s</td>
+</tr>
+</tbody>
+</table>
+<p>浅克隆后执行 <code>git fetch --deepen=50</code>，提交数变成 51。</p>
+<p>怎么选：</p>
+<ul>
+<li>部署和 CI：<code>--depth 1</code>，下载量最小。</li>
+<li>开发时需要 <code>git log</code>、<code>git blame</code>：<code>--filter=blob:none</code>，历史完整，文件内容用到再取。</li>
+<li>在线路不稳的环境，下载量越小，中途断开的概率越低。这一点是推论，测试机网络不在国内，未做断线对比。</li>
+</ul>
+<h2 id="3-ssh-改走-443-端口">3. SSH 改走 443 端口</h2>
+<p>有些网络会拦 SSH 的 22 端口。GitHub 官方提供 <code>ssh.github.com</code> 的 443 端口，配置方法来自 GitHub 文档 <em>Using SSH over the HTTPS port</em>。先测试能否连通：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ssh -T -p <span class="m">443</span> git@ssh.github.com
+</code></pre></td></tr></table>
+</div>
+</div><p>能连通就在 <code>~/.ssh/config</code> 里让所有 github.com 连接改走 443：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">Host github.com
+    Hostname ssh.github.com
+    Port 443
+    User git
+</code></pre></td></tr></table>
+</div>
+</div><p>之后 <code>git clone git@github.com:OWNER/REPO.git</code> 不用改地址。也可以直接写完整地址：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">git clone ssh://git@ssh.github.com:443/OWNER/REPO.git
+</code></pre></td></tr></table>
+</div>
+</div><p>第一次连接会提示主机指纹。请和 GitHub 官方公布的指纹核对后再输入 yes，Ed25519 指纹是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU
+</code></pre></td></tr></table>
+</div>
+</div><p>也可以把官方公布的公钥写进 <code>~/.ssh/known_hosts</code>。注意官方示例的主机名是 <code>github.com</code>，走 443 时 OpenSSH 校验的是 <code>[ssh.github.com]:443</code>，只写 <code>github.com</code> 那一行，第一次仍会提示主机名不同。应同时写入两条（公钥以官方页面当前值为准）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+[ssh.github.com]:443 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
+</code></pre></td></tr></table>
+</div>
+</div><p>如果提示的指纹对不上，不要继续连接，网络中间可能有人在冒充 GitHub。</p>
+<p><strong>实测说明</strong>：测试机出口拦截了 SSH。作者实测：直连 22 和 443 都被断开（<code>Connection closed by 198.18.0.1</code>），经代理连 443 时代理已经建立连接，但在 SSH 握手阶段超时。运维于 2026-11-24 19:35（曼谷时间，Asia/Bangkok）在同一网络复测 <code>ssh -T -p 443 git@ssh.github.com</code> 与 <code>ssh-keyscan -p 443 ssh.github.com</code>：<code>ssh.github.com</code> 解析到 <code>198.18.0.1</code>，443 端口返回的是 <code>HTTP/1.1 400 Bad Request</code>（<code>Server: Pingora</code>），不是 SSH banner，未能采集主机密钥。文中的 Ed25519 指纹已与当天 GitHub Docs 及 <code>https://api.github.com/meta</code> 的 <code>SHA256_ED25519</code> 核对一致。SSH 握手在这台机器上没有跑通，国内服务器上的连通性仍待有条件时补测。</p>
+<h2 id="4-只有-http-代理时让-ssh-也走代理">4. 只有 HTTP 代理时，让 SSH 也走代理</h2>
+<p>公司网络常常只提供一个 HTTP 代理。SSH 可以用 <code>ProxyCommand</code> 借这个代理的 CONNECT 方法出去。Debian/Ubuntu 上的 <code>nc</code> 是 OpenBSD 版本，支持 <code>-X connect</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">Host github.com
+    Hostname ssh.github.com
+    Port 443
+    User git
+    ProxyCommand nc -X connect -x 127.0.0.1:18888 %h %p
+</code></pre></td></tr></table>
+</div>
+</div><p>如果代理是 SOCKS5，把 <code>-X connect</code> 换成 <code>-X 5</code>（本文只实测了 HTTP 代理）。</p>
+<p>这里有一个容易踩的坑：很多 HTTP 代理只允许 CONNECT 到 443 端口。实测时代理按常见配置只放行 443，结果如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">$ ssh -T gh-proxy22          # 经代理连 github.com:22
+nc: Proxy error: &#34;HTTP/1.0 403 Access violation&#34;
+
+$ ssh -T gh-proxy443         # 经代理连 ssh.github.com:443
+（代理日志：CONNECT ssh.github.com:443，已放行）
+</code></pre></td></tr></table>
+</div>
+</div><p>所以“SSH 走代理”和“SSH 走 443”通常要一起用。</p>
+<h2 id="5-release-下载下载后一定要校验">5. Release 下载：下载后一定要校验</h2>
+<p>GitHub Release 的文件实际从 <code>release-assets.githubusercontent.com</code> 下载。实测走代理下载 GitHub CLI 的 Release 时，代理日志里出现了 <code>github.com</code> 和 <code>release-assets.githubusercontent.com</code> 两个域名。所以如果你用的是按域名分流的代理，两个域名都要放进去。</p>
+<p>下载后用项目发布的 checksums 文件校验：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">TAG</span><span class="o">=</span>v2.105.0<span class="p">;</span> <span class="nv">V</span><span class="o">=</span><span class="si">${</span><span class="nv">TAG</span><span class="p">#v</span><span class="si">}</span>
+curl -fSLO -x http://127.0.0.1:18888 <span class="s2">&#34;https://github.com/cli/cli/releases/download/</span><span class="nv">$TAG</span><span class="s2">/gh_</span><span class="si">${</span><span class="nv">V</span><span class="si">}</span><span class="s2">_linux_amd64.tar.gz&#34;</span>
+curl -fSLO -x http://127.0.0.1:18888 <span class="s2">&#34;https://github.com/cli/cli/releases/download/</span><span class="nv">$TAG</span><span class="s2">/gh_</span><span class="si">${</span><span class="nv">V</span><span class="si">}</span><span class="s2">_checksums.txt&#34;</span>
+sha256sum -c --ignore-missing <span class="s2">&#34;gh_</span><span class="si">${</span><span class="nv">V</span><span class="si">}</span><span class="s2">_checksums.txt&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>实测输出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">$ sha256sum -c --ignore-missing gh_2.105.0_checksums.txt
+gh_2.105.0_linux_amd64.tar.gz: OK
+</code></pre></td></tr></table>
+</div>
+</div><p>GitHub API 返回的 Release 资产信息里也带有 <code>digest</code> 字段，可以作为第二个来源核对。实测看到：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">api asset: gh_2.105.0_linux_amd64.tar.gz size=15050573 digest=sha256:79e7ab5db738c48777b696e374f8b428f0647debfb424f44d2f426370407fe2f
+</code></pre></td></tr></table>
+</div>
+</div><p>在文件末尾追加 1 个字节模拟被篡改，再校验：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">sha256sum: WARNING: 1 computed checksum did NOT match
+</code></pre></td></tr></table>
+</div>
+</div><p>注意，checksums 文件要从 GitHub 官方地址取。如果文件和 checksums 都来自同一个第三方镜像，镜像可以一起改掉，校验就没有意义了。</p>
+<h2 id="6-镜像站和加速链接的风险">6. 镜像站和“加速链接”的风险</h2>
+<p>网上有不少把 <code>https://github.com/...</code> 包一层再下载的加速站，也有人用 <code>url.&lt;base&gt;.insteadOf</code> 把整个 GitHub 改写到镜像：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 仅演示语法，MIRROR 为占位符，本文不推荐任何具体镜像</span>
+git config --global url.<span class="s2">&#34;https://MIRROR.example/https://github.com/&#34;</span>.insteadOf <span class="s2">&#34;https://github.com/&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>使用前想清楚这几件事：</p>
+<ol>
+<li><strong>内容可被修改</strong>：镜像能返回任意内容。下载二进制要按上一节校验，源码要核对提交哈希或签名标签。</li>
+<li><strong>凭据泄露</strong>：不要把 GitHub Token 写进镜像 URL，也不要经镜像 push 私有仓库。</li>
+<li><strong>可用性不可控</strong>：这类服务随时可能停止或变更规则，CI 依赖它就会突然失败。</li>
+<li><strong>合规</strong>：先确认所在单位对使用第三方中转的规定。</li>
+</ol>
+<p>如果确实要用，建议只用于公开仓库的只读拉取，用完执行 <code>git config --global --unset-all url.&quot;https://MIRROR.example/https://github.com/&quot;.insteadOf</code> 撤销。</p>
+<h2 id="7-为什么不再推荐改-hosts">7. 为什么不再推荐改 hosts</h2>
+<p>旧教程（包括站内 2022 年那篇）会给一组 IP 写进 <code>/etc/hosts</code>。现在不推荐，原因是：</p>
+<ul>
+<li>GitHub 的地址段很多，而且会变。2026-11-24 从官方 meta API（<code>https://api.github.com/meta</code>）读到：web 91 段、git 111 段、api 26 段、packages 32 段。hosts 只能写死某一个 IP，GitHub 换地址后就会失效，而且失效时不会有任何提示。</li>
+<li>一次 clone 或下载可能用到 <code>github.com</code>、<code>codeload.github.com</code>、<code>release-assets.githubusercontent.com</code>、<code>objects.githubusercontent.com</code> 等多个域名，只改其中一两个往往不起作用。</li>
+<li>写死 IP 解决不了线路本身的丢包和限速，“改完变快”很多时候只是碰巧换到一条当时较好的线路。</li>
+<li>从不明来源复制的 IP 列表，可能把你指向非 GitHub 的服务器。HTTPS 证书校验能挡住大部分风险，但前提是你没有为了“能用”而关掉证书校验（<code>git -c http.sslVerify=false</code> 之类的做法千万不要用）。</li>
+</ul>
+<p><strong>实测说明</strong>：测试机出口按 TLS SNI 透明转发，把 github.com 指到任何可路由的 IP（包括 Cloudflare 的 1.1.1.1）都会拿到 GitHub 的证书和 200，所以本文无法验证任何 hosts IP 在国内是否可用，也不会给出“某个 IP 能用”的结论。</p>
+<h2 id="常见故障">常见故障</h2>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>可能原因</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Failed to connect to 127.0.0.1 port xxxx</code></td>
+<td>配置的代理没启动</td>
+<td>启动代理，或 <code>git config --global --unset http.https://github.com.proxy</code></td>
+</tr>
+<tr>
+<td>只有 Gitee/内网 GitLab 变慢或失败</td>
+<td>设了全局 <code>http.proxy</code> 或环境变量 <code>https_proxy</code></td>
+<td>改成 <code>http.https://github.com.proxy</code>，检查 <code>env | grep -i proxy</code></td>
+</tr>
+<tr>
+<td><code>nc: Proxy error: &quot;HTTP/1.0 403 ...&quot;</code></td>
+<td>代理不允许 CONNECT 到 22</td>
+<td>SSH 改走 <code>ssh.github.com:443</code></td>
+</tr>
+<tr>
+<td>SSH 提示 Host key verification failed 或指纹变化</td>
+<td>known_hosts 里还是旧记录，或网络中间有人冒充</td>
+<td>先和官方指纹核对，确认无误再删除旧记录</td>
+</tr>
+<tr>
+<td><code>RPC failed; curl 18 transfer closed</code> 或 clone 到一半断开</td>
+<td>线路不稳，下载量大</td>
+<td>先 <code>--depth 1</code>，需要历史再 <code>git fetch --deepen</code></td>
+</tr>
+<tr>
+<td>Release 下载走代理仍然很慢</td>
+<td>代理分流规则没覆盖 <code>release-assets.githubusercontent.com</code></td>
+<td>把该域名加入代理规则</td>
+</tr>
+</tbody>
+</table>
+<h2 id="安全注意">安全注意</h2>
+<ul>
+<li>代理地址可以写在 git 配置里，但代理密码不要明文写进 <code>.gitconfig</code>，按官方用法只写用户名，让凭据机制询问密码。</li>
+<li>不要为了绕过问题关闭 TLS 证书校验。</li>
+<li>SSH 首次连接一定核对官方指纹。</li>
+<li>第三方镜像只做只读用途，不传 Token。</li>
+</ul>
+<h2 id="回滚">回滚</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">git config --global --unset http.https://github.com.proxy
+git config --global --unset-all url.<span class="s2">&#34;https://MIRROR.example/https://github.com/&#34;</span>.insteadOf
+<span class="c1"># ~/.ssh/config 删除新增的 Host github.com 段；known_hosts 中 [ssh.github.com]:443 的记录可保留</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="官方参考">官方参考</h2>
+<ul>
+<li>git-config：<code>http.proxy</code>、<code>http.&lt;url&gt;.*</code>：<a href="https://git-scm.com/docs/git-config">https://git-scm.com/docs/git-config</a></li>
+<li>git-clone：<code>--depth</code>、<code>--filter</code>、<code>--single-branch</code>：<a href="https://git-scm.com/docs/git-clone">https://git-scm.com/docs/git-clone</a></li>
+<li>GitHub Docs，Using SSH over the HTTPS port：<a href="https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port">https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port</a></li>
+<li>GitHub Docs，GitHub&rsquo;s SSH key fingerprints：<a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints">https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints</a></li>
+<li>GitHub Docs，About GitHub&rsquo;s IP addresses：<a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-githubs-ip-addresses">https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-githubs-ip-addresses</a></li>
+<li>ssh_config <code>ProxyCommand</code>：<a href="https://man.openbsd.org/ssh_config">https://man.openbsd.org/ssh_config</a></li>
+</ul>
+<p>相关阅读：<a href="https://www.mmfei.com/2022/04/%e9%98%bf%e9%87%8c%e4%ba%91%e5%9b%bd%e5%86%85%e6%9c%ba%e6%88%bf%e6%8b%89github%e4%bb%a3%e7%a0%81%e5%8a%a0%e9%80%9f%e6%96%b9%e6%a1%88/" target="_blank" rel="noopener noreffer">阿里云国内机房拉GitHub代码加速方案</a>、<a href="https://www.mmfei.com/2026/11/github-pages%e8%87%aa%e5%ae%9a%e4%b9%89%e5%9f%9f%e5%90%8dhttps%e6%a0%b8%e5%af%b9%e6%b8%85%e5%8d%95/" target="_blank" rel="noopener noreffer">GitHub Pages自定义域名HTTPS核对清单</a>。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-11-24</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.mmfei.com/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/" data-title="GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测" data-via="mmfei" data-hashtags="GitHub,git,代理,SSH,国内加速"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.mmfei.com/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/" data-hashtag="GitHub"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.mmfei.com/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/" data-title="GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.mmfei.com/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/" data-title="GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.mmfei.com/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/" data-title="GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/github/">GitHub</a>,&nbsp;<a href="/tags/git/">git</a>,&nbsp;<a href="/tags/%E4%BB%A3%E7%90%86/">代理</a>,&nbsp;<a href="/tags/ssh/">SSH</a>,&nbsp;<a href="/tags/%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F/">国内加速</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <nav class="sk-nav" aria-label="文章导航"><a href="/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/" class="sk-nav-btn sk-nav-prev" rel="prev" title="Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治"><i class="fas fa-angle-left fa-fw"></i>Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治</a>
+            <a href="/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/" class="sk-nav-btn sk-nav-next" rel="next" title="MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）">MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）<i class="fas fa-angle-right fa-fw"></i></a></nav>
+</div>
+
+<section class="sk-related">
+                    <h2 class="sk-related-title">相关文章</h2>
+                    <div class="sk-related-grid"><a class="sk-related-card" href="/2023/04/%E7%94%A8%E7%A9%BF%E9%80%8F%E7%9A%84%E6%96%B9%E5%BC%8F%E8%A7%A3%E5%86%B3%E5%9B%BD%E5%86%85%E9%98%BF%E9%87%8C%E4%BA%91%E8%AE%BF%E9%97%AEgithub%E4%B8%8D%E9%A1%BA%E7%95%85%E7%9A%84%E9%97%AE%E9%A2%98/">
+                                    <span class="sk-related-card-title">用穿透的方式解决国内阿里云访问github不顺畅的问题</span>
+                                    <span class="sk-related-card-meta">2023-04-29github · 穿透 · 阿里云 · 访问</span>
+                                </a><a class="sk-related-card" href="/2021/06/%E5%9F%BA%E4%BA%8Egithub%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AAphp%E7%9A%84%E9%80%82%E7%94%A8%E4%BA%8Ehyperf%E7%9A%84composer%E5%8C%85/">
+                                    <span class="sk-related-card-title">基于github开发一个php的适用于hyperf的composer包</span>
+                                    <span class="sk-related-card-meta">2021-06-05hyperf · php · composer · github</span>
+                                </a><a class="sk-related-card" href="/2021/05/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8hugo%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAgithub%E7%9A%84page/">
+                                    <span class="sk-related-card-title">如何使用hugo快速创建一个github的page</span>
+                                    <span class="sk-related-card-meta">2021-05-23hugo · github</span>
+                                </a></div>
+                </section><div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article>
+    </div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.mmfei.com/" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/css/skin-stripe.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"valine":{"appId":"agrUIy35wmii07cPfX0p0UWx-MdYXbMMI","appKey":"xNDv6FEmi9xqlsf6out3W5c6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://agruiy35.api.lncldglobal.com","visitor":true}}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6" async></script><link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+<div id="pagefind-overlay" class="pf-overlay" aria-hidden="true">
+    <div class="pf-modal" role="dialog" aria-modal="true" aria-label="搜索">
+        <button type="button" class="pf-close" id="pagefind-close" aria-label="清空">&times;</button>
+        <div id="pagefind-ui"></div>
+    </div>
+</div>
+
+<style>
+.pf-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8vh 16px 16px;
+}
+.pf-overlay.open {
+    display: flex;
+}
+.pf-modal {
+    position: relative;
+    width: 560px;
+    max-width: 100%;
+    background: var(--card-background, #fff);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.28);
+    padding: 18px 18px 10px;
+}
+.pf-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--secondary-font-color, #666);
+    cursor: pointer;
+    padding: 6px;
+}
+.pf-close:hover { color: var(--primary-font-color, #111); }
+#pagefind-ui { min-height: 40px; }
+@media (max-width: 680px) {
+    .pf-overlay { padding: 12px 10px; align-items: flex-start; }
+    .pf-modal { padding: 14px 12px 8px; border-radius: 10px; }
+}
+</style>
+
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+(function () {
+    var overlay = document.getElementById('pagefind-overlay');
+    var modal = overlay.querySelector('.pf-modal');
+    var closeBtn = document.getElementById('pagefind-close');
+    var uiMount = document.getElementById('pagefind-ui');
+
+    function open() {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        var input = uiMount.querySelector('input');
+        if (input) { setTimeout(function () { input.focus(); }, 60); }
+    }
+    function close() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    function bindTrigger(id) {
+        var el = document.getElementById(id);
+        if (el) { el.addEventListener('click', function (e) { e.preventDefault(); open(); }); }
+    }
+    bindTrigger('pagefind-trigger-desktop');
+    bindTrigger('pagefind-trigger-mobile');
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) { close(); }
+    });
+
+    if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({
+            element: uiMount,
+            showSubResults: true,
+            showImages: false,
+            highlightQuery: true,
+            translations: {
+                placeholder: '搜索文章标题、标签或内容…',
+                clear_search: '清除',
+                load_more: '加载更多结果',
+                search_label: '搜索',
+                filters_label: '筛选',
+                no_results: '没有找到结果'
+            }
+        });
+    }
+})();
+</script>
+</body>
+</html>

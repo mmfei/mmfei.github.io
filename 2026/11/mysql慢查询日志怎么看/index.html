@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测） - 木木飞</title><meta name="Description" content="MySQL 8 慢查询日志从开启、找文件、读懂每条记录，到用 mysqldumpslow 汇总、EXPLAIN ANALYZE 定位并加索引，再到日志文件太大时怎样安全清理和轮转。附 8.4 与 8.0 实测输出。"><meta property="og:title" content="MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）" />
+<meta property="og:description" content="MySQL 8 慢查询日志从开启、找文件、读懂每条记录，到用 mysqldumpslow 汇总、EXPLAIN ANALYZE 定位并加索引，再到日志文件太大时怎样安全清理和轮转。附 8.4 与 8.0 实测输出。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-11-24T19:46:00&#43;07:00" />
+<meta property="article:modified_time" content="2026-11-24T19:46:00&#43;07:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
+
+<meta name="twitter:title" content="MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）"/>
+<meta name="twitter:description" content="MySQL 8 慢查询日志从开启、找文件、读懂每条记录，到用 mysqldumpslow 汇总、EXPLAIN ANALYZE 定位并加索引，再到日志文件太大时怎样安全清理和轮转。附 8.4 与 8.0 实测输出。"/>
+<meta name="application-name" content="木木飞">
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/" /><link rel="prev" href="https://www.mmfei.com/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.mmfei.com\/2026\/11\/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B\/"
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "MySQL, 慢查询, mysqldumpslow, EXPLAIN, 运维","wordcount":  4265 ,
+        "url": "https:\/\/www.mmfei.com\/2026\/11\/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B\/","datePublished": "2026-11-24T19:46:00+07:00","dateModified": "2026-11-24T19:46:00+07:00","publisher": {
+            "@type": "Organization",
+            "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "mmfei"
+            },"description": "MySQL 8 慢查询日志从开启、找文件、读懂每条记录，到用 mysqldumpslow 汇总、EXPLAIN ANALYZE 定位并加索引，再到日志文件太大时怎样安全清理和轮转。附 8.4 与 8.0 实测输出。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-desktop" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-desktop"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a>
+                <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile">
+                <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-mobile" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-mobile"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<style>
+#header-desktop .header-wrapper .menu { overflow: visible; }
+#header-desktop .menu-has-sub { position: relative; display: inline-block; }
+#header-desktop .menu-parent-link,
+#header-mobile .menu-parent-link { color: inherit; text-decoration: none; }
+#header-desktop .menu-has-sub.active .menu-parent-link { font-weight: 900; }
+#header-desktop .menu-sub-toggle {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: 1;
+    padding: 0 2px;
+    cursor: pointer;
+}
+#header-desktop .menu-sub {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 8.5rem;
+    margin: 0;
+    padding: 6px 0;
+    text-align: left;
+    background: #f8f8f8;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .12);
+    z-index: 220;
+}
+#header-desktop .menu-has-sub:hover > .menu-sub,
+#header-desktop .menu-has-sub:focus-within > .menu-sub,
+#header-desktop .menu-has-sub.is-open > .menu-sub { display: block; }
+#header-desktop .menu-sub a { display: block; padding: 6px 14px; white-space: nowrap; color: inherit; text-decoration: none; }
+body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: #363636; }
+#header-mobile .menu-has-sub,
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub,
+#header-mobile .menu-sub a { display: block; }
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub a { line-height: 2.5rem; }
+#header-mobile .menu-sub-toggle { display: none; }
+</style>
+<script>
+(function () {
+    var buttons = document.querySelectorAll(".menu-sub-toggle");
+    Array.prototype.forEach.call(buttons, function (button) {
+        button.addEventListener("click", function () {
+            var item = button.parentNode;
+            var open = item.classList.toggle("is-open");
+            button.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key !== "Escape") return;
+        Array.prototype.forEach.call(buttons, function (button) {
+            button.parentNode.classList.remove("is-open");
+            button.setAttribute("aria-expanded", "false");
+        });
+    });
+})();
+</script>
+<main class="main">
+                <div class="container"><div class="sk-page sk-article"><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div><article class="page single sk-single">
+            <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/mysql/">mysql</a></p><h1 class="single-title sk-single-title">MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）</h1><div class="post-meta sk-single-meta">
+                    <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
+                    </div>
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-24">2026-11-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4265 字&nbsp;
+                        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;<span id="/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/" class="leancloud_visitors" data-flag-title="MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）">
+                                <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                            </span>&nbsp;</div>
+                </div>
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-先看当前配置">1. 先看当前配置</a></li>
+    <li><a href="#2-开启慢查询日志">2. 开启慢查询日志</a></li>
+    <li><a href="#3-慢查询日志怎么看">3. 慢查询日志怎么看</a></li>
+    <li><a href="#4-用-mysqldumpslow-汇总">4. 用 mysqldumpslow 汇总</a></li>
+    <li><a href="#5-用-explain-analyze-定位并加索引">5. 用 EXPLAIN ANALYZE 定位并加索引</a></li>
+    <li><a href="#6-log_queries_not_using_indexes-要不要开">6. log_queries_not_using_indexes 要不要开</a></li>
+    <li><a href="#7-慢查询日志文件太大怎么办">7. 慢查询日志文件太大怎么办</a>
+      <ul>
+        <li><a href="#做法-a改名后执行-flush-slow-logs推荐">做法 A：改名后执行 FLUSH SLOW LOGS（推荐）</a></li>
+        <li><a href="#做法-b原地清空应急">做法 B：原地清空（应急）</a></li>
+        <li><a href="#做法-clogrotate-定时轮转">做法 C：logrotate 定时轮转</a></li>
+        <li><a href="#排查结束关掉或调高阈值">排查结束：关掉或调高阈值</a></li>
+        <li><a href="#如果-log_outputtable">如果 log_output=TABLE</a></li>
+      </ul>
+    </li>
+    <li><a href="#常见问题">常见问题</a></li>
+    <li><a href="#安全注意">安全注意</a></li>
+    <li><a href="#回滚">回滚</a></li>
+    <li><a href="#官方参考">官方参考</a></li>
+  </ul>
+</nav></div>
+                </details><div class="content" id="content"><p>接口突然变慢，怀疑是数据库，第一步通常是看慢查询日志。但很多人卡在这几步：日志没开、找不到文件、看不懂内容、不知道先优化哪条 SQL；日志开了又忘了关，几天就涨到几个 G。本文按排查顺序，从开启到清理完整走一遍，所有输出都来自一次性容器里的实测。</p>
+<blockquote>
+<p>适用：MySQL 8.0 / 8.4（实测 8.4.13 与 8.0.46，官方 Docker 镜像）。安装 MySQL 可以参考站内<a href="https://www.mmfei.com/2024/06/ubuntu%e5%ae%89%e8%a3%85mysql8/" target="_blank" rel="noopener noreffer">Ubuntu安装mysql8</a>。示例密码、表名都是演示用的占位值。</p>
+</blockquote>
+<h2 id="1-先看当前配置">1. 先看当前配置</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Variable_name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span><span class="w">  </span><span class="s1">&#39;slow_query_log&#39;</span><span class="p">,</span><span class="s1">&#39;slow_query_log_file&#39;</span><span class="p">,</span><span class="s1">&#39;long_query_time&#39;</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="s1">&#39;log_queries_not_using_indexes&#39;</span><span class="p">,</span><span class="s1">&#39;log_output&#39;</span><span class="p">,</span><span class="s1">&#39;min_examined_row_limit&#39;</span><span class="p">);</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>8.4.13 默认值实测：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">+-------------------------------+--------------------------------------+
+| Variable_name                 | Value                                |
++-------------------------------+--------------------------------------+
+| log_output                    | FILE                                 |
+| log_queries_not_using_indexes | OFF                                  |
+| long_query_time               | 10.000000                            |
+| min_examined_row_limit        | 0                                    |
+| slow_query_log                | OFF                                  |
+| slow_query_log_file           | /var/lib/mysql/e444fbd33f77-slow.log |
++-------------------------------+--------------------------------------+
+</code></pre></td></tr></table>
+</div>
+</div><p>要点：</p>
+<ul>
+<li>默认<strong>不开启</strong>（<code>slow_query_log=OFF</code>）。</li>
+<li>默认阈值 10 秒，对 Web 接口来说太宽，大多数慢 SQL 根本不会被记下来。</li>
+<li>日志文件默认在数据目录，文件名是“主机名-slow.log”。Docker 里主机名就是容器 ID，所以每次重建容器文件名都会变。</li>
+</ul>
+<h2 id="2-开启慢查询日志">2. 开启慢查询日志</h2>
+<p>在线开启，并用 <code>SET PERSIST</code> 写入 <code>mysqld-auto.cnf</code>，重启后仍然有效（8.0 起支持）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span><span class="w"> </span><span class="n">PERSIST</span><span class="w"> </span><span class="n">slow_query_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">ON</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">SET</span><span class="w"> </span><span class="n">PERSIST</span><span class="w"> </span><span class="n">long_query_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">1</span><span class="p">;</span><span class="w">          </span><span class="c1">-- 超过 100 毫秒就记录，按业务调整
+</span><span class="c1"></span><span class="k">SET</span><span class="w"> </span><span class="n">PERSIST</span><span class="w"> </span><span class="n">log_queries_not_using_indexes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">OFF</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>实测核对：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">+-------------------------+--------------------------+------------------------------+
+| @@GLOBAL.slow_query_log | @@GLOBAL.long_query_time | this_session_long_query_time |
++-------------------------+--------------------------+------------------------------+
+|                       1 |                 0.100000 |                    10.000000 |
++-------------------------+--------------------------+------------------------------+
+</code></pre></td></tr></table>
+</div>
+</div><p>注意最后一列：<strong>当前会话的 <code>long_query_time</code> 仍是 10 秒</strong>。全局值只对之后新建的连接生效，所以改完要用新连接测试，应用的连接池也要等连接重建后才会按新阈值记录。</p>
+<p>重启容器后再查，<code>slow_query_log=1</code>、<code>long_query_time=0.1</code> 仍然生效，<code>mysqld-auto.cnf</code> 里能看到这三项。</p>
+<p>如果更习惯写配置文件，也可以在 <code>my.cnf</code> 的 <code>[mysqld]</code> 段写：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ini" data-lang="ini"><span class="k">[mysqld]</span>
+<span class="na">slow_query_log</span>      <span class="o">=</span> <span class="s">ON</span>
+<span class="na">slow_query_log_file</span> <span class="o">=</span> <span class="s">/var/log/mysql/mysql-slow.log</span>
+<span class="na">long_query_time</span>     <span class="o">=</span> <span class="s">0.1</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>改配置文件需要重启生效；<code>SET PERSIST</code> 的值优先级高于配置文件，两边都写时以 <code>SET PERSIST</code> 为准，排查“改了 my.cnf 没生效”时先查 <code>performance_schema.persisted_variables</code>。</p>
+<h2 id="3-慢查询日志怎么看">3. 慢查询日志怎么看</h2>
+<p>先找文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span><span class="w"> </span><span class="o">@@</span><span class="n">slow_query_log_file</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>实测造了一张 200 万行的 <code>orders</code> 表，按客户查最近 20 条订单（<code>customer_id</code> 上没有索引）。日志里的一条记录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"># Time: 2026-11-24T12:15:17.216798Z
+# User@Host: root[root] @ localhost []  Id:    14
+# Query_time: 0.170713  Lock_time: 0.000002 Rows_sent: 20  Rows_examined: 2000020
+SET timestamp=1795522517;
+SELECT id, amount, created_at FROM orders WHERE customer_id = 12345 ORDER BY created_at DESC LIMIT 20;
+</code></pre></td></tr></table>
+</div>
+</div><p>逐行看：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+<th>这条记录说明什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code># Time</code></td>
+<td>语句结束时间，UTC</td>
+<td>和北京时间差 8 小时，对日志时别看错</td>
+</tr>
+<tr>
+<td><code>User@Host</code>、<code>Id</code></td>
+<td>账号、来源、连接 ID</td>
+<td>判断是哪个应用、哪台机器</td>
+</tr>
+<tr>
+<td><code>Query_time</code></td>
+<td>执行耗时（秒）</td>
+<td>0.17 秒</td>
+</tr>
+<tr>
+<td><code>Lock_time</code></td>
+<td>等锁时间</td>
+<td>几乎为 0，不是锁的问题</td>
+</tr>
+<tr>
+<td><code>Rows_sent</code></td>
+<td>返回行数</td>
+<td>20</td>
+</tr>
+<tr>
+<td><code>Rows_examined</code></td>
+<td>扫描行数</td>
+<td>200 万，返回 20 行却扫了全表，典型缺索引</td>
+</tr>
+<tr>
+<td><code>SET timestamp</code></td>
+<td>语句开始时间戳</td>
+<td>便于和应用日志对时间</td>
+</tr>
+</tbody>
+</table>
+<p>经验判断：<code>Rows_examined</code> 远大于 <code>Rows_sent</code>，通常是缺索引或索引用不上；<code>Lock_time</code> 很大，要查锁等待和长事务，加索引不一定有用。</p>
+<h2 id="4-用-mysqldumpslow-汇总">4. 用 mysqldumpslow 汇总</h2>
+<p>日志一多，逐条看不过来。<code>mysqldumpslow</code> 会把参数不同、结构相同的 SQL 归成一类（数字替换成 N、字符串替换成 &lsquo;S&rsquo;），再按次数或总耗时排序。</p>
+<p>官方 <code>mysql:8.4</code> Docker 镜像里<strong>没有</strong> <code>mysqldumpslow</code>（实测 <code>command -v</code> 找不到）。可以把日志拷出来，用装了 MySQL 客户端的机器分析：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker cp &lt;容器名&gt;:/var/lib/mysql/&lt;主机名&gt;-slow.log ./slow.log
+
+<span class="c1"># 按总耗时排序，取前 5 类</span>
+mysqldumpslow -s t -t <span class="m">5</span> slow.log
+
+<span class="c1"># 按出现次数排序，只看包含 orders 的语句</span>
+mysqldumpslow -s c -t <span class="m">3</span> -g orders slow.log
+</code></pre></td></tr></table>
+</div>
+</div><p>实测（Ubuntu 24.04 的 mysql-client-core-8.0 8.0.46）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">Count: 1  Time=6.51s (6s)  Lock=0.00s (0s)  Rows=0.0 (0), root[root]@localhost
+  INSERT INTO orders (customer_id, status, amount, created_at)
+  ...
+
+Count: 5  Time=0.17s (0s)  Lock=0.00s (0s)  Rows=20.0 (100), root[root]@localhost
+  SELECT id, amount, created_at FROM orders WHERE customer_id = N ORDER BY created_at DESC LIMIT N
+
+Count: 1  Time=0.16s (0s)  Lock=0.00s (0s)  Rows=1.0 (1), root[root]@localhost
+  SELECT COUNT(*) FROM orders WHERE status = N AND amount &gt; N
+</code></pre></td></tr></table>
+</div>
+</div><p>怎么读：<code>Count</code> 是出现次数，<code>Time</code> 是平均耗时，括号里是总耗时。排在第一的 INSERT 是造数据时的一次性语句，可以忽略；真正要优化的是第二类，它执行了 5 次，每次 0.17 秒。<strong>优先处理“次数多 × 平均耗时高”的那类</strong>，而不是只看单次最慢的一条。</p>
+<p>常用参数：<code>-s t</code> 按总耗时，<code>-s c</code> 按次数，<code>-s at</code> 按平均耗时，<code>-t N</code> 取前 N 类，<code>-g</code> 按关键字过滤。</p>
+<p>实测中，Ubuntu 24.04 的 mysqldumpslow（mysql-client-core-8.0 8.0.46）在使用 <code>-t 5</code>、而日志里实际只有 3 类语句时，会先完整打印汇总，再报 <code>Died at /usr/bin/mysqldumpslow line 163, &lt;&gt; chunk 7</code>，退出码 255。原因已经核对过脚本：第 159 行用 <code>@sorted[0 .. $opt{t}-1]</code> 截断，类数不足时会补上空元素，第 163 行 <code>my $v = $stmt{$_} || die;</code> 因此退出。汇总结果可用。把 <code>-t</code> 改成不超过实际类数（本例 <code>-t 3</code>），或者不加 <code>-t</code>，就不会出现这行。</p>
+<h2 id="5-用-explain-analyze-定位并加索引">5. 用 EXPLAIN ANALYZE 定位并加索引</h2>
+<p>拿汇总出的那类 SQL 带一个真实参数，先看执行计划：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">,</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w">
+</span><span class="w"></span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12345</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">| type | possible_keys | key  | rows    | Extra                       |
+| ALL  | NULL          | NULL | 1994725 | Using where; Using filesort |
+</code></pre></td></tr></table>
+</div>
+</div><p><code>type=ALL</code> 是全表扫描，<code>Using filesort</code> 表示还要额外排序。<code>EXPLAIN ANALYZE</code> 会真正执行一次，给出每一步的实际耗时：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">-&gt; Limit: 20 row(s)  (actual time=279..279 rows=20 loops=1)
+    -&gt; Sort: orders.created_at DESC, limit input to 20 row(s) per chunk  (actual time=279..279 rows=20 loops=1)
+        -&gt; Filter: (orders.customer_id = 12345)  (actual time=2.13..279 rows=100 loops=1)
+            -&gt; Table scan on orders  (actual time=0.43..205 rows=2e+6 loops=1)
+</code></pre></td></tr></table>
+</div>
+</div><p><code>EXPLAIN ANALYZE</code> 会真的执行语句，在生产库上对 UPDATE/DELETE 或特别重的查询要慎用。</p>
+<p>按“等值条件列在前、排序列在后”建联合索引：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_customer_created</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">,</span><span class="w"> </span><span class="n">created_at</span><span class="p">),</span><span class="w">
+</span><span class="w">  </span><span class="n">ALGORITHM</span><span class="o">=</span><span class="n">INPLACE</span><span class="p">,</span><span class="w"> </span><span class="k">LOCK</span><span class="o">=</span><span class="k">NONE</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>再看：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">| type | key                  | rows | Extra               |
+| ref  | idx_customer_created |  100 | Backward index scan |
+
+-&gt; Limit: 20 row(s)  (actual time=0.971..0.979 rows=20 loops=1)
+    -&gt; Index lookup on orders using idx_customer_created (customer_id=12345) (reverse)  (actual time=0.966..0.974 rows=20 loops=1)
+</code></pre></td></tr></table>
+</div>
+</div><table>
+<thead>
+<tr>
+<th>版本</th>
+<th>加索引前（EXPLAIN ANALYZE 实际耗时）</th>
+<th>加索引后</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8.4.13</td>
+<td>279 ms，扫描 200 万行</td>
+<td>0.98 ms，扫描 20 行</td>
+</tr>
+<tr>
+<td>8.0.46</td>
+<td>358 ms</td>
+<td>0.60 ms</td>
+</tr>
+</tbody>
+</table>
+<p>加索引后再执行同一条 SQL，慢日志行数保持 46 行不变，说明它已经低于 0.1 秒阈值，不再被记录。</p>
+<p>生产环境加索引前先确认表大小和业务低峰期，大表在线 DDL 也会占用 IO，并且可能需要短暂的元数据锁。</p>
+<h2 id="6-log_queries_not_using_indexes-要不要开">6. log_queries_not_using_indexes 要不要开</h2>
+<p>打开后，没有用到索引的语句即使很快也会被记录，适合短时间排查“哪些 SQL 没走索引”：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">log_queries_not_using_indexes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">ON</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">log_throttle_queries_not_using_indexes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w">   </span><span class="c1">-- 每分钟最多记 10 条这类语句，防止刷屏
+</span></code></pre></td></tr></table>
+</div>
+</div><p>实测打开后，<code>SELECT COUNT(*) FROM orders WHERE status = 3</code> 被记了下来（<code>Rows_examined: 2000000</code>）。不过这条语句耗时 0.149 秒，本来就超过 0.1 秒阈值，所以这次实测不能单独证明该参数的效果，“快但没走索引的语句也会被记录”以官方文档为准。排查完记得关掉，否则小表上的全表扫描也会大量写入日志，文件很快变大。</p>
+<h2 id="7-慢查询日志文件太大怎么办">7. 慢查询日志文件太大怎么办</h2>
+<p>先说<strong>不要做的事：直接 <code>rm</code> 日志文件</strong>。实测删掉后，目录里看不到文件了，但 mysqld 还持有它：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">-&gt; /var/log/mysql-slow/slow.log (deleted)
+</code></pre></td></tr></table>
+</div>
+</div><p>磁盘空间不会释放，新日志继续写进这个看不见的文件，直到执行 <code>FLUSH SLOW LOGS</code> 或重启 MySQL。下面是三种安全做法，全部在 8.4.13 上实测过（实测时为了快速产生日志，把阈值设成了 0）。</p>
+<h3 id="做法-a改名后执行-flush-slow-logs推荐">做法 A：改名后执行 FLUSH SLOW LOGS（推荐）</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /var/log/mysql            <span class="c1"># 慢日志所在目录</span>
+mv mysql-slow.log mysql-slow.log.<span class="k">$(</span>date +%Y%m%d%H%M%S<span class="k">)</span>
+mysql -uroot -p -e <span class="s1">&#39;FLUSH SLOW LOGS&#39;</span>
+gzip mysql-slow.log.2026*    <span class="c1"># 压缩或拷走旧文件，再按需删除</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>实测过程：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">    709052 slow.log
+$ mv slow.log slow.log.20261124192835
+    827491 slow.log.20261124192835      # 改名后、FLUSH 前，新日志仍写进改名后的文件（同一个 inode）
+$ mysql -e &#39;FLUSH SLOW LOGS&#39;
+    119052 slow.log                     # mysqld 重新打开原文件名，新建 slow.log
+    827712 slow.log.20261124192835      # 旧文件不再增长（多出的 221 字节是 FLUSH 语句本身的记录）
+$ gzip slow.log.20261124192835
+    19606 slow.log.20261124192835.gz
+</code></pre></td></tr></table>
+</div>
+</div><p>所以 <code>mv</code> 之后一定要 FLUSH，否则日志还在往旧文件里写。<code>FLUSH SLOW LOGS</code> 只重新打开慢日志，不影响 binlog 和错误日志。官方文档还给了另一种不用 FLUSH 的写法：先 <code>SET GLOBAL slow_query_log = OFF</code>，改名后再 <code>ON</code>。</p>
+<h3 id="做法-b原地清空应急">做法 B：原地清空（应急）</h3>
+<p>磁盘快满、来不及处理时：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">truncate -s <span class="m">0</span> /var/log/mysql/mysql-slow.log
+</code></pre></td></tr></table>
+</div>
+</div><p>实测清空后文件从 0 字节开始继续增长，开头就是新的完整记录，没有出现空洞，也不需要重启：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">$ truncate -s 0 slow.log
+    0 slow.log
+    2799 slow.log
+# Time: 2026-11-24T12:28:36.055947Z
+# User@Host: root[root] @ localhost []  Id:    19
+</code></pre></td></tr></table>
+</div>
+</div><p>缺点是旧内容直接没了，需要保留的先拷走再清空。</p>
+<h3 id="做法-clogrotate-定时轮转">做法 C：logrotate 定时轮转</h3>
+<p>长期开着慢日志的机器，交给 logrotate。下面是 Docker 部署时在宿主机上的配置（日志目录已挂载到宿主机）。如果 MySQL 直接装在机器上，把 postrotate 里的命令换成 <code>mysqladmin flush-logs slow</code>，账号密码放在 root 的 <code>~/.my.cnf</code> 里：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">/data/mysql-log/slow.log {
+    daily
+    rotate 7
+    missingok
+    notifempty
+    compress
+    delaycompress
+    dateext
+    nocreate
+    sharedscripts
+    postrotate
+        docker exec mysql mysqladmin flush-logs slow
+    endscript
+}
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>nocreate</code>：不让 logrotate 自己创建新文件，由 mysqld 在 flush 时创建，避免属主和权限不对。</li>
+<li><code>mysqladmin flush-logs slow</code>：只刷新慢日志。运维在 MySQL 8.4.13 上核对过，这条命令实际发送的是 <code>FLUSH SLOW LOGS</code>，不会切换 binlog。注意不要写成不加类型的 <code>mysqladmin flush-logs</code>，那会执行 <code>FLUSH LOGS</code>，连 binlog 一起轮转。实测 logrotate 3.22.0 连续轮转两次，每次都生成新的 <code>slow.log</code>，上一份被 gzip 压缩。</li>
+<li>实测时容器内凭据用 <code>-e MYSQL_PWD=...</code> 传入，这只是演示。生产环境建议在容器内配置 <code>~/.my.cnf</code>（权限 600）或使用 socket 认证，不要把密码写进 logrotate 配置。</li>
+<li>logrotate 要求配置文件属主是 root，否则会报 <code>Ignoring ... because the file owner is wrong</code> 并跳过（实测踩到过）。</li>
+</ul>
+<p>测试配置时可以用 <code>logrotate -d</code> 预演，<code>logrotate -f</code> 强制执行一次。</p>
+<h3 id="排查结束关掉或调高阈值">排查结束：关掉或调高阈值</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span><span class="w"> </span><span class="n">PERSIST</span><span class="w"> </span><span class="n">slow_query_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">OFF</span><span class="p">;</span><span class="w">      </span><span class="c1">-- 或者把 long_query_time 调回 1~2 秒长期保留
+</span></code></pre></td></tr></table>
+</div>
+</div><p>实测关闭后再执行 500 条语句，文件大小不变（237274 → 237274）。</p>
+<h3 id="如果-log_outputtable">如果 log_output=TABLE</h3>
+<p>慢日志写在 <code>mysql.slow_log</code> 表里，清理用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">TRUNCATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="n">slow_log</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>实测清理前 205 行，清理后剩 1 行，这 1 行是阈值为 0 时 TRUNCATE 语句本身被记了下来。</p>
+<h2 id="常见问题">常见问题</h2>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>原因</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>改了 <code>long_query_time</code>，慢 SQL 还是没记</td>
+<td>全局值只对新连接生效</td>
+<td>用新连接测试；应用连接池等连接重建</td>
+</tr>
+<tr>
+<td>改了 my.cnf 不生效</td>
+<td>之前用 SET PERSIST 设置过</td>
+<td>查 <code>performance_schema.persisted_variables</code>，用 <code>RESET PERSIST</code> 清除</td>
+</tr>
+<tr>
+<td>删了日志磁盘没变</td>
+<td>mysqld 持有已删除的文件</td>
+<td><code>FLUSH SLOW LOGS</code></td>
+</tr>
+<tr>
+<td>重建容器后找不到旧日志</td>
+<td>默认文件名带容器 ID，又在数据卷里</td>
+<td>用 <code>slow_query_log_file</code> 指定固定路径并挂载出来</td>
+</tr>
+<tr>
+<td>日志里时间对不上</td>
+<td><code># Time</code> 是 UTC</td>
+<td>加 8 小时，或核对 <code>log_timestamps</code> 参数</td>
+</tr>
+<tr>
+<td>小表的查询也被记了</td>
+<td>开着 <code>log_queries_not_using_indexes</code></td>
+<td>排查完关掉</td>
+</tr>
+</tbody>
+</table>
+<h2 id="安全注意">安全注意</h2>
+<ul>
+<li>慢日志里是完整 SQL，可能包含手机号、订单号等业务数据，拷出分析后注意删除，不要随意发给外部。</li>
+<li><code>EXPLAIN ANALYZE</code> 会真的执行语句，生产库上慎用。</li>
+<li>命令行 <code>-p密码</code> 会留在 shell 历史和进程列表里，用 <code>~/.my.cnf</code> 或交互输入。</li>
+</ul>
+<h2 id="回滚">回滚</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">RESET</span><span class="w"> </span><span class="n">PERSIST</span><span class="w"> </span><span class="n">slow_query_log</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">RESET</span><span class="w"> </span><span class="n">PERSIST</span><span class="w"> </span><span class="n">long_query_time</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">RESET</span><span class="w"> </span><span class="n">PERSIST</span><span class="w"> </span><span class="n">log_queries_not_using_indexes</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">slow_query_log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">OFF</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">long_query_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_customer_created</span><span class="p">;</span><span class="w">   </span><span class="c1">-- 若是测试索引
+</span></code></pre></td></tr></table>
+</div>
+</div><p>实测回滚后 <code>persisted_variables</code> 中这三项为 0 条，重启后 <code>slow_query_log=0</code>、<code>long_query_time=10</code>。</p>
+<h2 id="官方参考">官方参考</h2>
+<ul>
+<li>The Slow Query Log：<a href="https://dev.mysql.com/doc/refman/8.4/en/slow-query-log.html">https://dev.mysql.com/doc/refman/8.4/en/slow-query-log.html</a></li>
+<li>Server Log Maintenance（改名与 flush）：<a href="https://dev.mysql.com/doc/refman/8.4/en/log-file-maintenance.html">https://dev.mysql.com/doc/refman/8.4/en/log-file-maintenance.html</a></li>
+<li>mysqldumpslow：<a href="https://dev.mysql.com/doc/refman/8.4/en/mysqldumpslow.html">https://dev.mysql.com/doc/refman/8.4/en/mysqldumpslow.html</a></li>
+<li>EXPLAIN / EXPLAIN ANALYZE：<a href="https://dev.mysql.com/doc/refman/8.4/en/explain.html">https://dev.mysql.com/doc/refman/8.4/en/explain.html</a></li>
+<li>Persisted System Variables（SET PERSIST）：<a href="https://dev.mysql.com/doc/refman/8.4/en/persisted-system-variables.html">https://dev.mysql.com/doc/refman/8.4/en/persisted-system-variables.html</a></li>
+<li>FLUSH 语句：<a href="https://dev.mysql.com/doc/refman/8.4/en/flush.html">https://dev.mysql.com/doc/refman/8.4/en/flush.html</a></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-11-24</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/" data-title="MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）" data-via="mmfei" data-hashtags="MySQL,慢查询,mysqldumpslow,EXPLAIN,运维"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/" data-hashtag="MySQL"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/" data-title="MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/" data-title="MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/" data-title="MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/mysql/">mysql</a>,&nbsp;<a href="/tags/%E6%85%A2%E6%9F%A5%E8%AF%A2/">慢查询</a>,&nbsp;<a href="/tags/mysqldumpslow/">mysqldumpslow</a>,&nbsp;<a href="/tags/explain/">EXPLAIN</a>,&nbsp;<a href="/tags/%E8%BF%90%E7%BB%B4/">运维</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <nav class="sk-nav" aria-label="文章导航"><a href="/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/" class="sk-nav-btn sk-nav-prev" rel="prev" title="GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测"><i class="fas fa-angle-left fa-fw"></i>GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测</a></nav>
+</div>
+
+<section class="sk-related">
+                    <h2 class="sk-related-title">相关文章</h2>
+                    <div class="sk-related-grid"><a class="sk-related-card" href="/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/">
+                                    <span class="sk-related-card-title">Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治</span>
+                                    <span class="sk-related-card-meta">2026-11-24Docker · docker logs · 日志清理 · json-file · 运维</span>
+                                </a><a class="sk-related-card" href="/2024/06/ubuntu%E5%AE%89%E8%A3%85mysql8/">
+                                    <span class="sk-related-card-title">在 Ubuntu 上安装 MySQL（核验软件源版本）</span>
+                                    <span class="sk-related-card-meta">2024-06-14ubuntu · mysql</span>
+                                </a><a class="sk-related-card" href="/2021/11/macbookm1x%E6%90%AD%E5%BB%BAmysql%E5%92%8Credis%E4%BB%A5%E5%8F%8Aphp%E7%9A%84swoole%E5%92%8Chyperf%E7%8E%AF%E5%A2%83/">
+                                    <span class="sk-related-card-title">MacBookM1X搭建mysql和redis以及php的swoole和hyperf环境</span>
+                                    <span class="sk-related-card-meta">2021-11-14php · swoole · hyperf · macbook · mysql · redis · m1x</span>
+                                </a></div>
+                </section><div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article>
+    </div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.mmfei.com/" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/css/skin-stripe.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"valine":{"appId":"agrUIy35wmii07cPfX0p0UWx-MdYXbMMI","appKey":"xNDv6FEmi9xqlsf6out3W5c6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://agruiy35.api.lncldglobal.com","visitor":true}}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6" async></script><link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+<div id="pagefind-overlay" class="pf-overlay" aria-hidden="true">
+    <div class="pf-modal" role="dialog" aria-modal="true" aria-label="搜索">
+        <button type="button" class="pf-close" id="pagefind-close" aria-label="清空">&times;</button>
+        <div id="pagefind-ui"></div>
+    </div>
+</div>
+
+<style>
+.pf-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8vh 16px 16px;
+}
+.pf-overlay.open {
+    display: flex;
+}
+.pf-modal {
+    position: relative;
+    width: 560px;
+    max-width: 100%;
+    background: var(--card-background, #fff);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.28);
+    padding: 18px 18px 10px;
+}
+.pf-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--secondary-font-color, #666);
+    cursor: pointer;
+    padding: 6px;
+}
+.pf-close:hover { color: var(--primary-font-color, #111); }
+#pagefind-ui { min-height: 40px; }
+@media (max-width: 680px) {
+    .pf-overlay { padding: 12px 10px; align-items: flex-start; }
+    .pf-modal { padding: 14px 12px 8px; border-radius: 10px; }
+}
+</style>
+
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+(function () {
+    var overlay = document.getElementById('pagefind-overlay');
+    var modal = overlay.querySelector('.pf-modal');
+    var closeBtn = document.getElementById('pagefind-close');
+    var uiMount = document.getElementById('pagefind-ui');
+
+    function open() {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        var input = uiMount.querySelector('input');
+        if (input) { setTimeout(function () { input.focus(); }, 60); }
+    }
+    function close() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    function bindTrigger(id) {
+        var el = document.getElementById(id);
+        if (el) { el.addEventListener('click', function (e) { e.preventDefault(); open(); }); }
+    }
+    bindTrigger('pagefind-trigger-desktop');
+    bindTrigger('pagefind-trigger-mobile');
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) { close(); }
+    });
+
+    if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({
+            element: uiMount,
+            showSubResults: true,
+            showImages: false,
+            highlightQuery: true,
+            translations: {
+                placeholder: '搜索文章标题、标签或内容…',
+                clear_search: '清除',
+                load_more: '加载更多结果',
+                search_label: '搜索',
+                filters_label: '筛选',
+                no_results: '没有找到结果'
+            }
+        });
+    }
+})();
+</script>
+</body>
+</html>

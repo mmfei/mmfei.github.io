@@ -37,3 +37,8 @@ export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_pr
 ```
 
 ## 换海外的阿里云ecs(推荐这个)
+
+---
+
+2026 年补充：[GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测](https://www.mmfei.com/2026/11/github国内加速2026/)
+

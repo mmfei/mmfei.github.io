@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治 - 木木飞</title><meta name="Description" content="Docker 容器日志把磁盘写满时，先找到 json-file 日志位置并用 docker logs 查看，再选择重建容器或应急清空，最后用 max-size、max-file 限制大小。附实测输出和回滚方法。"><meta property="og:title" content="Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治" />
+<meta property="og:description" content="Docker 容器日志把磁盘写满时，先找到 json-file 日志位置并用 docker logs 查看，再选择重建容器或应急清空，最后用 max-size、max-file 限制大小。附实测输出和回滚方法。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.mmfei.com/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-11-24T19:40:00&#43;07:00" />
+<meta property="article:modified_time" content="2026-11-24T19:40:00&#43;07:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
+
+<meta name="twitter:title" content="Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治"/>
+<meta name="twitter:description" content="Docker 容器日志把磁盘写满时，先找到 json-file 日志位置并用 docker logs 查看，再选择重建容器或应急清空，最后用 max-size、max-file 限制大小。附实测输出和回滚方法。"/>
+<meta name="application-name" content="木木飞">
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.mmfei.com/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/" /><link rel="prev" href="https://www.mmfei.com/2026/11/ffmpeg-hls%E5%88%87%E7%89%87%E4%B8%8E%E7%AD%BE%E5%90%8D%E9%89%B4%E6%9D%83/" /><link rel="next" href="https://www.mmfei.com/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.mmfei.com\/2026\/11\/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F\/"
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Docker, docker logs, 日志清理, json-file, 运维","wordcount":  3580 ,
+        "url": "https:\/\/www.mmfei.com\/2026\/11\/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F\/","datePublished": "2026-11-24T19:40:00+07:00","dateModified": "2026-11-24T19:40:00+07:00","publisher": {
+            "@type": "Organization",
+            "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "mmfei"
+            },"description": "Docker 容器日志把磁盘写满时，先找到 json-file 日志位置并用 docker logs 查看，再选择重建容器或应急清空，最后用 max-size、max-file 限制大小。附实测输出和回滚方法。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-desktop" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-desktop"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a>
+                <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile">
+                <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-mobile" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-mobile"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<style>
+#header-desktop .header-wrapper .menu { overflow: visible; }
+#header-desktop .menu-has-sub { position: relative; display: inline-block; }
+#header-desktop .menu-parent-link,
+#header-mobile .menu-parent-link { color: inherit; text-decoration: none; }
+#header-desktop .menu-has-sub.active .menu-parent-link { font-weight: 900; }
+#header-desktop .menu-sub-toggle {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: 1;
+    padding: 0 2px;
+    cursor: pointer;
+}
+#header-desktop .menu-sub {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 8.5rem;
+    margin: 0;
+    padding: 6px 0;
+    text-align: left;
+    background: #f8f8f8;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .12);
+    z-index: 220;
+}
+#header-desktop .menu-has-sub:hover > .menu-sub,
+#header-desktop .menu-has-sub:focus-within > .menu-sub,
+#header-desktop .menu-has-sub.is-open > .menu-sub { display: block; }
+#header-desktop .menu-sub a { display: block; padding: 6px 14px; white-space: nowrap; color: inherit; text-decoration: none; }
+body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: #363636; }
+#header-mobile .menu-has-sub,
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub,
+#header-mobile .menu-sub a { display: block; }
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub a { line-height: 2.5rem; }
+#header-mobile .menu-sub-toggle { display: none; }
+</style>
+<script>
+(function () {
+    var buttons = document.querySelectorAll(".menu-sub-toggle");
+    Array.prototype.forEach.call(buttons, function (button) {
+        button.addEventListener("click", function () {
+            var item = button.parentNode;
+            var open = item.classList.toggle("is-open");
+            button.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key !== "Escape") return;
+        Array.prototype.forEach.call(buttons, function (button) {
+            button.parentNode.classList.remove("is-open");
+            button.setAttribute("aria-expanded", "false");
+        });
+    });
+})();
+</script>
+<main class="main">
+                <div class="container"><div class="sk-page sk-article"><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div><article class="page single sk-single">
+            <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/docker/">docker</a></p><h1 class="single-title sk-single-title">Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治</h1><div class="post-meta sk-single-meta">
+                    <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
+                    </div>
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-24">2026-11-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3580 字&nbsp;
+                        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/" class="leancloud_visitors" data-flag-title="Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治">
+                                <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                            </span>&nbsp;</div>
+                </div>
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一docker-日志在哪">一、Docker 日志在哪</a>
+      <ul>
+        <li><a href="#找出最占空间的容器日志">找出最占空间的容器日志</a></li>
+      </ul>
+    </li>
+    <li><a href="#二查看日志的常用命令">二、查看日志的常用命令</a></li>
+    <li><a href="#三日志已经很大了怎么安全清理">三、日志已经很大了：怎么安全清理</a>
+      <ul>
+        <li><a href="#推荐给容器加上限制后重建">推荐：给容器加上限制后重建</a></li>
+        <li><a href="#应急不能停服务时用-truncate-清空">应急：不能停服务时用 truncate 清空</a></li>
+        <li><a href="#不要直接-rm-日志文件">不要直接 rm 日志文件</a></li>
+      </ul>
+    </li>
+    <li><a href="#四根治用-max-size-和-max-file-限制日志大小">四、根治：用 max-size 和 max-file 限制日志大小</a>
+      <ul>
+        <li><a href="#方式-1单个容器-docker-run">方式 1：单个容器 docker run</a></li>
+        <li><a href="#方式-2compose-文件里按服务配置">方式 2：Compose 文件里按服务配置</a></li>
+        <li><a href="#方式-3daemonjson-全局默认">方式 3：daemon.json 全局默认</a></li>
+        <li><a href="#关键只对新建的容器生效">关键：只对新建的容器生效</a></li>
+      </ul>
+    </li>
+    <li><a href="#五核验是否真的生效">五、核验是否真的生效</a></li>
+    <li><a href="#六local-驱动要不要换">六、local 驱动要不要换</a></li>
+    <li><a href="#常见问题">常见问题</a></li>
+    <li><a href="#安全注意">安全注意</a></li>
+    <li><a href="#回滚方法">回滚方法</a></li>
+    <li><a href="#实测环境与来源">实测环境与来源</a></li>
+  </ul>
+</nav></div>
+                </details><div class="content" id="content"><p>服务器磁盘报警，<code>du</code> 一查，<code>/var/lib/docker/containers/</code> 下某个 <code>*-json.log</code> 有几十 GB。这是 Docker 默认日志配置下很常见的情况：默认的 <code>json-file</code> 驱动不限制文件大小，容器只要一直往标准输出打日志，这个文件就会一直长。</p>
+<p>这篇按排查顺序写：<strong>日志在哪 → 怎么看 → 怎么安全清理 → 怎么用 max-size/max-file 根治 → 怎么核验和回滚</strong>。所有输出都来自一次性测试容器，见文末“实测环境”。</p>
+<p>和站内文章的分工：<a href="https://www.mmfei.com/2022/01/%e9%98%bf%e9%87%8c%e4%ba%91%e7%9a%84centos%e5%ae%89%e8%a3%85docker-compose/" target="_blank" rel="noopener noreffer">阿里云的 CentOS 安装 docker-compose</a> 讲安装，<a href="https://www.mmfei.com/2021/06/%e6%af%8f%e6%97%a5%e5%a4%87%e4%bb%bddocker%e9%83%a8%e7%bd%b2%e7%9a%84gitlab%e6%9c%8d%e5%8a%a1%e7%9a%84%e6%9c%80%e7%ae%80%e5%8d%95%e6%96%b9%e6%a1%88/" target="_blank" rel="noopener noreffer">每日备份 Docker 部署的 GitLab 服务</a> 讲备份；本文只讲容器标准输出日志的占用和限制。应用自己写到挂载目录里的日志文件（比如 <code>/data/app/logs/*.log</code>）不归 Docker 管，那类文件可以参考 <a href="https://www.mmfei.com/2021/06/%e4%bf%9d%e7%95%99%e6%9c%80%e6%96%b0n%e4%b8%aa%e6%96%87%e4%bb%b6%e7%9a%84bash%e8%84%9a%e6%9c%ac/" target="_blank" rel="noopener noreffer">保留最新 N 个文件的 bash 脚本</a> 定期清理。</p>
+<h2 id="一docker-日志在哪">一、Docker 日志在哪</h2>
+<p>默认数据目录是 <code>/var/lib/docker</code>，每个容器的标准输出日志在：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">/var/lib/docker/containers/&lt;容器完整ID&gt;/&lt;容器完整ID&gt;-json.log
+</code></pre></td></tr></table>
+</div>
+</div><p>不用自己拼 ID，直接问 Docker：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker info --format <span class="s1">&#39;DockerRootDir={{.DockerRootDir}} LoggingDriver={{.LoggingDriver}}&#39;</span>
+docker inspect --format <span class="s1">&#39;{{.LogPath}}&#39;</span> 容器名
+</code></pre></td></tr></table>
+</div>
+</div><p>实测输出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">DockerRootDir=/var/lib/docker LoggingDriver=json-file
+/var/lib/docker/containers/929afa9d302c8511568ef9f5cfa8f5800b0be22e308c4960ee89bf9cd5648fc5/929afa9d302c8511568ef9f5cfa8f5800b0be22e308c4960ee89bf9cd5648fc5-json.log
+</code></pre></td></tr></table>
+</div>
+</div><p>如果改过 <code>data-root</code>，以 <code>docker info</code> 显示的目录为准。用 <code>local</code> 驱动时 <code>LogPath</code> 是空的，文件在 <code>&lt;容器目录&gt;/local-logs/container.log</code>。</p>
+<h3 id="找出最占空间的容器日志">找出最占空间的容器日志</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 按大小列出最大的 10 个日志文件</span>
+sudo du -h /var/lib/docker/containers/*/*-json.log* <span class="p">|</span> sort -rh <span class="p">|</span> head -10
+
+<span class="c1"># 对应到容器名</span>
+<span class="k">for</span> id in <span class="k">$(</span>docker ps -aq<span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+  <span class="nv">p</span><span class="o">=</span><span class="k">$(</span>docker inspect -f <span class="s1">&#39;{{.LogPath}}&#39;</span> <span class="s2">&#34;</span><span class="nv">$id</span><span class="s2">&#34;</span><span class="k">)</span>
+  <span class="o">[</span> -n <span class="s2">&#34;</span><span class="nv">$p</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="k">$(</span>docker inspect -f <span class="s1">&#39;{{.Name}}&#39;</span> <span class="s2">&#34;</span><span class="nv">$id</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2"> </span><span class="k">$(</span>sudo du -h <span class="s2">&#34;</span><span class="nv">$p</span><span class="s2">&#34;</span> <span class="p">|</span> cut -f1<span class="k">)</span><span class="s2">&#34;</span>
+<span class="k">done</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>注意：<code>docker system df</code> 列的是镜像、容器、本地卷和构建缓存，没有单列容器日志，所以它看着正常不代表日志没占满磁盘，以 <code>du</code> 结果为准。</p>
+<h2 id="二查看日志的常用命令">二、查看日志的常用命令</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker logs --tail <span class="m">100</span> 容器名          <span class="c1"># 最后 100 行</span>
+docker logs -f --tail <span class="m">50</span> 容器名        <span class="c1"># 持续跟踪，Ctrl+C 退出</span>
+docker logs -t --since 30m 容器名      <span class="c1"># 带时间戳，最近 30 分钟</span>
+docker logs --since 2026-11-24T10:00:00 --until 2026-11-24T11:00:00 容器名
+docker compose logs -f --tail <span class="m">100</span> 服务名
+</code></pre></td></tr></table>
+</div>
+</div><p><code>-t</code> 打印的时间是 UTC（实测输出 <code>2026-11-24T12:15:51.859024216Z</code>，对应曼谷时间 19:15）。<code>--since</code> / <code>--until</code> 若不带 <code>Z</code> 或 <code>+07:00</code> 这类时区，会按客户端本地时区解析，不要把 <code>docker logs -t</code> 里的 UTC 时间去掉 <code>Z</code> 再贴进去，否则窗口会偏 7 小时、结果可能为空。排查时和业务日志对时间要注意换算。</p>
+<h2 id="三日志已经很大了怎么安全清理">三、日志已经很大了：怎么安全清理</h2>
+<h3 id="推荐给容器加上限制后重建">推荐：给容器加上限制后重建</h3>
+<p>日志文件跟着容器走，<strong>删除容器时日志文件一起删除</strong>。所以最干净的做法是按第四节加好 <code>max-size</code>/<code>max-file</code>，然后重建容器：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># Compose 项目</span>
+docker compose up -d --force-recreate 服务名
+
+<span class="c1"># docker run 启动的容器：先记下原来的启动参数，再删掉重建</span>
+docker rm -f 容器名
+docker run -d --name 容器名 --log-opt max-size<span class="o">=</span>50m --log-opt max-file<span class="o">=</span><span class="m">3</span> ...原参数...
+</code></pre></td></tr></table>
+</div>
+</div><p>重建会短暂中断服务，旧日志也随之删除。需要留存的，先导出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker logs 容器名 &gt; /backup/容器名-<span class="k">$(</span>date +%F<span class="k">)</span>.log 2&gt;<span class="p">&amp;</span><span class="m">1</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="应急不能停服务时用-truncate-清空">应急：不能停服务时用 truncate 清空</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo truncate -s <span class="m">0</span> <span class="s2">&#34;</span><span class="k">$(</span>docker inspect --format <span class="s1">&#39;{{.LogPath}}&#39;</span> 容器名<span class="k">)</span><span class="s2">&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>实测：清空后文件从 3856342 字节变为 0，3 秒后变成 252 字节，容器保持 <code>running</code>，新日志继续从文件开头写入，不会留下空洞。</p>
+<p>但要知道两点：</p>
+<ol>
+<li>Docker 官方文档明确提示，<code>json-file</code> 和 <code>local</code> 的日志文件应由 Docker 守护进程独占访问，用外部工具操作“可能干扰日志系统，应当避免”。所以 truncate 只作为磁盘告急时的应急手段，事后一定要按第四节根治。</li>
+<li>本次实测中，truncate 之后执行 <code>docker logs --tail 2 容器名</code> 挂住超过 60 秒没有返回，最后手动结束；容器本身一直在运行。如果你清空后遇到 <code>docker logs</code> 卡住，重建容器即可恢复。</li>
+</ol>
+<h3 id="不要直接-rm-日志文件">不要直接 rm 日志文件</h3>
+<p>很多人第一反应是 <code>rm</code> 掉那个大文件，这样<strong>磁盘空间不会释放</strong>，还会让 <code>docker logs</code> 报错。实测：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">$ rm -f /var/lib/docker/containers/6609.../6609...-json.log
+$ ls -l /proc/&lt;dockerd PID&gt;/fd | grep 6609...-json.log
+l-wx------ 1 root root 64 Nov 24 19:11 40 -&gt; /var/lib/docker/containers/6609.../6609...-json.log (deleted)
+$ docker logs --tail 2 logclean-b
+error from daemon in stream: Error grabbing logs: open /var/lib/docker/containers/6609.../6609...-json.log: no such file or directory
+</code></pre></td></tr></table>
+</div>
+</div><p>dockerd 仍持有已删除文件的句柄，空间要等容器删除或 Docker 重启后才回收。已经误删的，直接重建这个容器。</p>
+<h2 id="四根治用-max-size-和-max-file-限制日志大小">四、根治：用 max-size 和 max-file 限制日志大小</h2>
+<p><code>json-file</code> 的官方默认值是 <code>max-size=-1</code>（不限）、<code>max-file=1</code>、<code>compress=false</code>。<code>max-file</code> 只有在设置了 <code>max-size</code> 时才生效。下面三种方式任选，生产环境建议“全局默认 + 个别容器覆盖”。</p>
+<h3 id="方式-1单个容器-docker-run">方式 1：单个容器 docker run</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker run -d --name app <span class="se">\
+</span><span class="se"></span>  --log-driver json-file <span class="se">\
+</span><span class="se"></span>  --log-opt max-size<span class="o">=</span>50m <span class="se">\
+</span><span class="se"></span>  --log-opt max-file<span class="o">=</span><span class="m">3</span> <span class="se">\
+</span><span class="se"></span>  nginx:1.27
+</code></pre></td></tr></table>
+</div>
+</div><p>单个容器最多占用约 <code>50m × 3 = 150m</code>。</p>
+<h3 id="方式-2compose-文件里按服务配置">方式 2：Compose 文件里按服务配置</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">services</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">app</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">nginx:1.27</span><span class="w">
+</span><span class="w">    </span><span class="nt">logging</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l">json-file</span><span class="w">
+</span><span class="w">      </span><span class="nt">options</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">max-size</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;50m&#34;</span><span class="w">
+</span><span class="w">        </span><span class="nt">max-file</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;3&#34;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>改完执行 <code>docker compose up -d</code>，Compose 发现配置变化会重建该服务的容器。实测输出 <code>Container logrecreate-app-1  Recreated</code>，容器 ID 变了，<code>LogConfig</code> 变成 <code>{&quot;max-file&quot;:&quot;3&quot;,&quot;max-size&quot;:&quot;50m&quot;}</code>。</p>
+<h3 id="方式-3daemonjson-全局默认">方式 3：daemon.json 全局默认</h3>
+<p>编辑 <code>/etc/docker/daemon.json</code>（没有就新建）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;log-driver&#34;</span><span class="p">:</span> <span class="s2">&#34;json-file&#34;</span><span class="p">,</span>
+  <span class="nt">&#34;log-opts&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;max-size&#34;</span><span class="p">:</span> <span class="s2">&#34;50m&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;max-file&#34;</span><span class="p">:</span> <span class="s2">&#34;3&#34;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>注意 <code>log-opts</code> 里的值<strong>必须是字符串</strong>，<code>&quot;3&quot;</code> 不能写成 <code>3</code>。然后：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo python3 -m json.tool /etc/docker/daemon.json &gt; /dev/null <span class="o">&amp;&amp;</span> <span class="nb">echo</span> JSON OK
+sudo systemctl restart docker
+docker info --format <span class="s1">&#39;{{.LoggingDriver}}&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="关键只对新建的容器生效">关键：只对新建的容器生效</h3>
+<p>这是最容易踩的坑。修改 daemon.json 并重启 Docker 后：</p>
+<ul>
+<li>已有容器的 <code>LogConfig</code> 不变，<code>docker start</code> 之后也不会变（实测）；</li>
+<li>只有之后<strong>新建</strong>（包括 <code>docker rm</code> 后重建、<code>compose up --force-recreate</code>）的容器才继承新默认值。</li>
+</ul>
+<p>实测（daemon.json 设为 100k/3 后）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">/logtest-nolimit {&#34;Type&#34;:&#34;json-file&#34;,&#34;Config&#34;:{}}                              # 改配置前创建的旧容器
+/logtest-nolimit 重启后 {&#34;Type&#34;:&#34;json-file&#34;,&#34;Config&#34;:{}}                       # docker start 后仍然不变
+/logtest-new {&#34;Type&#34;:&#34;json-file&#34;,&#34;Config&#34;:{&#34;max-file&#34;:&#34;3&#34;,&#34;max-size&#34;:&#34;100k&#34;}}  # 新建容器继承默认值
+/logtest-nolimit {&#34;Type&#34;:&#34;json-file&#34;,&#34;Config&#34;:{&#34;max-file&#34;:&#34;3&#34;,&#34;max-size&#34;:&#34;100k&#34;}}  # rm 后同名重建才生效
+</code></pre></td></tr></table>
+</div>
+</div><p>另外，未开启 <code>live-restore</code> 时，<code>systemctl restart docker</code> 会停止所有运行中的容器（实测重启守护进程后旧容器处于停止状态，需要 <code>docker start</code>；设置了 <code>restart: always/unless-stopped</code> 的会自动拉起）。生产机请放在维护窗口操作。</p>
+<h2 id="五核验是否真的生效">五、核验是否真的生效</h2>
+<p><strong>1. 看容器的实际配置</strong>（不要只看 daemon.json）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker inspect -f <span class="s1">&#39;{{.Name}} {{json .HostConfig.LogConfig}}&#39;</span> <span class="k">$(</span>docker ps -q<span class="k">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>实测输出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">{&#34;Type&#34;:&#34;json-file&#34;,&#34;Config&#34;:{&#34;max-file&#34;:&#34;3&#34;,&#34;max-size&#34;:&#34;100k&#34;}}
+</code></pre></td></tr></table>
+</div>
+</div><p><code>Config</code> 为 <code>{}</code> 的就是还没限制的容器。</p>
+<p><strong>2. 看日志文件是否在轮转</strong>。测试容器连续输出 2 万行、<code>max-size=100k max-file=3</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">-rw-r----- 1 root root  65608 Nov 24 19:09 3f15...-json.log
+-rw-r----- 1 root root 100023 Nov 24 19:09 3f15...-json.log.1
+-rw-r----- 1 root root 100014 Nov 24 19:09 3f15...-json.log.2
+268K	total
+</code></pre></td></tr></table>
+</div>
+</div><p>对照组不加限制的同样容器，单个文件 2566632 字节且继续增长。</p>
+<p><strong>3. 知道轮转的代价</strong>：旧日志被删除后 <code>docker logs</code> 也看不到了。上面这个容器写了 2 万行，<code>docker logs</code> 只能返回最后 2061 行（<code>line 17939</code> 到 <code>line 19999</code>）。需要长期保留的日志，应该发到日志系统，而不是靠调大 <code>max-size</code>。</p>
+<h2 id="六local-驱动要不要换">六、local 驱动要不要换</h2>
+<p><code>local</code> 驱动默认就有限制：每个文件 <code>20m</code>、保留 <code>5</code> 个、轮转文件默认压缩，每个容器约 100MB。实测 <code>--log-driver local --log-opt max-size=100k --log-opt max-file=3</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">{&#34;Type&#34;:&#34;local&#34;,&#34;Config&#34;:{&#34;max-file&#34;:&#34;3&#34;,&#34;max-size&#34;:&#34;100k&#34;}} LogPath=&#34;&#34;
+-rw-r----- 1 root root 8342 Nov 24 19:10 container.log
+-rw-r----- 1 root root 6508 Nov 24 19:10 container.log.1.gz
+-rw-r----- 1 root root 6498 Nov 24 19:10 container.log.2.gz
+</code></pre></td></tr></table>
+</div>
+</div><p>取舍：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>json-file</th>
+<th>local</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>默认是否限制</td>
+<td>不限制</td>
+<td>约 100MB/容器</td>
+</tr>
+<tr>
+<td>文件格式</td>
+<td>每行一个 JSON，可直接 <code>tail</code>/采集</td>
+<td>内部二进制格式，只能用 <code>docker logs</code> 读</td>
+</tr>
+<tr>
+<td>压缩</td>
+<td>默认不压缩</td>
+<td>默认压缩</td>
+</tr>
+<tr>
+<td>适合</td>
+<td>有 Filebeat/Fluent Bit 等按文件采集</td>
+<td>不采集文件、只用 <code>docker logs</code> 看的单机</td>
+</tr>
+</tbody>
+</table>
+<p>如果你的日志采集器是直接读 <code>*-json.log</code> 文件的，不要切 <code>local</code>，给 <code>json-file</code> 加限制即可。</p>
+<h2 id="常见问题">常见问题</h2>
+<p><strong>改了 daemon.json，dockerd 起不来。</strong> 多半是 JSON 写错或数值没加引号。实测把 <code>max-size</code> 写成数字 <code>100</code> 时 dockerd 报错退出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">unable to configure the Docker daemon with file /etc/docker/daemon.json: json: cannot unmarshal number into Go struct field Config.CommonConfig.LogConfig.log-opts of type string
+</code></pre></td></tr></table>
+</div>
+</div><p>先用 <code>python3 -m json.tool</code> 检查，再看 <code>journalctl -u docker -n 50</code>。</p>
+<p><strong>想单个容器显式写“不限制”。</strong> 实测 Docker 26.1 的 <code>--log-opt max-size=-1</code> 会让容器启动失败（<code>invalid size: '-1'</code>），不要这么写；去掉 <code>max-size</code> 选项、并确认全局默认里没设置即可。</p>
+<p><strong>改了配置，磁盘还是满的。</strong> 确认容器已经重建（看 <code>LogConfig</code>）；确认不是应用写在容器可写层或挂载卷里的文件（用 <code>docker system df -v</code> 和 <code>du</code> 分别看）。</p>
+<p><strong>docker compose logs 看不到更早的日志。</strong> 已被轮转删除，这是预期行为。</p>
+<h2 id="安全注意">安全注意</h2>
+<ul>
+<li><code>/var/lib/docker</code> 需要 root 权限，操作前确认路径来自 <code>docker inspect</code>，不要用通配符批量 <code>truncate</code>/<code>rm</code> 整个目录。</li>
+<li>日志里可能有请求参数、Token、手机号等敏感信息，导出备份时注意权限（如 <code>chmod 600</code>），不要上传到公开位置。</li>
+<li>重启 Docker 和重建容器都会中断服务，生产环境先在维护窗口或单台机器验证。</li>
+</ul>
+<h2 id="回滚方法">回滚方法</h2>
+<ul>
+<li><strong>单容器 / Compose</strong>：删掉 <code>--log-opt</code> 或 <code>logging:</code> 段，再重建容器。</li>
+<li><strong>daemon.json</strong>：改之前先备份 <code>sudo cp /etc/docker/daemon.json /etc/docker/daemon.json.bak-$(date +%F)</code>；回滚时恢复备份（或删掉 <code>log-opts</code> 段），校验 JSON 后 <code>sudo systemctl restart docker</code>。同样只影响之后新建的容器。</li>
+<li>truncate 和轮转删除的日志无法恢复，需要的请先 <code>docker logs &gt; 文件</code> 导出。</li>
+</ul>
+<h2 id="实测环境与来源">实测环境与来源</h2>
+<ul>
+<li>测试时间：2026-11-24 19:09–19:17（曼谷时间）。</li>
+<li>环境：Debian 13（trixie），内核 6.12；Docker Engine 26.1.5+dfsg1（Debian 软件包），Docker Compose 2.26.1，镜像 <code>busybox:1.36</code>；一次性测试容器，测完已删除。守护进程不是 systemd 托管，重启用的是结束进程后重新启动，生产机对应 <code>systemctl restart docker</code>。</li>
+<li>未实测：Docker Desktop、rootless 模式、<code>live-restore</code> 开启时的重启行为、Docker 官方 docker-ce 软件包（本次是 Debian 打包版本，行为预期一致但未验证）。</li>
+<li>官方文档（2026-11-24 读取）：
+<ul>
+<li><a href="https://docs.docker.com/engine/logging/drivers/json-file/" target="_blank" rel="noopener noreffer">JSON File logging driver</a></li>
+<li><a href="https://docs.docker.com/engine/logging/drivers/local/" target="_blank" rel="noopener noreffer">Local file logging driver</a></li>
+<li><a href="https://docs.docker.com/engine/logging/configure/" target="_blank" rel="noopener noreffer">Configure logging drivers</a></li>
+<li><a href="https://docs.docker.com/reference/cli/docker/container/logs/" target="_blank" rel="noopener noreffer">docker container logs</a></li>
+<li><a href="https://docs.docker.com/reference/compose-file/services/#logging" target="_blank" rel="noopener noreffer">Compose 文件 logging 字段</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-11-24</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.mmfei.com/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/" data-title="Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治" data-via="mmfei" data-hashtags="Docker,docker logs,日志清理,json-file,运维"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.mmfei.com/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/" data-hashtag="Docker"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.mmfei.com/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/" data-title="Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.mmfei.com/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/" data-title="Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.mmfei.com/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/" data-title="Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/docker/">docker</a>,&nbsp;<a href="/tags/docker-logs/">docker logs</a>,&nbsp;<a href="/tags/%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86/">日志清理</a>,&nbsp;<a href="/tags/json-file/">json-file</a>,&nbsp;<a href="/tags/%E8%BF%90%E7%BB%B4/">运维</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <nav class="sk-nav" aria-label="文章导航"><a href="/2026/11/ffmpeg-hls%E5%88%87%E7%89%87%E4%B8%8E%E7%AD%BE%E5%90%8D%E9%89%B4%E6%9D%83/" class="sk-nav-btn sk-nav-prev" rel="prev" title="FFmpeg HLS 切片与签名鉴权：别只保护 m3u8"><i class="fas fa-angle-left fa-fw"></i>FFmpeg HLS 切片与签名鉴权：别只保护 m3u8</a>
+            <a href="/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/" class="sk-nav-btn sk-nav-next" rel="next" title="GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测">GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测<i class="fas fa-angle-right fa-fw"></i></a></nav>
+</div>
+
+<section class="sk-related">
+                    <h2 class="sk-related-title">相关文章</h2>
+                    <div class="sk-related-grid"><a class="sk-related-card" href="/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/">
+                                    <span class="sk-related-card-title">MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）</span>
+                                    <span class="sk-related-card-meta">2026-11-24MySQL · 慢查询 · mysqldumpslow · EXPLAIN · 运维</span>
+                                </a><a class="sk-related-card" href="/2023/11/%E7%94%A8docker%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAphpmyadmin/">
+                                    <span class="sk-related-card-title">用docker快速搭建一个phpmyadmin</span>
+                                    <span class="sk-related-card-meta">2023-11-21docker · phpmyadmin</span>
+                                </a><a class="sk-related-card" href="/2022/01/%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84centos%E5%AE%89%E8%A3%85docker-compose/">
+                                    <span class="sk-related-card-title">阿里云的centos安装docker Compose</span>
+                                    <span class="sk-related-card-meta">2022-01-17docker · docker-compose · centos · aliyun · linux</span>
+                                </a></div>
+                </section><div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article>
+    </div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.mmfei.com/" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/css/skin-stripe.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"valine":{"appId":"agrUIy35wmii07cPfX0p0UWx-MdYXbMMI","appKey":"xNDv6FEmi9xqlsf6out3W5c6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://agruiy35.api.lncldglobal.com","visitor":true}}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6" async></script><link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+<div id="pagefind-overlay" class="pf-overlay" aria-hidden="true">
+    <div class="pf-modal" role="dialog" aria-modal="true" aria-label="搜索">
+        <button type="button" class="pf-close" id="pagefind-close" aria-label="清空">&times;</button>
+        <div id="pagefind-ui"></div>
+    </div>
+</div>
+
+<style>
+.pf-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8vh 16px 16px;
+}
+.pf-overlay.open {
+    display: flex;
+}
+.pf-modal {
+    position: relative;
+    width: 560px;
+    max-width: 100%;
+    background: var(--card-background, #fff);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.28);
+    padding: 18px 18px 10px;
+}
+.pf-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--secondary-font-color, #666);
+    cursor: pointer;
+    padding: 6px;
+}
+.pf-close:hover { color: var(--primary-font-color, #111); }
+#pagefind-ui { min-height: 40px; }
+@media (max-width: 680px) {
+    .pf-overlay { padding: 12px 10px; align-items: flex-start; }
+    .pf-modal { padding: 14px 12px 8px; border-radius: 10px; }
+}
+</style>
+
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+(function () {
+    var overlay = document.getElementById('pagefind-overlay');
+    var modal = overlay.querySelector('.pf-modal');
+    var closeBtn = document.getElementById('pagefind-close');
+    var uiMount = document.getElementById('pagefind-ui');
+
+    function open() {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        var input = uiMount.querySelector('input');
+        if (input) { setTimeout(function () { input.focus(); }, 60); }
+    }
+    function close() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    function bindTrigger(id) {
+        var el = document.getElementById(id);
+        if (el) { el.addEventListener('click', function (e) { e.preventDefault(); open(); }); }
+    }
+    bindTrigger('pagefind-trigger-desktop');
+    bindTrigger('pagefind-trigger-mobile');
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) { close(); }
+    });
+
+    if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({
+            element: uiMount,
+            showSubResults: true,
+            showImages: false,
+            highlightQuery: true,
+            translations: {
+                placeholder: '搜索文章标题、标签或内容…',
+                clear_search: '清除',
+                load_more: '加载更多结果',
+                search_label: '搜索',
+                filters_label: '筛选',
+                no_results: '没有找到结果'
+            }
+        });
+    }
+})();
+</script>
+</body>
+</html>
