@@ -4,7 +4,14 @@
         <link>https://www.mmfei.com/categories/gitlab/</link>
         <description>gitlab - 分类 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 05 Aug 2025 19:30:35 &#43;0800</lastBuildDate><atom:link href="https://www.mmfei.com/categories/gitlab/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/categories/gitlab/" rel="self" type="application/rss+xml" /><item>
+    <title>GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）</title>
+    <link>https://www.mmfei.com/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+    <pubDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
+    <description><![CDATA[GitLab 换服务器，最常见的翻车不是备份失败，而是还原命令显示成功，用起来却不对：CI/CD 变量读不出来，旧的访问令牌全部 401（官方文档还提到 Runner 会]]></description>
+</item><item>
     <title>重置 GitLab CE 的 root 密码</title>
     <link>https://www.mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/</link>
     <pubDate>Tue, 05 Aug 2025 19:30:35 &#43;0800</pubDate>

@@ -103,3 +103,7 @@ Host gitlab_server
 ```
 
 
+---
+
+把备份还原到另一台服务器，见：[GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）](https://www.mmfei.com/2026/11/gitlab备份还原到另一台服务器/)
+

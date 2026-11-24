@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署） - 木木飞</title><meta name="Description" content="把 Docker 部署的 GitLab CE 迁移到新服务器：旧机 gitlab-backup create，连同 gitlab-secrets.json、gitlab.rb 一起带走，新机装完全相同的版本后按顺序还原，再用 doctor:secrets、gitlab:check 校验。附忘带密钥文件、版本不一致、备份文件权限不对的实测报错。"><meta property="og:title" content="GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）" />
+<meta property="og:description" content="把 Docker 部署的 GitLab CE 迁移到新服务器：旧机 gitlab-backup create，连同 gitlab-secrets.json、gitlab.rb 一起带走，新机装完全相同的版本后按顺序还原，再用 doctor:secrets、gitlab:check 校验。附忘带密钥文件、版本不一致、备份文件权限不对的实测报错。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.mmfei.com/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-11-24T20:24:00&#43;07:00" />
+<meta property="article:modified_time" content="2026-11-24T20:24:00&#43;07:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
+
+<meta name="twitter:title" content="GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）"/>
+<meta name="twitter:description" content="把 Docker 部署的 GitLab CE 迁移到新服务器：旧机 gitlab-backup create，连同 gitlab-secrets.json、gitlab.rb 一起带走，新机装完全相同的版本后按顺序还原，再用 doctor:secrets、gitlab:check 校验。附忘带密钥文件、版本不一致、备份文件权限不对的实测报错。"/>
+<meta name="application-name" content="木木飞">
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.mmfei.com/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/" /><link rel="prev" href="https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.mmfei.com\/2026\/11\/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8\/"
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "GitLab, gitlab-backup, 备份还原, 迁移, Docker","wordcount":  3674 ,
+        "url": "https:\/\/www.mmfei.com\/2026\/11\/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8\/","datePublished": "2026-11-24T20:24:00+07:00","dateModified": "2026-11-24T20:24:00+07:00","publisher": {
+            "@type": "Organization",
+            "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "mmfei"
+            },"description": "把 Docker 部署的 GitLab CE 迁移到新服务器：旧机 gitlab-backup create，连同 gitlab-secrets.json、gitlab.rb 一起带走，新机装完全相同的版本后按顺序还原，再用 doctor:secrets、gitlab:check 校验。附忘带密钥文件、版本不一致、备份文件权限不对的实测报错。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-desktop" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-desktop"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a>
+                <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile">
+                <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-mobile" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-mobile"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<style>
+#header-desktop .header-wrapper .menu { overflow: visible; }
+#header-desktop .menu-has-sub { position: relative; display: inline-block; }
+#header-desktop .menu-parent-link,
+#header-mobile .menu-parent-link { color: inherit; text-decoration: none; }
+#header-desktop .menu-has-sub.active .menu-parent-link { font-weight: 900; }
+#header-desktop .menu-sub-toggle {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: 1;
+    padding: 0 2px;
+    cursor: pointer;
+}
+#header-desktop .menu-sub {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 8.5rem;
+    margin: 0;
+    padding: 6px 0;
+    text-align: left;
+    background: #f8f8f8;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .12);
+    z-index: 220;
+}
+#header-desktop .menu-has-sub:hover > .menu-sub,
+#header-desktop .menu-has-sub:focus-within > .menu-sub,
+#header-desktop .menu-has-sub.is-open > .menu-sub { display: block; }
+#header-desktop .menu-sub a { display: block; padding: 6px 14px; white-space: nowrap; color: inherit; text-decoration: none; }
+body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: #363636; }
+#header-mobile .menu-has-sub,
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub,
+#header-mobile .menu-sub a { display: block; }
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub a { line-height: 2.5rem; }
+#header-mobile .menu-sub-toggle { display: none; }
+</style>
+<script>
+(function () {
+    var buttons = document.querySelectorAll(".menu-sub-toggle");
+    Array.prototype.forEach.call(buttons, function (button) {
+        button.addEventListener("click", function () {
+            var item = button.parentNode;
+            var open = item.classList.toggle("is-open");
+            button.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key !== "Escape") return;
+        Array.prototype.forEach.call(buttons, function (button) {
+            button.parentNode.classList.remove("is-open");
+            button.setAttribute("aria-expanded", "false");
+        });
+    });
+})();
+</script>
+<main class="main">
+                <div class="container"><div class="sk-page sk-article"><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div><article class="page single sk-single">
+            <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/gitlab/">gitlab</a></p><h1 class="single-title sk-single-title">GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）</h1><div class="post-meta sk-single-meta">
+                    <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
+                    </div>
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-24">2026-11-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3674 字&nbsp;
+                        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="leancloud_visitors" data-flag-title="GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）">
+                                <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                            </span>&nbsp;</div>
+                </div>
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#迁移前先确认三件事">迁移前先确认三件事</a></li>
+    <li><a href="#一旧服务器备份并带走三样文件">一、旧服务器：备份并带走三样文件</a></li>
+    <li><a href="#二新服务器装同一个版本">二、新服务器：装同一个版本</a></li>
+    <li><a href="#三按顺序还原顺序很重要">三、按顺序还原（顺序很重要）</a></li>
+    <li><a href="#四还原后怎么校验">四、还原后怎么校验</a></li>
+    <li><a href="#五实测忘带-gitlab-secretsjson-会怎样">五、实测：忘带 gitlab-secrets.json 会怎样</a></li>
+    <li><a href="#六实测版本不一致的报错">六、实测：版本不一致的报错</a></li>
+    <li><a href="#常见报错">常见报错</a></li>
+    <li><a href="#安全注意">安全注意</a></li>
+    <li><a href="#实测环境">实测环境</a></li>
+  </ul>
+</nav></div>
+                </details><div class="content" id="content"><p>GitLab 换服务器，最常见的翻车不是备份失败，而是<strong>还原命令显示成功，用起来却不对</strong>：CI/CD 变量读不出来，旧的访问令牌全部 401（官方文档还提到 Runner 会连不上、双因素认证用户无法登录）。原因几乎都是同一个：<code>gitlab-backup</code> 生成的备份包里<strong>不含</strong> <code>gitlab-secrets.json</code>。</p>
+<p>这篇按迁移顺序写：<strong>旧机备份 → 带走三样文件 → 新机装同版本 → 按顺序还原 → 校验</strong>，并实测了三种常见错误：忘带密钥文件、版本不一致、备份文件权限不对。</p>
+<p>测试用的是两台一次性的 <code>gitlab/gitlab-ce</code> 容器（都是 19.6.1），A 当旧服务器，B 当新服务器，详见文末“实测环境”。日常定时备份可以看站内的 <a href="https://www.mmfei.com/2021/06/%e6%af%8f%e6%97%a5%e5%a4%87%e4%bb%bddocker%e9%83%a8%e7%bd%b2%e7%9a%84gitlab%e6%9c%8d%e5%8a%a1%e7%9a%84%e6%9c%80%e7%ae%80%e5%8d%95%e6%96%b9%e6%a1%88/" target="_blank" rel="noopener noreffer">每日备份 Docker 部署的 GitLab 服务的最简单方案</a>，本文只讲<strong>把备份还原到另一台机器</strong>。新机从零搭建可参考 <a href="https://www.mmfei.com/2021/05/centos8%e6%90%ad%e5%bb%bagitlab%e5%92%8cgitlab-runner/" target="_blank" rel="noopener noreffer">CentOS8 搭建 GitLab 和 gitlab-runner</a>，迁移后忘了 root 密码可参考 <a href="https://www.mmfei.com/2025/08/%e8%ae%be%e7%bd%aegitlab-ce%e7%9a%84root%e8%b4%a6%e5%8f%b7%e5%af%86%e7%a0%81/" target="_blank" rel="noopener noreffer">设置 GitLab CE 的 root 账号密码</a>。</p>
+<h2 id="迁移前先确认三件事">迁移前先确认三件事</h2>
+<ol>
+<li>
+<p><strong>版本完全一致</strong>：还原只能在和备份<strong>完全相同的版本和类型</strong>（CE/EE）上进行，19.6.1 的备份不能还原到 19.6.0 或 19.7.0。先在旧机查版本：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker <span class="nb">exec</span> gitlab cat /opt/gitlab/embedded/service/gitlab-rails/VERSION
+<span class="c1"># 实测输出：19.6.1</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>新机 Docker 镜像要写死同一个标签，例如 <code>gitlab/gitlab-ce:19.6.1-ce.0</code>，<strong>不要用 <code>latest</code></strong>，否则两台机器拉到的版本可能不同。</p>
+</li>
+<li>
+<p><strong>新机先装好并能正常打开</strong>：还原要求目标 GitLab 已经在运行，而且最好是全新安装、没有业务数据。</p>
+</li>
+<li>
+<p><strong>磁盘空间</strong>：官方文档说明，还原前会检查备份目录剩余空间，至少要有备份包大小的 3 倍，不够会直接停止（本次备份包很小，这一项<strong>未实测</strong>）。</p>
+</li>
+</ol>
+<h2 id="一旧服务器备份并带走三样文件">一、旧服务器：备份并带走三样文件</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker <span class="nb">exec</span> -t gitlab gitlab-backup create
+</code></pre></td></tr></table>
+</div>
+</div><p>实测（测试数据：1 个项目、2 个提交、1 个议题、1 个 CI/CD 变量、1 个附件）用时 25 秒，结尾有两行需要注意：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">2026-11-24 13:08:29 UTC -- Backup 1795525706_2026_11_24_19.6.1 is done.
+2026-11-24 13:08:29 UTC -- Warning: Your gitlab.rb and gitlab-secrets.json files contain sensitive data
+and are not included in this backup. You will need these files to restore a backup.
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>备份文件在容器的 <code>/var/opt/gitlab/backups/</code>，文件名是 <code>&lt;备份ID&gt;_gitlab_backup.tar</code>，备份 ID <strong>里带着版本号</strong>（<code>..._19.6.1</code>）。里面有数据库（<code>db/database.sql.gz</code>）、仓库（<code>repositories/</code>）、附件、构建产物等。</li>
+<li>程序自己提示了：<code>gitlab.rb</code> 和 <code>gitlab-secrets.json</code> <strong>不在备份里</strong>。</li>
+</ul>
+<p>要带到新机的就是这三样（容器里的 <code>/etc/gitlab</code> 一般挂载在宿主机上，下面用 <code>/srv/gitlab/config</code> 举例，按你的 <code>-v</code> 参数替换）：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>位置</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*_gitlab_backup.tar</code></td>
+<td><code>/srv/gitlab/data/backups/</code></td>
+<td>数据库、仓库、附件等数据</td>
+</tr>
+<tr>
+<td><code>gitlab-secrets.json</code></td>
+<td><code>/srv/gitlab/config/</code></td>
+<td>数据库加密密钥：CI/CD 变量、访问令牌、双因素认证、Runner 令牌都靠它解密</td>
+</tr>
+<tr>
+<td><code>gitlab.rb</code></td>
+<td><code>/srv/gitlab/config/</code></td>
+<td>实例配置（域名、邮件、存储路径等）</td>
+</tr>
+</tbody>
+</table>
+<p>打包、记校验值，再传到新机：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">mkdir -p ~/gitlab-migrate <span class="o">&amp;&amp;</span> <span class="nb">cd</span> ~/gitlab-migrate
+sudo cp /srv/gitlab/data/backups/1795525706_2026_11_24_19.6.1_gitlab_backup.tar .
+sudo cp /srv/gitlab/config/gitlab-secrets.json /srv/gitlab/config/gitlab.rb .
+sudo sha256sum * <span class="p">|</span> sudo tee SHA256SUMS
+<span class="c1"># 传到新机（换成你的地址和目录）</span>
+sudo scp -r ~/gitlab-migrate root@新服务器:/root/
+</code></pre></td></tr></table>
+</div>
+</div><p>实测在同一台宿主机内复制，新机这边三样文件的 sha256 与旧机一致；跨服务器的 <code>scp</code> 这一步<strong>未实测</strong>。如果想让用户 <code>git clone</code> 时不出现“主机密钥已变更”的提示，可以把 <code>ssh_host_*</code> 密钥也一起带走；HTTPS 证书同理（<strong>未实测</strong>）。</p>
+<h2 id="二新服务器装同一个版本">二、新服务器：装同一个版本</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker run -d --name gitlab --hostname gitlab.example.com <span class="se">\
+</span><span class="se"></span>  -p 80:80 -p 443:443 -p 2222:22 --shm-size 256m <span class="se">\
+</span><span class="se"></span>  -v /srv/gitlab/config:/etc/gitlab <span class="se">\
+</span><span class="se"></span>  -v /srv/gitlab/logs:/var/log/gitlab <span class="se">\
+</span><span class="se"></span>  -v /srv/gitlab/data:/var/opt/gitlab <span class="se">\
+</span><span class="se"></span>  gitlab/gitlab-ce:19.6.1-ce.0
+</code></pre></td></tr></table>
+</div>
+</div><p>等它完全起来（实测两台各用了约 2.5 分钟）再继续：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker <span class="nb">exec</span> gitlab curl -fsS http://localhost/-/readiness <span class="o">&amp;&amp;</span> <span class="nb">echo</span> ready
+docker <span class="nb">exec</span> gitlab cat /opt/gitlab/embedded/service/gitlab-rails/VERSION   <span class="c1"># 必须和旧机一致</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="三按顺序还原顺序很重要">三、按顺序还原（顺序很重要）</h2>
+<p><strong>先放密钥文件，再还原数据。</strong> 第五节实测了顺序反过来会留下什么问题。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /root/gitlab-migrate <span class="o">&amp;&amp;</span> sha256sum -c SHA256SUMS
+
+<span class="c1"># 1. 先备份新机自己的密钥文件，再换成旧机的</span>
+sudo cp -a /srv/gitlab/config/gitlab-secrets.json /srv/gitlab/config/gitlab-secrets.json.new-server
+sudo cp gitlab-secrets.json gitlab.rb /srv/gitlab/config/
+sudo chown root:root /srv/gitlab/config/gitlab-secrets.json /srv/gitlab/config/gitlab.rb
+sudo chmod <span class="m">600</span> /srv/gitlab/config/gitlab-secrets.json /srv/gitlab/config/gitlab.rb
+docker <span class="nb">exec</span> gitlab gitlab-ctl reconfigure
+
+<span class="c1"># 2. 备份包放进备份目录，属主改成容器里的 git 用户</span>
+sudo cp 1795525706_2026_11_24_19.6.1_gitlab_backup.tar /srv/gitlab/data/backups/
+docker <span class="nb">exec</span> gitlab chown git:git /var/opt/gitlab/backups/1795525706_2026_11_24_19.6.1_gitlab_backup.tar
+
+<span class="c1"># 3. 停掉连接数据库的进程，其他保持运行</span>
+docker <span class="nb">exec</span> gitlab gitlab-ctl stop puma
+docker <span class="nb">exec</span> gitlab gitlab-ctl stop sidekiq
+
+<span class="c1"># 4. 还原：BACKUP= 后面写备份 ID，不带 _gitlab_backup.tar</span>
+docker <span class="nb">exec</span> -it gitlab gitlab-backup restore <span class="nv">BACKUP</span><span class="o">=</span>1795525706_2026_11_24_19.6.1
+
+<span class="c1"># 5. 重启容器</span>
+docker restart gitlab
+</code></pre></td></tr></table>
+</div>
+</div><p>说明：</p>
+<ul>
+<li>还原会<strong>清空新机的数据库</strong>。按官方文档，删除现有表之前等几个节点会询问是否继续，输入 <code>yes</code>；写脚本时加 <code>force=yes</code>（或设 <code>GITLAB_ASSUME_YES=1</code>）跳过询问。本次实测用的是 <code>force=yes</code>，所以没有看到询问。</li>
+<li>实测 <code>reconfigure</code> 用时 27 秒；还原用时 32–36 秒；重启后约 50 秒恢复可用。</li>
+<li>宿主机上看到备份文件属主是一个陌生的用户名或数字，是正常的：容器里的 <code>git</code> 用户 ID 在宿主机上对应别的名字，按上面在容器里 <code>chown</code> 即可。</li>
+<li>还原日志里实测出现了 6 行 <code>ERROR: must be owner of extension pg_trgm</code>（还有 <code>btree_gist</code>、<code>amcheck</code>），两次还原都有。官方排错文档列了这类报错，本次还原后的全部校验都通过了。</li>
+</ul>
+<h2 id="四还原后怎么校验">四、还原后怎么校验</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 1. 数据库里的加密数据能不能用当前密钥解开</span>
+docker <span class="nb">exec</span> gitlab gitlab-rake gitlab:doctor:secrets
+<span class="c1"># 2. 整体检查</span>
+docker <span class="nb">exec</span> gitlab gitlab-rake gitlab:check <span class="nv">SANITIZE</span><span class="o">=</span><span class="nb">true</span>
+<span class="c1"># 3. 附件、构建产物、LFS 完整性</span>
+docker <span class="nb">exec</span> gitlab gitlab-rake gitlab:uploads:check
+docker <span class="nb">exec</span> gitlab gitlab-rake gitlab:artifacts:check
+docker <span class="nb">exec</span> gitlab gitlab-rake gitlab:lfs:check
+</code></pre></td></tr></table>
+</div>
+</div><p>按正确顺序还原后的实测结果：</p>
+<ul>
+<li><code>gitlab:doctor:secrets</code> 结尾是 <code>Total: 0 row(s) affected</code>，没有解密失败。</li>
+<li><code>gitlab:check</code> 各项都是 <code>yes</code> / <code>OK</code>（systemd 相关两项在 Docker 里显示 skipped，正常）。</li>
+<li><code>uploads:check</code> 显示 <code>Failures: 0</code>。</li>
+</ul>
+<p>再人工核对业务数据（实测全部和旧机一致）：</p>
+<ul>
+<li>项目、两个提交、<code>app.txt</code> 的内容都在，从另一台容器 <code>git clone</code> 成功。</li>
+<li>议题在；附件链接返回 200。</li>
+<li>CI/CD 变量 <code>DEPLOY_TOKEN</code> 能读出原值。</li>
+<li>旧机创建的个人访问令牌在新机调用 API 返回 200；root 用旧密码能登录。</li>
+</ul>
+<p>都确认后再把域名解析切到新机。<strong>旧服务器在切换完成、观察几天之前不要删</strong>，这就是最简单的回滚方案：新机有问题，把解析切回去即可。</p>
+<h2 id="五实测忘带-gitlab-secretsjson-会怎样">五、实测：忘带 gitlab-secrets.json 会怎样</h2>
+<p>故意只拷备份包、不拷密钥文件，在 B 上还原。还原命令<strong>照样成功</strong>（退出码 0，结尾 <code>Restore task is done.</code>），重启后网页也能打开，但：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"># gitlab:doctor:secrets
+- Ci::Variable failures: 1
+- Project failures: 1
+Total: 3 row(s) affected
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>读 CI/CD 变量报 <code>OpenSSL::Cipher::CipherError: bad decrypt</code>，流水线拿不到变量。</li>
+<li>旧机创建的个人访问令牌调用 API 返回 <strong>401</strong>。</li>
+<li>root 用旧密码<strong>能</strong>登录。所以“能登录”不能说明迁移成功，一定要跑 <code>doctor:secrets</code>。</li>
+</ul>
+<p>接着补救：把旧机的 <code>gitlab-secrets.json</code> 拷过去、<code>reconfigure</code>、重启。CI 变量和令牌恢复了，但 <code>doctor:secrets</code> 仍有 1 条失败：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">- User failures: 1
+  - User[1]: static_object_token
+</code></pre></td></tr></table>
+</div>
+</div><p>这是在“已还原数据、但还用着新机密钥”的那段时间里，GitLab 用错误的密钥新写入了一个字段。之后<strong>按正确顺序把同一个备份再还原一次</strong>（密钥已经就位），<code>doctor:secrets</code> 才变成 <code>Total: 0 row(s) affected</code>。</p>
+<p>结论：顺序做反了，补拷密钥文件不一定能全部修好，<strong>最稳妥的是放好密钥后重新还原一次</strong>。要是旧机的 <code>gitlab-secrets.json</code> 已经找不回来，就只能按官方排错文档逐项重置 CI 变量、令牌、Runner 注册等，代价很大。所以<strong>每次备份都要把它和 <code>gitlab.rb</code> 一起另存</strong>。</p>
+<h2 id="六实测版本不一致的报错">六、实测：版本不一致的报错</h2>
+<p>只有一个版本的镜像，所以这项是<strong>模拟测试</strong>：把备份包里 <code>backup_information.yml</code> 的 <code>gitlab_version</code> 改成 19.5.0，再还原到 19.6.1：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">-- Unpacking backup ... done
+-- GitLab version mismatch:
+  Your current GitLab version (19.6.1) differs from the GitLab version in the backup!
+  Please switch to the following version and try again:
+  version: 19.5.0
+-- Hint: git checkout v19.5.0
+</code></pre></td></tr></table>
+</div>
+</div><p>从日志看，还原在解包后、恢复数据库之前就停止了（退出码 1）。处理办法是新机换成和备份<strong>完全一致</strong>的版本，还原成功后再按官方升级路径升级，不要反过来先升级新机。</p>
+<h2 id="常见报错">常见报错</h2>
+<table>
+<thead>
+<tr>
+<th>报错 / 现象</th>
+<th>原因与处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GitLab version mismatch</code></td>
+<td>版本或 CE/EE 类型不一致。新机装成备份里写的版本再还原</td>
+</tr>
+<tr>
+<td><code>tar: ..._gitlab_backup.tar: Cannot open: Permission denied</code> / <code>Unpacking backup failed</code></td>
+<td>实测：备份包属主是 root、权限 600 时出现。在容器里 <code>chown git:git</code> 后重试</td>
+</tr>
+<tr>
+<td>还原成功，但 CI 变量 <code>bad decrypt</code>、令牌 401</td>
+<td>实测：没有恢复旧机的 <code>gitlab-secrets.json</code>。见第五节（Runner 连不上是官方文档提到的同类后果，本次未测 Runner）</td>
+</tr>
+<tr>
+<td><code>doctor:secrets</code> 里有 <code>User[...]: static_object_token</code> 之类的失败</td>
+<td>还原后、放入密钥前，新机用自己的密钥写过数据。放好密钥后重新还原</td>
+</tr>
+<tr>
+<td><code>ERROR: must be owner of extension pg_trgm</code> 等</td>
+<td>实测两次还原都出现，还原后的校验全部通过</td>
+</tr>
+<tr>
+<td><code>repository already exists</code></td>
+<td>官方文档说明：新机上已有同名仓库时会出现，请用全新安装的实例还原（本次未遇到）</td>
+</tr>
+<tr>
+<td>还原前提示空间不足</td>
+<td>备份目录剩余空间要有备份包的 3 倍（官方文档，未实测）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="安全注意">安全注意</h2>
+<ul>
+<li><code>gitlab-secrets.json</code> 能解开数据库里所有加密数据。它和备份包最好<strong>分开存放</strong>，至少不要放在同一个公开可访问的位置；传输用 <code>scp</code> 或 <code>rsync -e ssh</code>，落盘后 <code>chmod 600</code>。</li>
+<li>备份包里有全部代码和数据库，和服务器本身同等重要，不要留在 <code>/tmp</code> 或 Web 目录下。</li>
+<li>新机还原完、确认无误后，清理 <code>~/gitlab-migrate</code> 里的副本。</li>
+</ul>
+<h2 id="实测环境">实测环境</h2>
+<ul>
+<li>测试时间：2026-11-24 20:02–20:24（曼谷时间，UTC+7）。</li>
+<li>宿主机：Debian 13（trixie），8 核、约 15GB 内存；Docker Engine 26.1.5（Debian 软件包）。两台一次性容器同时运行，镜像都是 <code>gitlab/gitlab-ce:latest</code>（<code>VERSION</code> 为 19.6.1，CE），A 运行时内存约 3.4GB。为节省内存关闭了 Prometheus 监控，Puma 用单进程模式，和生产配置不同，但不影响备份还原流程。</li>
+<li>网络：测试机的 docker0 默认网桥当天傍晚出过故障，为了不依赖它，两台容器放在单独创建的 Docker 网络里，测完已删除。</li>
+<li>测完已删除两台容器、自建网络和全部数据目录；没有重启 Docker 守护进程，也没有动其他容器。</li>
+<li>未实测：跨服务器 <code>scp</code> 传输；Linux 软件包（非 Docker）安装方式；EE 版；对象存储；容器镜像仓库、Pages；带双因素认证的用户；SSH 主机密钥和 HTTPS 证书迁移；大仓库的耗时；真实的不同版本还原（第六节是改元数据模拟的）。</li>
+<li>官方文档（2026-11-24 读取均可访问）：
+<ul>
+<li><a href="https://docs.gitlab.com/administration/backup_restore/backup_gitlab/" target="_blank" rel="noopener noreffer">Back up GitLab</a></li>
+<li><a href="https://docs.gitlab.com/administration/backup_restore/restore_gitlab/" target="_blank" rel="noopener noreffer">Restore GitLab</a></li>
+<li><a href="https://docs.gitlab.com/administration/backup_restore/migrate_to_new_server/" target="_blank" rel="noopener noreffer">Migrate to a new server</a></li>
+<li><a href="https://docs.gitlab.com/install/docker/backup/" target="_blank" rel="noopener noreffer">Back up GitLab running in a Docker container</a></li>
+<li><a href="https://docs.gitlab.com/administration/backup_restore/troubleshooting_backup_gitlab/" target="_blank" rel="noopener noreffer">Troubleshooting GitLab backups</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-11-24</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.mmfei.com/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/" data-title="GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）" data-via="mmfei" data-hashtags="GitLab,gitlab-backup,备份还原,迁移,Docker"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.mmfei.com/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/" data-hashtag="GitLab"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.mmfei.com/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/" data-title="GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.mmfei.com/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/" data-title="GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.mmfei.com/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/" data-title="GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/gitlab/">gitlab</a>,&nbsp;<a href="/tags/gitlab-backup/">gitlab-backup</a>,&nbsp;<a href="/tags/%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F/">备份还原</a>,&nbsp;<a href="/tags/%E8%BF%81%E7%A7%BB/">迁移</a>,&nbsp;<a href="/tags/docker/">docker</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <nav class="sk-nav" aria-label="文章导航"><a href="/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/" class="sk-nav-btn sk-nav-prev" rel="prev" title="MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）"><i class="fas fa-angle-left fa-fw"></i>MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）</a></nav>
+</div>
+
+<section class="sk-related">
+                    <h2 class="sk-related-title">相关文章</h2>
+                    <div class="sk-related-grid"><a class="sk-related-card" href="/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/">
+                                    <span class="sk-related-card-title">Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治</span>
+                                    <span class="sk-related-card-meta">2026-11-24Docker · docker logs · 日志清理 · json-file · 运维</span>
+                                </a><a class="sk-related-card" href="/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/">
+                                    <span class="sk-related-card-title">重置 GitLab CE 的 root 密码</span>
+                                    <span class="sk-related-card-meta">2025-08-05gitlab</span>
+                                </a><a class="sk-related-card" href="/2022/10/gitlab-ce%E8%BF%9B%E5%85%A5admin_runners%E6%8A%A5500/">
+                                    <span class="sk-related-card-title">Gitlab Ce进入admin_runners报500</span>
+                                    <span class="sk-related-card-meta">2022-10-25gitlab · gitlab-runner</span>
+                                </a></div>
+                </section><div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article>
+    </div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.mmfei.com/" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/css/skin-stripe.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"valine":{"appId":"agrUIy35wmii07cPfX0p0UWx-MdYXbMMI","appKey":"xNDv6FEmi9xqlsf6out3W5c6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://agruiy35.api.lncldglobal.com","visitor":true}}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6" async></script><link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+<div id="pagefind-overlay" class="pf-overlay" aria-hidden="true">
+    <div class="pf-modal" role="dialog" aria-modal="true" aria-label="搜索">
+        <button type="button" class="pf-close" id="pagefind-close" aria-label="清空">&times;</button>
+        <div id="pagefind-ui"></div>
+    </div>
+</div>
+
+<style>
+.pf-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8vh 16px 16px;
+}
+.pf-overlay.open {
+    display: flex;
+}
+.pf-modal {
+    position: relative;
+    width: 560px;
+    max-width: 100%;
+    background: var(--card-background, #fff);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.28);
+    padding: 18px 18px 10px;
+}
+.pf-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--secondary-font-color, #666);
+    cursor: pointer;
+    padding: 6px;
+}
+.pf-close:hover { color: var(--primary-font-color, #111); }
+#pagefind-ui { min-height: 40px; }
+@media (max-width: 680px) {
+    .pf-overlay { padding: 12px 10px; align-items: flex-start; }
+    .pf-modal { padding: 14px 12px 8px; border-radius: 10px; }
+}
+</style>
+
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+(function () {
+    var overlay = document.getElementById('pagefind-overlay');
+    var modal = overlay.querySelector('.pf-modal');
+    var closeBtn = document.getElementById('pagefind-close');
+    var uiMount = document.getElementById('pagefind-ui');
+
+    function open() {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        var input = uiMount.querySelector('input');
+        if (input) { setTimeout(function () { input.focus(); }, 60); }
+    }
+    function close() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    function bindTrigger(id) {
+        var el = document.getElementById(id);
+        if (el) { el.addEventListener('click', function (e) { e.preventDefault(); open(); }); }
+    }
+    bindTrigger('pagefind-trigger-desktop');
+    bindTrigger('pagefind-trigger-mobile');
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) { close(); }
+    });
+
+    if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({
+            element: uiMount,
+            showSubResults: true,
+            showImages: false,
+            highlightQuery: true,
+            translations: {
+                placeholder: '搜索文章标题、标签或内容…',
+                clear_search: '清除',
+                load_more: '加载更多结果',
+                search_label: '搜索',
+                filters_label: '筛选',
+                no_results: '没有找到结果'
+            }
+        });
+    }
+})();
+</script>
+</body>
+</html>

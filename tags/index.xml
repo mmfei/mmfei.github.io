@@ -4,7 +4,42 @@
         <link>https://www.mmfei.com/tags/</link>
         <description>Tags - 标签 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 24 Nov 2026 19:46:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>docker</title>
+    <link>https://www.mmfei.com/tags/docker/</link>
+    <pubDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/tags/docker/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>gitlab</title>
+    <link>https://www.mmfei.com/tags/gitlab/</link>
+    <pubDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/tags/gitlab/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>gitlab-backup</title>
+    <link>https://www.mmfei.com/tags/gitlab-backup/</link>
+    <pubDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/tags/gitlab-backup/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>备份还原</title>
+    <link>https://www.mmfei.com/tags/%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F/</link>
+    <pubDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/tags/%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>迁移</title>
+    <link>https://www.mmfei.com/tags/%E8%BF%81%E7%A7%BB/</link>
+    <pubDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/tags/%E8%BF%81%E7%A7%BB/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>EXPLAIN</title>
     <link>https://www.mmfei.com/tags/explain/</link>
     <pubDate>Tue, 24 Nov 2026 19:46:00 &#43;0700</pubDate>
@@ -38,41 +73,6 @@
     <pubDate>Tue, 24 Nov 2026 19:46:00 &#43;0700</pubDate>
     <author>作者</author>
     <guid>https://www.mmfei.com/tags/%E8%BF%90%E7%BB%B4/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>git</title>
-    <link>https://www.mmfei.com/tags/git/</link>
-    <pubDate>Tue, 24 Nov 2026 19:45:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/tags/git/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>GitHub</title>
-    <link>https://www.mmfei.com/tags/github/</link>
-    <pubDate>Tue, 24 Nov 2026 19:45:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/tags/github/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>SSH</title>
-    <link>https://www.mmfei.com/tags/ssh/</link>
-    <pubDate>Tue, 24 Nov 2026 19:45:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/tags/ssh/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>代理</title>
-    <link>https://www.mmfei.com/tags/%E4%BB%A3%E7%90%86/</link>
-    <pubDate>Tue, 24 Nov 2026 19:45:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/tags/%E4%BB%A3%E7%90%86/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>国内加速</title>
-    <link>https://www.mmfei.com/tags/%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F/</link>
-    <pubDate>Tue, 24 Nov 2026 19:45:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/tags/%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

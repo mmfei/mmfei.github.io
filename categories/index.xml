@@ -4,7 +4,14 @@
         <link>https://www.mmfei.com/categories/</link>
         <description>Categories - 分类 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 24 Nov 2026 19:46:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/categories/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>gitlab</title>
+    <link>https://www.mmfei.com/categories/gitlab/</link>
+    <pubDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/categories/gitlab/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>mysql</title>
     <link>https://www.mmfei.com/categories/mysql/</link>
     <pubDate>Tue, 24 Nov 2026 19:46:00 &#43;0700</pubDate>
@@ -66,13 +73,6 @@
     <pubDate>Thu, 19 Nov 2026 09:50:00 &#43;0700</pubDate>
     <author>作者</author>
     <guid>https://www.mmfei.com/categories/github-pages/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>HTTPS</title>
-    <link>https://www.mmfei.com/categories/https/</link>
-    <pubDate>Thu, 19 Nov 2026 09:50:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/categories/https/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

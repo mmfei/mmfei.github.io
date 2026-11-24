@@ -2,16 +2,23 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://www.mmfei.com/categories/</loc><lastmod>2026-11-24T19:46:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/categories/</loc><lastmod>2026-11-24T20:24:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/tags/docker/</loc><lastmod>2026-11-24T20:24:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/tags/gitlab/</loc><lastmod>2026-11-24T20:24:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/categories/gitlab/</loc><lastmod>2026-11-24T20:24:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc><lastmod>2026-11-24T20:24:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/tags/gitlab-backup/</loc><lastmod>2026-11-24T20:24:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/posts/</loc><lastmod>2026-11-24T20:24:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/tags/</loc><lastmod>2026-11-24T20:24:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/tags/%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F/</loc><lastmod>2026-11-24T20:24:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/</loc><lastmod>2026-11-24T20:24:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://www.mmfei.com/tags/%E8%BF%81%E7%A7%BB/</loc><lastmod>2026-11-24T20:24:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/tags/explain/</loc><lastmod>2026-11-24T19:46:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/tags/mysql/</loc><lastmod>2026-11-24T19:46:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/categories/mysql/</loc><lastmod>2026-11-24T19:46:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/</loc><lastmod>2026-11-24T19:46:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/tags/mysqldumpslow/</loc><lastmod>2026-11-24T19:46:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://www.mmfei.com/posts/</loc><lastmod>2026-11-24T19:46:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://www.mmfei.com/tags/</loc><lastmod>2026-11-24T19:46:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/tags/%E6%85%A2%E6%9F%A5%E8%AF%A2/</loc><lastmod>2026-11-24T19:46:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://www.mmfei.com/</loc><lastmod>2026-11-24T19:46:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/tags/%E8%BF%90%E7%BB%B4/</loc><lastmod>2026-11-24T19:46:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/tags/git/</loc><lastmod>2026-11-24T19:45:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/tags/github/</loc><lastmod>2026-11-24T19:45:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -20,7 +27,6 @@
             <loc>https://www.mmfei.com/tags/ssh/</loc><lastmod>2026-11-24T19:45:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/tags/%E4%BB%A3%E7%90%86/</loc><lastmod>2026-11-24T19:45:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/tags/%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F/</loc><lastmod>2026-11-24T19:45:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://www.mmfei.com/tags/docker/</loc><lastmod>2026-11-24T19:40:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/categories/docker/</loc><lastmod>2026-11-24T19:40:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/tags/docker-logs/</loc><lastmod>2026-11-24T19:40:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/</loc><lastmod>2026-11-24T19:40:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -79,8 +85,6 @@
             <loc>https://www.mmfei.com/tags/adsense/</loc><lastmod>2026-11-18T08:00:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/categories/adsense/</loc><lastmod>2026-11-18T08:00:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://www.mmfei.com/2026/11/github-pages%E5%8D%9A%E5%AE%A2%E6%8E%A5%E5%85%A5adsense/</loc><lastmod>2026-11-18T08:00:00&#43;07:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://www.mmfei.com/tags/gitlab/</loc><lastmod>2025-08-05T19:30:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://www.mmfei.com/categories/gitlab/</loc><lastmod>2025-08-05T19:30:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://www.mmfei.com/2025/08/%E8%AE%BE%E7%BD%AEgitlab-ce%E7%9A%84root%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/</loc><lastmod>2025-08-05T19:30:35&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://www.mmfei.com/tags/redis/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://www.mmfei.com/categories/redis/</loc><lastmod>2024-08-07T14:52:34&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
