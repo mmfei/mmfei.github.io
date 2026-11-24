@@ -12,6 +12,13 @@
     <guid>https://www.mmfei.com/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
     <description><![CDATA[GitLab 换服务器，最常见的翻车不是备份失败，而是还原命令显示成功，用起来却不对：CI/CD 变量读不出来，旧的访问令牌全部 401（官方文档还提到 Runner 会]]></description>
 </item><item>
+    <title>国内 Linux 服务器 Ollama 下载慢、镜像源失效怎么办：GitHub 代理与魔搭 GGUF 拉 DeepSeek 1.5B 实测</title>
+    <link>https://www.mmfei.com/2026/11/%E5%9B%BD%E5%86%85linux%E6%9C%8D%E5%8A%A1%E5%99%A8ollama%E4%B8%8B%E8%BD%BD%E6%85%A2/</link>
+    <pubDate>Tue, 24 Nov 2026 19:59:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/%E5%9B%BD%E5%86%85linux%E6%9C%8D%E5%8A%A1%E5%99%A8ollama%E4%B8%8B%E8%BD%BD%E6%85%A2/</guid>
+    <description><![CDATA[在服务器上跑 Ollama，最容易卡住的不是命令，而是两次大下载：Ollama 安装包（Linux amd64 版现在约 1.6GB）和模型文件（deepse]]></description>
+</item><item>
     <title>MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）</title>
     <link>https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/</link>
     <pubDate>Tue, 24 Nov 2026 19:46:00 &#43;0700</pubDate>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>https://www.mmfei.com/2026/11/robots%E4%B8%8Esitemap%E6%8A%93%E5%8F%96%E6%8E%92%E6%9F%A5%E6%B8%85%E5%8D%95/</guid>
     <description><![CDATA[把文章放进 sitemap，再在 robots.txt 写一句 Allow，并不能保证 Google 收录。前者提供发现网址的线索，后者表达爬虫能否抓取；页面是否被抓取、如何被索引]]></description>
-</item><item>
-    <title>博客分页的 canonical 怎么写：别把第二页都指向第一页</title>
-    <link>https://www.mmfei.com/2026/11/%E5%8D%9A%E5%AE%A2%E5%88%86%E9%A1%B5canonical%E5%88%AB%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E9%A1%B5/</link>
-    <pubDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/2026/11/%E5%8D%9A%E5%AE%A2%E5%88%86%E9%A1%B5canonical%E5%88%AB%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E9%A1%B5/</guid>
-    <description><![CDATA[文章归档第二页展示的是另一批文章，却把 canonical 写成第一页，这不是简单的“集中权重”：它向搜索引擎发送了与分页内容不一致的规范化信号。 Google 的分页文档明]]></description>
 </item></channel>
 </rss>

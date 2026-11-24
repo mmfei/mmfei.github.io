@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>国内 Linux 服务器 Ollama 下载慢、镜像源失效怎么办：GitHub 代理与魔搭 GGUF 拉 DeepSeek 1.5B 实测 - 木木飞</title><meta name="Description" content="在 Linux 服务器上装 Ollama 并跑 DeepSeek-R1 1.5B 时，安装包和模型下载慢或失败的处理办法：官方脚本和手动 tar.zst 安装、GitHub 下载代理、魔搭 ModelScope GGUF 加 Modelfile 导入、OLLAMA_MODELS、HTTPS_PROXY 和断点续传，逐项写明实测结果与哪些未在国内实测。"><meta property="og:title" content="国内 Linux 服务器 Ollama 下载慢、镜像源失效怎么办：GitHub 代理与魔搭 GGUF 拉 DeepSeek 1.5B 实测" />
+<meta property="og:description" content="在 Linux 服务器上装 Ollama 并跑 DeepSeek-R1 1.5B 时，安装包和模型下载慢或失败的处理办法：官方脚本和手动 tar.zst 安装、GitHub 下载代理、魔搭 ModelScope GGUF 加 Modelfile 导入、OLLAMA_MODELS、HTTPS_PROXY 和断点续传，逐项写明实测结果与哪些未在国内实测。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.mmfei.com/2026/11/%E5%9B%BD%E5%86%85linux%E6%9C%8D%E5%8A%A1%E5%99%A8ollama%E4%B8%8B%E8%BD%BD%E6%85%A2/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-11-24T19:59:00&#43;07:00" />
+<meta property="article:modified_time" content="2026-11-24T19:59:00&#43;07:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
+
+<meta name="twitter:title" content="国内 Linux 服务器 Ollama 下载慢、镜像源失效怎么办：GitHub 代理与魔搭 GGUF 拉 DeepSeek 1.5B 实测"/>
+<meta name="twitter:description" content="在 Linux 服务器上装 Ollama 并跑 DeepSeek-R1 1.5B 时，安装包和模型下载慢或失败的处理办法：官方脚本和手动 tar.zst 安装、GitHub 下载代理、魔搭 ModelScope GGUF 加 Modelfile 导入、OLLAMA_MODELS、HTTPS_PROXY 和断点续传，逐项写明实测结果与哪些未在国内实测。"/>
+<meta name="application-name" content="木木飞">
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.mmfei.com/2026/11/%E5%9B%BD%E5%86%85linux%E6%9C%8D%E5%8A%A1%E5%99%A8ollama%E4%B8%8B%E8%BD%BD%E6%85%A2/" /><link rel="prev" href="https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/" /><link rel="next" href="https://www.mmfei.com/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "国内 Linux 服务器 Ollama 下载慢、镜像源失效怎么办：GitHub 代理与魔搭 GGUF 拉 DeepSeek 1.5B 实测",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.mmfei.com\/2026\/11\/%E5%9B%BD%E5%86%85linux%E6%9C%8D%E5%8A%A1%E5%99%A8ollama%E4%B8%8B%E8%BD%BD%E6%85%A2\/"
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Ollama, DeepSeek, ModelScope, 大模型本地部署, AI实践, Linux","wordcount":  5134 ,
+        "url": "https:\/\/www.mmfei.com\/2026\/11\/%E5%9B%BD%E5%86%85linux%E6%9C%8D%E5%8A%A1%E5%99%A8ollama%E4%B8%8B%E8%BD%BD%E6%85%A2\/","datePublished": "2026-11-24T19:59:00+07:00","dateModified": "2026-11-24T19:59:00+07:00","publisher": {
+            "@type": "Organization",
+            "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "mmfei"
+            },"description": "在 Linux 服务器上装 Ollama 并跑 DeepSeek-R1 1.5B 时，安装包和模型下载慢或失败的处理办法：官方脚本和手动 tar.zst 安装、GitHub 下载代理、魔搭 ModelScope GGUF 加 Modelfile 导入、OLLAMA_MODELS、HTTPS_PROXY 和断点续传，逐项写明实测结果与哪些未在国内实测。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-desktop" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-desktop"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a>
+                <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile">
+                <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-mobile" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-mobile"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<style>
+#header-desktop .header-wrapper .menu { overflow: visible; }
+#header-desktop .menu-has-sub { position: relative; display: inline-block; }
+#header-desktop .menu-parent-link,
+#header-mobile .menu-parent-link { color: inherit; text-decoration: none; }
+#header-desktop .menu-has-sub.active .menu-parent-link { font-weight: 900; }
+#header-desktop .menu-sub-toggle {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: 1;
+    padding: 0 2px;
+    cursor: pointer;
+}
+#header-desktop .menu-sub {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 8.5rem;
+    margin: 0;
+    padding: 6px 0;
+    text-align: left;
+    background: #f8f8f8;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .12);
+    z-index: 220;
+}
+#header-desktop .menu-has-sub:hover > .menu-sub,
+#header-desktop .menu-has-sub:focus-within > .menu-sub,
+#header-desktop .menu-has-sub.is-open > .menu-sub { display: block; }
+#header-desktop .menu-sub a { display: block; padding: 6px 14px; white-space: nowrap; color: inherit; text-decoration: none; }
+body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: #363636; }
+#header-mobile .menu-has-sub,
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub,
+#header-mobile .menu-sub a { display: block; }
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub a { line-height: 2.5rem; }
+#header-mobile .menu-sub-toggle { display: none; }
+</style>
+<script>
+(function () {
+    var buttons = document.querySelectorAll(".menu-sub-toggle");
+    Array.prototype.forEach.call(buttons, function (button) {
+        button.addEventListener("click", function () {
+            var item = button.parentNode;
+            var open = item.classList.toggle("is-open");
+            button.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key !== "Escape") return;
+        Array.prototype.forEach.call(buttons, function (button) {
+            button.parentNode.classList.remove("is-open");
+            button.setAttribute("aria-expanded", "false");
+        });
+    });
+})();
+</script>
+<main class="main">
+                <div class="container"><div class="sk-page sk-article"><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div><article class="page single sk-single">
+            <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/ai/">ai</a></p><h1 class="single-title sk-single-title">国内 Linux 服务器 Ollama 下载慢、镜像源失效怎么办：GitHub 代理与魔搭 GGUF 拉 DeepSeek 1.5B 实测</h1><div class="post-meta sk-single-meta">
+                    <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
+                    </div>
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-24">2026-11-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5134 字&nbsp;
+                        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;<span id="/2026/11/%E5%9B%BD%E5%86%85linux%E6%9C%8D%E5%8A%A1%E5%99%A8ollama%E4%B8%8B%E8%BD%BD%E6%85%A2/" class="leancloud_visitors" data-flag-title="国内 Linux 服务器 Ollama 下载慢、镜像源失效怎么办：GitHub 代理与魔搭 GGUF 拉 DeepSeek 1.5B 实测">
+                                <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                            </span>&nbsp;</div>
+                </div>
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#结论速查">结论速查</a></li>
+    <li><a href="#一先弄清楚慢在哪一段">一、先弄清楚慢在哪一段</a></li>
+    <li><a href="#二安装-ollama">二、安装 Ollama</a>
+      <ul>
+        <li><a href="#方式-1官方脚本">方式 1：官方脚本</a></li>
+        <li><a href="#方式-2手动下载-tarzst下载慢时更可控">方式 2：手动下载 tar.zst（下载慢时更可控）</a></li>
+        <li><a href="#github-下载代理今天试了-7-个能用的只有-1-个">GitHub 下载代理：今天试了 7 个，能用的只有 1 个</a></li>
+        <li><a href="#国内镜像站和魔搭安装包">国内镜像站和魔搭安装包</a></li>
+      </ul>
+    </li>
+    <li><a href="#三拉模型ollama-pull-报-redirect-target-not-allowed">三、拉模型：<code>ollama pull</code> 报 redirect target not allowed</a></li>
+    <li><a href="#四用魔搭-modelscope-的-gguf-模型">四、用魔搭 ModelScope 的 GGUF 模型</a>
+      <ul>
+        <li><a href="#方法-aollama-pull-直接拉魔搭本机被拦">方法 A：<code>ollama pull</code> 直接拉魔搭（本机被拦）</a></li>
+        <li><a href="#方法-bcurl-下载-gguf--modelfile-导入本机跑通">方法 B：curl 下载 GGUF + Modelfile 导入（本机跑通）</a></li>
+      </ul>
+    </li>
+    <li><a href="#五模型放到数据盘ollama_models">五、模型放到数据盘：OLLAMA_MODELS</a></li>
+    <li><a href="#六跑一次推理确认能用">六、跑一次推理，确认能用</a></li>
+    <li><a href="#常见报错">常见报错</a></li>
+    <li><a href="#安全注意">安全注意</a></li>
+    <li><a href="#清理和回滚">清理和回滚</a></li>
+    <li><a href="#实测环境">实测环境</a></li>
+  </ul>
+</nav></div>
+                </details><div class="content" id="content"><p>在服务器上跑 Ollama，最容易卡住的不是命令，而是两次大下载：<strong>Ollama 安装包</strong>（Linux amd64 版现在约 1.6GB）和<strong>模型文件</strong>（deepseek-r1:1.5b 约 1.1GB）。网上的“国内镜像源”列表很多，但不少已经打不开。</p>
+<p>这篇把常见办法逐个试了一遍，只写今天（2026-11-24）真正跑过的结果：安装 Ollama 0.40.18、下载 DeepSeek-R1 1.5B、完成一次 <code>ollama run</code> 和一次 <code>curl /api/generate</code>。</p>
+<blockquote>
+<p><strong>先说明测试网络</strong>：测试机<strong>不在中国大陆</strong>，出网经过一层代理（DNS 统一解析到 198.18.0.1）。所以文中的速度只代表这台机器，<strong>国内下载速度和各镜像在国内的可用性都未在国内实测</strong>。详见文末“实测环境”。</p>
+</blockquote>
+<p>和站内文章的分工：GitHub 本身访问慢的通用办法见 <a href="https://www.mmfei.com/2026/11/github%e5%9b%bd%e5%86%85%e5%8a%a0%e9%80%9f2026/" target="_blank" rel="noopener noreffer">GitHub 国内加速 2026</a>，阿里云国内机房的老办法见 <a href="https://www.mmfei.com/2022/04/%e9%98%bf%e9%87%8c%e4%ba%91%e5%9b%bd%e5%86%85%e6%9c%ba%e6%88%bf%e6%8b%89github%e4%bb%a3%e7%a0%81%e5%8a%a0%e9%80%9f%e6%96%b9%e6%a1%88/" target="_blank" rel="noopener noreffer">阿里云国内机房拉GitHub代码加速方案</a> 和 <a href="https://www.mmfei.com/2023/04/%e7%94%a8%e7%a9%bf%e9%80%8f%e7%9a%84%e6%96%b9%e5%bc%8f%e8%a7%a3%e5%86%b3%e5%9b%bd%e5%86%85%e9%98%bf%e9%87%8c%e4%ba%91%e8%ae%bf%e9%97%aegithub%e4%b8%8d%e9%a1%ba%e7%95%85%e7%9a%84%e9%97%ae%e9%a2%98/" target="_blank" rel="noopener noreffer">用穿透的方式解决国内阿里云访问GitHub不顺畅的问题</a>。本文只讲 Ollama 安装包和模型这两段下载。</p>
+<h2 id="结论速查">结论速查</h2>
+<table>
+<thead>
+<tr>
+<th>办法</th>
+<th>本机实测结果</th>
+<th>国内</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>官方脚本 <code>install.sh</code></td>
+<td>可用，20 秒装完（需先装 zstd）</td>
+<td>未在国内实测</td>
+</tr>
+<tr>
+<td>手动下载 GitHub Release 的 tar.zst</td>
+<td>可用，1.6GB 用时 8.2 秒，sha256 一致</td>
+<td>未在国内实测</td>
+</tr>
+<tr>
+<td>GitHub 下载代理 gh-proxy.com</td>
+<td>可用，26.2 秒下完，sha256 一致，支持续传</td>
+<td>未在国内实测</td>
+</tr>
+<tr>
+<td>ghfast.top、ghproxy.net 等 6 个代理</td>
+<td>失效或很慢（403、TLS 错误、证书不符、522、240KB/s）</td>
+<td>未在国内实测</td>
+</tr>
+<tr>
+<td>清华 / 中科大 / 南大 github-release 镜像</td>
+<td>本机 403 或没有 ollama 目录</td>
+<td>未在国内实测</td>
+</tr>
+<tr>
+<td>魔搭 <code>modelscope/ollama-linux</code> 安装包</td>
+<td>能下载（约 1.4MB/s），但最新只到 v0.17.5，比官方落后很多</td>
+<td>未在国内实测</td>
+</tr>
+<tr>
+<td><code>ollama pull deepseek-r1:1.5b</code>（官方仓库）</td>
+<td><strong>本机失败</strong>：<code>redirect target not allowed ... non-public 198.18.0.1</code></td>
+<td>未在国内实测</td>
+</tr>
+<tr>
+<td>给 <code>ollama serve</code> 设 <code>HTTPS_PROXY</code></td>
+<td>能绕过上面的报错并开始下载，但经本机代理只有约 170KB/s，没跑完</td>
+<td>未在国内实测</td>
+</tr>
+<tr>
+<td><code>ollama pull --insecure</code></td>
+<td>无效，改用 http 拉清单，报 500</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>ollama pull modelscope.cn/...</code> 直拉魔搭</td>
+<td>本机同样被 198.18.0.1 拦截</td>
+<td>未在国内实测</td>
+</tr>
+<tr>
+<td>curl 下载魔搭 GGUF + Modelfile 导入</td>
+<td><strong>可用</strong>，4.4–5.0MB/s，断点续传两次，sha256 一致，导入 3 秒（实测用的是魔搭 unsloth 的 Q4_K_M，不是官方 deepseek-r1:1.5b，也不是同一个文件）</td>
+<td>未在国内实测</td>
+</tr>
+<tr>
+<td><code>OLLAMA_MODELS</code> 改模型目录</td>
+<td>可用</td>
+<td>与网络无关</td>
+</tr>
+</tbody>
+</table>
+<p>本机最后跑通的路线是：<strong>手动下载安装包 → curl 从魔搭下载 GGUF（可续传）→ Modelfile 导入 → 推理</strong>。</p>
+<h2 id="一先弄清楚慢在哪一段">一、先弄清楚慢在哪一段</h2>
+<ul>
+<li><strong>安装包</strong>：官方脚本从 <code>https://ollama.com/download/...</code> 下载，实际 302 跳转到 GitHub Release。0.40.18 的 Linux 包是 <code>ollama-linux-amd64.tar.zst</code>（1,648,243,083 字节），<strong>旧教程里的 <code>.tgz</code> 地址已经 404</strong>，解压需要 <code>zstd</code>。</li>
+<li><strong>模型</strong>：<code>ollama pull</code> 先从 <code>registry.ollama.ai</code> 取清单，再跳转到 Cloudflare R2 存储下载模型文件。deepseek-r1:1.5b 的模型层是 1,117,320,512 字节，Q4_K_M 量化。</li>
+</ul>
+<p>两段的域名不同，所以“安装很快、拉模型很慢”或者反过来都很常见，要分开处理。</p>
+<h2 id="二安装-ollama">二、安装 Ollama</h2>
+<h3 id="方式-1官方脚本">方式 1：官方脚本</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo apt-get install -y zstd curl     <span class="c1"># CentOS/RHEL 用 dnf install zstd</span>
+curl -fsSL https://ollama.com/install.sh <span class="p">|</span> sh
+ollama --version
+</code></pre></td></tr></table>
+</div>
+</div><p>实测（一次性 Ubuntu 24.04 容器）：脚本用时 <strong>20 秒</strong>，装到 <code>/usr/local/bin/ollama</code> 和 <code>/usr/local/lib/ollama</code>，解压后约 2.5GB。没有 GPU 时会提示 <code>WARNING: Unable to detect NVIDIA/AMD GPU</code>，不影响 CPU 推理。</p>
+<p>两点注意：</p>
+<ul>
+<li>没装 <code>zstd</code> 时脚本会直接报错退出，提示先安装 zstd。</li>
+<li>测试容器里没有 systemd，脚本没有创建 <code>ollama</code> 用户和 <code>ollama.service</code>，要自己运行 <code>ollama serve</code>。在正常的 systemd 服务器上，脚本会创建服务并自动启动（<strong>本次未实测</strong>）。</li>
+</ul>
+<p>想固定版本，在脚本前加 <code>OLLAMA_VERSION</code>，实测带版本参数的下载地址可用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">curl -fsSL https://ollama.com/install.sh <span class="p">|</span> <span class="nv">OLLAMA_VERSION</span><span class="o">=</span>0.40.18 sh
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="方式-2手动下载-tarzst下载慢时更可控">方式 2：手动下载 tar.zst（下载慢时更可控）</h3>
+<p>脚本是“边下载边解压”，网络一断就要整个重来。手动下载可以续传、可以校验，也可以在别的机器下好再传上去：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">VER</span><span class="o">=</span>v0.40.18
+<span class="nb">cd</span> /tmp
+curl -fL -C - --retry <span class="m">5</span> -o ollama-linux-amd64.tar.zst <span class="se">\
+</span><span class="se"></span>  https://github.com/ollama/ollama/releases/download/<span class="nv">$VER</span>/ollama-linux-amd64.tar.zst
+curl -fsSL -o sha256sum.txt <span class="se">\
+</span><span class="se"></span>  https://github.com/ollama/ollama/releases/download/<span class="nv">$VER</span>/sha256sum.txt
+grep ollama-linux-amd64.tar.zst sha256sum.txt   <span class="c1"># 和下面的结果对比</span>
+sha256sum ollama-linux-amd64.tar.zst
+
+sudo rm -rf /usr/local/lib/ollama                 <span class="c1"># 升级时先删旧库（官方文档解压到 /usr，对应删 /usr/lib/ollama）</span>
+sudo sh -c <span class="s1">&#39;zstd -dc /tmp/ollama-linux-amd64.tar.zst | tar -xf - -C /usr/local&#39;</span>
+ollama --version
+</code></pre></td></tr></table>
+</div>
+</div><p>实测：GitHub 直连 8.2 秒下完（约 200MB/s），sha256 为 <code>b82649006cb5b54e…315adf</code>，和官方 <code>sha256sum.txt</code> 一致；解压 4.4 秒。本机为了不动系统目录，解压到了临时目录，再用 <code>临时目录/bin/ollama</code> 运行，效果一样。</p>
+<p>手动安装后要自己配 systemd 服务，写法照 <a href="https://docs.ollama.com/linux" target="_blank" rel="noopener noreffer">官方 Linux 文档</a> 的 “Adding Ollama as a startup service” 一节（<strong>本次未在 systemd 机器上实测</strong>）。</p>
+<h3 id="github-下载代理今天试了-7-个能用的只有-1-个">GitHub 下载代理：今天试了 7 个，能用的只有 1 个</h3>
+<p>把 GitHub 地址拼在代理前缀后面下载，例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">curl -fL -C - -o ollama-linux-amd64.tar.zst <span class="se">\
+</span><span class="se"></span>  https://gh-proxy.com/https://github.com/ollama/ollama/releases/download/v0.40.18/ollama-linux-amd64.tar.zst
+</code></pre></td></tr></table>
+</div>
+</div><p>本机 2026-11-24 19:33–19:57（曼谷时间）的结果：</p>
+<table>
+<thead>
+<tr>
+<th>代理前缀</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gh-proxy.com</code></td>
+<td>可用。完整下载 26.2 秒（约 63MB/s），sha256 一致；截断到 100MB 后 <code>curl -C -</code> 返回 206，续传成功</td>
+</tr>
+<tr>
+<td><code>ghproxy.net</code></td>
+<td>能通但慢：小文件 14.3 秒，大文件约 240KB/s</td>
+</tr>
+<tr>
+<td><code>ghfast.top</code></td>
+<td>403 Forbidden</td>
+</tr>
+<tr>
+<td><code>mirror.ghproxy.com</code></td>
+<td>TLS 握手失败</td>
+</tr>
+<tr>
+<td><code>github.moeyy.xyz</code></td>
+<td>TLS 握手失败</td>
+</tr>
+<tr>
+<td><code>ghproxy.cc</code></td>
+<td>证书域名不匹配</td>
+</tr>
+<tr>
+<td><code>gh.llkk.cc</code></td>
+<td>Cloudflare 522</td>
+</tr>
+</tbody>
+</table>
+<p>这类公益代理随时会失效，结果只代表今天、这台机器，<strong>国内是否可用未实测</strong>。第三方代理能看到并篡改你下载的文件，<strong>用代理下的安装包一定要按上面的方法核对 sha256</strong>。</p>
+<h3 id="国内镜像站和魔搭安装包">国内镜像站和魔搭安装包</h3>
+<ul>
+<li>清华 <code>mirrors.tuna.tsinghua.edu.cn/github-release/</code>：本机返回 403，可能是限制了境外访问，国内是否有 ollama 目录<strong>未在国内实测</strong>。</li>
+<li>中科大、南大的 github-release 镜像：没有 <code>ollama/ollama</code> 目录（404）。</li>
+<li>魔搭 <a href="https://modelscope.cn/models/modelscope/ollama-linux" target="_blank" rel="noopener noreffer">modelscope/ollama-linux</a>：能下载，本机约 1.4MB/s；但 README 和版本标签显示<strong>最新是 v0.17.5</strong>（2026-03 上传），比官方 0.40.18 落后很多。只有在完全拿不到 GitHub 时才考虑，用之前确认版本是否满足需要。</li>
+</ul>
+<h2 id="三拉模型ollama-pull-报-redirect-target-not-allowed">三、拉模型：<code>ollama pull</code> 报 redirect target not allowed</h2>
+<p>启动服务后拉模型：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ollama serve <span class="p">&amp;</span>          <span class="c1"># systemd 安装的话服务已在运行，跳过</span>
+ollama pull deepseek-r1:1.5b
+</code></pre></td></tr></table>
+</div>
+</div><p>本机这一步失败了，服务日志里是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">aabd4debf0c8 part 5 attempt 5 failed: Get &#34;https://dd20bb891979d25aebc8bec07b2b3bbc.r2.cloudflarestorage.com/...&#34;: redirect target not allowed: dd20bb891979d25aebc8bec07b2b3bbc.r2.cloudflarestorage.com resolves to non-public 198.18.0.1, retrying in 32s
+</code></pre></td></tr></table>
+</div>
+</div><p>原因：清单能取到，但 Ollama 0.40.18 会检查模型下载的跳转目标，<strong>解析到非公网地址就拒绝</strong>。源码 <code>transfer/redirect.go</code> 里被拒绝的网段包括 <code>198.18.0.0/15</code>。本机的 DNS 把所有域名都解析成 198.18.0.1，所以被拦。</p>
+<p>在国内服务器上，如果装了 Clash、mihomo 一类代理软件并开了 <strong>fake-ip 模式</strong>，域名也会被解析到 198.18.x.x，大概率会遇到同一个报错（<strong>未在国内实测</strong>）。处理办法：</p>
+<ol>
+<li>
+<p><strong>给 <code>ollama serve</code> 设代理</strong>（不是给 <code>ollama pull</code> 这个客户端设）。源码里有明确分支：请求走代理时，交给代理解析域名，不再做本地 IP 检查。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 前台临时测试</span>
+<span class="nv">HTTPS_PROXY</span><span class="o">=</span>http://代理地址:端口 ollama serve
+
+<span class="c1"># systemd 服务</span>
+sudo systemctl edit ollama
+<span class="c1"># 在打开的文件里写：</span>
+<span class="c1"># [Service]</span>
+<span class="c1"># Environment=&#34;HTTPS_PROXY=http://代理地址:端口&#34;</span>
+sudo systemctl daemon-reload <span class="o">&amp;&amp;</span> sudo systemctl restart ollama
+</code></pre></td></tr></table>
+</div>
+</div><p>本机实测：加上 <code>HTTPS_PROXY</code> 后报错消失、开始下载，但经本机这个代理只有约 170KB/s，8 分钟才下了约 80MB，没有跑完。代理本身够快时这条路才实用。<a href="https://docs.ollama.com/faq" target="_blank" rel="noopener noreffer">官方 FAQ</a> 也提醒不要设 <code>HTTP_PROXY</code>，只设 <code>HTTPS_PROXY</code>。</p>
+</li>
+<li>
+<p><strong>让代理软件对这些域名返回真实 IP</strong>：在 fake-ip 过滤名单里加入 <code>registry.ollama.ai</code>、<code>*.r2.cloudflarestorage.com</code>（以及下面魔搭用到的 <code>*.modelscope.cn</code>）。<strong>未实测</strong>。</p>
+</li>
+<li>
+<p><strong>不要用 <code>--insecure</code></strong>：实测 <code>ollama pull --insecure</code> 会改用 http 去取清单，直接报 <code>pull model manifest: 500</code>，解决不了问题，还会降低安全性。</p>
+</li>
+</ol>
+<p><code>ollama pull</code> 中断后会在模型目录留下 <code>-partial</code> 文件，重新执行同一条命令会接着用。本机因为上面的问题没有完整跑完一次官方 pull，<strong>Ollama 自带的续传效果未实测</strong>。</p>
+<h2 id="四用魔搭-modelscope-的-gguf-模型">四、用魔搭 ModelScope 的 GGUF 模型</h2>
+<h3 id="方法-aollama-pull-直接拉魔搭本机被拦">方法 A：<code>ollama pull</code> 直接拉魔搭（本机被拦）</h3>
+<p><a href="https://www.modelscope.cn/docs/models/advanced-usage/ollama-integration" target="_blank" rel="noopener noreffer">魔搭文档</a> 给出的用法是把仓库名写成 <code>modelscope.cn/组织/仓库:量化</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ollama pull modelscope.cn/unsloth/DeepSeek-R1-Distill-Qwen-1.5B-GGUF:Q4_K_M
+</code></pre></td></tr></table>
+</div>
+</div><p>本机能取到清单、开始分片下载，但随后报 <code>redirect target not allowed: www.modelscope.cn resolves to non-public 198.18.0.1</code>，和上一节是同一个原因。DNS 正常的国内服务器上应该能直接用，<strong>未在国内实测</strong>。</p>
+<h3 id="方法-bcurl-下载-gguf--modelfile-导入本机跑通">方法 B：curl 下载 GGUF + Modelfile 导入（本机跑通）</h3>
+<p>这个方法不经过 Ollama 的下载器，能用 curl 的断点续传，下载完再导入：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">mkdir -p /data/gguf <span class="o">&amp;&amp;</span> <span class="nb">cd</span> /data/gguf
+curl -L -C - --retry <span class="m">5</span> --retry-delay <span class="m">3</span> -o ds-r1-1.5b-q4km.gguf <span class="se">\
+</span><span class="se"></span>  <span class="s2">&#34;https://www.modelscope.cn/models/unsloth/DeepSeek-R1-Distill-Qwen-1.5B-GGUF/resolve/master/DeepSeek-R1-Distill-Qwen-1.5B-Q4_K_M.gguf&#34;</span>
+sha256sum ds-r1-1.5b-q4km.gguf
+<span class="c1"># 应为 f3bdf9cf31dee4b57ae4e455a1cb0d01b5c2c1b50d72d3112141c195506c2840</span>
+
+cat &gt; Modelfile <span class="s">&lt;&lt;&#39;MF&#39;
+</span><span class="s">FROM ./ds-r1-1.5b-q4km.gguf
+</span><span class="s">PARAMETER temperature 0.6
+</span><span class="s">MF</span>
+ollama create ds-r1-1.5b-ms -f Modelfile
+ollama list
+</code></pre></td></tr></table>
+</div>
+</div><p>实测记录：</p>
+<ul>
+<li>下载速度 4.4–5.0MB/s，跳转到 <code>cdn-lfs-cn-1.modelscope.cn</code>。中途断了两次（一次人为 15 秒超时、一次进程被中断），每次用同一条 <code>curl -C -</code> 命令都从断点续上（返回 206），最终 1,117,321,312 字节，sha256 和魔搭页面列出的一致。</li>
+<li><code>ollama create</code> 用时 3 秒，<code>ollama show</code> 显示 <code>qwen2</code>、<code>Q4_K_M</code>、<code>template source gguf_chat_template</code>，也就是对话模板直接取自 GGUF 文件，Modelfile 里不用自己写 TEMPLATE。</li>
+<li>魔搭上同名 1.5B GGUF 有 unsloth、bartowski、lmstudio-community 几个来源，量化同为 Q4_K_M，但文件大小和 sha256 都和 Ollama 官方的 deepseek-r1:1.5b 不同，<strong>不是同一个文件</strong>。</li>
+</ul>
+<p>和官方模型的一个差别：导入后的模型<strong>不会把思考过程单独拆出来</strong>。实测 <code>/api/generate</code> 返回的 <code>response</code> 里直接包含思考内容和 <code>&lt;/think&gt;</code>，传 <code>&quot;think&quot;: false</code> 也没有关掉思考。需要把思考和答案分开时，要么自己按 <code>&lt;/think&gt;</code> 切分，要么等能拉到官方模型。</p>
+<h2 id="五模型放到数据盘ollama_models">五、模型放到数据盘：OLLAMA_MODELS</h2>
+<p>模型默认放在服务用户的家目录下，系统盘小的话建议换到数据盘。本次全程用的就是自定义目录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">OLLAMA_MODELS</span><span class="o">=</span>/data/ollama/models ollama serve
+</code></pre></td></tr></table>
+</div>
+</div><p>导入后 <code>/data/ollama/models</code> 一类的目录里出现 <code>blobs/</code> 和 <code>manifests/</code>，本例占 1.2GB。systemd 服务的写法（<strong>未实测</strong>）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">sudo mkdir -p /data/ollama/models
+sudo chown -R ollama:ollama /data/ollama
+sudo systemctl edit ollama
+<span class="c1"># [Service]</span>
+<span class="c1"># Environment=&#34;OLLAMA_MODELS=/data/ollama/models&#34;</span>
+sudo systemctl daemon-reload <span class="o">&amp;&amp;</span> sudo systemctl restart ollama
+</code></pre></td></tr></table>
+</div>
+</div><p>目录必须让 <code>ollama</code> 用户可读写，否则服务起不来或拉模型时报权限错误。改目录不会自动搬旧模型，需要的话先停服务再把旧目录内容拷过去。</p>
+<h2 id="六跑一次推理确认能用">六、跑一次推理，确认能用</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ollama run ds-r1-1.5b-ms --verbose <span class="s2">&#34;用一句话解释什么是 Docker 容器。&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>实测（8 核 CPU、无 GPU）：第一次加载模型 2.3 秒，生成 211 个 token 用 5.3 秒，约 <strong>40 tokens/s</strong>；第二次 320 个 token，约 37 tokens/s。占用内存约 1.3GB。输出末尾是 <code>&lt;/think&gt;</code> 加一句回答，开头的 <code>&lt;think&gt;</code> 不显示，这是 GGUF 模板把它放进提示词里了。</p>
+<p>用 HTTP 接口调用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">curl -s http://127.0.0.1:11434/api/generate -d <span class="s1">&#39;{
+</span><span class="s1">  &#34;model&#34;: &#34;ds-r1-1.5b-ms&#34;,
+</span><span class="s1">  &#34;prompt&#34;: &#34;Linux 下查看磁盘占用最大的目录用什么命令？只回答命令。&#34;,
+</span><span class="s1">  &#34;stream&#34;: false
+</span><span class="s1">}&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>实测返回 <code>&quot;done&quot;: true</code>，生成 770 个 token，耗时 21.3 秒。接口完全正常，但<strong>答案是错的</strong>：它给的是 <code>ls -l</code> 加 <code>find | sort</code> 的组合，第二次甚至编了一个不存在的 <code>dhcnd</code> 命令。正确做法是 <code>sudo du -xh --max-depth=1 / | sort -rh | head</code>。</p>
+<p>所以 1.5B 只适合用来验证部署跑通、做简单的文本处理，不要拿它的回答直接执行运维命令。</p>
+<h2 id="常见报错">常见报错</h2>
+<table>
+<thead>
+<tr>
+<th>报错 / 现象</th>
+<th>原因与处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>This version requires zstd for extraction</code></td>
+<td>新版安装包是 tar.zst，先装 zstd</td>
+</tr>
+<tr>
+<td>下载 <code>ollama-linux-amd64.tgz</code> 返回 404</td>
+<td>新版本已经没有 tgz，改下 <code>.tar.zst</code></td>
+</tr>
+<tr>
+<td><code>redirect target not allowed ... resolves to non-public 198.18.x.x</code></td>
+<td>DNS 被代理软件 fake-ip 接管，见第三节：给 <code>ollama serve</code> 设 <code>HTTPS_PROXY</code>，或把相关域名加入 fake-ip 过滤</td>
+</tr>
+<tr>
+<td><code>pull model manifest: 500</code>（用了 <code>--insecure</code>）</td>
+<td><code>--insecure</code> 会改用 http，去掉这个参数</td>
+</tr>
+<tr>
+<td><code>could not connect to a running Ollama instance</code></td>
+<td>服务没起来：systemd 机器看 <code>systemctl status ollama</code>，否则先 <code>ollama serve</code></td>
+</tr>
+<tr>
+<td>给 <code>ollama pull</code> 设了代理没效果</td>
+<td>代理要设在服务端 <code>ollama serve</code> 上</td>
+</tr>
+<tr>
+<td>导入的模型回答里混着思考过程</td>
+<td>GGUF 导入的模型不拆分思考内容，见第四节</td>
+</tr>
+</tbody>
+</table>
+<h2 id="安全注意">安全注意</h2>
+<ul>
+<li>Ollama 默认只监听 <code>127.0.0.1:11434</code>。接口没有鉴权，<strong>不要直接暴露到公网</strong>。远程访问另写一篇说明。</li>
+<li>GitHub 代理、第三方镜像下载的安装包和模型，都要核对 sha256 后再用。</li>
+<li>代理地址如果带账号密码，写进 systemd 配置后注意文件权限，不要贴进公开仓库或聊天记录。</li>
+</ul>
+<h2 id="清理和回滚">清理和回滚</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ollama rm ds-r1-1.5b-ms                     <span class="c1"># 删模型</span>
+sudo systemctl disable --now ollama          <span class="c1"># systemd 安装时</span>
+sudo rm -f /usr/local/bin/ollama /etc/systemd/system/ollama.service
+sudo rm -rf /usr/local/lib/ollama
+sudo rm -rf /usr/share/ollama                <span class="c1"># 默认模型目录，改过 OLLAMA_MODELS 的删对应目录</span>
+sudo userdel ollama<span class="p">;</span> sudo groupdel ollama
+</code></pre></td></tr></table>
+</div>
+</div><p>删除前确认模型目录里没有别的要保留的模型。</p>
+<h2 id="实测环境">实测环境</h2>
+<ul>
+<li>测试时间：2026-11-24 19:31–20:01（曼谷时间，UTC+7）。</li>
+<li>机器：Debian 13（trixie），内核 6.12；8 核 CPU、约 15GB 内存、<strong>无 GPU</strong>。官方脚本在一次性 <code>ubuntu:24.04</code> 容器（host 网络）里实测，测完容器已删除；手动安装、模型下载和推理都在临时目录里进行，服务监听本机 127.0.0.1 的非默认端口，测完已清理。</li>
+<li>网络：<strong>不在中国大陆</strong>，出网经过一层代理，DNS 把域名统一解析为 198.18.0.1。文中所有速度只代表这台机器；<strong>国内下载速度、各代理和镜像在国内的可用性均未在国内实测</strong>。</li>
+<li>版本：Ollama 0.40.18（GitHub 发布于 2026-11-24 11:18 曼谷时间）；模型为魔搭 <code>unsloth/DeepSeek-R1-Distill-Qwen-1.5B-GGUF</code> 的 Q4_K_M。官方 <code>deepseek-r1:1.5b</code> 因第三节的问题没有在本机拉完。</li>
+<li>未实测：systemd 机器上的脚本安装、服务配置和 <code>systemctl edit</code> 写法；Ollama 自带的续传；fake-ip 过滤名单写法；国内网络下的全部速度和镜像可用性；14B 及更大模型。</li>
+<li>官方文档（2026-11-24 读取均可访问）：
+<ul>
+<li><a href="https://docs.ollama.com/linux" target="_blank" rel="noopener noreffer">Ollama Linux 安装</a></li>
+<li><a href="https://docs.ollama.com/faq" target="_blank" rel="noopener noreffer">Ollama FAQ（代理、模型目录）</a></li>
+<li><a href="https://docs.ollama.com/import" target="_blank" rel="noopener noreffer">导入 GGUF 模型</a>、<a href="https://docs.ollama.com/modelfile" target="_blank" rel="noopener noreffer">Modelfile 参考</a></li>
+<li><a href="https://docs.ollama.com/api/generate" target="_blank" rel="noopener noreffer">/api/generate 接口</a></li>
+<li><a href="https://www.modelscope.cn/docs/models/advanced-usage/ollama-integration" target="_blank" rel="noopener noreffer">Ollama 加载 ModelScope 模型（魔搭文档）</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-11-24</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2026/11/%E5%9B%BD%E5%86%85linux%E6%9C%8D%E5%8A%A1%E5%99%A8ollama%E4%B8%8B%E8%BD%BD%E6%85%A2/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.mmfei.com/2026/11/%E5%9B%BD%E5%86%85linux%E6%9C%8D%E5%8A%A1%E5%99%A8ollama%E4%B8%8B%E8%BD%BD%E6%85%A2/" data-title="国内 Linux 服务器 Ollama 下载慢、镜像源失效怎么办：GitHub 代理与魔搭 GGUF 拉 DeepSeek 1.5B 实测" data-via="mmfei" data-hashtags="Ollama,DeepSeek,ModelScope,大模型本地部署,AI实践,Linux"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.mmfei.com/2026/11/%E5%9B%BD%E5%86%85linux%E6%9C%8D%E5%8A%A1%E5%99%A8ollama%E4%B8%8B%E8%BD%BD%E6%85%A2/" data-hashtag="Ollama"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.mmfei.com/2026/11/%E5%9B%BD%E5%86%85linux%E6%9C%8D%E5%8A%A1%E5%99%A8ollama%E4%B8%8B%E8%BD%BD%E6%85%A2/" data-title="国内 Linux 服务器 Ollama 下载慢、镜像源失效怎么办：GitHub 代理与魔搭 GGUF 拉 DeepSeek 1.5B 实测"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.mmfei.com/2026/11/%E5%9B%BD%E5%86%85linux%E6%9C%8D%E5%8A%A1%E5%99%A8ollama%E4%B8%8B%E8%BD%BD%E6%85%A2/" data-title="国内 Linux 服务器 Ollama 下载慢、镜像源失效怎么办：GitHub 代理与魔搭 GGUF 拉 DeepSeek 1.5B 实测"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.mmfei.com/2026/11/%E5%9B%BD%E5%86%85linux%E6%9C%8D%E5%8A%A1%E5%99%A8ollama%E4%B8%8B%E8%BD%BD%E6%85%A2/" data-title="国内 Linux 服务器 Ollama 下载慢、镜像源失效怎么办：GitHub 代理与魔搭 GGUF 拉 DeepSeek 1.5B 实测"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/ollama/">Ollama</a>,&nbsp;<a href="/tags/deepseek/">DeepSeek</a>,&nbsp;<a href="/tags/modelscope/">ModelScope</a>,&nbsp;<a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2/">大模型本地部署</a>,&nbsp;<a href="/tags/ai%E5%AE%9E%E8%B7%B5/">AI实践</a>,&nbsp;<a href="/tags/linux/">linux</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <nav class="sk-nav" aria-label="文章导航"><a href="/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/" class="sk-nav-btn sk-nav-prev" rel="prev" title="MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）"><i class="fas fa-angle-left fa-fw"></i>MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）</a>
+            <a href="/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="sk-nav-btn sk-nav-next" rel="next" title="GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）">GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）<i class="fas fa-angle-right fa-fw"></i></a></nav>
+</div>
+
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article>
+    </div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.mmfei.com/" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/css/skin-stripe.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"valine":{"appId":"agrUIy35wmii07cPfX0p0UWx-MdYXbMMI","appKey":"xNDv6FEmi9xqlsf6out3W5c6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://agruiy35.api.lncldglobal.com","visitor":true}}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6" async></script><link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+<div id="pagefind-overlay" class="pf-overlay" aria-hidden="true">
+    <div class="pf-modal" role="dialog" aria-modal="true" aria-label="搜索">
+        <button type="button" class="pf-close" id="pagefind-close" aria-label="清空">&times;</button>
+        <div id="pagefind-ui"></div>
+    </div>
+</div>
+
+<style>
+.pf-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8vh 16px 16px;
+}
+.pf-overlay.open {
+    display: flex;
+}
+.pf-modal {
+    position: relative;
+    width: 560px;
+    max-width: 100%;
+    background: var(--card-background, #fff);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.28);
+    padding: 18px 18px 10px;
+}
+.pf-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--secondary-font-color, #666);
+    cursor: pointer;
+    padding: 6px;
+}
+.pf-close:hover { color: var(--primary-font-color, #111); }
+#pagefind-ui { min-height: 40px; }
+@media (max-width: 680px) {
+    .pf-overlay { padding: 12px 10px; align-items: flex-start; }
+    .pf-modal { padding: 14px 12px 8px; border-radius: 10px; }
+}
+</style>
+
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+(function () {
+    var overlay = document.getElementById('pagefind-overlay');
+    var modal = overlay.querySelector('.pf-modal');
+    var closeBtn = document.getElementById('pagefind-close');
+    var uiMount = document.getElementById('pagefind-ui');
+
+    function open() {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        var input = uiMount.querySelector('input');
+        if (input) { setTimeout(function () { input.focus(); }, 60); }
+    }
+    function close() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    function bindTrigger(id) {
+        var el = document.getElementById(id);
+        if (el) { el.addEventListener('click', function (e) { e.preventDefault(); open(); }); }
+    }
+    bindTrigger('pagefind-trigger-desktop');
+    bindTrigger('pagefind-trigger-mobile');
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) { close(); }
+    });
+
+    if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({
+            element: uiMount,
+            showSubResults: true,
+            showImages: false,
+            highlightQuery: true,
+            translations: {
+                placeholder: '搜索文章标题、标签或内容…',
+                clear_search: '清除',
+                load_more: '加载更多结果',
+                search_label: '搜索',
+                filters_label: '筛选',
+                no_results: '没有找到结果'
+            }
+        });
+    }
+})();
+</script>
+</body>
+</html>

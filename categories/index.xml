@@ -12,6 +12,13 @@
     <guid>https://www.mmfei.com/categories/gitlab/</guid>
     <description><![CDATA[]]></description>
 </item><item>
+    <title>ai</title>
+    <link>https://www.mmfei.com/categories/ai/</link>
+    <pubDate>Tue, 24 Nov 2026 19:59:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/categories/ai/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>mysql</title>
     <link>https://www.mmfei.com/categories/mysql/</link>
     <pubDate>Tue, 24 Nov 2026 19:46:00 &#43;0700</pubDate>
@@ -66,13 +73,6 @@
     <pubDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</pubDate>
     <author>作者</author>
     <guid>https://www.mmfei.com/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>GitHub Pages</title>
-    <link>https://www.mmfei.com/categories/github-pages/</link>
-    <pubDate>Thu, 19 Nov 2026 09:50:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/categories/github-pages/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

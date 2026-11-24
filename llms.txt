@@ -11,8 +11,9 @@
 - [RSS 订阅](https://www.mmfei.com/index.xml): 站点 RSS Feed
 - [JSON Feed](https://www.mmfei.com/index.json): 结构化订阅
 
-## 文章索引（共 68 篇）
+## 文章索引（共 69 篇）
 - [GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）](https://www.mmfei.com/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/) — 2026-11-24 · 分类: gitlab · 标签: GitLab, gitlab-backup, 备份还原, 迁移, Docker
+- [国内 Linux 服务器 Ollama 下载慢、镜像源失效怎么办：GitHub 代理与魔搭 GGUF 拉 DeepSeek 1.5B 实测](https://www.mmfei.com/2026/11/%E5%9B%BD%E5%86%85linux%E6%9C%8D%E5%8A%A1%E5%99%A8ollama%E4%B8%8B%E8%BD%BD%E6%85%A2/) — 2026-11-24 · 分类: ai · 标签: Ollama, DeepSeek, ModelScope, 大模型本地部署, AI实践, Linux
 - [MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）](https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/) — 2026-11-24 · 分类: mysql · 标签: MySQL, 慢查询, mysqldumpslow, EXPLAIN, 运维
 - [GitHub 国内加速 2026：git 代理、SSH 走 443、浅克隆与 Release 校验实测](https://www.mmfei.com/2026/11/github%E5%9B%BD%E5%86%85%E5%8A%A0%E9%80%9F2026/) — 2026-11-24 · 分类: github · 标签: GitHub, git, 代理, SSH, 国内加速
 - [Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治](https://www.mmfei.com/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/) — 2026-11-24 · 分类: docker · 标签: Docker, docker logs, 日志清理, json-file, 运维
