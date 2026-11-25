@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>crontab 不执行、手动却可以：PATH、百分号、权限、工作目录和怎么查日志 - 木木飞</title><meta name="Description" content="crontab 里的任务到点不跑、同一条命令手动执行却成功时，先用每分钟任务确认 cron 本身在工作，再逐项对照 PATH 过短、未转义的 %、脚本没有可执行权限或 shebang 错误、工作目录不是你以为的那个，以及如何给任务单独记日志。"><meta property="og:title" content="crontab 不执行、手动却可以：PATH、百分号、权限、工作目录和怎么查日志" />
+<meta property="og:description" content="crontab 里的任务到点不跑、同一条命令手动执行却成功时，先用每分钟任务确认 cron 本身在工作，再逐项对照 PATH 过短、未转义的 %、脚本没有可执行权限或 shebang 错误、工作目录不是你以为的那个，以及如何给任务单独记日志。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.mmfei.com/2026/11/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-11-25T09:26:00&#43;07:00" />
+<meta property="article:modified_time" content="2026-11-25T09:26:00&#43;07:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
+
+<meta name="twitter:title" content="crontab 不执行、手动却可以：PATH、百分号、权限、工作目录和怎么查日志"/>
+<meta name="twitter:description" content="crontab 里的任务到点不跑、同一条命令手动执行却成功时，先用每分钟任务确认 cron 本身在工作，再逐项对照 PATH 过短、未转义的 %、脚本没有可执行权限或 shebang 错误、工作目录不是你以为的那个，以及如何给任务单独记日志。"/>
+<meta name="application-name" content="木木飞">
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.mmfei.com/2026/11/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C/" /><link rel="prev" href="https://www.mmfei.com/2026/11/docker%E7%A3%81%E7%9B%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E6%B8%85%E7%90%86/" /><link rel="next" href="https://www.mmfei.com/2026/11/%E6%9C%AC%E5%9C%B0whisper%E7%94%9F%E6%88%90srt%E5%AD%97%E5%B9%95/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "crontab 不执行、手动却可以：PATH、百分号、权限、工作目录和怎么查日志",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.mmfei.com\/2026\/11\/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C\/"
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "crontab, cron, Linux, 定时任务, shell","wordcount":  3555 ,
+        "url": "https:\/\/www.mmfei.com\/2026\/11\/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C\/","datePublished": "2026-11-25T09:26:00+07:00","dateModified": "2026-11-25T09:26:00+07:00","publisher": {
+            "@type": "Organization",
+            "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "mmfei"
+            },"description": "crontab 里的任务到点不跑、同一条命令手动执行却成功时，先用每分钟任务确认 cron 本身在工作，再逐项对照 PATH 过短、未转义的 %、脚本没有可执行权限或 shebang 错误、工作目录不是你以为的那个，以及如何给任务单独记日志。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-desktop" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-desktop"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a>
+                <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile">
+                <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-mobile" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-mobile"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<style>
+#header-desktop .header-wrapper .menu { overflow: visible; }
+#header-desktop .menu-has-sub { position: relative; display: inline-block; }
+#header-desktop .menu-parent-link,
+#header-mobile .menu-parent-link { color: inherit; text-decoration: none; }
+#header-desktop .menu-has-sub.active .menu-parent-link { font-weight: 900; }
+#header-desktop .menu-sub-toggle {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: 1;
+    padding: 0 2px;
+    cursor: pointer;
+}
+#header-desktop .menu-sub {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 8.5rem;
+    margin: 0;
+    padding: 6px 0;
+    text-align: left;
+    background: #f8f8f8;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .12);
+    z-index: 220;
+}
+#header-desktop .menu-has-sub:hover > .menu-sub,
+#header-desktop .menu-has-sub:focus-within > .menu-sub,
+#header-desktop .menu-has-sub.is-open > .menu-sub { display: block; }
+#header-desktop .menu-sub a { display: block; padding: 6px 14px; white-space: nowrap; color: inherit; text-decoration: none; }
+body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: #363636; }
+#header-mobile .menu-has-sub,
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub,
+#header-mobile .menu-sub a { display: block; }
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub a { line-height: 2.5rem; }
+#header-mobile .menu-sub-toggle { display: none; }
+</style>
+<script>
+(function () {
+    var buttons = document.querySelectorAll(".menu-sub-toggle");
+    Array.prototype.forEach.call(buttons, function (button) {
+        button.addEventListener("click", function () {
+            var item = button.parentNode;
+            var open = item.classList.toggle("is-open");
+            button.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key !== "Escape") return;
+        Array.prototype.forEach.call(buttons, function (button) {
+            button.parentNode.classList.remove("is-open");
+            button.setAttribute("aria-expanded", "false");
+        });
+    });
+})();
+</script>
+<main class="main">
+                <div class="container"><div class="sk-page sk-article"><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div><article class="page single sk-single">
+            <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/shell/">shell</a></p><h1 class="single-title sk-single-title">crontab 不执行、手动却可以：PATH、百分号、权限、工作目录和怎么查日志</h1><div class="post-meta sk-single-meta">
+                    <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
+                    </div>
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-25">2026-11-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3555 字&nbsp;
+                        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/2026/11/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C/" class="leancloud_visitors" data-flag-title="crontab 不执行、手动却可以：PATH、百分号、权限、工作目录和怎么查日志">
+                                <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                            </span>&nbsp;</div>
+                </div>
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一先确认-cron-能跑">一、先确认 cron 能跑</a></li>
+    <li><a href="#二cron-的默认环境和手工执行不一样">二、cron 的默认环境和手工执行不一样</a></li>
+    <li><a href="#三典型失败手工成功cron-失败">三、典型失败：手工成功，cron 失败</a>
+      <ul>
+        <li><a href="#1-path-过短">1. PATH 过短</a></li>
+        <li><a href="#2--会被当成换行">2. <code>%</code> 会被当成换行</a></li>
+        <li><a href="#3-没有可执行权限或-shebang-不对">3. 没有可执行权限，或 shebang 不对</a></li>
+        <li><a href="#4-工作目录不是你以为的那个">4. 工作目录不是你以为的那个</a></li>
+        <li><a href="#5-缺少应用依赖的环境变量">5. 缺少应用依赖的环境变量</a></li>
+      </ul>
+    </li>
+    <li><a href="#四怎么看出-cron-有没有跑过">四、怎么看出 cron 有没有跑过</a></li>
+    <li><a href="#五常见问题与安全注意">五、常见问题与安全注意</a></li>
+    <li><a href="#六回滚">六、回滚</a></li>
+    <li><a href="#七实测环境与来源">七、实测环境与来源</a></li>
+  </ul>
+</nav></div>
+                </details><div class="content" id="content"><p>写好了 crontab，脚本在终端里跑得通，到点却没反应，或者根本不知道有没有跑过。这通常不是「cron 坏了」，而是 cron 的环境和手工执行不一样。这篇按本机实测，把最常见的几类失败对上原因和改法。</p>
+<p>常被放进 crontab 的日志轮转脚本，可以参考 <a href="https://www.mmfei.com/2021/06/%e4%bf%9d%e7%95%99%e6%9c%80%e6%96%b0n%e4%b8%aa%e6%96%87%e4%bb%b6%e7%9a%84bash%e8%84%9a%e6%9c%ac/" target="_blank" rel="noopener noreffer">保留最新 N 个文件的 bash 脚本</a>。</p>
+<h2 id="一先确认-cron-能跑">一、先确认 cron 能跑</h2>
+<p>用一条每分钟任务验证「到点会执行」。输出写到你指定的文件，不要依赖系统邮件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">crontab -e
+</code></pre></td></tr></table>
+</div>
+</div><pre><code class="language-cron" data-lang="cron"># 先确认能跑，验证完删掉
+* * * * * date -Iseconds &gt;&gt; /tmp/cron-baseline.log 2&gt;&amp;1
+</code></pre><p>本机在 09:20:01 和 09:22:01（Asia/Bangkok）各写下了一行，说明 <code>/usr/sbin/cron</code> 在运行、用户 crontab 已被加载、时间字段也生效。若过了两分钟文件还是空的，再查用户是否允许使用 crontab（<code>/etc/cron.allow</code> / <code>/etc/cron.deny</code>）、crontab 最后一行是否有换行（Debian <code>crontab(5)</code> 写明缺换行会被视为损坏），以及系统时间是否正确。</p>
+<p>用户 crontab 是五段时间 + 命令，不要写成 <code>/etc/crontab</code> 那种六段（中间多一个用户名）。本机没有改 <code>/etc/crontab</code> 或他人的 crontab。</p>
+<h2 id="二cron-的默认环境和手工执行不一样">二、cron 的默认环境和手工执行不一样</h2>
+<p>本机用一条任务把 cron 里的环境完整打出来。用户 crontab、未另行设置时只有这些：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">HOME=/home/box
+LOGNAME=box
+MAILTO=
+PATH=/usr/bin:/bin
+PWD=/home/box
+SHELL=/bin/sh
+</code></pre></td></tr></table>
+</div>
+</div><p>对照要点：</p>
+<ul>
+<li><code>PATH</code> 只有 <code>/usr/bin:/bin</code>，没有 <code>/usr/local/bin</code>，也没有你在交互 shell 里加过的目录。</li>
+<li>工作目录是家目录（这里是 <code>/home/box</code>），不是你手工执行时所在的项目目录。</li>
+<li><code>SHELL</code> 是 <code>/bin/sh</code>，不是 bash；不会自动读 <code>~/.bashrc</code>。</li>
+<li><code>HOME</code>、<code>LOGNAME</code> 会按 <code>/etc/passwd</code> 设置（与 <code>crontab(5)</code> 一致）。本机 <code>USER</code> 未设置。</li>
+<li>自定义变量（例如应用要的 token）默认没有。</li>
+</ul>
+<p><code>crontab(5)</code> 还写明：环境变量赋值<strong>不会</strong>做 <code>$PATH</code> 或 <code>~</code> 展开。写成 <code>PATH=$HOME/bin:$PATH</code> 不会按你在 shell 里的习惯工作。要改 PATH，写绝对路径列表。</p>
+<h2 id="三典型失败手工成功cron-失败">三、典型失败：手工成功，cron 失败</h2>
+<p>以下每条都在本机做过对照。失败任务跑在 09:20（以及随后一分钟），修复后的任务跑在 09:22。</p>
+<h3 id="1-path-过短">1. PATH 过短</h3>
+<p>准备一个只存在于自定义目录的命令 <code>/tmp/mmfei-20261125-cron/bin/mmfei-hello</code>，脚本里直接调用 <code>mmfei-hello</code>。</p>
+<p>手工把该目录加进 PATH 后成功：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">PATH=/tmp/mmfei-20261125-cron/bin:...
+command -v mmfei-hello: /tmp/mmfei-20261125-cron/bin/mmfei-hello
+mmfei-20261125-hello-ok
+</code></pre></td></tr></table>
+</div>
+</div><p>cron 默认 <code>PATH=/usr/bin:/bin</code>，同样的脚本：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">PWD=/home/box
+PATH=/usr/bin:/bin
+command -v mmfei-hello: not found
+/tmp/mmfei-20261125-cron/path-test.sh: 11: mmfei-hello: not found
+</code></pre></td></tr></table>
+</div>
+</div><p>修复：在 crontab 里写绝对路径，或显式设置 PATH：</p>
+<pre><code class="language-cron" data-lang="cron">PATH=/tmp/mmfei-20261125-cron/bin:/usr/bin:/bin
+* * * * * /bin/sh /tmp/mmfei-20261125-cron/path-test.sh &gt;&gt; /tmp/path-ok.log 2&gt;&amp;1
+</code></pre><p>09:22 的输出里 <code>command -v mmfei-hello</code> 已能找到，命令执行成功。本机 <code>/usr/bin/python3</code>、<code>/usr/bin/date</code> 在默认 PATH 里，这类命令不会踩这个坑；容易出问题的是装在 <code>/usr/local/bin</code>、<code>$HOME/.local/bin</code> 或项目 <code>bin</code> 里的命令。</p>
+<h3 id="2--会被当成换行">2. <code>%</code> 会被当成换行</h3>
+<p>Debian <code>crontab(5)</code> 原文：命令字段里未用反斜杠转义的 <code>%</code> 会变成换行，第一个 <code>%</code> 之后的内容作为该命令的标准输入。</p>
+<p>手工执行 <code>date +%F</code> 得到 <code>2026-11-25</code>。把同样写法放进 crontab（为了能把错误写进日志，把重定向放在第一个 <code>%</code> 之前）：</p>
+<pre><code class="language-cron" data-lang="cron">* * * * * exec &gt;&gt; /tmp/date-unescaped.log 2&gt;&amp;1; echo start; date +%F; echo after-date
+</code></pre><p>cron 实际执行的是 <code>exec &gt;&gt; ...; echo start; date +</code>，后面的 <code>F; echo after-date</code> 变成了 <code>date</code> 的标准输入。日志只有：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">mmfei-20261125-pct-unescaped start
+</code></pre></td></tr></table>
+</div>
+</div><p><code>after-date</code> 没有作为命令执行，也没有写出日期。</p>
+<p>转义后：</p>
+<pre><code class="language-cron" data-lang="cron">* * * * * date +\%F &gt; /tmp/date-escaped.log 2&gt;&amp;1
+</code></pre><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">2026-11-25
+mmfei-20261125-pct-escaped ok
+</code></pre></td></tr></table>
+</div>
+</div><p><code>date +%F</code>、<code>date +%Y-%m-%d</code>，以及 <code>mysqldump</code>、<code>find -printf</code> 里的 <code>%</code>，在 crontab 里都要写成 <code>\%</code>。</p>
+<h3 id="3-没有可执行权限或-shebang-不对">3. 没有可执行权限，或 shebang 不对</h3>
+<p>脚本内容没问题，但权限是 <code>644</code>（没有 <code>+x</code>）。手工用解释器打开成功：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">/bin/bash /tmp/mmfei-20261125-cron/perm-test.sh    <span class="c1"># 成功</span>
+/tmp/mmfei-20261125-cron/perm-test.sh              <span class="c1"># Permission denied，退出码 126</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>cron 里直接写脚本路径，等同于直接执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">/bin/sh: 1: /tmp/mmfei-20261125-cron/perm-test.sh: Permission denied
+</code></pre></td></tr></table>
+</div>
+</div><p>加上 <code>chmod +x</code> 后，09:22 的 cron 任务执行成功。也可以不改权限，改成 <code>/bin/bash /path/to/script.sh</code>。</p>
+<p>shebang 指向不存在的解释器时是另一类失败。本机脚本第一行是 <code>#!/usr/bin/mmfei-no-such-interpreter</code>，手工 <code>bash 脚本</code> 会忽略 shebang、执行成功；直接执行则报 <code>cannot execute: required file not found</code>（退出码 127）。cron 里是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">/bin/sh: 1: /tmp/mmfei-20261125-cron/shebang-bad.sh: not found
+</code></pre></td></tr></table>
+</div>
+</div><p>修复：把 shebang 改成真实存在的解释器（如 <code>#!/bin/bash</code> 或 <code>#!/bin/sh</code>），或在 crontab 里用 <code>/bin/bash /path/to/script.sh</code> 调用。后者在 09:22 实测成功。</p>
+<h3 id="4-工作目录不是你以为的那个">4. 工作目录不是你以为的那个</h3>
+<p>脚本用相对路径读 <code>secret.txt</code>。在文件所在目录手工执行成功；在家目录执行则 <code>cat: secret.txt: No such file or directory</code>。</p>
+<p>cron 的 <code>PWD</code> 是 <code>/home/box</code>，同样失败：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">PWD=/home/box
+pwd=/home/box
+relative cat secret.txt: cat: secret.txt: No such file or directory
+cat-exit=1
+</code></pre></td></tr></table>
+</div>
+</div><p>修复：在 crontab 里先 <code>cd</code> 到目标目录，或全部改成绝对路径：</p>
+<pre><code class="language-cron" data-lang="cron">* * * * * cd /tmp/mmfei-20261125-cron/workdir &amp;&amp; /tmp/mmfei-20261125-cron/cwd-test.sh &gt;&gt; /tmp/cwd-ok.log 2&gt;&amp;1
+</code></pre><p>09:22 输出：<code>PWD=/tmp/mmfei-20261125-cron/workdir</code>，相对路径读取成功。</p>
+<h3 id="5-缺少应用依赖的环境变量">5. 缺少应用依赖的环境变量</h3>
+<p>本机 cron 会设置 <code>HOME</code>，但不会设置你在 <code>.bashrc</code> 里 export 的变量。用自定义变量 <code>MMFEI_TOKEN</code> 做对照：脚本在变量为空时退出 1。</p>
+<p>手工 <code>MMFEI_TOKEN=secret-mmfei-20261125</code> 执行成功；不设则失败。cron 未声明该变量时：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">HOME=/home/box
+SHELL=/bin/sh
+PATH=/usr/bin:/bin
+LOGNAME=box
+USER=&lt;unset&gt;
+PWD=/home/box
+MMFEI_TOKEN is empty/unset
+</code></pre></td></tr></table>
+</div>
+</div><p>在 crontab 里加入 <code>MMFEI_TOKEN=secret-mmfei-20261125</code> 后，09:22 任务报告变量已设置（长度为 21）。需要的变量要写在 crontab 里，或在脚本开头显式加载配置文件，不要指望 <code>.bashrc</code>。</p>
+<h2 id="四怎么看出-cron-有没有跑过">四、怎么看出 cron 有没有跑过</h2>
+<p>最可靠的办法是任务自己写日志：</p>
+<pre><code class="language-cron" data-lang="cron">MAILTO=&quot;&quot;
+* * * * * /path/to/job.sh &gt;&gt; /var/log/myjob.log 2&gt;&amp;1
+</code></pre><p><code>2&gt;&amp;1</code> 把错误也记下，否则权限问题和「command not found」可能只进邮件，你在文件里看不到。</p>
+<p>本机还查了系统日志，结果如下，供对照：</p>
+<ul>
+<li><code>/var/log/syslog</code>、<code>/var/log/cron</code>、<code>/var/log/messages</code> 都不存在。</li>
+<li><code>journalctl</code> 无论是否用 root，都提示 <em>No journal files were found</em>；<code>/var/log/journal</code> 是空目录。本机 PID 1 是 <code>tini</code>，不是 systemd，<code>systemd-journald</code> 未运行。</li>
+<li><code>/dev/log</code> 是指向 <code>/run/systemd/journal/dev-log</code> 的悬空符号链接，syslog 套接字不可用。</li>
+<li>任务设置了 <code>MAILTO=&quot;&quot;</code>，<code>/var/mail</code> 下也没有用户邮件。</li>
+</ul>
+<p>也就是说，在这台机器上<strong>看不到</strong> cron 守护进程自己的执行记录，只能靠任务重定向的文件判断有没有跑、跑出了什么错。<code>cron(8)</code> 写明日志打到 syslog 的 <code>cron</code> facility；在常见的 Debian systemd 机器上，一般会去看 <code>/var/log/syslog</code>（或 <code>journalctl -u cron</code> / <code>journalctl -t cron</code>）。<strong>这些查法未在本机实测</strong>，因为这里没有 syslog、也没有用 systemd 拉起 cron。</p>
+<p>生产机若用 systemd 管理 cron，可以用 <code>systemctl status cron</code> 看服务是否在跑。本机 PID 1 不是 systemd，这条也未实测。</p>
+<h2 id="五常见问题与安全注意">五、常见问题与安全注意</h2>
+<p><strong>改完 crontab 要等多久？</strong> cron 每分钟检查一次 spool。本机用 <code>crontab</code> 命令装入后，下一分钟就会跑，不用重启 cron。不要为了「马上看效果」去 <code>kill</code> 系统 cron。</p>
+<p><strong>交互 shell 能跑，cron 不能。</strong> 按第三节的顺序查：PATH、<code>%</code>、权限与 shebang、工作目录、环境变量。把 cron 的 <code>env</code> 重定向到文件，和手工 <code>env</code> 对比最快。</p>
+<p><strong>任务重叠。</strong> 每分钟（或每小时）任务如果跑不完，下一轮可能再起一条。本篇未测锁与超时，需要时在脚本里用 <code>flock</code> 一类互斥。</p>
+<p><strong>不要在 crontab 里写破坏性命令的相对路径。</strong> 工作目录是家目录，<code>rm *.log</code> 之类很容易删错地方。一律绝对路径，先在测试目录验证。</p>
+<p><strong><code>/etc/crontab</code> 和 <code>/etc/cron.d/</code> 多一列用户名</strong>，格式与用户 crontab 不同。没有把握不要改系统 crontab。</p>
+<h2 id="六回滚">六、回滚</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">crontab -l              <span class="c1"># 先看当前内容</span>
+crontab -l &gt; crontab.bak
+crontab crontab.bak     <span class="c1"># 恢复</span>
+crontab -r              <span class="c1"># 删除当前用户的全部 crontab（本机测试后已恢复为空）</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>只删某一行时，把 <code>crontab -l</code> 的备份改好再装回去，不要直接改 <code>/var/spool/cron/crontabs/</code> 下的文件。</p>
+<h2 id="七实测环境与来源">七、实测环境与来源</h2>
+<ul>
+<li>测试时间：2026-11-25 09:18–09:23，Asia/Bangkok（UTC+7）。</li>
+<li>系统：Debian 13 (trixie)，内核 6.12.113，cron 3.0pl1-197（<code>/usr/sbin/cron</code> 已在运行，非 systemd 拉起）。用户 <code>box</code> 的 crontab 原先为空。</li>
+<li>所有条目都带标记 <code>mmfei-20261125</code>，输出只写入 <code>/tmp/mmfei-20261125-cron/</code>。测完已 <code>crontab -r</code>，用户 crontab 恢复为空；未改 <code>/etc/crontab</code>、<code>/etc/cron.d/</code> 或他人 crontab。</li>
+<li>已实测：每分钟任务能跑；默认环境（<code>PATH=/usr/bin:/bin</code>、工作目录为 <code>$HOME</code>、<code>SHELL=/bin/sh</code>、<code>HOME</code>/<code>LOGNAME</code> 有值、<code>USER</code> 未设置）；PATH 过短导致自定义命令失败，设置 PATH 或绝对路径后成功；未转义 <code>%</code> 使 <code>date +%F</code> 失败，<code>\%</code> 后成功；无执行权限、错误 shebang 的失败与修复；相对路径因工作目录不是预期目录而失败，<code>cd</code> 到目标目录后成功；缺少自定义环境变量失败，在 crontab 中声明后成功；本机系统日志路径与查不到 cron 守护进程记录的情况。</li>
+<li>未实测：crontab 末行缺换行导致的损坏；<code>/etc/cron.allow</code>、<code>/etc/cron.deny</code>；<code>/etc/crontab</code> 与 <code>/etc/cron.d/</code> 的系统格式；<code>cron</code> 的 systemd 服务管理（<code>systemctl status cron</code>）以及 <code>journalctl -u cron</code>、<code>/var/log/syslog</code> 中的 CRON 记录（本机无 systemd、无 syslog）；PAM 或 SELinux 对 cron 的影响；任务重叠与 <code>flock</code>。</li>
+<li>官方文档（2026-11-25 查阅）：
+<ul>
+<li><a href="https://manpages.debian.org/trixie/cron/crontab.5.en.html">https://manpages.debian.org/trixie/cron/crontab.5.en.html</a></li>
+<li><a href="https://manpages.debian.org/trixie/cron/cron.8.en.html">https://manpages.debian.org/trixie/cron/cron.8.en.html</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-11-25</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2026/11/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.mmfei.com/2026/11/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C/" data-title="crontab 不执行、手动却可以：PATH、百分号、权限、工作目录和怎么查日志" data-via="mmfei" data-hashtags="crontab,cron,Linux,定时任务,shell"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.mmfei.com/2026/11/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C/" data-hashtag="crontab"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.mmfei.com/2026/11/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C/" data-title="crontab 不执行、手动却可以：PATH、百分号、权限、工作目录和怎么查日志"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.mmfei.com/2026/11/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C/" data-title="crontab 不执行、手动却可以：PATH、百分号、权限、工作目录和怎么查日志"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.mmfei.com/2026/11/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C/" data-title="crontab 不执行、手动却可以：PATH、百分号、权限、工作目录和怎么查日志"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/crontab/">crontab</a>,&nbsp;<a href="/tags/cron/">cron</a>,&nbsp;<a href="/tags/linux/">Linux</a>,&nbsp;<a href="/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">定时任务</a>,&nbsp;<a href="/tags/shell/">shell</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <nav class="sk-nav" aria-label="文章导航"><a href="/2026/11/docker%E7%A3%81%E7%9B%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E6%B8%85%E7%90%86/" class="sk-nav-btn sk-nav-prev" rel="prev" title="Docker 磁盘满了怎么清理：先用 system df 查占用，再按容器、镜像、卷和构建缓存安全清理"><i class="fas fa-angle-left fa-fw"></i>Docker 磁盘满了怎么清理：先用 system df 查占用，再按容器、镜像、卷和构建缓存安全清理</a>
+            <a href="/2026/11/%E6%9C%AC%E5%9C%B0whisper%E7%94%9F%E6%88%90srt%E5%AD%97%E5%B9%95/" class="sk-nav-btn sk-nav-next" rel="next" title="whisper 字幕生成：Linux 上用 whisper.cpp 把音视频转成可编辑 SRT">whisper 字幕生成：Linux 上用 whisper.cpp 把音视频转成可编辑 SRT<i class="fas fa-angle-right fa-fw"></i></a></nav>
+</div>
+
+<section class="sk-related">
+                    <h2 class="sk-related-title">相关文章</h2>
+                    <div class="sk-related-grid"><a class="sk-related-card" href="/2022/01/%E8%BD%AC%E6%8D%A2%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E8%A7%86%E9%A2%91%E4%B8%BAbase64%E7%9A%84json/">
+                                    <span class="sk-related-card-title">转换本地图片视频为base64的json</span>
+                                    <span class="sk-related-card-meta">2022-01-03json · shell · bash · base64 · image · video · mp4 · mp3 · avi · jpg · jpeg · png · ico · bmp</span>
+                                </a><a class="sk-related-card" href="/2021/06/%E4%BF%9D%E7%95%99%E6%9C%80%E6%96%B0n%E4%B8%AA%E6%96%87%E4%BB%B6%E7%9A%84bash%E8%84%9A%E6%9C%AC/">
+                                    <span class="sk-related-card-title">保留最新n个文件的bash脚本</span>
+                                    <span class="sk-related-card-meta">2021-06-29shell · backup · bash · script · 脚本</span>
+                                </a><a class="sk-related-card" href="/2026/11/%E5%9B%BD%E5%86%85linux%E6%9C%8D%E5%8A%A1%E5%99%A8ollama%E4%B8%8B%E8%BD%BD%E6%85%A2/">
+                                    <span class="sk-related-card-title">国内 Linux 服务器 Ollama 下载慢、镜像源失效怎么办：GitHub 代理与魔搭 GGUF 拉 DeepSeek 1.5B 实测</span>
+                                    <span class="sk-related-card-meta">2026-11-24Ollama · DeepSeek · ModelScope · 大模型本地部署 · AI实践 · Linux</span>
+                                </a></div>
+                </section><div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article>
+    </div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.mmfei.com/" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/css/skin-stripe.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"valine":{"appId":"agrUIy35wmii07cPfX0p0UWx-MdYXbMMI","appKey":"xNDv6FEmi9xqlsf6out3W5c6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://agruiy35.api.lncldglobal.com","visitor":true}}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6" async></script><link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+<div id="pagefind-overlay" class="pf-overlay" aria-hidden="true">
+    <div class="pf-modal" role="dialog" aria-modal="true" aria-label="搜索">
+        <button type="button" class="pf-close" id="pagefind-close" aria-label="清空">&times;</button>
+        <div id="pagefind-ui"></div>
+    </div>
+</div>
+
+<style>
+.pf-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8vh 16px 16px;
+}
+.pf-overlay.open {
+    display: flex;
+}
+.pf-modal {
+    position: relative;
+    width: 560px;
+    max-width: 100%;
+    background: var(--card-background, #fff);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.28);
+    padding: 18px 18px 10px;
+}
+.pf-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--secondary-font-color, #666);
+    cursor: pointer;
+    padding: 6px;
+}
+.pf-close:hover { color: var(--primary-font-color, #111); }
+#pagefind-ui { min-height: 40px; }
+@media (max-width: 680px) {
+    .pf-overlay { padding: 12px 10px; align-items: flex-start; }
+    .pf-modal { padding: 14px 12px 8px; border-radius: 10px; }
+}
+</style>
+
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+(function () {
+    var overlay = document.getElementById('pagefind-overlay');
+    var modal = overlay.querySelector('.pf-modal');
+    var closeBtn = document.getElementById('pagefind-close');
+    var uiMount = document.getElementById('pagefind-ui');
+
+    function open() {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        var input = uiMount.querySelector('input');
+        if (input) { setTimeout(function () { input.focus(); }, 60); }
+    }
+    function close() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    function bindTrigger(id) {
+        var el = document.getElementById(id);
+        if (el) { el.addEventListener('click', function (e) { e.preventDefault(); open(); }); }
+    }
+    bindTrigger('pagefind-trigger-desktop');
+    bindTrigger('pagefind-trigger-mobile');
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) { close(); }
+    });
+
+    if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({
+            element: uiMount,
+            showSubResults: true,
+            showImages: false,
+            highlightQuery: true,
+            translations: {
+                placeholder: '搜索文章标题、标签或内容…',
+                clear_search: '清除',
+                load_more: '加载更多结果',
+                search_label: '搜索',
+                filters_label: '筛选',
+                no_results: '没有找到结果'
+            }
+        });
+    }
+})();
+</script>
+</body>
+</html>

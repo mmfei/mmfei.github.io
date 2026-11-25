@@ -4,7 +4,42 @@
         <link>https://www.mmfei.com/posts/</link>
         <description>所有文章 | 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 25 Nov 2026 09:38:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>MySQL 连接数过多（too many connections）怎么处理？查看占用、KILL 与 max_connections（8.4 实测）</title>
+    <link>https://www.mmfei.com/2026/11/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A/</link>
+    <pubDate>Wed, 25 Nov 2026 09:38:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A/</guid>
+    <description><![CDATA[应用或客户端报 Too many connections 时，先看当前有多少连接、是谁占着、能不能先腾出一个会话，再决定要不要临时加大 max_connections。不要把“把上]]></description>
+</item><item>
+    <title>whisper 字幕生成：Linux 上用 whisper.cpp 把音视频转成可编辑 SRT</title>
+    <link>https://www.mmfei.com/2026/11/%E6%9C%AC%E5%9C%B0whisper%E7%94%9F%E6%88%90srt%E5%AD%97%E5%B9%95/</link>
+    <pubDate>Wed, 25 Nov 2026 09:33:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/%E6%9C%AC%E5%9C%B0whisper%E7%94%9F%E6%88%90srt%E5%AD%97%E5%B9%95/</guid>
+    <description><![CDATA[要把录像或音频转成可编辑的 SRT，又不想把素材传到付费云端语音 API，可以在 Linux 服务器上本地跑 Whisper。本文只做这一段：识别并生成 SRT]]></description>
+</item><item>
+    <title>crontab 不执行、手动却可以：PATH、百分号、权限、工作目录和怎么查日志</title>
+    <link>https://www.mmfei.com/2026/11/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C/</link>
+    <pubDate>Wed, 25 Nov 2026 09:26:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C/</guid>
+    <description><![CDATA[写好了 crontab，脚本在终端里跑得通，到点却没反应，或者根本不知道有没有跑过。这通常不是「cron 坏了」，而是 cron 的环境和手工执行不一样。]]></description>
+</item><item>
+    <title>Docker 磁盘满了怎么清理：先用 system df 查占用，再按容器、镜像、卷和构建缓存安全清理</title>
+    <link>https://www.mmfei.com/2026/11/docker%E7%A3%81%E7%9B%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E6%B8%85%E7%90%86/</link>
+    <pubDate>Wed, 25 Nov 2026 09:26:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/docker%E7%A3%81%E7%9B%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E6%B8%85%E7%90%86/</guid>
+    <description><![CDATA[df 显示磁盘快满，du 指向 Docker 数据目录，但不一定是日志。镜像、已退出容器的可写层、卷、构建缓存都会占空间。这篇按排查顺序写：先查清空间去向，再按]]></description>
+</item><item>
+    <title>Redis 内存满了怎么处理？maxmemory、淘汰策略与安全释放（8.0.2 实测）</title>
+    <link>https://www.mmfei.com/2026/11/redis%E5%86%85%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86/</link>
+    <pubDate>Wed, 25 Nov 2026 09:26:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/redis%E5%86%85%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86/</guid>
+    <description><![CDATA[Redis 占用越来越高，或已经写不进去时，先确认当前用了多少内存、有没有上限、上限到了会淘汰还是直接报错，再决定改配置还是删数据。不要一上来就 FLU]]></description>
+</item><item>
     <title>GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）</title>
     <link>https://www.mmfei.com/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
     <pubDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</pubDate>
@@ -39,40 +74,5 @@
     <author>作者</author>
     <guid>https://www.mmfei.com/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/</guid>
     <description><![CDATA[服务器磁盘报警，du 一查，/var/lib/docker/containers/ 下某个 *-json.log 有几十 GB。这是 Docker 默认日志配置下很常见的情况：默认的]]></description>
-</item><item>
-    <title>FFmpeg HLS 切片与签名鉴权：别只保护 m3u8</title>
-    <link>https://www.mmfei.com/2026/11/ffmpeg-hls%E5%88%87%E7%89%87%E4%B8%8E%E7%AD%BE%E5%90%8D%E9%89%B4%E6%9D%83/</link>
-    <pubDate>Thu, 19 Nov 2026 14:52:53 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/2026/11/ffmpeg-hls%E5%88%87%E7%89%87%E4%B8%8E%E7%AD%BE%E5%90%8D%E9%89%B4%E6%9D%83/</guid>
-    <description><![CDATA[为短剧播放页签一个index.m3u8地址，并不意味着视频片段受保护。如果播放列表里的seg000.ts可以直接访问，跳过播放页仍然能拿到内]]></description>
-</item><item>
-    <title>FFmpeg 合成字幕与音轨：显式选流、中文字体和时长对齐</title>
-    <link>https://www.mmfei.com/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/</link>
-    <pubDate>Thu, 19 Nov 2026 14:50:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/2026/11/ffmpeg%E5%90%88%E6%88%90%E5%AD%97%E5%B9%95%E4%B8%8E%E9%9F%B3%E8%BD%A8/</guid>
-    <description><![CDATA[一条短视频有6秒画面、4秒配音和两段字幕，合成时应该提前结束，还是保留画面并把尾部补静音？输入文件里有多个音轨时，究竟选到了哪一条？这些问题]]></description>
-</item><item>
-    <title>Python &#43; SQLite 实现视频任务队列：幂等、重试与租约恢复</title>
-    <link>https://www.mmfei.com/2026/11/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/</link>
-    <pubDate>Thu, 19 Nov 2026 14:45:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/2026/11/python-sqlite%E8%A7%86%E9%A2%91%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97/</guid>
-    <description><![CDATA[用户重复点“生成视频”，接口超时后前端又重试，worker 提交模型任务后还没写回状态就退出：三种现象可能都导致重复提交与重复计费。仅给队列消]]></description>
-</item><item>
-    <title>GA4 自然搜索会话为什么对不上 Search Console 点击：博客数据核对清单</title>
-    <link>https://www.mmfei.com/2026/11/ga4%E8%87%AA%E7%84%B6%E6%90%9C%E7%B4%A2%E5%AF%B9%E4%B8%8D%E4%B8%8Asearch-console%E7%82%B9%E5%87%BB/</link>
-    <pubDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/2026/11/ga4%E8%87%AA%E7%84%B6%E6%90%9C%E7%B4%A2%E5%AF%B9%E4%B8%8D%E4%B8%8Asearch-console%E7%82%B9%E5%87%BB/</guid>
-    <description><![CDATA[Search Console 显示的 Google 搜索点击，与 GA4 里的自然搜索会话，不应该被当成必须完全相等的两列数据。它们记录的环节、计数方式和采集条件都不同。 真正要解决的是：在]]></description>
-</item><item>
-    <title>robots.txt 与 sitemap 不是收录开关：静态博客的抓取排查清单</title>
-    <link>https://www.mmfei.com/2026/11/robots%E4%B8%8Esitemap%E6%8A%93%E5%8F%96%E6%8E%92%E6%9F%A5%E6%B8%85%E5%8D%95/</link>
-    <pubDate>Thu, 19 Nov 2026 14:10:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/2026/11/robots%E4%B8%8Esitemap%E6%8A%93%E5%8F%96%E6%8E%92%E6%9F%A5%E6%B8%85%E5%8D%95/</guid>
-    <description><![CDATA[把文章放进 sitemap，再在 robots.txt 写一句 Allow，并不能保证 Google 收录。前者提供发现网址的线索，后者表达爬虫能否抓取；页面是否被抓取、如何被索引]]></description>
 </item></channel>
 </rss>

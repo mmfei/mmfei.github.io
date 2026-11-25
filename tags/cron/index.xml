@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>cron - 标签 - 木木飞</title>
+        <link>https://www.mmfei.com/tags/cron/</link>
+        <description>cron - 标签 - 木木飞</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 25 Nov 2026 09:26:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/tags/cron/" rel="self" type="application/rss+xml" /><item>
+    <title>crontab 不执行、手动却可以：PATH、百分号、权限、工作目录和怎么查日志</title>
+    <link>https://www.mmfei.com/2026/11/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C/</link>
+    <pubDate>Wed, 25 Nov 2026 09:26:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C/</guid>
+    <description><![CDATA[写好了 crontab，脚本在终端里跑得通，到点却没反应，或者根本不知道有没有跑过。这通常不是「cron 坏了」，而是 cron 的环境和手工执行不一样。]]></description>
+</item></channel>
+</rss>

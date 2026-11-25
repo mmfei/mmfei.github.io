@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>MySQL 连接数过多（too many connections）怎么处理？查看占用、KILL 与 max_connections（8.4 实测） - 木木飞</title><meta name="Description" content="在官方 MySQL 8.4.13 一次性容器里查看当前连接，复现 1040 Too many connections，验证为 CONNECTION_ADMIN 预留的额外连接，用 PROCESSLIST 定位并 KILL 会话，并说明 SET GLOBAL 与配置文件、重启的关系。"><meta property="og:title" content="MySQL 连接数过多（too many connections）怎么处理？查看占用、KILL 与 max_connections（8.4 实测）" />
+<meta property="og:description" content="在官方 MySQL 8.4.13 一次性容器里查看当前连接，复现 1040 Too many connections，验证为 CONNECTION_ADMIN 预留的额外连接，用 PROCESSLIST 定位并 KILL 会话，并说明 SET GLOBAL 与配置文件、重启的关系。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.mmfei.com/2026/11/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-11-25T09:38:00&#43;07:00" />
+<meta property="article:modified_time" content="2026-11-25T09:38:00&#43;07:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
+
+<meta name="twitter:title" content="MySQL 连接数过多（too many connections）怎么处理？查看占用、KILL 与 max_connections（8.4 实测）"/>
+<meta name="twitter:description" content="在官方 MySQL 8.4.13 一次性容器里查看当前连接，复现 1040 Too many connections，验证为 CONNECTION_ADMIN 预留的额外连接，用 PROCESSLIST 定位并 KILL 会话，并说明 SET GLOBAL 与配置文件、重启的关系。"/>
+<meta name="application-name" content="木木飞">
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.mmfei.com/2026/11/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A/" /><link rel="prev" href="https://www.mmfei.com/2026/11/%E6%9C%AC%E5%9C%B0whisper%E7%94%9F%E6%88%90srt%E5%AD%97%E5%B9%95/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "MySQL 连接数过多（too many connections）怎么处理？查看占用、KILL 与 max_connections（8.4 实测）",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.mmfei.com\/2026\/11\/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A\/"
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "MySQL, 连接数, too many connections, max_connections, 运维","wordcount":  5028 ,
+        "url": "https:\/\/www.mmfei.com\/2026\/11\/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A\/","datePublished": "2026-11-25T09:38:00+07:00","dateModified": "2026-11-25T09:38:00+07:00","publisher": {
+            "@type": "Organization",
+            "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "mmfei"
+            },"description": "在官方 MySQL 8.4.13 一次性容器里查看当前连接，复现 1040 Too many connections，验证为 CONNECTION_ADMIN 预留的额外连接，用 PROCESSLIST 定位并 KILL 会话，并说明 SET GLOBAL 与配置文件、重启的关系。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-desktop" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-desktop"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a>
+                <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile">
+                <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-mobile" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-mobile"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<style>
+#header-desktop .header-wrapper .menu { overflow: visible; }
+#header-desktop .menu-has-sub { position: relative; display: inline-block; }
+#header-desktop .menu-parent-link,
+#header-mobile .menu-parent-link { color: inherit; text-decoration: none; }
+#header-desktop .menu-has-sub.active .menu-parent-link { font-weight: 900; }
+#header-desktop .menu-sub-toggle {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: 1;
+    padding: 0 2px;
+    cursor: pointer;
+}
+#header-desktop .menu-sub {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 8.5rem;
+    margin: 0;
+    padding: 6px 0;
+    text-align: left;
+    background: #f8f8f8;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .12);
+    z-index: 220;
+}
+#header-desktop .menu-has-sub:hover > .menu-sub,
+#header-desktop .menu-has-sub:focus-within > .menu-sub,
+#header-desktop .menu-has-sub.is-open > .menu-sub { display: block; }
+#header-desktop .menu-sub a { display: block; padding: 6px 14px; white-space: nowrap; color: inherit; text-decoration: none; }
+body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: #363636; }
+#header-mobile .menu-has-sub,
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub,
+#header-mobile .menu-sub a { display: block; }
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub a { line-height: 2.5rem; }
+#header-mobile .menu-sub-toggle { display: none; }
+</style>
+<script>
+(function () {
+    var buttons = document.querySelectorAll(".menu-sub-toggle");
+    Array.prototype.forEach.call(buttons, function (button) {
+        button.addEventListener("click", function () {
+            var item = button.parentNode;
+            var open = item.classList.toggle("is-open");
+            button.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key !== "Escape") return;
+        Array.prototype.forEach.call(buttons, function (button) {
+            button.parentNode.classList.remove("is-open");
+            button.setAttribute("aria-expanded", "false");
+        });
+    });
+})();
+</script>
+<main class="main">
+                <div class="container"><div class="sk-page sk-article"><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div><article class="page single sk-single">
+            <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/mysql/">mysql</a></p><h1 class="single-title sk-single-title">MySQL 连接数过多（too many connections）怎么处理？查看占用、KILL 与 max_connections（8.4 实测）</h1><div class="post-meta sk-single-meta">
+                    <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
+                    </div>
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-25">2026-11-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5028 字&nbsp;
+                        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;<span id="/2026/11/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A/" class="leancloud_visitors" data-flag-title="MySQL 连接数过多（too many connections）怎么处理？查看占用、KILL 与 max_connections（8.4 实测）">
+                                <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                            </span>&nbsp;</div>
+                </div>
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#结论速查">结论速查</a></li>
+    <li><a href="#1-准备一次性的官方-mysql-84-实例">1. 准备一次性的官方 MySQL 8.4 实例</a></li>
+    <li><a href="#2-先看默认上限和当前连接">2. 先看默认上限和当前连接</a></li>
+    <li><a href="#3-准备一个普通账号和一个有-connection_admin-的账号">3. 准备一个普通账号和一个有 CONNECTION_ADMIN 的账号</a></li>
+    <li><a href="#4-把上限临时降到-5复现-1040">4. 把上限临时降到 5，复现 1040</a></li>
+    <li><a href="#5-kill-一个会话后普通账号可以再连上">5. KILL 一个会话后，普通账号可以再连上</a></li>
+    <li><a href="#6-set-global-可以临时调大但重启会丢除非写入配置文件">6. SET GLOBAL 可以临时调大，但重启会丢，除非写入配置文件</a></li>
+    <li><a href="#7-wait_timeout-与连接泄漏先观察不给生产推荐值">7. wait_timeout 与连接泄漏：先观察，不给生产推荐值</a></li>
+    <li><a href="#8-内存代价用官方公式和本实例测到的变量来算不拍脑袋">8. 内存代价：用官方公式和本实例测到的变量来算，不拍脑袋</a></li>
+    <li><a href="#常见问题">常见问题</a></li>
+    <li><a href="#安全注意">安全注意</a></li>
+    <li><a href="#回滚">回滚</a></li>
+    <li><a href="#实测环境与来源">实测环境与来源</a></li>
+  </ul>
+</nav></div>
+                </details><div class="content" id="content"><p>应用或客户端报 <code>Too many connections</code> 时，先看当前有多少连接、是谁占着、能不能先腾出一个会话，再决定要不要临时加大 <code>max_connections</code>。不要把“把上限调到很大”当成第一步。</p>
+<p>本文只讲连接数排查和上限，不讲安装，也不讲慢查询。安装见站内<a href="https://www.mmfei.com/2024/06/ubuntu%e5%ae%89%e8%a3%85mysql8/" target="_blank" rel="noopener noreffer">Ubuntu安装mysql8</a>，慢查询见<a href="https://www.mmfei.com/2026/11/mysql%e6%85%a2%e6%9f%a5%e8%af%a2%e6%97%a5%e5%bf%97%e6%80%8e%e4%b9%88%e7%9c%8b" target="_blank" rel="noopener noreffer">MySQL慢查询日志怎么看</a>。下面的输出全部来自官方 <code>mysql:8.4.13</code> 一次性容器，密码只是实验占位值。</p>
+<blockquote>
+<p>资料核对日期：2026 年 11 月 25 日。依据当时的 MySQL 8.4 手册：<a href="https://dev.mysql.com/doc/refman/8.4/en/too-many-connections.html" target="_blank" rel="noopener noreffer">Too many connections</a>、<a href="https://dev.mysql.com/doc/refman/8.4/en/server-system-variables.html#sysvar_max_connections" target="_blank" rel="noopener noreffer">max_connections</a>、<a href="https://dev.mysql.com/doc/refman/8.4/en/show-processlist.html" target="_blank" rel="noopener noreffer">SHOW PROCESSLIST</a>、<a href="https://dev.mysql.com/doc/refman/8.4/en/memory-use.html" target="_blank" rel="noopener noreffer">How MySQL Uses Memory</a>、<a href="https://dev.mysql.com/doc/refman/8.4/en/innodb-init-startup-configuration.html" target="_blank" rel="noopener noreffer">InnoDB Startup Configuration</a> 中的估算公式、<a href="https://dev.mysql.com/doc/refman/8.4/en/server-system-variables.html#sysvar_wait_timeout" target="_blank" rel="noopener noreffer">wait_timeout</a>。实测版本是 8.4.13，不要用 MariaDB 的表现来给 MySQL 下结论。</p>
+</blockquote>
+<h2 id="结论速查">结论速查</h2>
+<table>
+<thead>
+<tr>
+<th>你看到的现象</th>
+<th>先看什么</th>
+<th>常见处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ERROR 1040 (...) Too many connections</code></td>
+<td><code>SHOW VARIABLES LIKE 'max_connections'</code>，<code>SHOW STATUS LIKE 'Threads_connected'</code>，<code>SHOW PROCESSLIST</code> 或 <code>performance_schema.processlist</code></td>
+<td>找出长时间 <code>Sleep</code> 或卡住的会话；能确认无用后再 <code>KILL</code>。不要先盲目加大上限</td>
+</tr>
+<tr>
+<td>普通账号已经连不上，管理员还能进去</td>
+<td>官方为 <code>CONNECTION_ADMIN</code>（或已弃用的 <code>SUPER</code>）预留的 <code>max_connections + 1</code> 条连接</td>
+<td>用有该权限的账号登录、排查；把这个权限只留给管理员</td>
+</tr>
+<tr>
+<td>改了 <code>SET GLOBAL max_connections</code>，重启后又回去了</td>
+<td>配置文件里有没有写这一项</td>
+<td><code>SET GLOBAL</code> 只改运行中的值；要持久化需写选项文件并重启，或使用官方的持久化变量机制（后者本文未实测）</td>
+</tr>
+<tr>
+<td>连接池总是被占满，但 <code>PROCESSLIST</code> 里很多 <code>Sleep</code></td>
+<td><code>Time</code> 和 <code>wait_timeout</code></td>
+<td>多半是应用没把连接还回池里。默认 <code>wait_timeout</code> 是 28800 秒（8 小时），空闲连接会一直占槽</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-准备一次性的官方-mysql-84-实例">1. 准备一次性的官方 MySQL 8.4 实例</h2>
+<p>本环境共享 Docker 的默认网桥 <code>docker0</code> 不存在，为了不重启共享 <code>dockerd</code>，另外建了一个一次性网桥，并把端口只绑在 <code>127.0.0.1</code>。如果你那边默认 bridge 正常，可以改用默认网络，但仍应把发布端口限制在回环地址。数据目录和配置目录都是一次性的。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">umask</span> <span class="m">077</span>
+<span class="nv">LAB</span><span class="o">=</span>/tmp/mmfei-20261125-mysql
+mkdir -p <span class="s2">&#34;</span><span class="nv">$LAB</span><span class="s2">/data&#34;</span> <span class="s2">&#34;</span><span class="nv">$LAB</span><span class="s2">/conf.d&#34;</span>
+chmod <span class="m">755</span> <span class="s2">&#34;</span><span class="nv">$LAB</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$LAB</span><span class="s2">/conf.d&#34;</span>
+
+<span class="c1"># 本环境需要自定义网桥；测完删除</span>
+docker network create --driver bridge <span class="se">\
+</span><span class="se"></span>  --subnet 172.28.25.0/24 <span class="se">\
+</span><span class="se"></span>  -o com.docker.network.bridge.name<span class="o">=</span>mmfei20261125br <span class="se">\
+</span><span class="se"></span>  mmfei-20261125-mysql-net
+
+docker run -d <span class="se">\
+</span><span class="se"></span>  --name mmfei-20261125-mysql <span class="se">\
+</span><span class="se"></span>  --hostname mmfei-mysql-lab <span class="se">\
+</span><span class="se"></span>  --network mmfei-20261125-mysql-net <span class="se">\
+</span><span class="se"></span>  -e <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span><span class="s1">&#39;TestOnly_ChangeMe&#39;</span> <span class="se">\
+</span><span class="se"></span>  -e <span class="nv">MYSQL_DATABASE</span><span class="o">=</span>lab <span class="se">\
+</span><span class="se"></span>  -p 127.0.0.1:33070:3306 <span class="se">\
+</span><span class="se"></span>  -v <span class="s2">&#34;</span><span class="nv">$LAB</span><span class="s2">/data:/var/lib/mysql&#34;</span> <span class="se">\
+</span><span class="se"></span>  -v <span class="s2">&#34;</span><span class="nv">$LAB</span><span class="s2">/conf.d:/etc/mysql/conf.d&#34;</span> <span class="se">\
+</span><span class="se"></span>  mysql:8.4.13 <span class="se">\
+</span><span class="se"></span>  --character-set-server<span class="o">=</span>utf8mb4
+</code></pre></td></tr></table>
+</div>
+</div><p><code>conf.d</code> 必须让容器内的 <code>mysql</code> 用户能读（目录 755，配置文件 644）。本次一开始把目录设成 700，入口脚本会报 <code>Can't read dir of '/etc/mysql/conf.d/'</code> 并退出。</p>
+<p>等就绪：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker <span class="nb">exec</span> -e <span class="nv">MYSQL_PWD</span><span class="o">=</span><span class="s1">&#39;TestOnly_ChangeMe&#39;</span> mmfei-20261125-mysql <span class="se">\
+</span><span class="se"></span>  mysqladmin ping -uroot --silent
+</code></pre></td></tr></table>
+</div>
+</div><p>下面的客户端命令都通过 <code>docker exec</code> 走容器内 socket。镜像版本与本次实际读到的服务器版本：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">8.4.13
+</code></pre></td></tr></table>
+</div>
+</div><p>镜像 digest 为 <code>mysql@sha256:8c233bad33d520a7aae1c1e619c3a9775f4a1ba2d463d692fada04ec7f40be00</code>。命令行里出现的密码只用于这个可丢弃实例；生产请用权限 600 的 <code>~/.my.cnf</code> 或 socket 认证，不要把密码写进历史记录。</p>
+<h2 id="2-先看默认上限和当前连接">2. 先看默认上限和当前连接</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span><span class="w"> </span><span class="n">VARIABLES</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Variable_name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span><span class="w">  </span><span class="s1">&#39;max_connections&#39;</span><span class="p">,</span><span class="s1">&#39;wait_timeout&#39;</span><span class="p">,</span><span class="s1">&#39;interactive_timeout&#39;</span><span class="p">,</span><span class="s1">&#39;thread_stack&#39;</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="s1">&#39;open_files_limit&#39;</span><span class="p">,</span><span class="s1">&#39;admin_address&#39;</span><span class="p">,</span><span class="s1">&#39;admin_port&#39;</span><span class="p">);</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">SHOW</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">STATUS</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Variable_name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span><span class="w">  </span><span class="s1">&#39;Threads_connected&#39;</span><span class="p">,</span><span class="s1">&#39;Threads_running&#39;</span><span class="p">,</span><span class="s1">&#39;Threads_created&#39;</span><span class="p">,</span><span class="s1">&#39;Threads_cached&#39;</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="s1">&#39;Max_used_connections&#39;</span><span class="p">,</span><span class="s1">&#39;Max_used_connections_time&#39;</span><span class="p">,</span><span class="s1">&#39;Connections&#39;</span><span class="p">,</span><span class="w">
+</span><span class="w">  </span><span class="s1">&#39;Aborted_connects&#39;</span><span class="p">,</span><span class="s1">&#39;Aborted_clients&#39;</span><span class="p">,</span><span class="s1">&#39;Connection_errors_max_connections&#39;</span><span class="p">);</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>本次官方镜像、尚未改配置时的关键默认值：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">max_connections     151
+wait_timeout        28800
+interactive_timeout 28800
+thread_stack        1048576
+admin_address       （空）
+admin_port          33062
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">Threads_connected                 1
+Max_used_connections              1
+Connection_errors_max_connections 0
+Aborted_connects                  0
+</code></pre></td></tr></table>
+</div>
+</div><p>与 2026-11-25 的 8.4 手册一致：<code>max_connections</code> 默认 151，范围 1 到 100000，可在运行中修改；有效上限还受 <code>open_files_limit - 810</code> 约束。<code>wait_timeout</code> 默认 28800 秒，作用于非交互连接空闲超时。</p>
+<p><code>Threads_connected</code> 是当前打开的客户端连接数，<code>Max_used_connections</code> 是启动以来的峰值。它们是看“有没有顶满”的第一组数字。<code>event_scheduler</code> 会出现在进程列表里，但不计入这组客户端连接。</p>
+<h2 id="3-准备一个普通账号和一个有-connection_admin-的账号">3. 准备一个普通账号和一个有 CONNECTION_ADMIN 的账号</h2>
+<p>官方 <a href="https://dev.mysql.com/doc/refman/8.4/en/too-many-connections.html" target="_blank" rel="noopener noreffer">Too many connections</a> 写明：服务器实际允许 <code>max_connections + 1</code> 条客户端连接，多出来的那一条预留给具有 <code>CONNECTION_ADMIN</code> 权限（或已弃用的 <code>SUPER</code>）的账号，以便普通连接已经满了时，管理员还能进去做 <code>SHOW PROCESSLIST</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">&#39;app&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;AppOnly_ChangeMe&#39;</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">&#39;dba&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">&#39;DbaOnly_ChangeMe&#39;</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">lab</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;app&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">GRANT</span><span class="w"> </span><span class="n">CONNECTION_ADMIN</span><span class="p">,</span><span class="w"> </span><span class="n">PROCESS</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">&#39;dba&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="n">FLUSH</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">SHOW</span><span class="w"> </span><span class="n">GRANTS</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="s1">&#39;app&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">SHOW</span><span class="w"> </span><span class="n">GRANTS</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="s1">&#39;dba&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>本次结果：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">GRANT USAGE ON *.* TO `app`@`%`
+GRANT SELECT ON `lab`.* TO `app`@`%`
+
+GRANT PROCESS ON *.* TO `dba`@`%`
+GRANT CONNECTION_ADMIN ON *.* TO `dba`@`%`
+</code></pre></td></tr></table>
+</div>
+</div><p><code>app</code> 没有 <code>CONNECTION_ADMIN</code> 或 <code>SUPER</code>。<code>root</code> 在本镜像里同时拥有这两项，以及 <code>PROCESS</code>、<code>SYSTEM_VARIABLES_ADMIN</code>。生产环境不要把 <code>CONNECTION_ADMIN</code> 授给普通应用账号，否则预留连接就失去意义。</p>
+<h2 id="4-把上限临时降到-5复现-1040">4. 把上限临时降到 5，复现 1040</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">max_connections</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">@@</span><span class="k">GLOBAL</span><span class="p">.</span><span class="n">max_connections</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>返回 <code>5</code>。然后用普通账号打开 5 个一直不退出的会话（这里用 <code>SELECT SLEEP(600)</code> 占住，只为了实验）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SHOW</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">STATUS</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Variable_name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span><span class="w">  </span><span class="s1">&#39;Threads_connected&#39;</span><span class="p">,</span><span class="s1">&#39;Max_used_connections&#39;</span><span class="p">,</span><span class="s1">&#39;Connection_errors_max_connections&#39;</span><span class="p">);</span><span class="w">
+</span><span class="w"></span><span class="k">SHOW</span><span class="w"> </span><span class="k">FULL</span><span class="w"> </span><span class="n">PROCESSLIST</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>本次在 5 个 <code>app</code> 会话都还在时，用 root 查询看到：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">Threads_connected    6
+Max_used_connections 6
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">Id  User             Command  State       Info
+5   event_scheduler  Daemon   Waiting...  NULL
+18  app              Query    User sleep  SELECT SLEEP(600)
+19  app              Query    User sleep  SELECT SLEEP(600)
+20  app              Query    User sleep  SELECT SLEEP(600)
+21  app              Query    User sleep  SELECT SLEEP(600)
+22  app              Query    User sleep  SELECT SLEEP(600)
+23  root             Query    init        SHOW FULL PROCESSLIST
+</code></pre></td></tr></table>
+</div>
+</div><p>5 个普通连接已经用满 <code>max_connections</code>，root 用的是那条预留连接，所以 <code>Threads_connected</code> 为 6。官方手册还写：<code>SHOW PROCESSLIST</code> 的 INFORMATION_SCHEMA 实现已弃用，建议改用 Performance Schema：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span><span class="w"> </span><span class="n">ID</span><span class="p">,</span><span class="w"> </span><span class="k">USER</span><span class="p">,</span><span class="w"> </span><span class="k">HOST</span><span class="p">,</span><span class="w"> </span><span class="n">DB</span><span class="p">,</span><span class="w"> </span><span class="n">COMMAND</span><span class="p">,</span><span class="w"> </span><span class="n">TIME</span><span class="p">,</span><span class="w"> </span><span class="k">STATE</span><span class="p">,</span><span class="w"> </span><span class="k">LEFT</span><span class="p">(</span><span class="n">INFO</span><span class="p">,</span><span class="mi">80</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">INFO</span><span class="w">
+</span><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">performance_schema</span><span class="p">.</span><span class="n">processlist</span><span class="w">
+</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">ID</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>本次它额外列出了一条 <code>system user</code> 后台线程，这是 <code>SHOW FULL PROCESSLIST</code> 里没有的。没有 <code>PROCESS</code> 权限的账号通常只能看到自己的会话。</p>
+<p>此时再让 <code>app</code> 连接：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">ERROR 1040 (08004): Too many connections
+</code></pre></td></tr></table>
+</div>
+</div><p>同一个状态下，<code>dba</code>（只有 <code>CONNECTION_ADMIN</code> 和 <code>PROCESS</code>，没有 <code>SUPER</code>）仍然可以连上：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">CURRENT_USER()  CONNECTION_ID()
+dba@%           27
+</code></pre></td></tr></table>
+</div>
+</div><p>这与 8.4 文档中“为 CONNECTION_ADMIN / SUPER 预留额外一条连接”的说明一致。</p>
+<p>有两点限制，也在本次观察到了：</p>
+<ul>
+<li>预留的只有一条。如果管理员自己也用长时间会话把这条占住，其它管理员再连会失败。本次在 5 个 <code>app</code> 再加上一个不退出的 <code>dba</code> 之后，root 再连得到的是 <code>ERROR 1040 (HY000): Too many connections</code>。SQLSTATE 与普通账号被拒时的 <code>08004</code> 不同，但错误号仍是 1040。</li>
+<li>官方还提到专用管理接口。本次 <code>admin_address</code> 为空，未启用，也就没有在那条路径上做实测。</li>
+</ul>
+<h2 id="5-kill-一个会话后普通账号可以再连上">5. KILL 一个会话后，普通账号可以再连上</h2>
+<p>先确认要杀的是哪一个会话，再执行 <code>KILL</code>。不要误杀正在跑业务的会话。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span><span class="w"> </span><span class="n">ID</span><span class="p">,</span><span class="w"> </span><span class="k">USER</span><span class="p">,</span><span class="w"> </span><span class="n">COMMAND</span><span class="p">,</span><span class="w"> </span><span class="n">TIME</span><span class="p">,</span><span class="w"> </span><span class="k">LEFT</span><span class="p">(</span><span class="n">INFO</span><span class="p">,</span><span class="mi">40</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">INFO</span><span class="w">
+</span><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">performance_schema</span><span class="p">.</span><span class="n">processlist</span><span class="w">
+</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">USER</span><span class="o">=</span><span class="s1">&#39;app&#39;</span><span class="w">
+</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">ID</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>本次杀掉了 <code>Id=13</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="n">KILL</span><span class="w"> </span><span class="mi">13</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>返回后进程列表里已经没有 13，<code>Threads_connected</code> 从 6 降到 5（剩下 4 个 <code>app</code> 加上当前这条 root 查询）。随后普通账号立刻可以再连上：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">x               id
+app-after-kill  24
+</code></pre></td></tr></table>
+</div>
+</div><p><code>KILL</code> 只结束那一个会话，不会改变 <code>max_connections</code>。这是满员时最直接的临时处理：先腾位置，再查为什么连接没被释放。</p>
+<h2 id="6-set-global-可以临时调大但重启会丢除非写入配置文件">6. SET GLOBAL 可以临时调大，但重启会丢，除非写入配置文件</h2>
+<p>在仍然有若干 <code>app</code> 会话占着的情况下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">max_connections</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>返回 10。随后又成功增加了 4 个 <code>app</code> 会话，<code>Max_used_connections</code> 达到 9，<code>Connection_errors_max_connections</code> 为 1（对应前面那次 1040）。这说明把上限调大能立即允许新的普通连接；它解决的是“现在挤不进去”，并不自动修好连接泄漏。</p>
+<p><code>SET GLOBAL</code> 与配置文件、重启的关系，本次只重启了这个实验容器，没有重启共享 Docker 守护进程：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>重启后的 <code>max_connections</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>只 <code>SET GLOBAL</code> 为 10，<code>conf.d</code> 里没有这项</td>
+<td>151（回到镜像默认）</td>
+</tr>
+<tr>
+<td>在 <code>/etc/mysql/conf.d/mmfei-lab.cnf</code> 写入 <code>max_connections=8</code> 再重启</td>
+<td>8</td>
+</tr>
+<tr>
+<td>配置文件仍是 8，再 <code>SET GLOBAL</code> 为 20，然后重启</td>
+<td>8（文件赢了运行中的修改）</td>
+</tr>
+</tbody>
+</table>
+<p>配置文件示例（数字只用于这次实验，不是生产推荐值）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-ini" data-lang="ini"><span class="k">[mysqld]</span>
+<span class="na">max_connections</span><span class="o">=</span><span class="s">8</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>文件放进会为 mysqld 读取的目录（本次是镜像的 <code>/etc/mysql/conf.d/</code>），权限让 <code>mysql</code> 用户能读，然后重启 mysqld。官方还有 <code>SET PERSIST</code> 一类把运行时改动写进 <code>mysqld-auto.cnf</code> 的机制，本文没有实测。</p>
+<h2 id="7-wait_timeout-与连接泄漏先观察不给生产推荐值">7. wait_timeout 与连接泄漏：先观察，不给生产推荐值</h2>
+<p><code>PROCESSLIST</code> 里 <code>Command</code> 为 <code>Sleep</code> 的会话表示当前没有在执行语句，但连接仍占着一个槽，直到客户端断开，或空闲时间达到该会话的 <code>wait_timeout</code>（交互式客户端则看 <code>interactive_timeout</code>）。本次默认都是 28800 秒。</p>
+<p>实验里给一个 <code>app</code> 会话执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span><span class="w"> </span><span class="k">SESSION</span><span class="w"> </span><span class="n">wait_timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">CONNECTION_ID</span><span class="p">(),</span><span class="w"> </span><span class="o">@@</span><span class="k">session</span><span class="p">.</span><span class="n">wait_timeout</span><span class="p">;</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>随后不再发送 SQL。当时进程列表里可以看到这条 <code>Command=Sleep</code> 的 <code>app</code> 会话；大约 5 秒后再查，该会话已经消失，<code>Aborted_clients</code> 有增加。另一次观察里，一条空闲的 <code>Sleep</code> 会话会把 <code>Threads_connected</code> 多计 1，把这条客户端关掉后计数就降回去。</p>
+<p>这只能说明：空闲连接确实占槽，短的 <code>wait_timeout</code> 会把它们收回。它不能推出“生产应该设成 3 秒或某个常用值”。连接池里的空闲连接如果被服务器先断开，应用侧还可能遇到“已经断了却误以为还能用”的错误。真正要查的是：连接池是否按用完归还、有没有会话一直挂着事务或 <code>SLEEP</code>、有没有脚本没关连接。</p>
+<h2 id="8-内存代价用官方公式和本实例测到的变量来算不拍脑袋">8. 内存代价：用官方公式和本实例测到的变量来算，不拍脑袋</h2>
+<p>加大 <code>max_connections</code> 会提高潜在内存占用。官方 <a href="https://dev.mysql.com/doc/refman/8.4/en/memory-use.html" target="_blank" rel="noopener noreffer">How MySQL Uses Memory</a> 指出，每个连接线程至少涉及 <code>thread_stack</code>、连接缓冲和结果缓冲（由 <code>net_buffer_length</code> 起步，可增长到 <code>max_allowed_packet</code>），以及每会话 <code>max_digest_length</code>；执行具体语句时还可能再分配 <code>read_buffer_size</code>、<code>sort_buffer_size</code> 等。这些缓冲并不是在每个连接上一开始就全部占满。</p>
+<p>8.4 手册的 <a href="https://dev.mysql.com/doc/refman/8.4/en/innodb-init-startup-configuration.html" target="_blank" rel="noopener noreffer">InnoDB Startup Configuration</a> 另外给了一个粗算公式，并写明需要按你的版本和配置调整：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">innodb_buffer_pool_size
++ key_buffer_size
++ max_connections*(sort_buffer_size+read_buffer_size+binlog_cache_size)
++ max_connections*2MB
+</code></pre></td></tr></table>
+</div>
+</div><p>该页还写：每个线程使用一块栈（常常按 2MB 估，Oracle 提供的某些二进制里曾是 256KB），最坏情况下还会再加上 <code>sort_buffer_size + read_buffer_size</code>。</p>
+<p>把本实例测到的默认值代入（<code>innodb_buffer_pool_size=128MiB</code>，<code>key_buffer_size=8MiB</code>，<code>sort+read+binlog=416KiB</code>，<code>max_connections=151</code>）：</p>
+<ul>
+<li>按公式里的 <code>* 2MB</code> 项计算，合计约 <strong>499.34 MiB</strong></li>
+<li>本次 <code>thread_stack</code> 实际是 <strong>1048576（1MB）</strong>，若把公式最后一项改成按 1MB 算，合计约 <strong>348.34 MiB</strong></li>
+</ul>
+<p>这只是按官方公式和本容器默认变量做的算术，假设所有连接同时用上公式里的那些缓冲；实际占用可能更低，也可能因排序、大包、连接跟踪等更高。它不是“这台机器应该把 <code>max_connections</code> 设成多少”的答案。调大上限前，先确认机器在 InnoDB 缓冲池和其它进程之外，还撑不撑得住最坏情况。</p>
+<h2 id="常见问题">常见问题</h2>
+<p><strong>已经满了，普通账号连不上，我该登录哪个账号？</strong><br>
+用拥有 <code>CONNECTION_ADMIN</code>（或 <code>SUPER</code>）的管理员账号。本次 <code>dba</code> 在 5 个普通连接占满时仍然可以登录。不要把这个权限给应用账号。</p>
+<p><strong><code>SHOW PROCESSLIST</code> 和 <code>performance_schema.processlist</code> 为什么不完全一样？</strong><br>
+官方推荐用 Performance Schema 实现。本次它多显示了后台 <code>system user</code>。看谁占着客户端槽，主要盯 <code>User</code> 为业务账号、<code>Command</code> 为 <code>Query</code> 或 <code>Sleep</code> 的行。</p>
+<p><strong><code>SET GLOBAL</code> 当时生效，维护窗口重启后又变回去？</strong><br>
+运行中的修改默认不写进配置文件。把需要保留的值写入 mysqld 会读到的选项文件，再重启并核对 <code>SHOW VARIABLES</code>。</p>
+<p><strong>把 <code>max_connections</code> 加大之后，应用还是报连接不够？</strong><br>
+先看是不是马上又出现大量 <code>Sleep</code> 或未提交的会话。上限只能延后挤满，不能代替修连接池和泄漏。</p>
+<p><strong>错误号都是 1040，SQLSTATE 却不一样？</strong><br>
+本次普通账号在额度用尽时是 <code>ERROR 1040 (08004): Too many connections</code>；预留连接也被占住后，管理员再连是 <code>ERROR 1040 (HY000): Too many connections</code>。排查时以错误号和原文为准，同时看当时是否已经有管理员占着那条预留连接。</p>
+<h2 id="安全注意">安全注意</h2>
+<ul>
+<li>实验密码、端口和数据目录都是一次性的，容器端口只绑 <code>127.0.0.1</code>。生产必须有认证、网段限制和最小权限。</li>
+<li><code>KILL</code> 会打断正在执行的语句并断开会话，可能造成未提交事务回滚。先确认 <code>INFO</code> 和 <code>Time</code>，不要按感觉杀。</li>
+<li>命令行密码会进进程列表和 shell 历史。演示里用 <code>MYSQL_PWD</code> 同样不适合生产。</li>
+<li>不要在共享或生产实例上用 <code>SLEEP</code> 占满连接做实验。</li>
+<li>本文没有给生产环境的 <code>max_connections</code> 或 <code>wait_timeout</code> 推荐值。</li>
+</ul>
+<h2 id="回滚">回滚</h2>
+<p>若只是 <code>SET GLOBAL max_connections = ...</code>，重启且配置文件未改时，会回到文件或编译默认值。本次已验证：只改运行中的值，重启后回到 151。</p>
+<p>若已经把值写进选项文件，删掉或改回原来的数字再重启。需要在运行中先改回去时：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SET</span><span class="w"> </span><span class="k">GLOBAL</span><span class="w"> </span><span class="n">max_connections</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">151</span><span class="p">;</span><span class="w">   </span><span class="c1">-- 改回你原来的值，151 只是本镜像默认
+</span></code></pre></td></tr></table>
+</div>
+</div><p>实验容器用 <code>docker rm -f mmfei-20261125-mysql</code> 删除，并删掉一次性网桥和数据目录即可。不要对共享 <code>dockerd</code> 做 restart 或无过滤的 prune。</p>
+<h2 id="实测环境与来源">实测环境与来源</h2>
+<ul>
+<li>时间：2026-11-25 09:33–09:37，Asia/Bangkok（UTC+7）。容器内时间为 UTC</li>
+<li>版本：官方 Docker 镜像 <code>mysql:8.4.13</code>，<code>SELECT VERSION()</code> 为 <code>8.4.13</code>；digest <code>mysql@sha256:8c233bad33d520a7aae1c1e619c3a9775f4a1ba2d463d692fada04ec7f40be00</code></li>
+<li>实例：容器 <code>mmfei-20261125-mysql</code>，自定义网桥 <code>mmfei-20261125-mysql-net</code>，发布端口 <code>127.0.0.1:33070</code>，数据目录一次性；客户端走 <code>docker exec</code> / 容器内 socket。本环境默认 <code>docker0</code> 不存在，未重启共享 dockerd</li>
+<li>已实测：默认 <code>max_connections=151</code> 及上述相关变量；<code>SET GLOBAL</code> 降到 5 后用 5 个普通会话占满，第 6 个 <code>app</code> 报 <code>ERROR 1040 (08004): Too many connections</code>；具有 <code>CONNECTION_ADMIN</code> 的 <code>dba</code> 在已满时仍可连接；<code>SHOW FULL PROCESSLIST</code> 与 <code>performance_schema.processlist</code>；<code>KILL</code> 后普通账号可再连；<code>SET GLOBAL</code> 调到 10 后可再增加连接；仅 <code>SET GLOBAL</code> 重启回到 151，写入 <code>conf.d</code> 后重启保持文件中的 8；<code>wait_timeout=3</code> 的空闲会话会消失，<code>Sleep</code> 会话会占槽</li>
+<li>未实测：专用管理接口（<code>admin_address</code> 为空）；<code>SET PERSIST</code> 写 <code>mysqld-auto.cnf</code>；应用连接池在真实框架里的泄漏形态；生产环境“合适的 <code>max_connections</code> / <code>wait_timeout</code>”；把公式估算与容器实际 RSS 做逐字节对照</li>
+<li>官方文档读取日期：2026-11-25，链接见文首</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-11-25</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2026/11/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.mmfei.com/2026/11/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A/" data-title="MySQL 连接数过多（too many connections）怎么处理？查看占用、KILL 与 max_connections（8.4 实测）" data-via="mmfei" data-hashtags="MySQL,连接数,too many connections,max_connections,运维"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.mmfei.com/2026/11/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A/" data-hashtag="MySQL"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.mmfei.com/2026/11/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A/" data-title="MySQL 连接数过多（too many connections）怎么处理？查看占用、KILL 与 max_connections（8.4 实测）"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.mmfei.com/2026/11/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A/" data-title="MySQL 连接数过多（too many connections）怎么处理？查看占用、KILL 与 max_connections（8.4 实测）"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.mmfei.com/2026/11/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A/" data-title="MySQL 连接数过多（too many connections）怎么处理？查看占用、KILL 与 max_connections（8.4 实测）"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/mysql/">mysql</a>,&nbsp;<a href="/tags/%E8%BF%9E%E6%8E%A5%E6%95%B0/">连接数</a>,&nbsp;<a href="/tags/too-many-connections/">too many connections</a>,&nbsp;<a href="/tags/max_connections/">max_connections</a>,&nbsp;<a href="/tags/%E8%BF%90%E7%BB%B4/">运维</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <nav class="sk-nav" aria-label="文章导航"><a href="/2026/11/%E6%9C%AC%E5%9C%B0whisper%E7%94%9F%E6%88%90srt%E5%AD%97%E5%B9%95/" class="sk-nav-btn sk-nav-prev" rel="prev" title="whisper 字幕生成：Linux 上用 whisper.cpp 把音视频转成可编辑 SRT"><i class="fas fa-angle-left fa-fw"></i>whisper 字幕生成：Linux 上用 whisper.cpp 把音视频转成可编辑 SRT</a></nav>
+</div>
+
+<section class="sk-related">
+                    <h2 class="sk-related-title">相关文章</h2>
+                    <div class="sk-related-grid"><a class="sk-related-card" href="/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/">
+                                    <span class="sk-related-card-title">MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）</span>
+                                    <span class="sk-related-card-meta">2026-11-24MySQL · 慢查询 · mysqldumpslow · EXPLAIN · 运维</span>
+                                </a><a class="sk-related-card" href="/2026/11/docker%E7%A3%81%E7%9B%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E6%B8%85%E7%90%86/">
+                                    <span class="sk-related-card-title">Docker 磁盘满了怎么清理：先用 system df 查占用，再按容器、镜像、卷和构建缓存安全清理</span>
+                                    <span class="sk-related-card-meta">2026-11-25Docker · docker system df · docker system prune · 磁盘清理 · 运维</span>
+                                </a><a class="sk-related-card" href="/2026/11/docker%E6%97%A5%E5%BF%97%E6%B8%85%E7%90%86%E4%B8%8E%E9%99%90%E5%88%B6%E5%A4%A7%E5%B0%8F/">
+                                    <span class="sk-related-card-title">Docker 日志清理与限制大小：日志在哪、怎么查看、应急清空与 max-size 根治</span>
+                                    <span class="sk-related-card-meta">2026-11-24Docker · docker logs · 日志清理 · json-file · 运维</span>
+                                </a></div>
+                </section><div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article>
+    </div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.mmfei.com/" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/css/skin-stripe.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"valine":{"appId":"agrUIy35wmii07cPfX0p0UWx-MdYXbMMI","appKey":"xNDv6FEmi9xqlsf6out3W5c6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://agruiy35.api.lncldglobal.com","visitor":true}}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6" async></script><link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+<div id="pagefind-overlay" class="pf-overlay" aria-hidden="true">
+    <div class="pf-modal" role="dialog" aria-modal="true" aria-label="搜索">
+        <button type="button" class="pf-close" id="pagefind-close" aria-label="清空">&times;</button>
+        <div id="pagefind-ui"></div>
+    </div>
+</div>
+
+<style>
+.pf-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8vh 16px 16px;
+}
+.pf-overlay.open {
+    display: flex;
+}
+.pf-modal {
+    position: relative;
+    width: 560px;
+    max-width: 100%;
+    background: var(--card-background, #fff);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.28);
+    padding: 18px 18px 10px;
+}
+.pf-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--secondary-font-color, #666);
+    cursor: pointer;
+    padding: 6px;
+}
+.pf-close:hover { color: var(--primary-font-color, #111); }
+#pagefind-ui { min-height: 40px; }
+@media (max-width: 680px) {
+    .pf-overlay { padding: 12px 10px; align-items: flex-start; }
+    .pf-modal { padding: 14px 12px 8px; border-radius: 10px; }
+}
+</style>
+
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+(function () {
+    var overlay = document.getElementById('pagefind-overlay');
+    var modal = overlay.querySelector('.pf-modal');
+    var closeBtn = document.getElementById('pagefind-close');
+    var uiMount = document.getElementById('pagefind-ui');
+
+    function open() {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        var input = uiMount.querySelector('input');
+        if (input) { setTimeout(function () { input.focus(); }, 60); }
+    }
+    function close() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    function bindTrigger(id) {
+        var el = document.getElementById(id);
+        if (el) { el.addEventListener('click', function (e) { e.preventDefault(); open(); }); }
+    }
+    bindTrigger('pagefind-trigger-desktop');
+    bindTrigger('pagefind-trigger-mobile');
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) { close(); }
+    });
+
+    if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({
+            element: uiMount,
+            showSubResults: true,
+            showImages: false,
+            highlightQuery: true,
+            translations: {
+                placeholder: '搜索文章标题、标签或内容…',
+                clear_search: '清除',
+                load_more: '加载更多结果',
+                search_label: '搜索',
+                filters_label: '筛选',
+                no_results: '没有找到结果'
+            }
+        });
+    }
+})();
+</script>
+</body>
+</html>

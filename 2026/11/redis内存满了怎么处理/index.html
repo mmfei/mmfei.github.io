@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Redis 内存满了怎么处理？maxmemory、淘汰策略与安全释放（8.0.2 实测） - 木木飞</title><meta name="Description" content="在隔离的 Redis 8.0.2 实例上查看内存占用，设置 maxmemory 与淘汰策略，复现写满后的 OOM，对比 noeviction、allkeys-lru 和 volatile-lru，并说明删除键后 used_memory 与 RSS 的差别。"><meta property="og:title" content="Redis 内存满了怎么处理？maxmemory、淘汰策略与安全释放（8.0.2 实测）" />
+<meta property="og:description" content="在隔离的 Redis 8.0.2 实例上查看内存占用，设置 maxmemory 与淘汰策略，复现写满后的 OOM，对比 noeviction、allkeys-lru 和 volatile-lru，并说明删除键后 used_memory 与 RSS 的差别。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.mmfei.com/2026/11/redis%E5%86%85%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2026-11-25T09:26:00&#43;07:00" />
+<meta property="article:modified_time" content="2026-11-25T09:26:00&#43;07:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
+
+<meta name="twitter:title" content="Redis 内存满了怎么处理？maxmemory、淘汰策略与安全释放（8.0.2 实测）"/>
+<meta name="twitter:description" content="在隔离的 Redis 8.0.2 实例上查看内存占用，设置 maxmemory 与淘汰策略，复现写满后的 OOM，对比 noeviction、allkeys-lru 和 volatile-lru，并说明删除键后 used_memory 与 RSS 的差别。"/>
+<meta name="application-name" content="木木飞">
+<meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.mmfei.com/2026/11/redis%E5%86%85%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86/" /><link rel="prev" href="https://www.mmfei.com/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/" /><link rel="next" href="https://www.mmfei.com/2026/11/docker%E7%A3%81%E7%9B%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E6%B8%85%E7%90%86/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Redis 内存满了怎么处理？maxmemory、淘汰策略与安全释放（8.0.2 实测）",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/www.mmfei.com\/2026\/11\/redis%E5%86%85%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86\/"
+        },"image": ["https:\/\/www.mmfei.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Redis, maxmemory, 淘汰策略, 内存","wordcount":  6694 ,
+        "url": "https:\/\/www.mmfei.com\/2026\/11\/redis%E5%86%85%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86\/","datePublished": "2026-11-25T09:26:00+07:00","dateModified": "2026-11-25T09:26:00+07:00","publisher": {
+            "@type": "Organization",
+            "name": "mmfei","logo": "https:\/\/www.mmfei.com\/images\/avatar.jpg"},"author": {
+                "@type": "Person",
+                "name": "mmfei"
+            },"description": "在隔离的 Redis 8.0.2 实例上查看内存占用，设置 maxmemory 与淘汰策略，复现写满后的 OOM，对比 noeviction、allkeys-lru 和 volatile-lru，并说明删除键后 used_memory 与 RSS 的差别。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-desktop" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-desktop"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item search" id="pagefind-trigger-desktop" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a>
+                <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="木木飞"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/images/avatar.jpg"
+        data-srcset="/images/avatar.jpg, /images/avatar.jpg 1.5x, /images/avatar.jpg 2x"
+        data-sizes="auto"
+        alt="/images/avatar.jpg"
+        title="/images/avatar.jpg" /><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>木木飞</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile">
+                <a href="javascript:void(0);" class="menu-item" id="pagefind-trigger-mobile" title="搜索">
+                    <i class="fas fa-search fa-fw"></i>
+                </a><a class="menu-item" href="/posts/">所有文章</a><a class="menu-item" href="/tags/">标签</a><a class="menu-item" href="/categories/">分类</a><a class="menu-item" href="/friend/">友链</a><a class="menu-item" href="/about/">关于</a><a class="menu-item" href="/topics/video-processing/">专题</a><div class="menu-item menu-has-sub">
+        <a class="menu-parent-link" href="/tools/" title="工具总览">工具</a>
+        <button type="button" class="menu-sub-toggle" aria-expanded="false" aria-controls="menu-sub-tools-mobile" aria-label="展开工具">
+            <i class="fas fa-chevron-down fa-fw" aria-hidden="true"></i>
+        </button>
+        <div class="menu-sub" id="menu-sub-tools-mobile"><a href="/tools/fonts/" title="用同一段文字比较已核实字体">字体对比</a></div>
+    </div><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<style>
+#header-desktop .header-wrapper .menu { overflow: visible; }
+#header-desktop .menu-has-sub { position: relative; display: inline-block; }
+#header-desktop .menu-parent-link,
+#header-mobile .menu-parent-link { color: inherit; text-decoration: none; }
+#header-desktop .menu-has-sub.active .menu-parent-link { font-weight: 900; }
+#header-desktop .menu-sub-toggle {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: 1;
+    padding: 0 2px;
+    cursor: pointer;
+}
+#header-desktop .menu-sub {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 8.5rem;
+    margin: 0;
+    padding: 6px 0;
+    text-align: left;
+    background: #f8f8f8;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, .12);
+    z-index: 220;
+}
+#header-desktop .menu-has-sub:hover > .menu-sub,
+#header-desktop .menu-has-sub:focus-within > .menu-sub,
+#header-desktop .menu-has-sub.is-open > .menu-sub { display: block; }
+#header-desktop .menu-sub a { display: block; padding: 6px 14px; white-space: nowrap; color: inherit; text-decoration: none; }
+body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: #363636; }
+#header-mobile .menu-has-sub,
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub,
+#header-mobile .menu-sub a { display: block; }
+#header-mobile .menu-parent-link,
+#header-mobile .menu-sub a { line-height: 2.5rem; }
+#header-mobile .menu-sub-toggle { display: none; }
+</style>
+<script>
+(function () {
+    var buttons = document.querySelectorAll(".menu-sub-toggle");
+    Array.prototype.forEach.call(buttons, function (button) {
+        button.addEventListener("click", function () {
+            var item = button.parentNode;
+            var open = item.classList.toggle("is-open");
+            button.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key !== "Escape") return;
+        Array.prototype.forEach.call(buttons, function (button) {
+            button.parentNode.classList.remove("is-open");
+            button.setAttribute("aria-expanded", "false");
+        });
+    });
+})();
+</script>
+<main class="main">
+                <div class="container"><div class="sk-page sk-article"><div class="toc" id="toc-auto">
+                <h2 class="toc-title">目录</h2>
+                <div class="toc-content" id="toc-content-auto"></div>
+            </div><article class="page single sk-single">
+            <header class="sk-single-head"><p class="sk-single-kicker"><a href="/categories/redis/">redis</a></p><h1 class="single-title sk-single-title">Redis 内存满了怎么处理？maxmemory、淘汰策略与安全释放（8.0.2 实测）</h1><div class="post-meta sk-single-meta">
+                    <div class="post-meta-line"><span class="post-author"><a href="https://www.mmfei.com/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>mmfei</a></span>
+                    </div>
+                    <div class="post-meta-line sk-single-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2026-11-25">2026-11-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6694 字&nbsp;
+                        <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 14 分钟&nbsp;<span id="/2026/11/redis%E5%86%85%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86/" class="leancloud_visitors" data-flag-title="Redis 内存满了怎么处理？maxmemory、淘汰策略与安全释放（8.0.2 实测）">
+                                <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                            </span>&nbsp;</div>
+                </div>
+            </header><details class="sk-toc-fold" id="toc-static" data-testid="article-toc">
+                    <summary class="toc-title">目录</summary>
+                    <div class="toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#结论速查">结论速查</a></li>
+    <li><a href="#1-准备一个一次性实例">1. 准备一个一次性实例</a></li>
+    <li><a href="#2-先看当前用了多少有没有上限">2. 先看当前用了多少，有没有上限</a></li>
+    <li><a href="#3-用-redisconf-或-config-set-加上限">3. 用 redis.conf 或 CONFIG SET 加上限</a></li>
+    <li><a href="#4-noeviction写满以后会发生什么">4. noeviction：写满以后会发生什么</a></li>
+    <li><a href="#5-allkeys-lru到达上限后淘汰并继续写入">5. allkeys-lru：到达上限后淘汰并继续写入</a></li>
+    <li><a href="#6-volatile-lru没有-ttl-的键不会被淘汰">6. volatile-lru：没有 TTL 的键不会被淘汰</a></li>
+    <li><a href="#7-删除键和-flushdb-会释放什么">7. 删除键和 FLUSHDB 会释放什么</a></li>
+    <li><a href="#8-碎片相关命令跑了但不等于已经整理好">8. 碎片相关命令：跑了，但不等于已经整理好</a></li>
+    <li><a href="#9-上限设多少只有计算思路没有万能数字">9. 上限设多少：只有计算思路，没有万能数字</a></li>
+    <li><a href="#常见问题">常见问题</a></li>
+    <li><a href="#安全注意">安全注意</a></li>
+    <li><a href="#回滚">回滚</a></li>
+    <li><a href="#实测环境与来源">实测环境与来源</a></li>
+  </ul>
+</nav></div>
+                </details><div class="content" id="content"><p>Redis 占用越来越高，或已经写不进去时，先确认当前用了多少内存、有没有上限、上限到了会淘汰还是直接报错，再决定改配置还是删数据。不要一上来就 <code>FLUSHALL</code>，也不要在没看过官方说明的情况下套一个“通用百分比”。</p>
+<p>本文只讲内存上限、淘汰策略和排查释放，安装步骤见站内<a href="https://www.mmfei.com/2024/08/ubuntu%e5%ae%89%e8%a3%85redis/" target="_blank" rel="noopener noreffer">Ubuntu安装redis</a>，应用侧用法见<a href="https://www.mmfei.com/2023/11/phpredis%e7%9a%84%e4%bd%bf%e7%94%a8" target="_blank" rel="noopener noreffer">phpredis的使用</a>。所有命令输出都来自一次性本地实例，不要在生产数据上复现写满、淘汰或清空。</p>
+<blockquote>
+<p>资料核对日期：2026 年 11 月 25 日。依据当时的 <a href="https://redis.io/docs/latest/develop/reference/eviction/" target="_blank" rel="noopener noreffer">Key eviction</a>、<a href="https://redis.io/docs/latest/operate/oss_and_stack/management/optimization/memory-optimization/" target="_blank" rel="noopener noreffer">Memory optimization</a>、<a href="https://redis.io/docs/latest/develop/reference/errors/common/oom/" target="_blank" rel="noopener noreffer">OOM error</a>、<a href="https://redis.io/docs/latest/commands/info/" target="_blank" rel="noopener noreffer">INFO</a>、<a href="https://redis.io/docs/latest/commands/memory-stats/" target="_blank" rel="noopener noreffer">MEMORY STATS</a>、<a href="https://redis.io/docs/latest/commands/memory-purge/" target="_blank" rel="noopener noreffer">MEMORY PURGE</a>、<a href="https://redis.io/docs/latest/commands/config-set/" target="_blank" rel="noopener noreffer">CONFIG SET</a>、<a href="https://redis.io/docs/latest/commands/config-rewrite/" target="_blank" rel="noopener noreffer">CONFIG REWRITE</a>。实测版本是 Redis 8.0.2（64 位，jemalloc-5.3.0）。现行文档里另有较新版本才出现的策略和命令，下面会标明本实例不支持的部分。</p>
+</blockquote>
+<h2 id="结论速查">结论速查</h2>
+<table>
+<thead>
+<tr>
+<th>你看到的现象</th>
+<th>先看什么</th>
+<th>常见处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>写入失败，错误含 <code>OOM command not allowed when used memory &gt; 'maxmemory'</code></td>
+<td><code>INFO memory</code> 里的 <code>used_memory_human</code>、<code>maxmemory_human</code>、<code>maxmemory_policy</code></td>
+<td>只读和删除仍可用。缓存场景可改淘汰策略；需要保留全部键就扩容或删不用的数据，而不是盲目加大上限</td>
+</tr>
+<tr>
+<td>内存看起来一直涨</td>
+<td><code>used_memory</code>（Redis 自己的分配）和 <code>used_memory_rss</code>（进程 RSS）</td>
+<td>先确认是数据在涨，还是删了键但 RSS 没还给操作系统</td>
+</tr>
+<tr>
+<td>改了 <code>CONFIG SET maxmemory</code>，重启后又回去了</td>
+<td>配置文件里有没有对应指令</td>
+<td><code>CONFIG SET</code> 只改运行中的值，要持久化需改 <code>redis.conf</code> 或再执行 <code>CONFIG REWRITE</code></td>
+</tr>
+<tr>
+<td><code>maxmemory</code> 为 <code>0</code></td>
+<td>64 位默认就是不限制</td>
+<td>实例可以一直申请内存，官方建议设一个上限，避免把整机吃满</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-准备一个一次性实例">1. 准备一个一次性实例</h2>
+<p>下面的端口和目录只用于本次实验。启动前确认 <code>26379</code> 空闲，不要去动系统默认的 <code>6379</code>，也不要复用生产数据目录。本实例关闭了 RDB 和 AOF，方便反复清空；这不代表生产也该关掉持久化。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">umask</span> <span class="m">077</span>
+<span class="nv">LAB</span><span class="o">=</span>/tmp/mmfei-20261125-redis
+mkdir -p <span class="s2">&#34;</span><span class="nv">$LAB</span><span class="s2">&#34;</span>
+chmod <span class="m">700</span> <span class="s2">&#34;</span><span class="nv">$LAB</span><span class="s2">&#34;</span>
+
+cat &gt; <span class="s2">&#34;</span><span class="nv">$LAB</span><span class="s2">/redis.conf&#34;</span> <span class="s">&lt;&lt;&#39;EOF&#39;
+</span><span class="s">bind 127.0.0.1
+</span><span class="s">port 26379
+</span><span class="s">protected-mode yes
+</span><span class="s">daemonize no
+</span><span class="s">pidfile /tmp/mmfei-20261125-redis/redis.pid
+</span><span class="s">logfile /tmp/mmfei-20261125-redis/redis.log
+</span><span class="s">dir /tmp/mmfei-20261125-redis
+</span><span class="s">dbfilename dump.rdb
+</span><span class="s">appendonly no
+</span><span class="s">save &#34;&#34;
+</span><span class="s">EOF</span>
+
+redis-server <span class="s2">&#34;</span><span class="nv">$LAB</span><span class="s2">/redis.conf&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>另开一个终端：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">R</span><span class="o">=(</span>redis-cli -h 127.0.0.1 -p 26379<span class="o">)</span>
+<span class="s2">&#34;</span><span class="si">${</span><span class="nv">R</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span> PING
+</code></pre></td></tr></table>
+</div>
+</div><p>本次环境输出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">PONG
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">redis_version:8.0.2
+redis_mode:standalone
+arch_bits:64
+tcp_port:26379
+executable:/workspace/redis-server
+config_file:/tmp/mmfei-20261125-redis/redis.conf
+</code></pre></td></tr></table>
+</div>
+</div><p>版本行来自 <code>redis-server --version</code>：<code>Redis server v=8.0.2 sha=00000000:0 malloc=jemalloc-5.3.0 bits=64</code>。下面的 <code>redis-cli</code> 命令都相当于 <code>&quot;${R[@]}&quot; ...</code>。</p>
+<h2 id="2-先看当前用了多少有没有上限">2. 先看当前用了多少，有没有上限</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">redis-cli -h 127.0.0.1 -p <span class="m">26379</span> CONFIG GET maxmemory
+redis-cli -h 127.0.0.1 -p <span class="m">26379</span> CONFIG GET maxmemory-policy
+redis-cli -h 127.0.0.1 -p <span class="m">26379</span> INFO memory
+redis-cli -h 127.0.0.1 -p <span class="m">26379</span> MEMORY STATS
+redis-cli -h 127.0.0.1 -p <span class="m">26379</span> DBSIZE
+</code></pre></td></tr></table>
+</div>
+</div><p>空实例、配置文件里没有写 <code>maxmemory</code> 时，本机 8.0.2 的运行默认值是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">maxmemory
+0
+maxmemory-policy
+noeviction
+</code></pre></td></tr></table>
+</div>
+</div><p><code>INFO memory</code> 里和本题相关的字段（已去掉无关行）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">used_memory:783288
+used_memory_human:764.93K
+used_memory_rss:13934592
+used_memory_rss_human:13.29M
+used_memory_startup:670592
+maxmemory:0
+maxmemory_human:0B
+maxmemory_policy:noeviction
+mem_fragmentation_ratio:19.46
+mem_fragmentation_bytes:13218664
+mem_not_counted_for_evict:0
+mem_allocator:jemalloc-5.3.0
+active_defrag_running:0
+</code></pre></td></tr></table>
+</div>
+</div><p>怎么读：</p>
+<ul>
+<li><code>used_memory</code> / <code>used_memory_human</code>：Redis 向分配器申请、用于数据的内存。看占用先看这个。</li>
+<li><code>used_memory_rss</code> / <code>used_memory_rss_human</code>：操作系统看到的进程常驻内存，和 <code>top</code>/<code>ps</code> 更接近。</li>
+<li><code>maxmemory 0</code>：官方 <a href="https://redis.io/docs/latest/develop/reference/eviction/" target="_blank" rel="noopener noreffer">Key eviction</a> 写明，设为 <code>0</code> 表示不对数据集做内存上限。这是 64 位系统的默认行为；32 位系统有 3GB 的隐含上限（本文环境是 64 位，隐含上限未实测）。</li>
+<li><code>maxmemory-policy noeviction</code>：到达上限时不淘汰键，写新数据的命令会失败。本实例默认就是它。</li>
+<li><code>mem_not_counted_for_evict</code>：复制或持久化缓冲区里、不计入淘汰比较的那部分内存。本实例没有开复制和 AOF，值为 <code>0</code>。</li>
+<li><code>mem_fragmentation_ratio</code>：官方说明是 <code>used_memory_rss / used_memory</code>，并提醒其中还包含进程本身的开销。空实例上比值很高，并不等于“碎片已经很严重”。官方还写：当碎片字节数只有几兆时，比值偏高（例如 1.5 以上）也不宜单独当成故障。</li>
+</ul>
+<p><code>MEMORY STATS</code> 给出更细的分项，空实例里 <code>keys.count</code> 为 <code>0</code>，<code>total.allocated</code> 与 <code>used_memory</code> 接近，<code>fragmentation</code> 对应 <code>mem_fragmentation_ratio</code>。日常排查用 <code>INFO memory</code> 通常就够。</p>
+<p>本实例在 <code>maxmemory</code> 仍为 <code>0</code> 时写入一个小键是成功的；下面为了安全演示写满，会先加上一个很小的上限，而不会去打满整机内存。</p>
+<h2 id="3-用-redisconf-或-config-set-加上限">3. 用 redis.conf 或 CONFIG SET 加上限</h2>
+<p>两种方式含义相同，生效时机不同。</p>
+<p>配置文件（启动时生效，重启后还在）：</p>
+<pre><code class="language-conf" data-lang="conf">maxmemory 16mb
+maxmemory-policy noeviction
+</code></pre><p>运行中修改（立即生效，默认不会写回文件）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">redis-cli -h 127.0.0.1 -p <span class="m">26379</span> CONFIG SET maxmemory 16mb
+redis-cli -h 127.0.0.1 -p <span class="m">26379</span> CONFIG SET maxmemory-policy noeviction
+</code></pre></td></tr></table>
+</div>
+</div><p>本次两次 <code>CONFIG SET</code> 都返回 <code>OK</code>，随后：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">maxmemory
+16777216
+maxmemory-policy
+noeviction
+</code></pre></td></tr></table>
+</div>
+</div><p><code>16mb</code> 会被转成字节 <code>16777216</code>。只做 <code>CONFIG SET</code> 时，这次实验在 <code>SHUTDOWN NOSAVE</code> 后按原配置文件重启，<code>maxmemory</code> 回到 <code>0</code>，<code>maxmemory-policy</code> 回到 <code>noeviction</code>。要把运行中的修改写进配置文件，需要再执行 <code>CONFIG REWRITE</code>，或手工改 <code>redis.conf</code> 后重启。</p>
+<p>本次 <code>CONFIG REWRITE</code> 返回 <code>OK</code>，文件末尾被追加了：</p>
+<pre><code class="language-conf" data-lang="conf"># Generated by CONFIG REWRITE
+maxmemory 16mb
+maxmemory-policy allkeys-lru
+</code></pre><p>同时配置文件里其它运行中的项也可能被重写或补全。再用这份文件启动后，<code>CONFIG GET maxmemory</code> 为 <code>16777216</code>，<code>maxmemory-policy</code> 为 <code>allkeys-lru</code>。重启前应通读改写后的文件，确认没有把不想保留的运行时改动一起写进去。</p>
+<p>官方还提醒：如果实例开了复制或持久化，复制/AOF 缓冲不计入与 <code>maxmemory</code> 的比较，建议把 <code>maxmemory</code> 设得略低于机器上能完全交给 Redis 的内存，给这些缓冲区留余地；<code>noeviction</code> 策略下不是同样的必要。本实例没有开复制和 AOF，这一条未在该场景实测。</p>
+<h2 id="4-noeviction写满以后会发生什么">4. noeviction：写满以后会发生什么</h2>
+<p>策略为 <code>noeviction</code>、上限 <code>16mb</code> 时，用 8KiB 字符串循环 <code>SET</code>，直到 Redis 返回错误。写入命令可以写成：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">python3 -c <span class="s1">&#39;print(&#34;X&#34;*8192, end=&#34;&#34;)&#39;</span> <span class="p">|</span> redis-cli -h 127.0.0.1 -p <span class="m">26379</span> -x SET noe:0
+</code></pre></td></tr></table>
+</div>
+</div><p>本次一共成功写入 1536 个这样的键，再写就失败，错误原文是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">OOM command not allowed when used memory &gt; &#39;maxmemory&#39;.
+</code></pre></td></tr></table>
+</div>
+</div><p>当时的内存和键数量：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">used_memory:16776536
+used_memory_human:16.00M
+used_memory_rss_human:24.29M
+maxmemory:16777216
+maxmemory_human:16.00M
+maxmemory_policy:noeviction
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">1536
+</code></pre></td></tr></table>
+</div>
+</div><p>最后一次成功写入后，<code>used_memory</code> 已经非常接近 <code>16777216</code>，<code>evicted_keys</code> 仍是 <code>0</code>，符合“不淘汰、只拒写”。</p>
+<p>官方 <a href="https://redis.io/docs/latest/develop/reference/errors/common/oom/" target="_blank" rel="noopener noreffer">OOM error</a> 写明：到达上限且无法为新命令腾出空间时，增加数据的命令失败，读取和删除仍然可用。本次验证：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"># STRLEN noe:0
+8192
+# EXISTS noe:0
+1
+# DEL noe:1
+1
+</code></pre></td></tr></table>
+</div>
+</div><p><code>GET noe:0</code> 也能返回那 8192 字节。删掉一个 8KiB 键后，再写入一个很小的新键，本次仍然报同样的 OOM——当时 <code>used_memory_human</code> 为 <code>16.04M</code>，仍在上限附近（读大 value 时客户端输出缓冲也会占一点 <code>used_memory</code>）。结论是：OOM 之后读和删可用，但不等于删一个键就一定能立刻再写入同等或更小的数据，还要看当时真正腾出来的空间。</p>
+<h2 id="5-allkeys-lru到达上限后淘汰并继续写入">5. allkeys-lru：到达上限后淘汰并继续写入</h2>
+<p>在已经写满的实例上把策略改成 <code>allkeys-lru</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">redis-cli -h 127.0.0.1 -p <span class="m">26379</span> CONFIG SET maxmemory-policy allkeys-lru
+</code></pre></td></tr></table>
+</div>
+</div><p>本次改完之后、还没批量写新键时，<code>evicted_keys</code> 已经从 <code>0</code> 变成 <code>4</code>，<code>DBSIZE</code> 从删过 1 个键后的数量落到 <code>1531</code>。说明当实际占用已经达到或略超过 <code>maxmemory</code> 时，换成可淘汰策略后，后续命令处理过程中就可以开始淘汰。</p>
+<p>接着又写入 400 个 8KiB 的新键，全部成功，没有再出现 OOM。对比：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>改策略后、批量写入前</th>
+<th>再写入 400 个键之后</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>evicted_keys</code></td>
+<td>4</td>
+<td>404</td>
+</tr>
+<tr>
+<td><code>DBSIZE</code></td>
+<td>1531</td>
+<td>1531</td>
+</tr>
+<tr>
+<td><code>used_memory_human</code></td>
+<td>16.00M 附近</td>
+<td>16.00M</td>
+</tr>
+</tbody>
+</table>
+<p>键的数量没有随新写入线性增加，<code>evicted_keys</code> 正好增加了 400。这就是“淘汰旧键、腾出空间继续写”。</p>
+<p><code>allkeys-lru</code> 按近似的最近最少使用来选牺牲者，并不是精确的 LRU。本实例默认 <code>maxmemory-samples</code> 为 <code>5</code>，与官方文档里的默认示例一致。另外，Redis 用来记录“最近使用”的时钟粒度是秒级：如果在同一秒内把键全部写入再立刻淘汰，冷热对比会不明显。本次补做了一组更干净的观察：在 <code>noeviction</code> 下写入 1532 个 8KiB 键，等待 2 秒，只 <code>GET</code> 末尾 100 个键，再改成 <code>allkeys-lru</code> 并写入 300 个新键。结果是：</p>
+<ul>
+<li><code>evicted_keys</code> 增加 300，<code>DBSIZE</code> 仍为 1532，新键 300 个都还在</li>
+<li>刚访问过的 100 个热键全部还在（100/100）</li>
+<li>从未再读取的头 100 个键只剩下 58 个（58/100）</li>
+</ul>
+<p>热键被保住了，但冷键也不是全部消失，这和官方说的“近似 LRU、抽样淘汰”一致。不要把“最先写入的一定先被删”当成保证。</p>
+<h2 id="6-volatile-lru没有-ttl-的键不会被淘汰">6. volatile-lru：没有 TTL 的键不会被淘汰</h2>
+<p>官方写明：<code>volatile-*</code> 系列只在“设置了过期时间（TTL）的键”里淘汰；如果没有任何键带过期时间，行为与 <code>noeviction</code> 相同。</p>
+<p>先把策略改成 <code>volatile-lru</code>，上限仍是 <code>16mb</code>，只写入不带 TTL 的键。本次成功 1528 个后再次出现：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">OOM command not allowed when used memory &gt; &#39;maxmemory&#39;.
+</code></pre></td></tr></table>
+</div>
+</div><p><code>DBSIZE</code> 为 1528，没有靠淘汰腾出空间。</p>
+<p>再清空后换成混合数据：先写入 300 个无 TTL 的 <code>keep:*</code>，再写入 4000 个带 <code>EX 3600</code> 的 <code>tmp:*</code>。4000 次带 TTL 的写入全部返回 <code>OK</code>，但实例并没有变成 4300 个键：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">used_memory_human:16.00M
+maxmemory_policy:volatile-lru
+evicted_keys:2765
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text"># DBSIZE
+1535
+# SCAN 计数
+keep=300
+tmp=1232
+</code></pre></td></tr></table>
+</div>
+</div><p>抽查：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">EXISTS keep:0    1
+EXISTS keep:100  1
+EXISTS keep:299  1
+EXISTS tmp:0     0
+EXISTS tmp:10    0
+EXISTS tmp:100   0
+EXISTS tmp:500   0
+EXISTS tmp:1000  0
+</code></pre></td></tr></table>
+</div>
+</div><p>300 个无 TTL 的键全部还在；被淘汰的是带 TTL 的键。此时再写入一个无 TTL 的新键 <code>keep:extra</code> 也成功了，代价是继续淘汰带 TTL 的键：<code>keep</code> 变为 301，<code>tmp</code> 变为 1229，<code>evicted_keys</code> 变为 2771。</p>
+<p>所以：<code>volatile-lru</code> 适合“同一实例里既有必须保留的数据、又有可丢的缓存，并且缓存键都设了 TTL”的情况。官方也建议，若条件允许，缓存和必须持久保留的数据分两个实例更清晰。给键设置过期时间本身也要占一点内存；如果整库都是可丢的缓存，<code>allkeys-lru</code> 往往更省事，也不依赖 TTL。</p>
+<p>Redis 8.0.2 实际接受的 <code>maxmemory-policy</code> 只有下面 8 种（<code>CONFIG SET</code> 会校验）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">noeviction
+allkeys-lru
+allkeys-lfu
+allkeys-random
+volatile-lru
+volatile-lfu
+volatile-random
+volatile-ttl
+</code></pre></td></tr></table>
+</div>
+</div><p>本次把 <code>allkeys-lrm</code>、<code>volatile-lrm</code> 写进去会被拒绝，错误里列出的就是上面这份清单。2026-11-25 的官方淘汰文档还提到了 <code>allkeys-lrm</code> / <code>volatile-lrm</code>（按最近修改时间淘汰），那是更新版本里的策略，不能默认 8.0.2 已经支持。<code>allkeys-lfu</code> 等策略本实例可以设置，但具体淘汰效果未在本文单独实测。</p>
+<h2 id="7-删除键和-flushdb-会释放什么">7. 删除键和 FLUSHDB 会释放什么</h2>
+<p>在确认这是一次性实验实例的前提下，可以删指定键，或清空当前数据库：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">redis-cli -h 127.0.0.1 -p <span class="m">26379</span> DEL keep:0
+redis-cli -h 127.0.0.1 -p <span class="m">26379</span> FLUSHDB
+</code></pre></td></tr></table>
+</div>
+</div><p><code>DEL keep:0</code> 返回 <code>1</code>。<code>FLUSHDB</code> 返回 <code>OK</code>，随后 <code>DBSIZE</code> 为 <code>0</code>。<code>used_memory</code> 会明显下降，但进程 RSS 不一定跟着下降。本次清空前 <code>used_memory_human</code> 为 <code>12.81M</code>、<code>used_memory_rss_human</code> 为 <code>25.38M</code>；清空后：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">used_memory:1030200
+used_memory_human:1006.05K
+used_memory_rss:26607616
+used_memory_rss_human:25.38M
+used_memory_peak_human:16.05M
+</code></pre></td></tr></table>
+</div>
+</div><p><code>used_memory</code> 回到大约 1MB（仍包含启动开销），RSS 仍是 25.38M。这与官方 <a href="https://redis.io/docs/latest/operate/oss_and_stack/management/optimization/memory-optimization/" target="_blank" rel="noopener noreffer">Memory optimization</a> 的说明一致：键删掉后，内存先还给分配器，分配器不一定立刻把页还给操作系统；规划容量时要按峰值来，而不是按“删完之后 used_memory 看起来很小”。之后如果再写入，分配器通常会先复用已经拿在手里的内存，RSS 不一定继续涨。</p>
+<p>这两条命令都会丢掉数据。<code>FLUSHDB</code> 只清当前 DB，<code>FLUSHALL</code> 会清全部 DB。只允许在你自己的一次性实例上做；生产排障应先定位大键和无用键，再有针对地删除。</p>
+<h2 id="8-碎片相关命令跑了但不等于已经整理好">8. 碎片相关命令：跑了，但不等于已经整理好</h2>
+<p>官方把真正的分配器外部碎片指标指向 <code>allocator_frag_ratio</code> / <code>allocator_frag_bytes</code>，而不是只看 <code>mem_fragmentation_ratio</code>。删掉大量键之后，比值也往往不准，因为它会受到历史峰值 RSS 的影响。</p>
+<p>本次把上限临时调到 <code>32mb</code>，写入 3153 个 8KiB 键（<code>used_memory_human=32.00M</code>，<code>used_memory_rss_human=42.18M</code>），再删掉其中 1577 个偶数键后：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-text" data-lang="text">used_memory_human:16.50M
+used_memory_rss_human:44.81M
+allocator_frag_ratio:1.07
+</code></pre></td></tr></table>
+</div>
+</div><p>逻辑占用大约砍半，RSS 没有下降（本次还略升到 44.81M）。接着执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">redis-cli -h 127.0.0.1 -p <span class="m">26379</span> MEMORY PURGE
+</code></pre></td></tr></table>
+</div>
+</div><p>返回 <code>OK</code>。官方说明：该命令请 jemalloc 尝试回收脏页；其它分配器上是空操作。本实例分配器是 jemalloc-5.3.0，但执行后 <code>used_memory_rss_human</code> 仍是 <code>44.81M</code>。所以 <code>OK</code> 只表示命令被接受，不保证 RSS 立刻下降。</p>
+<p>随后的 <code>MEMORY DOCTOR</code> 指出了三类现象：过去峰值超过当前用量 150%、RSS 相对逻辑分配偏高、分配器外部碎片大于 1.1，并提到可以尝试 <code>MEMORY PURGE</code>，或在必要时重启实例，以及考虑打开 <code>activedefrag</code>。这些是诊断建议，不是已经完成整理的证明。</p>
+<p>本次也尝试打开主动整理：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">redis-cli -h 127.0.0.1 -p <span class="m">26379</span> CONFIG SET activedefrag yes
+redis-cli -h 127.0.0.1 -p <span class="m">26379</span> CONFIG SET active-defrag-ignore-bytes 1mb
+redis-cli -h 127.0.0.1 -p <span class="m">26379</span> CONFIG SET active-defrag-threshold-lower <span class="m">5</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>默认 <code>activedefrag</code> 为 <code>no</code>，<code>active-defrag-ignore-bytes</code> 默认 <code>104857600</code>（100mb），数据集较小时本来就不会启动。把忽略阈值降到 1mb 并等待约 8 秒后，<code>active_defrag_running</code> 一直是 <code>0</code>，<code>active_defrag_hits</code> 一直是 <code>0</code>。本文把主动碎片整理标为“命令已执行，本环境未观察到整理开始”，不把它写成已经跑通的运维手段。</p>
+<h2 id="9-上限设多少只有计算思路没有万能数字">9. 上限设多少：只有计算思路，没有万能数字</h2>
+<p>不要用“物理内存的百分之几”当标准答案。可以按下面的顺序自己算，并在目标机器上用 <code>INFO memory</code> 核对：</p>
+<ol>
+<li>先看机器还要给操作系统和其它进程留多少，剩余的才可能给 Redis。</li>
+<li>再看业务峰值需要的数据集大小（按峰值 <code>used_memory</code> 规划，不要按删键之后的低点规划）。</li>
+<li>若开启复制或 AOF，按官方建议把 <code>maxmemory</code> 再留出一块给缓冲区，并观察 <code>mem_not_counted_for_evict</code>。</li>
+<li>接受 RSS 可能高于 <code>used_memory</code>。只盯着 <code>used_memory</code> 等于上限，并不表示进程不会占用更多物理内存。</li>
+<li>64 位上 <code>maxmemory 0</code> 表示不限制。本次在 <code>2mb + noeviction</code> 下写入 110 个 8KiB 键后出现 OOM；再执行 <code>CONFIG SET maxmemory 0</code>，同样的 <code>SET</code> 立即成功，<code>maxmemory_human</code> 变为 <code>0B</code>，<code>used_memory_human</code> 为 <code>2.01M</code>。这次只用于证明 <code>0</code> 会放开上限，没有继续往整机内存里灌数据。官方也写：不设上限时 Redis 可以逐渐吃掉全部空闲内存，因此一般应该配置限制。</li>
+</ol>
+<p>缓存可以选 <code>allkeys-lru</code>（或在你验证过命中率后再考虑 <code>allkeys-lfu</code>）；必须全保留的数据应使用 <code>noeviction</code>，并在到达上限前扩容或清理。把上限加大只能延后问题，不能代替找泄漏、大键和不合理的数据结构。</p>
+<h2 id="常见问题">常见问题</h2>
+<p><strong>写入报 OOM，读还正常，是不是 Redis 坏了？</strong><br>
+不是。这是 <code>noeviction</code>（或 <code>volatile-*</code> 但没有可淘汰键）到达 <code>maxmemory</code> 时的预期行为。先看 <code>INFO memory</code> 和 <code>INFO stats</code> 里的 <code>evicted_keys</code>。</p>
+<p><strong>改成 <code>volatile-lru</code> 了，为什么还是 OOM？</strong><br>
+键上没有 TTL。本次在全部无 TTL 时就是这样。给可丢的键设置过期时间，或改用 <code>allkeys-*</code>。</p>
+<p><strong><code>used_memory</code> 降了，<code>top</code> 里还是很大，要不要立刻重启？</strong><br>
+先确认是不是刚删过大批键。官方认为这种 RSS 偏高常常只是峰值留下的，分配器稍后可能复用。本次 <code>FLUSHDB</code> 和“填满再删一半”都出现了 used 下降、RSS 不降。<code>MEMORY PURGE</code> 在本次也没有把 RSS 降下来。是否重启要看机器是否已经因此换页或被 OOM killer 盯上，而不是只看比值。</p>
+<p><strong><code>CONFIG SET</code> 当时生效，第二天重启又回到旧值？</strong><br>
+运行中的修改默认不写回文件。改 <code>redis.conf</code> 或在确认内容后执行 <code>CONFIG REWRITE</code>，再核对重启后的 <code>CONFIG GET</code>。</p>
+<p><strong>搜到了 <code>allkeys-lrm</code> 或保护某个键不被淘汰的命令？</strong><br>
+以你正在运行的版本能 <code>CONFIG SET</code> 成功为准。8.0.2 不接受 <code>*-lrm</code>。现行文档里还有 Redis 8.12 的 <code>BLESS</code> 系列，本实例未涉及，也未实测。</p>
+<h2 id="安全注意">安全注意</h2>
+<ul>
+<li>实验实例绑定 <code>127.0.0.1</code>、未设置密码，只因为数据可丢。生产必须有认证、网段限制和最小权限。</li>
+<li><code>FLUSHDB</code> / <code>FLUSHALL</code> / 无筛选的 <code>KEYS *</code> 加删除，都可能造成业务数据丢失。不要在生产上“先清空试试”。</li>
+<li><code>CONFIG REWRITE</code> 会改写配置文件，执行前备份原文件，执行后通读再重启。</li>
+<li>不要把真实密码写进命令行、shell 历史或贴到文章里。</li>
+<li>把 <code>maxmemory</code> 设得过大，或保持 <code>0</code>，都可能把整机内存吃光，连排查终端都受影响。</li>
+</ul>
+<h2 id="回滚">回滚</h2>
+<p>若只是用 <code>CONFIG SET</code> 改了运行中的值，重启且配置文件未改写时，会回到文件里的设置。本次已验证：只 <code>CONFIG SET</code>、不 <code>CONFIG REWRITE</code>，重启后回到默认的 <code>maxmemory 0</code> 与 <code>noeviction</code>。</p>
+<p>若已经 <code>CONFIG REWRITE</code> 或手工改了文件，把文件恢复成改之前的副本再重启。需要在运行中先改回去时：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">redis-cli -h 127.0.0.1 -p <span class="m">26379</span> CONFIG SET maxmemory <span class="m">0</span>
+redis-cli -h 127.0.0.1 -p <span class="m">26379</span> CONFIG SET maxmemory-policy noeviction
+redis-cli -h 127.0.0.1 -p <span class="m">26379</span> CONFIG SET activedefrag no
+</code></pre></td></tr></table>
+</div>
+</div><p>以上是回到本实例启动默认值的例子，不是生产推荐值。生产应改回你原来的上限和策略，并决定要不要 <code>CONFIG REWRITE</code>。实验进程用 <code>SHUTDOWN NOSAVE</code> 关闭即可，然后删除一次性目录。</p>
+<h2 id="实测环境与来源">实测环境与来源</h2>
+<ul>
+<li>时间：2026-11-25 09:16–09:24，Asia/Bangkok（UTC+7）</li>
+<li>版本：Redis server v=8.0.2，64 位，分配器 jemalloc-5.3.0；本机二进制，未使用 Docker</li>
+<li>实例：<code>127.0.0.1:26379</code>，数据目录 <code>/tmp/mmfei-20261125-redis</code>，配置关闭了 RDB/AOF，无认证</li>
+<li>已实测：默认 <code>maxmemory=0</code> / <code>noeviction</code>；<code>INFO memory</code> 与 <code>MEMORY STATS</code>；<code>16mb + noeviction</code> 写满出现 OOM，读和删仍可用；改为 <code>allkeys-lru</code> 后继续写入且 <code>evicted_keys</code> 增加、<code>DBSIZE</code> 不再上涨；等待 2 秒后访问的热键在近似 LRU 下全部保留；<code>volatile-lru</code> 在无 TTL 时 OOM，有 TTL 时只淘汰带过期的键；隔离实例上 <code>DEL</code> / <code>FLUSHDB</code> 使 <code>used_memory</code> 下降但 RSS 未同步下降；<code>MEMORY PURGE</code> 返回 <code>OK</code> 但本次 RSS 未降；<code>CONFIG SET</code> 重启丢失与 <code>CONFIG REWRITE</code> 后重启保留；<code>maxmemory 0</code> 可解除上限（未灌满整机）</li>
+<li>未实测：32 位的 3GB 隐含上限；复制/AOF 场景下 <code>mem_not_counted_for_evict</code> 对容量规划的具体影响；<code>allkeys-lfu</code> / <code>volatile-ttl</code> 等其它策略的淘汰效果；主动碎片整理实际回收效果（命令已执行，约 8 秒内未启动）；带密码或 ACL 时 <code>CONFIG REWRITE</code> 的完整文件内容；生产数据上的“合适上限”</li>
+<li>官方文档读取日期：2026-11-25，链接见文首</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2026-11-25</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2026/11/redis%E5%86%85%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://www.mmfei.com/2026/11/redis%E5%86%85%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86/" data-title="Redis 内存满了怎么处理？maxmemory、淘汰策略与安全释放（8.0.2 实测）" data-via="mmfei" data-hashtags="Redis,maxmemory,淘汰策略,内存"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://www.mmfei.com/2026/11/redis%E5%86%85%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86/" data-hashtag="Redis"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="https://www.mmfei.com/2026/11/redis%E5%86%85%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86/" data-title="Redis 内存满了怎么处理？maxmemory、淘汰策略与安全释放（8.0.2 实测）"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="https://www.mmfei.com/2026/11/redis%E5%86%85%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86/" data-title="Redis 内存满了怎么处理？maxmemory、淘汰策略与安全释放（8.0.2 实测）"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="https://www.mmfei.com/2026/11/redis%E5%86%85%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86/" data-title="Redis 内存满了怎么处理？maxmemory、淘汰策略与安全释放（8.0.2 实测）"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/redis/">redis</a>,&nbsp;<a href="/tags/maxmemory/">maxmemory</a>,&nbsp;<a href="/tags/%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5/">淘汰策略</a>,&nbsp;<a href="/tags/%E5%86%85%E5%AD%98/">内存</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <nav class="sk-nav" aria-label="文章导航"><a href="/2026/11/gitlab%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E5%88%B0%E5%8F%A6%E4%B8%80%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="sk-nav-btn sk-nav-prev" rel="prev" title="GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）"><i class="fas fa-angle-left fa-fw"></i>GitLab 备份还原到另一台服务器：gitlab-backup、gitlab-secrets.json 和版本一致性实测（Docker 部署）</a>
+            <a href="/2026/11/docker%E7%A3%81%E7%9B%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E6%B8%85%E7%90%86/" class="sk-nav-btn sk-nav-next" rel="next" title="Docker 磁盘满了怎么清理：先用 system df 查占用，再按容器、镜像、卷和构建缓存安全清理">Docker 磁盘满了怎么清理：先用 system df 查占用，再按容器、镜像、卷和构建缓存安全清理<i class="fas fa-angle-right fa-fw"></i></a></nav>
+</div>
+
+<section class="sk-related">
+                    <h2 class="sk-related-title">相关文章</h2>
+                    <div class="sk-related-grid"><a class="sk-related-card" href="/2024/08/ubuntu%E5%AE%89%E8%A3%85redis/">
+                                    <span class="sk-related-card-title">在 Ubuntu 上用 apt 安装 Redis</span>
+                                    <span class="sk-related-card-meta">2024-08-07ubuntu · redis</span>
+                                </a><a class="sk-related-card" href="/2023/11/phpredis%E7%9A%84%E4%BD%BF%E7%94%A8/">
+                                    <span class="sk-related-card-title">phpredis的使用</span>
+                                    <span class="sk-related-card-meta">2023-11-07redis · php</span>
+                                </a></div>
+                </section><div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article>
+    </div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://www.mmfei.com/" target="_blank">mmfei</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href='https://beian.miit.gov.cn/' target='_blank' >粤ICP备15086948号-1</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/css/skin-stripe.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":-1},"comment":{"valine":{"appId":"agrUIy35wmii07cPfX0p0UWx-MdYXbMMI","appKey":"xNDv6FEmi9xqlsf6out3W5c6","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://agruiy35.api.lncldglobal.com","visitor":true}}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript">
+            window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());
+            gtag('config', 'G-JC9GDLXKD6', { 'anonymize_ip': true });
+        </script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-JC9GDLXKD6" async></script><link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+
+<div id="pagefind-overlay" class="pf-overlay" aria-hidden="true">
+    <div class="pf-modal" role="dialog" aria-modal="true" aria-label="搜索">
+        <button type="button" class="pf-close" id="pagefind-close" aria-label="清空">&times;</button>
+        <div id="pagefind-ui"></div>
+    </div>
+</div>
+
+<style>
+.pf-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8vh 16px 16px;
+}
+.pf-overlay.open {
+    display: flex;
+}
+.pf-modal {
+    position: relative;
+    width: 560px;
+    max-width: 100%;
+    background: var(--card-background, #fff);
+    border-radius: 12px;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.28);
+    padding: 18px 18px 10px;
+}
+.pf-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--secondary-font-color, #666);
+    cursor: pointer;
+    padding: 6px;
+}
+.pf-close:hover { color: var(--primary-font-color, #111); }
+#pagefind-ui { min-height: 40px; }
+@media (max-width: 680px) {
+    .pf-overlay { padding: 12px 10px; align-items: flex-start; }
+    .pf-modal { padding: 14px 12px 8px; border-radius: 10px; }
+}
+</style>
+
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+(function () {
+    var overlay = document.getElementById('pagefind-overlay');
+    var modal = overlay.querySelector('.pf-modal');
+    var closeBtn = document.getElementById('pagefind-close');
+    var uiMount = document.getElementById('pagefind-ui');
+
+    function open() {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        var input = uiMount.querySelector('input');
+        if (input) { setTimeout(function () { input.focus(); }, 60); }
+    }
+    function close() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    function bindTrigger(id) {
+        var el = document.getElementById(id);
+        if (el) { el.addEventListener('click', function (e) { e.preventDefault(); open(); }); }
+    }
+    bindTrigger('pagefind-trigger-desktop');
+    bindTrigger('pagefind-trigger-mobile');
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) { close(); }
+    });
+
+    if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({
+            element: uiMount,
+            showSubResults: true,
+            showImages: false,
+            highlightQuery: true,
+            translations: {
+                placeholder: '搜索文章标题、标签或内容…',
+                clear_search: '清除',
+                load_more: '加载更多结果',
+                search_label: '搜索',
+                filters_label: '筛选',
+                no_results: '没有找到结果'
+            }
+        });
+    }
+})();
+</script>
+</body>
+</html>

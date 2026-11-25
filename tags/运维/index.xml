@@ -4,7 +4,21 @@
         <link>https://www.mmfei.com/tags/%E8%BF%90%E7%BB%B4/</link>
         <description>运维 - 标签 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 24 Nov 2026 19:46:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/tags/%E8%BF%90%E7%BB%B4/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 25 Nov 2026 09:38:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/tags/%E8%BF%90%E7%BB%B4/" rel="self" type="application/rss+xml" /><item>
+    <title>MySQL 连接数过多（too many connections）怎么处理？查看占用、KILL 与 max_connections（8.4 实测）</title>
+    <link>https://www.mmfei.com/2026/11/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A/</link>
+    <pubDate>Wed, 25 Nov 2026 09:38:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A/</guid>
+    <description><![CDATA[应用或客户端报 Too many connections 时，先看当前有多少连接、是谁占着、能不能先腾出一个会话，再决定要不要临时加大 max_connections。不要把“把上]]></description>
+</item><item>
+    <title>Docker 磁盘满了怎么清理：先用 system df 查占用，再按容器、镜像、卷和构建缓存安全清理</title>
+    <link>https://www.mmfei.com/2026/11/docker%E7%A3%81%E7%9B%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E6%B8%85%E7%90%86/</link>
+    <pubDate>Wed, 25 Nov 2026 09:26:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/docker%E7%A3%81%E7%9B%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E6%B8%85%E7%90%86/</guid>
+    <description><![CDATA[df 显示磁盘快满，du 指向 Docker 数据目录，但不一定是日志。镜像、已退出容器的可写层、卷、构建缓存都会占空间。这篇按排查顺序写：先查清空间去向，再按]]></description>
+</item><item>
     <title>MySQL 慢查询日志怎么看？开启、mysqldumpslow 分析与日志文件太大清理（MySQL 8 实测）</title>
     <link>https://www.mmfei.com/2026/11/mysql%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%E6%80%8E%E4%B9%88%E7%9C%8B/</link>
     <pubDate>Tue, 24 Nov 2026 19:46:00 &#43;0700</pubDate>

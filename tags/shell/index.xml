@@ -4,7 +4,14 @@
         <link>https://www.mmfei.com/tags/shell/</link>
         <description>shell - 标签 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Mon, 03 Jan 2022 17:27:31 &#43;0800</lastBuildDate><atom:link href="https://www.mmfei.com/tags/shell/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 25 Nov 2026 09:26:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/tags/shell/" rel="self" type="application/rss+xml" /><item>
+    <title>crontab 不执行、手动却可以：PATH、百分号、权限、工作目录和怎么查日志</title>
+    <link>https://www.mmfei.com/2026/11/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C/</link>
+    <pubDate>Wed, 25 Nov 2026 09:26:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/crontab%E4%B8%8D%E6%89%A7%E8%A1%8C/</guid>
+    <description><![CDATA[写好了 crontab，脚本在终端里跑得通，到点却没反应，或者根本不知道有没有跑过。这通常不是「cron 坏了」，而是 cron 的环境和手工执行不一样。]]></description>
+</item><item>
     <title>转换本地图片视频为base64的json</title>
     <link>https://www.mmfei.com/2022/01/%E8%BD%AC%E6%8D%A2%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E8%A7%86%E9%A2%91%E4%B8%BAbase64%E7%9A%84json/</link>
     <pubDate>Mon, 03 Jan 2022 17:27:31 &#43;0800</pubDate>

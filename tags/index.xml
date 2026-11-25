@@ -4,75 +4,75 @@
         <link>https://www.mmfei.com/tags/</link>
         <description>Tags - 标签 - 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/tags/" rel="self" type="application/rss+xml" /><item>
-    <title>docker</title>
-    <link>https://www.mmfei.com/tags/docker/</link>
-    <pubDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</pubDate>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Wed, 25 Nov 2026 09:38:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>max_connections</title>
+    <link>https://www.mmfei.com/tags/max_connections/</link>
+    <pubDate>Wed, 25 Nov 2026 09:38:00 &#43;0700</pubDate>
     <author>作者</author>
-    <guid>https://www.mmfei.com/tags/docker/</guid>
+    <guid>https://www.mmfei.com/tags/max_connections/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>gitlab</title>
-    <link>https://www.mmfei.com/tags/gitlab/</link>
-    <pubDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</pubDate>
+    <title>mysql</title>
+    <link>https://www.mmfei.com/tags/mysql/</link>
+    <pubDate>Wed, 25 Nov 2026 09:38:00 &#43;0700</pubDate>
     <author>作者</author>
-    <guid>https://www.mmfei.com/tags/gitlab/</guid>
+    <guid>https://www.mmfei.com/tags/mysql/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>gitlab-backup</title>
-    <link>https://www.mmfei.com/tags/gitlab-backup/</link>
-    <pubDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</pubDate>
+    <title>too many connections</title>
+    <link>https://www.mmfei.com/tags/too-many-connections/</link>
+    <pubDate>Wed, 25 Nov 2026 09:38:00 &#43;0700</pubDate>
     <author>作者</author>
-    <guid>https://www.mmfei.com/tags/gitlab-backup/</guid>
+    <guid>https://www.mmfei.com/tags/too-many-connections/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>备份还原</title>
-    <link>https://www.mmfei.com/tags/%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F/</link>
-    <pubDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</pubDate>
+    <title>运维</title>
+    <link>https://www.mmfei.com/tags/%E8%BF%90%E7%BB%B4/</link>
+    <pubDate>Wed, 25 Nov 2026 09:38:00 &#43;0700</pubDate>
     <author>作者</author>
-    <guid>https://www.mmfei.com/tags/%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F/</guid>
+    <guid>https://www.mmfei.com/tags/%E8%BF%90%E7%BB%B4/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>迁移</title>
-    <link>https://www.mmfei.com/tags/%E8%BF%81%E7%A7%BB/</link>
-    <pubDate>Tue, 24 Nov 2026 20:24:00 &#43;0700</pubDate>
+    <title>连接数</title>
+    <link>https://www.mmfei.com/tags/%E8%BF%9E%E6%8E%A5%E6%95%B0/</link>
+    <pubDate>Wed, 25 Nov 2026 09:38:00 &#43;0700</pubDate>
     <author>作者</author>
-    <guid>https://www.mmfei.com/tags/%E8%BF%81%E7%A7%BB/</guid>
+    <guid>https://www.mmfei.com/tags/%E8%BF%9E%E6%8E%A5%E6%95%B0/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>AI实践</title>
     <link>https://www.mmfei.com/tags/ai%E5%AE%9E%E8%B7%B5/</link>
-    <pubDate>Tue, 24 Nov 2026 19:59:00 &#43;0700</pubDate>
+    <pubDate>Wed, 25 Nov 2026 09:33:00 &#43;0700</pubDate>
     <author>作者</author>
     <guid>https://www.mmfei.com/tags/ai%E5%AE%9E%E8%B7%B5/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>DeepSeek</title>
-    <link>https://www.mmfei.com/tags/deepseek/</link>
-    <pubDate>Tue, 24 Nov 2026 19:59:00 &#43;0700</pubDate>
+    <title>FFmpeg</title>
+    <link>https://www.mmfei.com/tags/ffmpeg/</link>
+    <pubDate>Wed, 25 Nov 2026 09:33:00 &#43;0700</pubDate>
     <author>作者</author>
-    <guid>https://www.mmfei.com/tags/deepseek/</guid>
+    <guid>https://www.mmfei.com/tags/ffmpeg/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>linux</title>
-    <link>https://www.mmfei.com/tags/linux/</link>
-    <pubDate>Tue, 24 Nov 2026 19:59:00 &#43;0700</pubDate>
+    <title>SRT</title>
+    <link>https://www.mmfei.com/tags/srt/</link>
+    <pubDate>Wed, 25 Nov 2026 09:33:00 &#43;0700</pubDate>
     <author>作者</author>
-    <guid>https://www.mmfei.com/tags/linux/</guid>
+    <guid>https://www.mmfei.com/tags/srt/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>ModelScope</title>
-    <link>https://www.mmfei.com/tags/modelscope/</link>
-    <pubDate>Tue, 24 Nov 2026 19:59:00 &#43;0700</pubDate>
+    <title>Whisper</title>
+    <link>https://www.mmfei.com/tags/whisper/</link>
+    <pubDate>Wed, 25 Nov 2026 09:33:00 &#43;0700</pubDate>
     <author>作者</author>
-    <guid>https://www.mmfei.com/tags/modelscope/</guid>
+    <guid>https://www.mmfei.com/tags/whisper/</guid>
     <description><![CDATA[]]></description>
 </item><item>
-    <title>Ollama</title>
-    <link>https://www.mmfei.com/tags/ollama/</link>
-    <pubDate>Tue, 24 Nov 2026 19:59:00 &#43;0700</pubDate>
+    <title>字幕</title>
+    <link>https://www.mmfei.com/tags/%E5%AD%97%E5%B9%95/</link>
+    <pubDate>Wed, 25 Nov 2026 09:33:00 &#43;0700</pubDate>
     <author>作者</author>
-    <guid>https://www.mmfei.com/tags/ollama/</guid>
+    <guid>https://www.mmfei.com/tags/%E5%AD%97%E5%B9%95/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
