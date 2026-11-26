@@ -18,6 +18,8 @@
 .nv h1, .nv h2, .nv p { margin: 0; }
 .nv a { color: inherit; text-decoration: none; }
 .nv-intro { display: flex; flex-direction: column; gap: 8px; }
+.nv-cross { font-size: 14px; line-height: 1.5; color: var(--nv-mute); }
+.nv-cross a { color: var(--nv-link); text-decoration: underline; }
 .nv h1 { font-size: 28px; line-height: 40px; font-weight: 700; }
 .nv-lead { font-size: 14px; line-height: 1.5; color: var(--nv-mute); }
 .nv-block { display: flex; flex-direction: column; gap: 8px; margin-top: 24px; }

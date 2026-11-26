@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>工具 - 木木飞</title><meta name="Description" content="本站工具总览。可以进入字体对比，用同一段文字查看已核实的字体；可以进入资源导航，查看已核实的 AI 工具、游戏开发与模型选型；可以进入 SRT 时间偏移，在浏览器本地调整字幕时间；也可以进入交互与动效预览，在线体验按钮、表单反馈、模态弹窗、列表状态和一段 CSS 微动效。"><meta property="og:title" content="工具" />
-<meta property="og:description" content="本站工具总览。可以进入字体对比，用同一段文字查看已核实的字体；可以进入资源导航，查看已核实的 AI 工具、游戏开发与模型选型；可以进入 SRT 时间偏移，在浏览器本地调整字幕时间；也可以进入交互与动效预览，在线体验按钮、表单反馈、模态弹窗、列表状态和一段 CSS 微动效。" />
+        <title>工具 - 木木飞</title><meta name="Description" content="本站工具总览。可以进入字体对比，用同一段文字查看已核实的字体；可以进入资源导航，查看已核实的 AI 工具、游戏开发与模型选型；可以进入 SRT 时间偏移，在浏览器本地调整字幕时间；也可以进入交互与动效预览，在线体验按钮、表单反馈、模态弹窗、列表状态和一段 CSS 微动效。也可以进入免费资源，查看域名、服务器、GPU 与设计稿的介绍和官方入口。"><meta property="og:title" content="工具" />
+<meta property="og:description" content="本站工具总览。可以进入字体对比，用同一段文字查看已核实的字体；可以进入资源导航，查看已核实的 AI 工具、游戏开发与模型选型；可以进入 SRT 时间偏移，在浏览器本地调整字幕时间；也可以进入交互与动效预览，在线体验按钮、表单反馈、模态弹窗、列表状态和一段 CSS 微动效。也可以进入免费资源，查看域名、服务器、GPU 与设计稿的介绍和官方入口。" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.mmfei.com/tools/" /><meta property="og:image" content="https://www.mmfei.com/images/avatar.jpg"/>
 
@@ -14,7 +14,7 @@
 <meta name="twitter:image" content="https://www.mmfei.com/images/avatar.jpg"/>
 
 <meta name="twitter:title" content="工具"/>
-<meta name="twitter:description" content="本站工具总览。可以进入字体对比，用同一段文字查看已核实的字体；可以进入资源导航，查看已核实的 AI 工具、游戏开发与模型选型；可以进入 SRT 时间偏移，在浏览器本地调整字幕时间；也可以进入交互与动效预览，在线体验按钮、表单反馈、模态弹窗、列表状态和一段 CSS 微动效。"/>
+<meta name="twitter:description" content="本站工具总览。可以进入字体对比，用同一段文字查看已核实的字体；可以进入资源导航，查看已核实的 AI 工具、游戏开发与模型选型；可以进入 SRT 时间偏移，在浏览器本地调整字幕时间；也可以进入交互与动效预览，在线体验按钮、表单反馈、模态弹窗、列表状态和一段 CSS 微动效。也可以进入免费资源，查看域名、服务器、GPU 与设计稿的介绍和官方入口。"/>
 <meta name="application-name" content="木木飞">
 <meta name="apple-mobile-web-app-title" content="木木飞"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -174,12 +174,20 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
     </section>
     <section class="nv-block" aria-labelledby="nv-docs">
         <h2 id="nv-docs">资料入口</h2>
+        <div class="nv-grid nv-grid-2">
         <a class="nv-card" href="/resources/" data-testid="tool-resources">
             <span class="nv-name">资源导航</span>
             <span class="nv-body">AI 工具、游戏开发与模型选型。</span>
             <span class="nv-scope">6 条官方资料 · 软件与权重许可分别看</span>
             <span class="nv-go">浏览资源导航<img src="/img/nav-arrow.svg" alt="" width="16" height="16"></span>
         </a>
+        <a class="nv-card" href="/free-resources/" data-testid="tool-free-resources">
+            <span class="nv-name">免费资源</span>
+            <span class="nv-body">域名、服务器、GPU 与设计稿的介绍。</span>
+            <span class="nv-scope">17 条官方入口 · 只介绍，不托管不代领</span>
+            <span class="nv-go">查看免费资源<img src="/img/nav-arrow.svg" alt="" width="16" height="16"></span>
+        </a>
+        </div>
     </section>
     <details class="nv-bounds" data-testid="tool-bounds">
         <summary>使用边界<img src="/img/nav-chevron.svg" alt="" width="16" height="16"></summary>
@@ -187,6 +195,7 @@ body[theme=dark] #header-desktop .menu-sub { background: #252627; border-color: 
             <p>字体：53 款可预览；仅 Noto Sans SC、Inter 提供本站完整 ZIP，其余 51 款保留预览与官方来源。免费不等于无条件商用，使用前核各款许可。</p>
             <p>SRT：单份最多 1 MiB、10,000 条；统一偏移整数毫秒，不处理越播越不同步。任一时间变负或结束不晚于开始时整次拒绝，不截为 0。交叉字幕只提示，不因此拒绝或重排。正文、换行、序号顺序保持。在浏览器本地处理。</p>
             <p>资源：只提供官方选型资料，不代运行、不托管软件或模型，不统一承诺全部免费或商用。</p>
+            <p>免费资源：只介绍域名、服务器、GPU 与设计稿，入口跳到对方官方页面。不托管、不镜像、也不代为领取。</p>
             <p>交互与动效预览：按钮、表单、弹窗和列表在页面体验；只有微动效 CSS 可预览并复制。不是所有交互都能导出代码，不含弹簧、拖拽、配色或页面转场。</p>
         </div>
     </details>
