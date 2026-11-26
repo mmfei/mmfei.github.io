@@ -11,7 +11,8 @@
 - [RSS 订阅](https://www.mmfei.com/index.xml): 站点 RSS Feed
 - [JSON Feed](https://www.mmfei.com/index.json): 结构化订阅
 
-## 文章索引（共 74 篇）
+## 文章索引（共 75 篇）
+- [PDF 合并免费在线：用 PDF24 把多个文件合成一个（实测）](https://www.mmfei.com/2026/11/pdf%E5%90%88%E5%B9%B6%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BFpdf24/) — 2026-11-26 · 分类: 办公效率 · 标签: PDF合并, PDF24, 免费工具, 在线工具, 办公技巧
 - [MySQL 连接数过多（too many connections）怎么处理？查看占用、KILL 与 max_connections（8.4 实测）](https://www.mmfei.com/2026/11/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A/) — 2026-11-25 · 分类: mysql · 标签: MySQL, 连接数, too many connections, max_connections, 运维
 - [whisper 字幕生成：Linux 上用 whisper.cpp 把音视频转成可编辑 SRT](https://www.mmfei.com/2026/11/%E6%9C%AC%E5%9C%B0whisper%E7%94%9F%E6%88%90srt%E5%AD%97%E5%B9%95/) — 2026-11-25 · 分类: ai · 标签: Whisper, 字幕, SRT, FFmpeg, AI实践
 - [Redis 内存满了怎么处理？maxmemory、淘汰策略与安全释放（8.0.2 实测）](https://www.mmfei.com/2026/11/redis%E5%86%85%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86/) — 2026-11-25 · 分类: redis · 标签: Redis, maxmemory, 淘汰策略, 内存
