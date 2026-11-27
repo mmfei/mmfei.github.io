@@ -1,0 +1,4 @@
+# Keep official FIGlet 2.2.5 bytes. Do not renormalize line endings.
+*.flf -text
+LICENSE -text
+figlet.js.LICENSE.txt -text

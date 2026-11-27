@@ -1,0 +1,300 @@
+/* ASCII 字符画。颜色沿用 SRT 工具的站点色，横向滚动只发生在预览框。 */
+.aa {
+  --aa-ink: #0d253d;
+  --aa-muted: #64748d;
+  --aa-faint: #8b97a6;
+  --aa-line: #e3e8ee;
+  --aa-soft: #f6f9fc;
+  --aa-bg: #ffffff;
+  --aa-primary: #533afd;
+  --aa-art: #64748d;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto 48px;
+  padding: 4.75rem 0 32px;
+  color: var(--aa-ink);
+  font-family: Inter, "SF Pro Display", -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+.aa *,
+.aa *::before,
+.aa *::after {
+  box-sizing: border-box;
+}
+
+.aa h1,
+.aa h2,
+.aa p {
+  margin: 0;
+}
+
+.aa-crumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 12px;
+  color: var(--aa-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.aa-crumb a {
+  color: var(--aa-primary);
+  text-decoration: none;
+}
+
+.aa-crumb a:hover {
+  text-decoration: underline;
+}
+
+.aa-crumb a:focus-visible,
+.aa-input:focus-visible,
+.aa-copy:focus-visible,
+.aa-help summary:focus-visible,
+.aa-view:focus-visible {
+  outline: 2px solid var(--aa-primary);
+  outline-offset: 2px;
+}
+
+.aa h1 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+}
+
+.aa-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 20px 0 8px;
+  font-size: 14px;
+}
+
+.aa-label-row label {
+  font-weight: 650;
+}
+
+.aa-local,
+.aa-tip,
+.aa-status,
+.aa-license {
+  color: var(--aa-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.aa-local {
+  color: var(--aa-faint);
+}
+
+.aa-input {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  margin: 0;
+  padding: 12px 16px;
+  border: 1px solid var(--aa-line);
+  border-radius: 12px;
+  background: var(--aa-bg);
+  color: var(--aa-ink);
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.aa-tip,
+.aa-status {
+  margin-top: 8px;
+}
+
+.aa-tip {
+  color: #92400e;
+}
+
+.aa-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.aa-card {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--aa-line);
+  border-radius: 16px;
+  background: var(--aa-bg);
+}
+
+.aa-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.aa-card h2 {
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.aa-copy {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--aa-primary);
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.aa-copy svg {
+  display: block;
+}
+
+.aa-copy:disabled {
+  background: #d5dee8;
+  color: #5c6b7a;
+  cursor: not-allowed;
+}
+
+.aa-view {
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--aa-soft);
+}
+
+.aa-art {
+  margin: 0;
+  color: var(--aa-art);
+  font-family: ui-monospace, "SFMono-Regular", "Source Code Pro", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  line-height: 1.05;
+  white-space: pre;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.aa-help {
+  margin-top: 16px;
+}
+
+.aa-help summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  color: var(--aa-muted);
+  font-size: 14px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.aa-help summary::-webkit-details-marker {
+  display: none;
+}
+
+.aa-chevron {
+  display: block;
+  transition: transform 160ms ease-out;
+}
+
+.aa-help[open] .aa-chevron {
+  transform: rotate(180deg);
+}
+
+.aa-help-panel {
+  margin-top: 4px;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--aa-soft);
+  color: var(--aa-ink);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.aa-help-panel p + p,
+.aa-help-panel h2 {
+  margin-top: 10px;
+}
+
+.aa-help-panel h2 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.aa-help-panel a {
+  color: var(--aa-primary);
+}
+
+.aa-license {
+  max-width: 46rem;
+  margin-top: 4px;
+}
+
+.aa-license a {
+  color: inherit;
+}
+
+@media (max-width: 760px) {
+  .aa {
+    padding-top: 4.25rem;
+  }
+
+  .aa h1 {
+    font-size: 28px;
+  }
+
+  .aa-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .aa-art {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aa-chevron {
+    transition: none;
+  }
+}
+
+body[theme="dark"] .aa {
+  --aa-ink: #e8eef5;
+  --aa-muted: #a8b3c2;
+  --aa-faint: #8b97a6;
+  --aa-line: #363636;
+  --aa-soft: #252627;
+  --aa-bg: #1d1e1f;
+  --aa-primary: #8b84ff;
+  --aa-art: #a8b3c2;
+}
+
+body[theme="dark"] .aa-tip {
+  color: #fde68a;
+}
+
+body[theme="dark"] .aa-copy:disabled {
+  background: #3a3a3c;
+  color: #8b97a6;
+}
