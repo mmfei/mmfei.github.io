@@ -11,7 +11,8 @@
 - [RSS 订阅](https://www.mmfei.com/index.xml): 站点 RSS Feed
 - [JSON Feed](https://www.mmfei.com/index.json): 结构化订阅
 
-## 文章索引（共 79 篇）
+## 文章索引（共 80 篇）
+- [PDF 压缩免费在线：用 PDF24 把偏大的文件压小再发送（实测）](https://www.mmfei.com/2026/11/pdf%E5%8E%8B%E7%BC%A9%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BFpdf24/) — 2026-11-27 · 分类: 办公效率 · 标签: PDF压缩, PDF24, 免费工具, 在线工具, 办公技巧
 - [图片转 Excel 免费：用 ImageToText 把表格截图转成可编辑表格（实测）](https://www.mmfei.com/2026/11/%E5%9B%BE%E7%89%87%E8%BD%ACexcel%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BFimagetotext/) — 2026-11-26 · 分类: 办公效率 · 标签: 图片转Excel, ImageToText, 免费工具, 在线工具, 办公技巧
 - [免登录在线抠图：用 iLoveIMG 把背景换成透明底（实测）](https://www.mmfei.com/2026/11/%E5%85%8D%E7%99%BB%E5%BD%95%E5%9C%A8%E7%BA%BF%E6%8A%A0%E5%9B%BEiloveimg/) — 2026-11-26 · 分类: 办公效率 · 标签: 在线抠图, iLoveIMG, 去除背景, 免费工具, 办公技巧
 - [PDF 转 Word 免费在线：用 iLovePDF 转成可编辑文档（实测）](https://www.mmfei.com/2026/11/pdf%E8%BD%ACword%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BFilovepdf/) — 2026-11-26 · 分类: 办公效率 · 标签: PDF转Word, iLovePDF, 免费工具, 在线工具, 办公技巧
