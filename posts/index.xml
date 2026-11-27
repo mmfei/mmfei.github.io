@@ -4,7 +4,14 @@
         <link>https://www.mmfei.com/posts/</link>
         <description>所有文章 | 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Fri, 27 Nov 2026 21:57:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Fri, 27 Nov 2026 22:03:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Word 转 PDF 免费在线：用 iLovePDF 把文档转成可分发的 PDF（实测）</title>
+    <link>https://www.mmfei.com/2026/11/word%E8%BD%ACpdf%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BFilovepdf/</link>
+    <pubDate>Fri, 27 Nov 2026 22:03:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/word%E8%BD%ACpdf%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BFilovepdf/</guid>
+    <description><![CDATA[要把一份 Word 说明、清单或通知转成方便发给别人的 PDF，很多人会搜「Word 转 PDF 免费」。这篇按本机实测，走通 iLovePDF 的在线转换：不用注册，不用付费，按]]></description>
+</item><item>
     <title>在线压缩图片免费：用 iLoveIMG 把偏大的照片压小（实测）</title>
     <link>https://www.mmfei.com/2026/11/%E5%9C%A8%E7%BA%BF%E5%8E%8B%E7%BC%A9%E5%9B%BE%E7%89%87%E5%85%8D%E8%B4%B9iloveimg/</link>
     <pubDate>Fri, 27 Nov 2026 21:57:00 &#43;0700</pubDate>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>https://www.mmfei.com/2026/11/mysql%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%BF%87%E5%A4%9A/</guid>
     <description><![CDATA[应用或客户端报 Too many connections 时，先看当前有多少连接、是谁占着、能不能先腾出一个会话，再决定要不要临时加大 max_connections。不要把“把上]]></description>
-</item><item>
-    <title>whisper 字幕生成：Linux 上用 whisper.cpp 把音视频转成可编辑 SRT</title>
-    <link>https://www.mmfei.com/2026/11/%E6%9C%AC%E5%9C%B0whisper%E7%94%9F%E6%88%90srt%E5%AD%97%E5%B9%95/</link>
-    <pubDate>Wed, 25 Nov 2026 09:33:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/2026/11/%E6%9C%AC%E5%9C%B0whisper%E7%94%9F%E6%88%90srt%E5%AD%97%E5%B9%95/</guid>
-    <description><![CDATA[要把录像或音频转成可编辑的 SRT，又不想把素材传到付费云端语音 API，可以在 Linux 服务器上本地跑 Whisper。本文只做这一段：识别并生成 SRT]]></description>
 </item></channel>
 </rss>
