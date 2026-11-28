@@ -4,7 +4,14 @@
         <link>https://www.mmfei.com/posts/</link>
         <description>所有文章 | 木木飞</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wlfkongl@gmail.com (mmfei)</managingEditor>
-            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sat, 28 Nov 2026 09:32:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wlfkongl@gmail.com (mmfei)</webMaster><lastBuildDate>Sat, 28 Nov 2026 09:45:00 &#43;0700</lastBuildDate><atom:link href="https://www.mmfei.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>HEIC 转 JPG 免费在线：用 iLoveIMG 把 HEIC 转成普通图片（实测）</title>
+    <link>https://www.mmfei.com/2026/11/heic%E8%BD%ACjpg%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BFiloveimg/</link>
+    <pubDate>Sat, 28 Nov 2026 09:45:00 &#43;0700</pubDate>
+    <author>作者</author>
+    <guid>https://www.mmfei.com/2026/11/heic%E8%BD%ACjpg%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BFiloveimg/</guid>
+    <description><![CDATA[iPhone 拍出来的照片常常是 HEIC，拿到 Windows 或网页上，有时不能直接打开。这篇按本机实测，走通 iLoveIMG 的在线转换：不用注册，不用付费，按页面默认选项就能把一]]></description>
+</item><item>
     <title>PDF 转 JPG 免费在线：用 iLovePDF 把 PDF 页面导出成图片（实测）</title>
     <link>https://www.mmfei.com/2026/11/pdf%E8%BD%ACjpg%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BFilovepdf/</link>
     <pubDate>Sat, 28 Nov 2026 09:32:00 &#43;0700</pubDate>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>https://www.mmfei.com/2026/11/%E5%85%8D%E7%99%BB%E5%BD%95%E5%9C%A8%E7%BA%BF%E6%8A%A0%E5%9B%BEiloveimg/</guid>
     <description><![CDATA[只想把一张图的背景去掉，换成透明底，又不想先注册或开会员。这篇按本机 2026 年 11 月 26 日 10:15–10:16（曼谷时间）的实测，用 iLoveIMG 网页版走通了免]]></description>
-</item><item>
-    <title>PDF 转 Word 免费在线：用 iLovePDF 转成可编辑文档（实测）</title>
-    <link>https://www.mmfei.com/2026/11/pdf%E8%BD%ACword%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BFilovepdf/</link>
-    <pubDate>Thu, 26 Nov 2026 09:57:00 &#43;0700</pubDate>
-    <author>作者</author>
-    <guid>https://www.mmfei.com/2026/11/pdf%E8%BD%ACword%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BFilovepdf/</guid>
-    <description><![CDATA[只想改 PDF 里的几段字，却打不开可编辑的文档时，很多人会搜「pdf 转 word 免费网站」。这篇按本机 2026 年 11 月 26 日 09:53–09:54（曼谷时间）的实测]]></description>
 </item></channel>
 </rss>
