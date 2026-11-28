@@ -11,7 +11,8 @@
 - [RSS 订阅](https://www.mmfei.com/index.xml): 站点 RSS Feed
 - [JSON Feed](https://www.mmfei.com/index.json): 结构化订阅
 
-## 文章索引（共 88 篇）
+## 文章索引（共 89 篇）
+- [AI 消除图片多余物体免费在线：用 Cleanup.pictures 涂一涂去掉杂物（实测）](https://www.mmfei.com/2026/11/ai%E6%B6%88%E9%99%A4%E5%9B%BE%E7%89%87%E5%A4%9A%E4%BD%99%E7%89%A9%E4%BD%93cleanuppictures/) — 2026-11-28 · 分类: AI实践 · 标签: AI消除, Cleanup.pictures, 免费工具, 在线工具, AI实践
 - [Excel 转 PDF 免费在线：用 iLovePDF 把表格转成 PDF（实测）](https://www.mmfei.com/2026/11/excel%E8%BD%ACpdf%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BFilovepdf/) — 2026-11-28 · 分类: 办公效率 · 标签: Excel转PDF, iLovePDF, 免费工具, 在线工具, 办公技巧
 - [HEIC 转 JPG 免费在线：用 iLoveIMG 把 HEIC 转成普通图片（实测）](https://www.mmfei.com/2026/11/heic%E8%BD%ACjpg%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BFiloveimg/) — 2026-11-28 · 分类: 办公效率 · 标签: HEIC转JPG, iLoveIMG, 免费工具, 在线工具, 办公技巧
 - [PDF 转 JPG 免费在线：用 iLovePDF 把 PDF 页面导出成图片（实测）](https://www.mmfei.com/2026/11/pdf%E8%BD%ACjpg%E5%85%8D%E8%B4%B9%E5%9C%A8%E7%BA%BFilovepdf/) — 2026-11-28 · 分类: 办公效率 · 标签: PDF转JPG, iLovePDF, 免费工具, 在线工具, 办公技巧
